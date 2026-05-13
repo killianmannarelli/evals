@@ -1,0 +1,13 @@
+task_id,attempter,repo,pr,gold_filename,filename_pr,fileSizeInBytes,non_blank_lines,content_sha256_short,flag
+69fb006c97254707b149aa2a,ilona.boizard@outlier.ai+outlier,matrix-org/matrix-rust-sdk,675,matrix_org_matrix-rust-sdk_675_gold_changed.yaml,675,2751,48,bf7ddc666f,OK
+6a0168ec9dd759a63e587e54,pushkardev54321@gmail.com+outlier,BoundaryML/baml,1465,boundaryml_baml_1465_gold.yaml,1465,9347,161,97b6281713,OK
+6a03066bbedbbd40de721aec,ilona.boizard@outlier.ai+outlier,argoproj/argo-cd,27674,fixed_gold (3).yaml,,5785,99,6262e60900,DUPLICATE_CONTENT+GENERIC_FILENAME
+6a03066bbedbbd40de721aed,ilona.boizard@outlier.ai+outlier,darktable-org/darktable,20322,symfony_ux_101_task_multi.yaml,101,1324,7,71d5eefd1f,FILENAME_PR_MISMATCH
+6a03066bbedbbd40de721af0,ilona.boizard@outlier.ai+outlier,InternLM/lmdeploy,3965,fixed_gold (3).yaml,,5785,99,6262e60900,DUPLICATE_CONTENT+GENERIC_FILENAME
+6a03066bbedbbd40de721af1,ilona.boizard@outlier.ai+outlier,jneilliii/OctoPrint-RTMPStreamer,59,symfony_ux_101_gold.yaml,101,14742,132,9749975829,DUPLICATE_CONTENT+FILENAME_PR_MISMATCH
+6a03066bbedbbd40de721af3,ilona.boizard@outlier.ai+outlier,knoxio/pops,2613,symfony_ux_101_gold.yaml,101,14742,132,9749975829,DUPLICATE_CONTENT+FILENAME_PR_MISMATCH
+6a03066bbedbbd40de721af4,ilona.boizard@outlier.ai+outlier,kubernetes-sigs/kustomize,6037,symfony_ux_101_gold.yaml,101,14742,132,9749975829,DUPLICATE_CONTENT+FILENAME_PR_MISMATCH
+6a03066bbedbbd40de721af5,ilona.boizard@outlier.ai+outlier,modelcontextprotocol/python-sdk,2380,symfony_ux_101_gold.yaml,101,14742,132,9749975829,DUPLICATE_CONTENT+FILENAME_PR_MISMATCH
+6a03066bbedbbd40de721af6,ilona.boizard@outlier.ai+outlier,oven-sh/bun,28708,fixed_gold (3).yaml,,5785,99,6262e60900,DUPLICATE_CONTENT+GENERIC_FILENAME
+6a03066bbedbbd40de721af8,ilona.boizard@outlier.ai+outlier,refcell/edge-rs,9,symfony_ux_101_gold.yaml,101,14742,132,9749975829,DUPLICATE_CONTENT+FILENAME_PR_MISMATCH
+6a03066bbedbbd40de721af9,ilona.boizard@outlier.ai+outlier,rust-lang/rust,45905,fixed_gold (3).yaml,,5785,99,6262e60900,DUPLICATE_CONTENT+GENERIC_FILENAME
