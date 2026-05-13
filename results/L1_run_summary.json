@@ -1,65 +1,65 @@
 {
   "skill": "QC Auditor \u2014 created by Marius Delahay",
-  "tasks_audited": 14,
+  "tasks_audited": 7,
   "tasks_clean": 0,
   "tasks_incomplete": 0,
-  "raw_findings": 158,
-  "post_merge_findings": 84,
-  "confirmed_findings": 54,
-  "rejected_findings": 30,
-  "merge_rate": 0.4684,
-  "drop_rate": 0.3571,
+  "raw_findings": 55,
+  "post_merge_findings": 41,
+  "confirmed_findings": 28,
+  "rejected_findings": 13,
+  "merge_rate": 0.2545,
+  "drop_rate": 0.3171,
   "agreement_breakdown": {
-    "3/3": 17,
-    "2/3": 21,
-    "1/3": 16
+    "3/3": 4,
+    "2/3": 6,
+    "1/3": 18
   },
   "reaudit": {
-    "tasks_reaudited": 1,
-    "forced_decisions": 1,
+    "tasks_reaudited": 0,
+    "forced_decisions": 0,
     "tasks_still_needs_reaudit": 0
   },
   "top_failure_categories": [
     [
       "Non-Fail - Unlisted Minor Errors",
-      12
+      6
     ],
     [
       "Non-Fail - Missing Coverage",
-      8
-    ],
-    [
-      "Fail - Criteria Accuracy",
-      3
-    ],
-    [
-      "Non-Fail - Imprecise GOLD.yaml Claims",
-      3
-    ],
-    [
-      "Non-Fail - Unnecessary Modification of GOLD.yaml",
-      3
-    ],
-    [
-      "Non-Fail - GOLD.yaml Justification Misaligned",
-      3
-    ],
-    [
-      "Non-Fail - Minor PR alignment with GOLD.yaml Claims",
-      2
+      4
     ],
     [
       "Non-Fail - Objectivity / Specificity",
+      3
+    ],
+    [
+      "Fail - Rubric Misaligned with GOLD.yaml",
+      3
+    ],
+    [
+      "Fail - Missing Coverage",
       2
     ],
     [
-      "Non-Fail - Overlap / Redundancy",
+      "Non- Fail - Phrasing",
       2
     ],
     [
-      "Fail - Phrasing",
+      "Fail - Invalid Modification of GOLD.yaml",
       2
+    ],
+    [
+      "Non-Fail - Extra Criteria",
+      2
+    ],
+    [
+      "Fail - Criteria Atomicity",
+      1
+    ],
+    [
+      "Non-Fail - Slightly Incorrect GOLD.yaml",
+      1
     ]
   ],
-  "csv_path": "/home/user/evals/qc-auditor-workspace/69bee012be45f06904292c9a_L1_20260513T040619Z/audit_results.csv"
+  "csv_path": "/home/user/evals/qc-auditor-workspace/69bee012be45f06904292c9a_L1_20260513T090006Z/audit_results.csv"
 }
