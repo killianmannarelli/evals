@@ -1,0 +1,65 @@
+{
+  "skill": "QC Auditor \u2014 created by Marius Delahay",
+  "tasks_audited": 14,
+  "tasks_clean": 0,
+  "tasks_incomplete": 0,
+  "raw_findings": 158,
+  "post_merge_findings": 84,
+  "confirmed_findings": 54,
+  "rejected_findings": 30,
+  "merge_rate": 0.4684,
+  "drop_rate": 0.3571,
+  "agreement_breakdown": {
+    "3/3": 17,
+    "2/3": 21,
+    "1/3": 16
+  },
+  "reaudit": {
+    "tasks_reaudited": 1,
+    "forced_decisions": 1,
+    "tasks_still_needs_reaudit": 0
+  },
+  "top_failure_categories": [
+    [
+      "Non-Fail - Unlisted Minor Errors",
+      12
+    ],
+    [
+      "Non-Fail - Missing Coverage",
+      8
+    ],
+    [
+      "Fail - Criteria Accuracy",
+      3
+    ],
+    [
+      "Non-Fail - Imprecise GOLD.yaml Claims",
+      3
+    ],
+    [
+      "Non-Fail - Unnecessary Modification of GOLD.yaml",
+      3
+    ],
+    [
+      "Non-Fail - GOLD.yaml Justification Misaligned",
+      3
+    ],
+    [
+      "Non-Fail - Minor PR alignment with GOLD.yaml Claims",
+      2
+    ],
+    [
+      "Non-Fail - Objectivity / Specificity",
+      2
+    ],
+    [
+      "Non-Fail - Overlap / Redundancy",
+      2
+    ],
+    [
+      "Fail - Phrasing",
+      2
+    ]
+  ],
+  "csv_path": "/home/user/evals/qc-auditor-workspace/69bee012be45f06904292c9a_L1_20260513T040619Z/audit_results.csv"
+}
