@@ -4,38 +4,96 @@
 Sheet: 1MOa-semWY_Z-uskBD9bwzGKrMHrHjXwERda9bv2_9QU
 Tab:   Evals
 
+Auth resolution (first that's set wins):
+  GOOGLE_APPLICATION_CREDENTIALS  path to a service-account JSON.
+                                  The SA must be granted Editor on the sheet.
+                                  Signed via openssl subprocess (no Python
+                                  cryptography lib needed).
+  OAUTH_TOKEN_JSON                path to user OAuth token JSON with at least
+                                  the spreadsheets scope. drive.file only
+                                  works if the file is in the app's grant.
+
 Per ~/.claude memory (reference_drive_upload_oauth.md):
-- Use the user's OAuth creds with drive.file scope (preferred).
-- drive.file: write-by-id works, read-by-id 404s -- skip any probe.
-- The sheet must be in the OAuth app's drive.file grant (the user opened it via
-  Picker or the app created it). If the token doesn't see it, broaden scope or
-  re-grant in the browser.
+  - SA cannot create files in My Drive (no quota), but CAN write to a sheet
+    that has been shared with it as an editor.
+  - drive.file write-by-id works only when the user opened the file via the
+    Picker for this OAuth client.
 
-Usage:
-    OAUTH_TOKEN_JSON=~/path/to/oauth_token.json python3 push_to_infohub.py
-
-Pure-stdlib: no google-api-python-client dependency.
+Pure stdlib. Tested under Python 3.11.
 """
+import base64
 import csv
 import json
 import os
+import subprocess
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
 
 SHEET_ID = "1MOa-semWY_Z-uskBD9bwzGKrMHrHjXwERda9bv2_9QU"
 TAB = "Evals"
+SPREADSHEETS_SCOPE = "https://www.googleapis.com/auth/spreadsheets"
 
-# CSV files to push, in order. The header is taken from the first; the rest
-# must match column-for-column.
 DEFAULT_CSVS = [
     "results/L0_audit_results.csv",
     "results/L1_audit_results.csv",
 ]
 
 
-def refresh_token(token_path):
+def b64u(b):
+    return base64.urlsafe_b64encode(b).rstrip(b"=")
+
+
+def sa_access_token(sa_path):
+    sa = json.load(open(os.path.expanduser(sa_path)))
+    now = int(time.time())
+    header = {"alg": "RS256", "typ": "JWT", "kid": sa["private_key_id"]}
+    claims = {
+        "iss": sa["client_email"],
+        "scope": SPREADSHEETS_SCOPE,
+        "aud": sa["token_uri"],
+        "iat": now,
+        "exp": now + 3600,
+    }
+    signing_input = (
+        b64u(json.dumps(header, separators=(",", ":")).encode())
+        + b"."
+        + b64u(json.dumps(claims, separators=(",", ":")).encode())
+    )
+    key_path = "/tmp/.sa_key.pem"
+    with open(key_path, "w") as f:
+        f.write(sa["private_key"])
+    os.chmod(key_path, 0o600)
+    try:
+        proc = subprocess.run(
+            ["openssl", "dgst", "-sha256", "-sign", key_path],
+            input=signing_input,
+            capture_output=True,
+            check=True,
+        )
+    finally:
+        try:
+            os.unlink(key_path)
+        except OSError:
+            pass
+    jwt = signing_input + b"." + b64u(proc.stdout)
+    body = urllib.parse.urlencode({
+        "grant_type": "urn:ietf:params:oauth:grant-type:jwt-bearer",
+        "assertion": jwt.decode(),
+    }).encode()
+    req = urllib.request.Request(
+        sa["token_uri"],
+        data=body,
+        method="POST",
+        headers={"Content-Type": "application/x-www-form-urlencoded"},
+    )
+    with urllib.request.urlopen(req) as r:
+        return json.loads(r.read())["access_token"], sa["client_email"]
+
+
+def oauth_access_token(token_path):
     tok = json.load(open(os.path.expanduser(token_path)))
     body = urllib.parse.urlencode({
         "grant_type": "refresh_token",
@@ -50,7 +108,19 @@ def refresh_token(token_path):
         headers={"Content-Type": "application/x-www-form-urlencoded"},
     )
     with urllib.request.urlopen(req) as r:
-        return json.loads(r.read())["access_token"]
+        return json.loads(r.read())["access_token"], "(user OAuth)"
+
+
+def get_access_token():
+    sa = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
+    if sa:
+        return sa_access_token(sa)
+    oauth = os.environ.get("OAUTH_TOKEN_JSON")
+    if oauth:
+        return oauth_access_token(oauth)
+    raise SystemExit(
+        "Set GOOGLE_APPLICATION_CREDENTIALS or OAUTH_TOKEN_JSON. See module docstring."
+    )
 
 
 def load_rows(csv_paths):
@@ -58,18 +128,17 @@ def load_rows(csv_paths):
     rows = []
     for p in csv_paths:
         with open(p, newline="") as f:
-            reader = csv.reader(f)
-            this_header = next(reader)
+            r = csv.reader(f)
+            this_header = next(r)
             if header is None:
                 header = this_header
             elif this_header != header:
-                raise SystemExit(f"header mismatch in {p}:\n  {header}\n  {this_header}")
-            for r in reader:
-                rows.append(r)
+                raise SystemExit(f"header mismatch in {p}")
+            rows.extend(r)
     return header, rows
 
 
-def append(access_token, rows):
+def append(access, rows):
     url = (
         f"https://sheets.googleapis.com/v4/spreadsheets/{SHEET_ID}"
         f"/values/{urllib.parse.quote(TAB)}!A1:append"
@@ -81,7 +150,7 @@ def append(access_token, rows):
         data=body,
         method="POST",
         headers={
-            "Authorization": f"Bearer {access_token}",
+            "Authorization": f"Bearer {access}",
             "Content-Type": "application/json",
         },
     )
@@ -89,31 +158,29 @@ def append(access_token, rows):
         with urllib.request.urlopen(req) as r:
             return json.loads(r.read())
     except urllib.error.HTTPError as e:
-        print(f"HTTP {e.code} from Sheets append:", file=sys.stderr)
-        print(e.read().decode(), file=sys.stderr)
+        msg = e.read().decode()
+        print(f"HTTP {e.code}: {msg}", file=sys.stderr)
         if e.code == 404:
             print(
-                "\n404 usually means this OAuth client's drive.file grant "
-                "doesn't include the sheet. Open the sheet in a browser "
-                "session linked to the same client, or use a token with the "
-                "https://www.googleapis.com/auth/spreadsheets scope.",
+                "\n404 = the auth principal can't see the sheet. For an SA, "
+                "share the sheet with the SA's client_email as Editor. For "
+                "OAuth drive.file, open the sheet in the matching browser "
+                "session first.",
                 file=sys.stderr,
             )
         raise
 
 
 def main():
-    token_path = os.environ.get("OAUTH_TOKEN_JSON", "~/.config/gcloud/oauth_token.json")
     csv_paths = sys.argv[1:] or DEFAULT_CSVS
     header, rows = load_rows(csv_paths)
-    print(f"Loaded {len(rows)} rows from {len(csv_paths)} CSV(s); "
-          f"header has {len(header)} columns", flush=True)
-    access = refresh_token(token_path)
-    print("Token refreshed via refresh_token grant", flush=True)
+    print(f"Loaded {len(rows)} rows from {len(csv_paths)} CSV(s); header has {len(header)} columns")
+    access, principal = get_access_token()
+    print(f"Auth OK ({principal})")
     result = append(access, rows)
     u = result.get("updates", {})
     print(
-        f"Appended OK: {u.get('updatedRange')}  "
+        f"Appended: range={u.get('updatedRange')}  "
         f"rows={u.get('updatedRows')}  cells={u.get('updatedCells')}"
     )
 
