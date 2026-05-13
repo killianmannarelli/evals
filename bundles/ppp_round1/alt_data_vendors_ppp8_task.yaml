@@ -1,0 +1,142 @@
+task_id: swarm__alt_data_vendors__ppp8
+name: Alt-Data Source Catalog — top 3 non-traditional vendors for 65 macro indicators
+domain: swarm_research
+difficulty: easy
+primary_pattern: map_reduce
+coordination_pattern: map_reduce
+estimated_sub_agents: 66
+has_dependencies: true
+sandbox: docker
+sandbox_image: swarm-bench-general:latest
+simulated_actors: []
+tools:
+- llm_call
+- str_replace_editor
+- browse
+- read_file
+- list_files
+- submit_deliverable
+time_limit: 5400
+prompt: "### DELEGATION WORKFLOW — Alt-Data Source Catalog\n\n**Objective:** Coordinate 65 parallel sub-agents,\
+  \ each assigned to one macro indicator, to find the top 3 non-traditional data vendors for that indicator.\
+  \ Your role as coordinator is to plan the research, delegate tasks, audit results for quality, and assemble\
+  \ the final data matrix. Do NOT perform any research yourself; all data gathering must be delegated\
+  \ via `llm_call`. Your coordinator messages must constitute less than 15% of the total swarm token usage.\n\
+  \n#### Phase 1 — Create the Plan\n\n1.  Begin by creating a detailed plan file at `/mnt/agent/output/plan.md`\
+  \ using `str_replace_editor.create`. This file is the single source of truth for all sub-agents. It\
+  \ must include:\n\n    *   **Header:** A brief description of the task, the objective, and the final\
+  \ output format (a TSV file).\n    *   **Assignment Table:** A numbered list of all 65 macro indicators.\
+  \ Each line should follow the format: `[N]. [Indicator Name] — Find top 3 alternative data vendors —\
+  \ result file: result_{NNN}.tsv`.\n        ```\n        1. Shipping bottlenecks — Find top 3 alternative\
+  \ data vendors — result file: result_001.tsv\n        2. Cement demand — Find top 3 alternative data\
+  \ vendors — result file: result_002.tsv\n        ...\n        65. Used car parts — Find top 3 alternative\
+  \ data vendors — result file: result_065.tsv\n        ```\n    *   **Output Schema:** Clearly define\
+  \ the exact TSV column headers each sub-agent must use for their output file: `Indicator`, `VendorName`,\
+  \ `UpdateFrequency`, `HistoryDepth`, `Price`, `DataSourceURL`. This ensures consistency for the final\
+  \ merge.\n    *   **Quality Criteria:** Define what constitutes a `complete` result (all columns filled\
+  \ for at least 2-3 vendors) versus a `partial` result (missing key data points like Price or History\
+  \ Depth). Specify that `DataSourceURL` must link directly to the vendor's product page, API docs, or\
+  \ pricing page.\n\n#### Phase 2 — Parallel Delegation\n\n2.  Launch ALL 65 sub-agent calls in a SINGLE\
+  \ message. This parallel execution is the core of the swarm strategy. Sequential delegation is inefficient\
+  \ and will fail the task.\n\n    Each `llm_call` must contain:\n    *   **Assignment reference:** \"\
+  You are sub-agent N. Your task is defined on line N of the Assignment Table in `/mnt/agent/output/plan.md`.\"\
+  \n    *   **Entity scope:** The specific macro indicator to research (e.g., \"Shipping bottlenecks\"\
+  ).\n    *   **Output file:** The unique, zero-padded file path from the plan, e.g., `/mnt/agent/output/result_001.tsv`.\n\
+  \    *   **fork_mode:** `none`. Each sub-agent's task is self-contained and guided by the plan file.\n\
+  \    *   **Research instructions:** \"Use the `browse` tool to find 3 non-traditional data vendors for\
+  \ your assigned indicator. Investigate vendor websites, API documentation, and look for sample data\
+  \ to find the update frequency, historical data depth, and pricing. Be persistent and try multiple search\
+  \ queries (e.g., '[indicator] data provider', '[indicator] alternative data API').\"\n    *   **Result\
+  \ format:** \"Write your findings to the assigned result file using `str_replace_editor`. The file must\
+  \ be a TSV. The first line must be `STATUS: complete` or `STATUS: partial — [reason for partial status]`.\
+  \ The second line must be the header row from the plan. Subsequent lines are your data, with one vendor\
+  \ per row.\"\n\n#### Phase 3 — Quality Audit & Gap Fill\n\n3.  Once the sub-agents have completed their\
+  \ work, perform a quality audit. Do not read the full content of every file yet.\n    *   Efficiently\
+  \ scan just the first line of each of the 65 result files using `str_replace_editor.view` with a small\
+  \ `view_range` to check the `STATUS`.\n    *   Tally the number of `complete`, `partial`, and missing\
+  \ files.\n    *   For any `partial` or missing results, launch a single, consolidated follow-up batch\
+  \ of `llm_call`s. These agents can be given more specific instructions, such as trying different search\
+  \ terms or focusing on finding a specific missing data point (e.g., pricing).\n    *   Limit this to\
+  \ one round of follow-ups to avoid diminishing returns.\n\n#### Phase 4 — Assemble Final Output\n\n\
+  4.  Gather all the individual TSV files and synthesize the final report.\n    *   Read the contents\
+  \ of all `complete` and acceptable `partial` result files.\n    *   Create a final master file at `/mnt/agent/output/final.tsv`.\n\
+  \    *   Write a single header row at the top, matching the schema from the plan.\n    *   Append the\
+  \ data from all individual files, ensuring consistent TSV formatting. Sort the final table by the `Indicator`\
+  \ column.\n\n5.  Add a brief summary at the top of the `final.tsv` file (commented out with a `#` so\
+  \ it doesn't interfere with parsing).\n    *   `# Total Indicators Researched: 65`\n    *   `# Complete\
+  \ Results: [count]`\n    *   `# Partial/Missing: [count]`\n    *   `# Research Date: [current date]`\n\
+  \n#### Resource Budget\n*   **Phase 2 sub-agents:** 65 (one per macro indicator)\n*   **Phase 3 follow-ups:**\
+  \ Up to 15 (for gaps/partials)\n*   **Sub-agent tools:** `browse`, `str_replace_editor`\n*   **Max messages\
+  \ per sub-agent:** 25\n*   **Coordinator critical-path target:** <15% of total swarm tokens"
+single_agent_prompt: "### DELEGATION WORKFLOW — Alt-Data Source Catalog\n\n**Objective:** Coordinate 65\
+  \ parallel sub-agents, each assigned to one macro indicator, to find the top 3 non-traditional data\
+  \ vendors for that indicator. Your role as coordinator is to plan the research, delegate tasks, audit\
+  \ results for quality, and assemble the final data matrix. Do NOT perform any research yourself; all\
+  \ data gathering must be delegated via `llm_call`. Your coordinator messages must constitute less than\
+  \ 15% of the total swarm token usage.\n\n#### Phase 1 — Create the Plan\n\n1.  Begin by creating a detailed\
+  \ plan file at `/mnt/agent/output/plan.md` using `str_replace_editor.create`. This file is the single\
+  \ source of truth for all sub-agents. It must include:\n\n    *   **Header:** A brief description of\
+  \ the task, the objective, and the final output format (a TSV file).\n    *   **Assignment Table:**\
+  \ A numbered list of all 65 macro indicators. Each line should follow the format: `[N]. [Indicator Name]\
+  \ — Find top 3 alternative data vendors — result file: result_{NNN}.tsv`.\n        ```\n        1. Shipping\
+  \ bottlenecks — Find top 3 alternative data vendors — result file: result_001.tsv\n        2. Cement\
+  \ demand — Find top 3 alternative data vendors — result file: result_002.tsv\n        ...\n        65.\
+  \ Used car parts — Find top 3 alternative data vendors — result file: result_065.tsv\n        ```\n\
+  \    *   **Output Schema:** Clearly define the exact TSV column headers each sub-agent must use for\
+  \ their output file: `Indicator`, `VendorName`, `UpdateFrequency`, `HistoryDepth`, `Price`, `DataSourceURL`.\
+  \ This ensures consistency for the final merge.\n    *   **Quality Criteria:** Define what constitutes\
+  \ a `complete` result (all columns filled for at least 2-3 vendors) versus a `partial` result (missing\
+  \ key data points like Price or History Depth). Specify that `DataSourceURL` must link directly to the\
+  \ vendor's product page, API docs, or pricing page.\n\n#### Phase 2 — Parallel Delegation\n\n2.  Launch\
+  \ ALL 65 sub-agent calls in a SINGLE message. This parallel execution is the core of the swarm strategy.\
+  \ Sequential delegation is inefficient and will fail the task.\n\n    Each `llm_call` must contain:\n\
+  \    *   **Assignment reference:** \"You are sub-agent N. Your task is defined on line N of the Assignment\
+  \ Table in `/mnt/agent/output/plan.md`.\"\n    *   **Entity scope:** The specific macro indicator to\
+  \ research (e.g., \"Shipping bottlenecks\").\n    *   **Output file:** The unique, zero-padded file\
+  \ path from the plan, e.g., `/mnt/agent/output/result_001.tsv`.\n    *   **fork_mode:** `none`. Each\
+  \ sub-agent's task is self-contained and guided by the plan file.\n    *   **Research instructions:**\
+  \ \"Use the `browse` tool to find 3 non-traditional data vendors for your assigned indicator. Investigate\
+  \ vendor websites, API documentation, and look for sample data to find the update frequency, historical\
+  \ data depth, and pricing. Be persistent and try multiple search queries (e.g., '[indicator] data provider',\
+  \ '[indicator] alternative data API').\"\n    *   **Result format:** \"Write your findings to the assigned\
+  \ result file using `str_replace_editor`. The file must be a TSV. The first line must be `STATUS: complete`\
+  \ or `STATUS: partial — [reason for partial status]`. The second line must be the header row from the\
+  \ plan. Subsequent lines are your data, with one vendor per row.\"\n\n#### Phase 3 — Quality Audit &\
+  \ Gap Fill\n\n3.  Once the sub-agents have completed their work, perform a quality audit. Do not read\
+  \ the full content of every file yet.\n    *   Efficiently scan just the first line of each of the 65\
+  \ result files using `str_replace_editor.view` with a small `view_range` to check the `STATUS`.\n  \
+  \  *   Tally the number of `complete`, `partial`, and missing files.\n    *   For any `partial` or missing\
+  \ results, launch a single, consolidated follow-up batch of `llm_call`s. These agents can be given more\
+  \ specific instructions, such as trying different search terms or focusing on finding a specific missing\
+  \ data point (e.g., pricing).\n    *   Limit this to one round of follow-ups to avoid diminishing returns.\n\
+  \n#### Phase 4 — Assemble Final Output\n\n4.  Gather all the individual TSV files and synthesize the\
+  \ final report.\n    *   Read the contents of all `complete` and acceptable `partial` result files.\n\
+  \    *   Create a final master file at `/mnt/agent/output/final.tsv`.\n    *   Write a single header\
+  \ row at the top, matching the schema from the plan.\n    *   Append the data from all individual files,\
+  \ ensuring consistent TSV formatting. Sort the final table by the `Indicator` column.\n\n5.  Add a brief\
+  \ summary at the top of the `final.tsv` file (commented out with a `#` so it doesn't interfere with\
+  \ parsing).\n    *   `# Total Indicators Researched: 65`\n    *   `# Complete Results: [count]`\n  \
+  \  *   `# Partial/Missing: [count]`\n    *   `# Research Date: [current date]`\n\n#### Resource Budget\n\
+  *   **Phase 2 sub-agents:** 65 (one per macro indicator)\n*   **Phase 3 follow-ups:** Up to 15 (for\
+  \ gaps/partials)\n*   **Sub-agent tools:** `browse`, `str_replace_editor`\n*   **Max messages per sub-agent:**\
+  \ 25\n*   **Coordinator critical-path target:** <15% of total swarm tokens"
+metadata:
+  ppp_id: PPP_8
+  n_research_agents: 65
+  n_followups: 15
+  entity_unit: macro indicator
+  entity_unit_plural: macro indicators
+  final_output_filename: final.tsv
+  output_schema_columns:
+  - Indicator
+  - VendorName
+  - UpdateFrequency
+  - HistoryDepth
+  - Price
+  - DataSourceURL
+  research_summary: For the assigned indicator, find 3 non-traditional / alternative data vendors. Use
+    vendor product pages, API docs, and pricing pages to fill update frequency, history depth, and price.
+  data_sources:
+  - Alternative data marketplaces (Datarade, Snowflake Marketplace)
+  - Vendor product / API documentation pages
+  - Vendor pricing pages and sample data downloads

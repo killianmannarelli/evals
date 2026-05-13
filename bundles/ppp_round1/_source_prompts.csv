@@ -1,0 +1,442 @@
+Id,Prompt
+PPP_4,"### DELEGATION WORKFLOW — Open Source Maintainer Map
+
+**Objective:** Coordinate 70 parallel sub-agents to research one critical npm/PyPI package each, identifying the top 3 most active maintainers not employed by a FAANG company. Your role as coordinator is to plan, delegate, audit, and synthesize the final dossier. Do NOT perform any research yourself; every lookup must be delegated via `llm_call`. Your coordinator messages should be less than 15% of the total swarm token count.
+
+#### Phase 1 — Create the Plan
+
+1.  Write a plan file to `/mnt/agent/output/plan.md` using `str_replace_editor.create`. This file is the single source of truth for all sub-agents. It must contain:
+
+    **Header:** A brief description of the task, the goal of finding non-FAANG maintainers, and the final output format (TSV).
+
+    **Assignment Table:** A numbered list of all 70 npm/PyPI packages, one per line. This defines the scope for each sub-agent.
+    ```
+    1. [Package 1 Name] — Find top 3 non-FAANG maintainers — result file: result_001.tsv
+    2. [Package 2 Name] — Find top 3 non-FAANG maintainers — result file: result_002.tsv
+    ...
+    70. [Package 70 Name] — Find top 3 non-FAANG maintainers — result file: result_070.tsv
+    ```
+
+    **Output Schema:** Define the exact TSV column headers each sub-agent must use. This ensures consistency for the final assembly.
+    `PackageName`, `MaintainerName`, `GitHubProfileURL`, `ContactInfo`, `EstimatedTimezone`, `SponsorshipStatus`, `CurrentEmployer`, `NonFAANG_EvidenceURL`
+
+    **Quality Criteria:** A `complete` result requires all fields to be filled for at least one maintainer. A result is `partial` if key information like `CurrentEmployer` or `ContactInfo` is missing. Explicitly state that any maintainer working at Meta, Apple, Amazon, Netflix, or Google must be excluded.
+
+#### Phase 2 — Parallel Delegation
+
+2.  Launch ALL 70 sub-agent calls in a SINGLE message. This parallel execution is critical for efficiency. Your single coordinator message will trigger a massive research effort.
+
+    Each `llm_call` must be precisely structured:
+    -   **Assignment reference:** ""You are sub-agent N. Read `/mnt/agent/output/plan.md` and find your assigned package on line N.""
+    -   **Entity scope:** The specific npm/PyPI package name to research.
+    -   **Output file:** `/mnt/agent/output/result_{NNN}.tsv` (zero-padded).
+    -   **fork_mode:** `none` — each task is self-contained using the plan file.
+    -   **Research instructions:** Provide a clear research workflow. ""Use the `browse` tool. Start by finding the package's official GitHub repository. Analyze the 'Contributors' page and recent commit history to identify highly active individuals. For each promising candidate, investigate their GitHub profile, personal website, Twitter, and LinkedIn to determine their current employer. You MUST verify they do not work for a FAANG company; document the evidence URL. Search for their sponsorship status on GitHub Sponsors or OpenCollective. Find a contact method (email or social media handle) and estimate their timezone. Identify the top 3 maintainers who meet all criteria.""
+    -   **Result format:** ""Write your findings as tab-separated rows (one row per maintainer) to your assigned result file using `str_replace_editor`. Do NOT include a header row. The first line of the file must be `STATUS: complete` or `STATUS: partial — [reason for partial status]`.""
+
+    CRITICAL: All 70 `llm_call` invocations must be in the same message to enable parallel execution.
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+3.  Once the sub-agents complete, perform a quality check. Do not read the full content of every file yet.
+    -   Use `str_replace_editor.view` with `view_range=(0, 1)` to read only the `STATUS` line of all 70 result files.
+    -   Tally the number of `complete`, `partial`, and missing files.
+    -   For `partial` results (e.g., employer could not be confirmed), launch a small, targeted batch of follow-up sub-agents in a single message. Give them specific instructions, like, ""Confirm the employer for [MaintainerName] of package [PackageName].""
+    -   Limit this to a single round of follow-ups for no more than 20% of the initial assignments.
+
+#### Phase 4 — Assemble Final Output
+
+4.  Consolidate all verified results into the final deliverable.
+    -   Read all `result_*.tsv` files that have a `STATUS: complete` line.
+    -   Create a new file `/mnt/agent/output/final_dossier.tsv`.
+    -   Write the header row as defined in the `plan.md` schema.
+    -   Append the content from all the individual result files, skipping the `STATUS` line for each.
+    -   Sort the final table by `PackageName`.
+
+5.  Write a brief summary report in `/mnt/agent/output/summary.md`.
+    -   Total packages analyzed: 70
+    -   Packages with complete results: [count]
+    -   Total maintainers identified: [count]
+    -   Notes on common challenges (e.g., difficulty verifying employment for independent consultants).
+
+#### Resource Budget
+-   **Phase 2 sub-agents:** 70 (one per package)
+-   **Phase 3 follow-ups:** up to 14 (for gaps/partials)
+-   **Sub-agent tools:** browse, str_replace_editor
+-   **Max messages per sub-agent:** 25
+-   **Coordinator critical-path target:** <15% of total swarm tokens"
+PPP_5,"### DELEGATION WORKFLOW — Tenure-Track Pipeline Scan
+
+**Objective:** Coordinate 55 parallel sub-agents, each assigned to one R1 university economics department, to identify the top 3 junior faculty hired in the last 2 years. Your role as coordinator is to plan, delegate, audit, and synthesize the final dataset. Do NOT perform any research yourself; all data gathering must be delegated via `llm_call`. Your coordinator messages must be less than 15% of the total swarm token usage.
+
+#### Phase 1 — Create the Plan
+
+1.  First, create a comprehensive plan file. Use `str_replace_editor.create` to write to `/mnt/agent/output/plan.md`. This plan is the single source of truth for all sub-agents. It must contain:
+
+    *   **Header:** A brief description of the task: ""Identify the top 3 junior faculty (hired in the last 2 years) from 55 R1 university economics departments.""
+
+    *   **Assignment Table:** A numbered list of all 55 university economics departments. Each line represents one sub-agent's assignment.
+        ```
+        1. [University Name 1] Economics Department — result file: result_001.tsv
+        2. [University Name 2] Economics Department — result file: result_002.tsv
+        ...
+        55. [University Name 55] Economics Department — result file: result_055.tsv
+        ```
+
+    *   **Output Schema:** Define the exact TSV (Tab-Separated Values) column headers that each sub-agent's output file must use. This ensures consistency for the final merge.
+        `University	Department	Faculty_Name	Hire_Year	PhD_Granting_Institution	Publication_Count	Research_Keywords`
+
+    *   **Quality Criteria:** Define what constitutes a complete result. ""Junior faculty"" are those hired in the last two academic years (e.g., Assistant Professors with start dates of 2022 or later). ""Top 3"" can be interpreted as the three most prominent or simply the first three qualified individuals found. A complete entry requires all fields in the output schema to be populated. Specify data sources: official university department websites, faculty CVs (often linked from their profile pages), and Google Scholar for publication metrics.
+
+#### Phase 2 — Parallel Delegation
+
+2.  Launch ALL 55 sub-agent calls in a SINGLE message. This parallel execution is the core of the swarm strategy, maximizing throughput.
+
+    Each `llm_call` must be precisely structured:
+    *   **Assignment reference:** ""You are sub-agent N. Your task is defined on line N of the plan file at `/mnt/agent/output/plan.md`.""
+    *   **Entity scope:** The specific university department name.
+    *   **Output file:** The corresponding result file, e.g., `/mnt/agent/output/result_{NNN}.tsv` (zero-padded).
+    *   **fork_mode:** `none`, as each task is self-contained and relies on the central plan.
+    *   **Research instructions:** Instruct the sub-agent to use the `browse` tool. The workflow should be: 1) Find the official faculty directory for the assigned department. 2) Identify faculty with titles like 'Assistant Professor' and check their start date or CV for a hire date within the last two years. 3) For each of the top 3 found, visit their personal page or find their CV to extract their PhD-granting institution. 4) Use Google Scholar to find their profile and record their total publication count and list 3-5 of their primary research keywords. 5) Save the findings to the assigned result file.
+    *   **Result format:** Write results as tab-separated rows (one row per faculty member) to the assigned `.tsv` file. Do NOT include a header row in the individual result files. The very first line of the file must be `STATUS: complete` or `STATUS: partial — [reason for incompleteness]`.
+
+    CRITICAL: All 55 `llm_call` invocations must be issued in the same turn to leverage parallel processing. Sequential delegation is inefficient and will fail the task.
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+3.  Once the sub-agents complete, perform a quality check. Do not read the full content of every file yet.
+    *   Use `str_replace_editor.view` with `view_range=(0, 1)` to read only the first line of each of the 55 result files.
+    *   Parse the `STATUS` line to count how many results are `complete`, `partial`, or missing entirely.
+    *   For any `partial` or missing files, launch a single, consolidated follow-up batch of `llm_call`s. Provide these agents with more specific instructions or alternative search queries based on the failure reasons.
+    *   Limit this to one round of follow-ups to avoid diminishing returns.
+
+#### Phase 4 — Assemble Final Output
+
+4.  Synthesize the final deliverable. Read the contents of all `complete` and acceptable `partial` result files (skipping the `STATUS` line).
+
+5.  Create a single master file, `/mnt/agent/output/final_report.tsv`. First, write the header row defined in the plan's Output Schema. Then, append the content from all the individual result files.
+
+6.  Write a brief summary file `/mnt/agent/output/summary.md` containing:
+    *   Total departments surveyed: 55
+    *   Total faculty records compiled: [count]
+    *   Departments with complete results: [count]
+    *   Departments with partial/missing results: [count] with a brief summary of reasons.
+    *   Date of research.
+
+#### Resource Budget
+*   **Phase 2 sub-agents:** 55
+*   **Phase 3 follow-ups:** up to 10
+*   **Sub-agent tools:** `browse`, `str_replace_editor`
+*   **Max messages per sub-agent:** 25
+*   **Coordinator critical-path target:** <15% of total swarm tokens"
+PPP_6,"### DELEGATION WORKFLOW — Fractional Exec Marketplace
+
+**Objective:** Coordinate 60 parallel sub-agents to research 1 functional role each (e.g., RevOps, Chief of Staff) and identify the top 3 fractional leaders with public case studies. Your role as coordinator is to plan, delegate, and synthesize the final dataset. Do NOT research entities yourself — every lookup must be delegated via `llm_call`. Your coordinator messages should be <15% of total assistant tokens across the swarm.
+
+#### Phase 1 — Create the Plan
+
+1. Write a detailed plan file to `/mnt/agent/output/plan.md` using `str_replace_editor.create`. This plan is the single source of truth for all sub-agents. It must contain:
+
+   **Header:** A brief task description, specifying the goal of finding 3 fractional leaders per role.
+
+   **Assignment Table:** A numbered list of all 60 functional roles, one per line. This is the master list of assignments.
+   ```
+   1. [Functional Role 1] — Find top 3 fractional leaders — result file: result_001.tsv
+   2. [Functional Role 2] — Find top 3 fractional leaders — result file: result_002.tsv
+   ...
+   60. [Functional Role 60] — Find top 3 fractional leaders — result file: result_060.tsv
+   ```
+
+   **Output Schema:** Define the EXACT TSV column headers each sub-agent must use:
+   `Role`, `LeaderName`, `HourlyRate`, `TechStack`, `ClientLogos`, `CaseStudyURL`, `SourceURL`
+
+   **Quality Criteria:** Define what constitutes a complete result. A leader entry is 'complete' if it includes at least `LeaderName`, `CaseStudyURL`, and one of `HourlyRate`, `TechStack`, or `ClientLogos`. If criteria cannot be met for 3 leaders, the sub-agent should still list what they found and mark the file as `partial`.
+
+#### Phase 2 — Parallel Delegation
+
+2. Launch ALL 60 sub-agent calls in a SINGLE message. This parallel execution is critical for efficiency. Your coordinator turn should only consist of these 60 `llm_call` invocations.
+
+   Each `llm_call` must include:
+   - **Assignment reference:** ""You are sub-agent N. Your task is to research the functional role listed at line N in `/mnt/agent/output/plan.md`.""
+   - **Entity scope:** The specific functional role to research.
+   - **Output file:** `/mnt/agent/output/result_{NNN}.tsv` (zero-padded).
+   - **fork_mode:** `none` — each task is self-contained and relies on the central plan file.
+   - **Research instructions:** ""Use the `browse` tool to search LinkedIn, Toptal, and personal portfolio sites. Use targeted queries like '[Role] fractional consultant case study' or 'interim [Role] Toptal'. For each of the top 3 leaders you find, extract the required data points defined in the plan's Output Schema.""
+   - **Result format:** ""Write results as tab-separated rows (one row per leader) to your assigned result file. Do not include a header row. The first line of the file must be `STATUS: complete` or `STATUS: partial — [reason for partial result, e.g., 'could not find hourly rates']`.""
+
+   CRITICAL: Issuing all `llm_call`s in the same message is mandatory for parallel execution. Sequential delegation will fail the task.
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+3. Once all 60 sub-agents have completed, perform a quality audit:
+   - Use `str_replace_editor.view` to read the first line (the `STATUS` line) of each of the 60 result files.
+   - Tally the number of `complete`, `partial`, and any missing files (if a sub-agent failed).
+   - For any `partial` or missing results, launch a single batch of follow-up `llm_call`s (up to 10 agents) with more specific instructions or alternative search terms to fill the gaps.
+   - Limit this to ONE round of follow-ups to avoid diminishing returns.
+
+#### Phase 4 — Assemble Final Output
+
+4. Consolidate all individual results into the final deliverable.
+   - Read all `result_*.tsv` files.
+   - Create a new file `/mnt/agent/output/final.tsv`.
+   - Write the header row first, as defined in the `plan.md` file: `Role`, `LeaderName`, `HourlyRate`, ...
+   - Append the content from all result files, skipping the `STATUS` lines.
+   - Ensure the final TSV is well-formatted and can be easily imported into a spreadsheet or Airtable.
+
+5. Write a brief summary report in `/mnt/agent/output/summary.md`:
+   - Total functional roles researched: 60
+   - Total leaders identified: [count]
+   - Completion rate: [count of 'complete' files] / 60
+   - Summary of challenges (e.g., ""Hourly rates were difficult to find for 45% of leaders."")
+
+#### Resource Budget
+- **Phase 2 sub-agents:** 60 (one per functional role)
+- **Phase 3 follow-ups:** up to 10 (for gaps/partials)
+- **Sub-agent tools:** `browse`, `str_replace_editor`
+- **Max messages per sub-agent:** 25
+- **Coordinator critical-path target:** <15% of total swarm tokens"
+PPP_7,"### DELEGATION WORKFLOW — Micro-PE Rollup Targets
+
+**Objective:** Coordinate 75 parallel sub-agents to research one “boring” business niche each (e.g., HVAC, elevator repair, car wash). Each sub-agent will identify the top 3 potential acquisition targets within their assigned niche that meet specific financial and demographic criteria ($1M-$5M EBITDA, owner age 55+). The final output will be a collection of CIM-style teaser decks for each identified company. Your role as coordinator is to plan, delegate, audit, and synthesize. Do NOT perform any research yourself; all data gathering must be delegated via `llm_call`. Your coordinator messages must constitute less than 15% of the total swarm token usage.
+
+#### Phase 1 — Create the Plan
+
+1.  Write a detailed plan to `/mnt/agent/output/plan.md` using `str_replace_editor.create`. This file is the single source of truth for all sub-agents. It must contain:
+
+    **Header:** A brief overview of the task, its objective, and a description of the final deliverable.
+
+    **Assignment Table:** A numbered list of all 75 business niches, one per line. This list defines the scope for each sub-agent.
+    ```
+    1. HVAC Services — find 3 companies — result file: result_001.md
+    2. Commercial Elevator Repair — find 3 companies — result file: result_002.md
+    ...
+    75. Self-Storage Facilities — find 3 companies — result file: result_075.md
+    ```
+
+    **Output Schema:** A detailed markdown template for the CIM-style teaser deck. Each sub-agent must use this exact structure for each of the 3 companies they find. The schema must include sections for Company Overview, Financial Snapshot (with estimated EBITDA), Ownership Profile (with estimated owner age), Investment Rationale, and a list of Source URLs.
+
+    **Quality Criteria:** Define what constitutes a `complete` vs. `partial` result. A complete result must include all sections of the teaser deck for 3 companies, with credible estimates for EBITDA and owner age, supported by evidence from the specified data sources (state business registries, BuiltWith, local news, industry-specific directories).
+
+#### Phase 2 — Parallel Delegation
+
+2.  Launch ALL 75 sub-agent calls in a SINGLE message. This parallel execution is critical for efficiency. Your single coordinator turn will spawn a massive research effort.
+
+    Each `llm_call` must specify:
+    *   **Assignment reference:** ""You are sub-agent N. Your task is defined in `/mnt/agent/output/plan.md` on line N of the Assignment Table.""
+    *   **Entity scope:** The specific business niche to research (e.g., ""HVAC Services"").
+    *   **Output file:** The designated result file, e.g., `/mnt/agent/output/result_{NNN}.md` (zero-padded).
+    *   **fork_mode:** `none`. Each task is self-contained and guided by the central plan file.
+    *   **Research instructions:** Instruct the sub-agent to use the `browse` tool to query sources like state business registries, company database tools like BuiltWith or Apollo.io, and local business news articles. Queries should be specific, such as ""[niche] companies in [state/region] owner retiring"" or ""[company name] executive team age"". The goal is to find companies fitting the $1M-$5M EBITDA and 55+ owner age criteria.
+    *   **Result format:** Write the three teaser decks into the assigned result file using the exact markdown schema from the plan. The very first line of the file must be `STATUS: complete` or `STATUS: partial — [reason for incompleteness]`. For each company, all fields must be populated.
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+3.  Once the sub-agents have completed their work, perform a quality audit. Do not read the full content of every file initially.
+    *   Use `str_replace_editor.view` with a small `view_range` (e.g., lines 1-2) to read the `STATUS` line of all 75 result files.
+    *   Tally the number of `complete`, `partial`, and missing files.
+    *   For any `partial` or missing results, launch a targeted follow-up wave of `llm_call`s (again, in a single message) to address the gaps. Provide these agents with more specific instructions or alternative search strategies.
+    *   Fully review 3-5 `complete` files to ensure the output format is correct and the quality of research is high.
+
+#### Phase 4 — Assemble Final Output
+
+4.  Consolidate the individual results into a comprehensive final report.
+    *   Read the content of all `complete` result files.
+    *   Assemble them into a single document: `/mnt/agent/output/final_report.md`.
+    *   Generate a Table of Contents at the beginning of the report, linking to each business niche section.
+    *   Ensure consistent formatting and headers throughout the document.
+
+5.  Write a brief executive summary at the top of the final report, including:
+    *   Total niches researched: 75
+    *   Total target companies identified: [count]
+    *   Completion rate: [count of complete results] / 75
+    *   Date of research.
+
+This final, consolidated document is the deliverable for the task.
+
+#### Resource Budget
+*   **Phase 2 sub-agents:** 75 (one per business niche)
+*   **Phase 3 follow-ups:** up to 15 (for gaps/partials)
+*   **Sub-agent tools:** browse, str_replace_editor
+*   **Max messages per sub-agent:** 25
+*   **Coordinator critical-path target:** <15% of total swarm tokens"
+PPP_8,"### DELEGATION WORKFLOW — Alt-Data Source Catalog
+
+**Objective:** Coordinate 65 parallel sub-agents, each assigned to one macro indicator, to find the top 3 non-traditional data vendors for that indicator. Your role as coordinator is to plan the research, delegate tasks, audit results for quality, and assemble the final data matrix. Do NOT perform any research yourself; all data gathering must be delegated via `llm_call`. Your coordinator messages must constitute less than 15% of the total swarm token usage.
+
+#### Phase 1 — Create the Plan
+
+1.  Begin by creating a detailed plan file at `/mnt/agent/output/plan.md` using `str_replace_editor.create`. This file is the single source of truth for all sub-agents. It must include:
+
+    *   **Header:** A brief description of the task, the objective, and the final output format (a TSV file).
+    *   **Assignment Table:** A numbered list of all 65 macro indicators. Each line should follow the format: `[N]. [Indicator Name] — Find top 3 alternative data vendors — result file: result_{NNN}.tsv`.
+        ```
+        1. Shipping bottlenecks — Find top 3 alternative data vendors — result file: result_001.tsv
+        2. Cement demand — Find top 3 alternative data vendors — result file: result_002.tsv
+        ...
+        65. Used car parts — Find top 3 alternative data vendors — result file: result_065.tsv
+        ```
+    *   **Output Schema:** Clearly define the exact TSV column headers each sub-agent must use for their output file: `Indicator`, `VendorName`, `UpdateFrequency`, `HistoryDepth`, `Price`, `DataSourceURL`. This ensures consistency for the final merge.
+    *   **Quality Criteria:** Define what constitutes a `complete` result (all columns filled for at least 2-3 vendors) versus a `partial` result (missing key data points like Price or History Depth). Specify that `DataSourceURL` must link directly to the vendor's product page, API docs, or pricing page.
+
+#### Phase 2 — Parallel Delegation
+
+2.  Launch ALL 65 sub-agent calls in a SINGLE message. This parallel execution is the core of the swarm strategy. Sequential delegation is inefficient and will fail the task.
+
+    Each `llm_call` must contain:
+    *   **Assignment reference:** ""You are sub-agent N. Your task is defined on line N of the Assignment Table in `/mnt/agent/output/plan.md`.""
+    *   **Entity scope:** The specific macro indicator to research (e.g., ""Shipping bottlenecks"").
+    *   **Output file:** The unique, zero-padded file path from the plan, e.g., `/mnt/agent/output/result_001.tsv`.
+    *   **fork_mode:** `none`. Each sub-agent's task is self-contained and guided by the plan file.
+    *   **Research instructions:** ""Use the `browse` tool to find 3 non-traditional data vendors for your assigned indicator. Investigate vendor websites, API documentation, and look for sample data to find the update frequency, historical data depth, and pricing. Be persistent and try multiple search queries (e.g., '[indicator] data provider', '[indicator] alternative data API').""
+    *   **Result format:** ""Write your findings to the assigned result file using `str_replace_editor`. The file must be a TSV. The first line must be `STATUS: complete` or `STATUS: partial — [reason for partial status]`. The second line must be the header row from the plan. Subsequent lines are your data, with one vendor per row.""
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+3.  Once the sub-agents have completed their work, perform a quality audit. Do not read the full content of every file yet.
+    *   Efficiently scan just the first line of each of the 65 result files using `str_replace_editor.view` with a small `view_range` to check the `STATUS`.
+    *   Tally the number of `complete`, `partial`, and missing files.
+    *   For any `partial` or missing results, launch a single, consolidated follow-up batch of `llm_call`s. These agents can be given more specific instructions, such as trying different search terms or focusing on finding a specific missing data point (e.g., pricing).
+    *   Limit this to one round of follow-ups to avoid diminishing returns.
+
+#### Phase 4 — Assemble Final Output
+
+4.  Gather all the individual TSV files and synthesize the final report.
+    *   Read the contents of all `complete` and acceptable `partial` result files.
+    *   Create a final master file at `/mnt/agent/output/final.tsv`.
+    *   Write a single header row at the top, matching the schema from the plan.
+    *   Append the data from all individual files, ensuring consistent TSV formatting. Sort the final table by the `Indicator` column.
+
+5.  Add a brief summary at the top of the `final.tsv` file (commented out with a `#` so it doesn't interfere with parsing).
+    *   `# Total Indicators Researched: 65`
+    *   `# Complete Results: [count]`
+    *   `# Partial/Missing: [count]`
+    *   `# Research Date: [current date]`
+
+#### Resource Budget
+*   **Phase 2 sub-agents:** 65 (one per macro indicator)
+*   **Phase 3 follow-ups:** Up to 15 (for gaps/partials)
+*   **Sub-agent tools:** `browse`, `str_replace_editor`
+*   **Max messages per sub-agent:** 25
+*   **Coordinator critical-path target:** <15% of total swarm tokens"
+PPP_9,"### DELEGATION WORKFLOW — DAO Treasury Asset Audit
+
+**Objective:** Coordinate 50 parallel sub-agents to research the treasury composition and custody setup of 50 major DAOs (Decentralized Autonomous Organizations). Your role as coordinator is to plan the research, delegate to sub-agents, audit the results, and synthesize the final risk dashboard. Do NOT perform any research yourself; all data gathering must be delegated via `llm_call`. Your coordinator messages should constitute less than 15% of the total swarm token usage.
+
+#### Phase 1 — Create the Plan
+
+1.  Begin by creating a detailed plan file at `/mnt/agent/output/plan.md` using `str_replace_editor.create`. This plan is the single source of truth for all sub-agents.
+
+    **Header:** Include a task description, the objective (auditing DAO treasuries), and the final output format specification (a TSV file).
+
+    **Assignment Table:** Create a numbered list of all 50 DAOs to be investigated. Each line should follow this format:
+    ```
+    1. [DAO Name] — Find top 3 non-stablecoin assets and custody setup — result file: result_001.tsv
+    2. [DAO Name] — Find top 3 non-stablecoin assets and custody setup — result file: result_002.tsv
+    ...
+    50. [DAO Name] — Find top 3 non-stablecoin assets and custody setup — result file: result_050.tsv
+    ```
+
+    **Output Schema:** Define the exact TSV columns each sub-agent must produce. The required headers are: `DAO_Name`, `Asset_1`, `Asset_1_Value_USD`, `Asset_2`, `Asset_2_Value_USD`, `Asset_3`, `Asset_3_Value_USD`, `Diversification_Non_Stable`, `Custody_Type`, `Multisig_Address`, `Signer_Count`, `Source_Links`.
+
+    **Quality Criteria:** A `complete` result must populate all fields, especially the top 3 assets and custody details. A `partial` result is one where custody information (like signer count) is unavailable after a thorough search. Specify that sub-agents must use reliable sources.
+
+#### Phase 2 — Parallel Delegation
+
+2.  In a SINGLE message, launch all 50 `llm_call` invocations to run in parallel. This concurrent execution is crucial for efficiency.
+
+    Each `llm_call` must be precisely configured:
+    *   **Assignment reference:** ""You are sub-agent N. Your task is to audit a DAO treasury. Read `/mnt/agent/output/plan.md` and find your assigned DAO under item N.""
+    *   **Entity scope:** The specific DAO name (e.g., ""Uniswap DAO"").
+    *   **Output file:** `/mnt/agent/output/result_{NNN}.tsv` (zero-padded).
+    *   **fork_mode:** `none`, as each task is self-contained based on the plan file.
+    *   **Research instructions:** Instruct the sub-agent to use the `browse` tool to investigate its assigned DAO. Key data sources include Etherscan (or other block explorers for the relevant chain) for on-chain holdings, the DAO's official governance forum for treasury reports and custody discussions, and Snapshot.org pages for governance proposals related to treasury management. Example queries: ""[DAO Name] treasury address Etherscan"", ""[DAO Name] multisig signers"", ""[DAO Name] treasury diversification report forum"".
+    *   **Result format:** Write a single tab-separated value (TSV) row to the assigned result file, matching the columns in the plan's Output Schema. The file must begin with a status line: `STATUS: complete` or `STATUS: partial — [reason for partial result]`, followed by a newline, and then the TSV data row. Do not include the header row in the result file.
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+3.  Once the sub-agents complete their work, perform a quality audit. Use `str_replace_editor.view` to read the first line of each of the 50 result files.
+    *   Tally the number of `complete`, `partial`, and missing files.
+    *   For any `partial` or missing results (up to a maximum of 10), launch a targeted follow-up round of `llm_call`s in a single message. Provide these agents with more specific search queries or alternative data sources to try.
+    *   Randomly spot-check 3-5 `complete` files to ensure data accuracy and correct formatting.
+
+#### Phase 4 — Assemble Final Output
+
+4.  Consolidate all successful results into the final deliverable. Read the data row from every `complete` and acceptable `partial` result file.
+    *   Merge these rows into a single file at `/mnt/agent/output/final_dashboard.tsv`.
+    *   Write the header row (as defined in the plan) at the top of this file.
+    *   Sort the final table alphabetically by `DAO_Name`.
+
+5.  Write a brief summary report in `/mnt/agent/output/summary.md`. This report should include:
+    *   Total DAOs audited.
+    *   Completion statistics (complete/partial counts).
+    *   A high-level analysis of findings, such as the most commonly held non-stablecoin assets across all DAOs, common custody setups (e.g., Gnosis Safe), and average signer counts.
+
+#### Resource Budget
+*   **Phase 2 sub-agents:** 50
+*   **Phase 3 follow-ups:** up to 10
+*   **Sub-agent tools:** `browse`, `str_replace_editor`
+*   **Max messages per sub-agent:** 25
+*   **Coordinator critical-path target:** <15% of total swarm tokens"
+PPP_10,"### DELEGATION WORKFLOW — State-Level AI Law Tracker
+
+**Objective:** Coordinate 50 parallel sub-agents to research AI-related legislation in each of the 50 US states. Each sub-agent will identify up to 3 relevant bills. Your role as the coordinator is to orchestrate this research by planning, delegating, and synthesizing the results. You must not perform any research yourself; all data gathering is to be delegated via `llm_call`. Your coordinator messages must be less than 15% of the total swarm token count.
+
+#### Phase 1 — Create the Plan
+
+1.  Begin by creating a detailed plan file at `/mnt/agent/output/plan.md` using `str_replace_editor.create`. This file is the single source of truth for all sub-agents. It must include:
+
+    **Header:** A brief description of the task, the overall goal (creating a 50-state AI bill tracker), and the final output format.
+
+    **Assignment Table:** A numbered list of all 50 US states, assigning one state per sub-agent. The format should be:
+    ```
+    1. Alabama — Find top 3 bills mentioning “algorithmic” or “foundation model” since 2023 — result file: result_001.tsv
+    2. Alaska — Find top 3 bills mentioning “algorithmic” or “foundation model” since 2023 — result file: result_002.tsv
+    ...
+    50. Wyoming — Find top 3 bills mentioning “algorithmic” or “foundation model” since 2023 — result file: result_050.tsv
+    ```
+
+    **Output Schema:** Define the precise TSV (Tab-Separated Values) format for the sub-agent result files. Specify the exact column headers:
+    `State`, `Bill_ID`, `Title`, `Sponsor`, `Status`, `Summary_of_Obligations`, `Source_URL`
+
+    **Quality Criteria:** Define what constitutes a complete result. A sub-agent's work is `complete` if it finds at least one bill and populates all columns. If no relevant bills are found after a thorough search, the status is also `complete` but the file will contain only the header and a status line. A `partial` result is one where a bill is found but critical information (like Status or Sponsor) is missing.
+
+#### Phase 2 — Parallel Delegation
+
+2.  In a SINGLE message, launch all 50 `llm_call` invocations to run in parallel. This is the core of the swarm strategy, maximizing throughput.
+
+    Each `llm_call` must be configured as follows:
+    *   **Assignment reference:** ""You are sub-agent N. Your task is to research AI legislation. Read `/mnt/agent/output/plan.md` and find your assigned state under item N.""
+    *   **Entity scope:** The specific US state to research (e.g., ""Alabama"").
+    *   **Output file:** The corresponding result file, e.g., `/mnt/agent/output/result_001.tsv`.
+    *   **fork_mode:** `none`. Each sub-agent's task is independent and guided by the central plan.
+    *   **Research instructions:** Instruct the sub-agent to use the `browse` tool to search Legiscan, state legislature websites (e.g., `*.legis.state.us`), and official state government sites. Provide example search queries like `""algorithmic transparency bill [State Name] 2024""` or `""site:legiscan.com [State Name] 'foundation model'""`. The search must be restricted to bills proposed or enacted since January 1, 2023.
+    *   **Result format:** Instruct the agent to write its findings to the assigned result file using `str_replace_editor`. The file's first line MUST be `STATUS: complete` or `STATUS: partial — [reason for partial status]`. Subsequent lines must be the TSV data, with columns separated by tabs, adhering strictly to the schema in the plan file.
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+3.  Once the sub-agents have completed their tasks, perform a quality check. Use `str_replace_editor.view` on each of the 50 result files, reading only the first two lines to check the `STATUS`.
+    *   Tally the number of `complete`, `partial`, and missing files.
+    *   For any `partial` or missing results, launch a single, consolidated follow-up batch of `llm_call`s. These new agents should be given more specific instructions, perhaps suggesting alternative search terms or focusing only on the missing data points.
+    *   Limit this to one round of follow-ups to avoid diminishing returns.
+
+#### Phase 4 — Assemble Final Output
+
+4.  With all individual results gathered, create the final deliverable. Read the contents of all `result_*.tsv` files (skipping the STATUS line).
+    *   Merge all data into a single file: `/mnt/agent/output/final_bill_tracker.tsv`.
+    *   Ensure the final file has a single, consistent header row as defined in the plan.
+    *   Add a new column, `_source_agent_id`, to track which sub-agent (e.g., `sub_agent_001`) provided each row of data.
+    *   Sort the final table alphabetically by the `State` column.
+
+5.  Write a brief summary report in `/mnt/agent/output/summary.md`. This report should include:
+    *   Total states surveyed: 50
+    *   Number of states with complete results: [count]
+    *   Number of states with partial/missing results: [count]
+    *   Total number of unique bills identified.
+    *   Date of research.
+
+#### Resource Budget
+*   **Phase 2 sub-agents:** 50
+*   **Phase 3 follow-ups:** Up to 10
+*   **Sub-agent tools:** `browse`, `str_replace_editor`
+*   **Max messages per sub-agent:** 25
+*   **Coordinator critical-path target:** <15% of total swarm tokens"

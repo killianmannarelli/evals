@@ -1,0 +1,151 @@
+task_id: swarm__econ_junior_faculty__ppp5
+name: Tenure-Track Pipeline Scan — top 3 junior faculty at 55 R1 economics departments
+domain: swarm_research
+difficulty: easy
+primary_pattern: map_reduce
+coordination_pattern: map_reduce
+estimated_sub_agents: 56
+has_dependencies: true
+sandbox: docker
+sandbox_image: swarm-bench-general:latest
+simulated_actors: []
+tools:
+- llm_call
+- str_replace_editor
+- browse
+- read_file
+- list_files
+- submit_deliverable
+time_limit: 5400
+prompt: "### DELEGATION WORKFLOW — Tenure-Track Pipeline Scan\n\n**Objective:** Coordinate 55 parallel\
+  \ sub-agents, each assigned to one R1 university economics department, to identify the top 3 junior\
+  \ faculty hired in the last 2 years. Your role as coordinator is to plan, delegate, audit, and synthesize\
+  \ the final dataset. Do NOT perform any research yourself; all data gathering must be delegated via\
+  \ `llm_call`. Your coordinator messages must be less than 15% of the total swarm token usage.\n\n####\
+  \ Phase 1 — Create the Plan\n\n1.  First, create a comprehensive plan file. Use `str_replace_editor.create`\
+  \ to write to `/mnt/agent/output/plan.md`. This plan is the single source of truth for all sub-agents.\
+  \ It must contain:\n\n    *   **Header:** A brief description of the task: \"Identify the top 3 junior\
+  \ faculty (hired in the last 2 years) from 55 R1 university economics departments.\"\n\n    *   **Assignment\
+  \ Table:** A numbered list of all 55 university economics departments. Each line represents one sub-agent's\
+  \ assignment.\n        ```\n        1. [University Name 1] Economics Department — result file: result_001.tsv\n\
+  \        2. [University Name 2] Economics Department — result file: result_002.tsv\n        ...\n  \
+  \      55. [University Name 55] Economics Department — result file: result_055.tsv\n        ```\n\n\
+  \    *   **Output Schema:** Define the exact TSV (Tab-Separated Values) column headers that each sub-agent's\
+  \ output file must use. This ensures consistency for the final merge.\n        `University\tDepartment\t\
+  Faculty_Name\tHire_Year\tPhD_Granting_Institution\tPublication_Count\tResearch_Keywords`\n\n    *  \
+  \ **Quality Criteria:** Define what constitutes a complete result. \"Junior faculty\" are those hired\
+  \ in the last two academic years (e.g., Assistant Professors with start dates of 2022 or later). \"\
+  Top 3\" can be interpreted as the three most prominent or simply the first three qualified individuals\
+  \ found. A complete entry requires all fields in the output schema to be populated. Specify data sources:\
+  \ official university department websites, faculty CVs (often linked from their profile pages), and\
+  \ Google Scholar for publication metrics.\n\n#### Phase 2 — Parallel Delegation\n\n2.  Launch ALL 55\
+  \ sub-agent calls in a SINGLE message. This parallel execution is the core of the swarm strategy, maximizing\
+  \ throughput.\n\n    Each `llm_call` must be precisely structured:\n    *   **Assignment reference:**\
+  \ \"You are sub-agent N. Your task is defined on line N of the plan file at `/mnt/agent/output/plan.md`.\"\
+  \n    *   **Entity scope:** The specific university department name.\n    *   **Output file:** The corresponding\
+  \ result file, e.g., `/mnt/agent/output/result_{NNN}.tsv` (zero-padded).\n    *   **fork_mode:** `none`,\
+  \ as each task is self-contained and relies on the central plan.\n    *   **Research instructions:**\
+  \ Instruct the sub-agent to use the `browse` tool. The workflow should be: 1) Find the official faculty\
+  \ directory for the assigned department. 2) Identify faculty with titles like 'Assistant Professor'\
+  \ and check their start date or CV for a hire date within the last two years. 3) For each of the top\
+  \ 3 found, visit their personal page or find their CV to extract their PhD-granting institution. 4)\
+  \ Use Google Scholar to find their profile and record their total publication count and list 3-5 of\
+  \ their primary research keywords. 5) Save the findings to the assigned result file.\n    *   **Result\
+  \ format:** Write results as tab-separated rows (one row per faculty member) to the assigned `.tsv`\
+  \ file. Do NOT include a header row in the individual result files. The very first line of the file\
+  \ must be `STATUS: complete` or `STATUS: partial — [reason for incompleteness]`.\n\n    CRITICAL: All\
+  \ 55 `llm_call` invocations must be issued in the same turn to leverage parallel processing. Sequential\
+  \ delegation is inefficient and will fail the task.\n\n#### Phase 3 — Quality Audit & Gap Fill\n\n3.\
+  \  Once the sub-agents complete, perform a quality check. Do not read the full content of every file\
+  \ yet.\n    *   Use `str_replace_editor.view` with `view_range=(0, 1)` to read only the first line of\
+  \ each of the 55 result files.\n    *   Parse the `STATUS` line to count how many results are `complete`,\
+  \ `partial`, or missing entirely.\n    *   For any `partial` or missing files, launch a single, consolidated\
+  \ follow-up batch of `llm_call`s. Provide these agents with more specific instructions or alternative\
+  \ search queries based on the failure reasons.\n    *   Limit this to one round of follow-ups to avoid\
+  \ diminishing returns.\n\n#### Phase 4 — Assemble Final Output\n\n4.  Synthesize the final deliverable.\
+  \ Read the contents of all `complete` and acceptable `partial` result files (skipping the `STATUS` line).\n\
+  \n5.  Create a single master file, `/mnt/agent/output/final_report.tsv`. First, write the header row\
+  \ defined in the plan's Output Schema. Then, append the content from all the individual result files.\n\
+  \n6.  Write a brief summary file `/mnt/agent/output/summary.md` containing:\n    *   Total departments\
+  \ surveyed: 55\n    *   Total faculty records compiled: [count]\n    *   Departments with complete results:\
+  \ [count]\n    *   Departments with partial/missing results: [count] with a brief summary of reasons.\n\
+  \    *   Date of research.\n\n#### Resource Budget\n*   **Phase 2 sub-agents:** 55\n*   **Phase 3 follow-ups:**\
+  \ up to 10\n*   **Sub-agent tools:** `browse`, `str_replace_editor`\n*   **Max messages per sub-agent:**\
+  \ 25\n*   **Coordinator critical-path target:** <15% of total swarm tokens"
+single_agent_prompt: "### DELEGATION WORKFLOW — Tenure-Track Pipeline Scan\n\n**Objective:** Coordinate\
+  \ 55 parallel sub-agents, each assigned to one R1 university economics department, to identify the top\
+  \ 3 junior faculty hired in the last 2 years. Your role as coordinator is to plan, delegate, audit,\
+  \ and synthesize the final dataset. Do NOT perform any research yourself; all data gathering must be\
+  \ delegated via `llm_call`. Your coordinator messages must be less than 15% of the total swarm token\
+  \ usage.\n\n#### Phase 1 — Create the Plan\n\n1.  First, create a comprehensive plan file. Use `str_replace_editor.create`\
+  \ to write to `/mnt/agent/output/plan.md`. This plan is the single source of truth for all sub-agents.\
+  \ It must contain:\n\n    *   **Header:** A brief description of the task: \"Identify the top 3 junior\
+  \ faculty (hired in the last 2 years) from 55 R1 university economics departments.\"\n\n    *   **Assignment\
+  \ Table:** A numbered list of all 55 university economics departments. Each line represents one sub-agent's\
+  \ assignment.\n        ```\n        1. [University Name 1] Economics Department — result file: result_001.tsv\n\
+  \        2. [University Name 2] Economics Department — result file: result_002.tsv\n        ...\n  \
+  \      55. [University Name 55] Economics Department — result file: result_055.tsv\n        ```\n\n\
+  \    *   **Output Schema:** Define the exact TSV (Tab-Separated Values) column headers that each sub-agent's\
+  \ output file must use. This ensures consistency for the final merge.\n        `University\tDepartment\t\
+  Faculty_Name\tHire_Year\tPhD_Granting_Institution\tPublication_Count\tResearch_Keywords`\n\n    *  \
+  \ **Quality Criteria:** Define what constitutes a complete result. \"Junior faculty\" are those hired\
+  \ in the last two academic years (e.g., Assistant Professors with start dates of 2022 or later). \"\
+  Top 3\" can be interpreted as the three most prominent or simply the first three qualified individuals\
+  \ found. A complete entry requires all fields in the output schema to be populated. Specify data sources:\
+  \ official university department websites, faculty CVs (often linked from their profile pages), and\
+  \ Google Scholar for publication metrics.\n\n#### Phase 2 — Parallel Delegation\n\n2.  Launch ALL 55\
+  \ sub-agent calls in a SINGLE message. This parallel execution is the core of the swarm strategy, maximizing\
+  \ throughput.\n\n    Each `llm_call` must be precisely structured:\n    *   **Assignment reference:**\
+  \ \"You are sub-agent N. Your task is defined on line N of the plan file at `/mnt/agent/output/plan.md`.\"\
+  \n    *   **Entity scope:** The specific university department name.\n    *   **Output file:** The corresponding\
+  \ result file, e.g., `/mnt/agent/output/result_{NNN}.tsv` (zero-padded).\n    *   **fork_mode:** `none`,\
+  \ as each task is self-contained and relies on the central plan.\n    *   **Research instructions:**\
+  \ Instruct the sub-agent to use the `browse` tool. The workflow should be: 1) Find the official faculty\
+  \ directory for the assigned department. 2) Identify faculty with titles like 'Assistant Professor'\
+  \ and check their start date or CV for a hire date within the last two years. 3) For each of the top\
+  \ 3 found, visit their personal page or find their CV to extract their PhD-granting institution. 4)\
+  \ Use Google Scholar to find their profile and record their total publication count and list 3-5 of\
+  \ their primary research keywords. 5) Save the findings to the assigned result file.\n    *   **Result\
+  \ format:** Write results as tab-separated rows (one row per faculty member) to the assigned `.tsv`\
+  \ file. Do NOT include a header row in the individual result files. The very first line of the file\
+  \ must be `STATUS: complete` or `STATUS: partial — [reason for incompleteness]`.\n\n    CRITICAL: All\
+  \ 55 `llm_call` invocations must be issued in the same turn to leverage parallel processing. Sequential\
+  \ delegation is inefficient and will fail the task.\n\n#### Phase 3 — Quality Audit & Gap Fill\n\n3.\
+  \  Once the sub-agents complete, perform a quality check. Do not read the full content of every file\
+  \ yet.\n    *   Use `str_replace_editor.view` with `view_range=(0, 1)` to read only the first line of\
+  \ each of the 55 result files.\n    *   Parse the `STATUS` line to count how many results are `complete`,\
+  \ `partial`, or missing entirely.\n    *   For any `partial` or missing files, launch a single, consolidated\
+  \ follow-up batch of `llm_call`s. Provide these agents with more specific instructions or alternative\
+  \ search queries based on the failure reasons.\n    *   Limit this to one round of follow-ups to avoid\
+  \ diminishing returns.\n\n#### Phase 4 — Assemble Final Output\n\n4.  Synthesize the final deliverable.\
+  \ Read the contents of all `complete` and acceptable `partial` result files (skipping the `STATUS` line).\n\
+  \n5.  Create a single master file, `/mnt/agent/output/final_report.tsv`. First, write the header row\
+  \ defined in the plan's Output Schema. Then, append the content from all the individual result files.\n\
+  \n6.  Write a brief summary file `/mnt/agent/output/summary.md` containing:\n    *   Total departments\
+  \ surveyed: 55\n    *   Total faculty records compiled: [count]\n    *   Departments with complete results:\
+  \ [count]\n    *   Departments with partial/missing results: [count] with a brief summary of reasons.\n\
+  \    *   Date of research.\n\n#### Resource Budget\n*   **Phase 2 sub-agents:** 55\n*   **Phase 3 follow-ups:**\
+  \ up to 10\n*   **Sub-agent tools:** `browse`, `str_replace_editor`\n*   **Max messages per sub-agent:**\
+  \ 25\n*   **Coordinator critical-path target:** <15% of total swarm tokens"
+metadata:
+  ppp_id: PPP_5
+  n_research_agents: 55
+  n_followups: 10
+  entity_unit: R1 university economics department
+  entity_unit_plural: R1 university economics departments
+  final_output_filename: final_report.tsv
+  output_schema_columns:
+  - University
+  - Department
+  - Faculty_Name
+  - Hire_Year
+  - PhD_Granting_Institution
+  - Publication_Count
+  - Research_Keywords
+  research_summary: Find the official faculty directory, identify Assistant Professors with start dates
+    in the last 2 academic years, pull PhD-granting institution from CV, and grab Google Scholar publication
+    counts + research keywords.
+  data_sources:
+  - Official university department faculty directories
+  - Faculty CVs (linked from profile pages)
+  - Google Scholar profile pages

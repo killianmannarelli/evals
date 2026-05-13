@@ -1,0 +1,135 @@
+task_id: swarm__fractional_execs__ppp6
+name: Fractional Exec Marketplace — top 3 fractional leaders for 60 functional roles
+domain: swarm_research
+difficulty: easy
+primary_pattern: map_reduce
+coordination_pattern: map_reduce
+estimated_sub_agents: 61
+has_dependencies: true
+sandbox: docker
+sandbox_image: swarm-bench-general:latest
+simulated_actors: []
+tools:
+- llm_call
+- str_replace_editor
+- browse
+- read_file
+- list_files
+- submit_deliverable
+time_limit: 5400
+prompt: "### DELEGATION WORKFLOW — Fractional Exec Marketplace\n\n**Objective:** Coordinate 60 parallel\
+  \ sub-agents to research 1 functional role each (e.g., RevOps, Chief of Staff) and identify the top\
+  \ 3 fractional leaders with public case studies. Your role as coordinator is to plan, delegate, and\
+  \ synthesize the final dataset. Do NOT research entities yourself — every lookup must be delegated via\
+  \ `llm_call`. Your coordinator messages should be <15% of total assistant tokens across the swarm.\n\
+  \n#### Phase 1 — Create the Plan\n\n1. Write a detailed plan file to `/mnt/agent/output/plan.md` using\
+  \ `str_replace_editor.create`. This plan is the single source of truth for all sub-agents. It must contain:\n\
+  \n   **Header:** A brief task description, specifying the goal of finding 3 fractional leaders per role.\n\
+  \n   **Assignment Table:** A numbered list of all 60 functional roles, one per line. This is the master\
+  \ list of assignments.\n   ```\n   1. [Functional Role 1] — Find top 3 fractional leaders — result file:\
+  \ result_001.tsv\n   2. [Functional Role 2] — Find top 3 fractional leaders — result file: result_002.tsv\n\
+  \   ...\n   60. [Functional Role 60] — Find top 3 fractional leaders — result file: result_060.tsv\n\
+  \   ```\n\n   **Output Schema:** Define the EXACT TSV column headers each sub-agent must use:\n   `Role`,\
+  \ `LeaderName`, `HourlyRate`, `TechStack`, `ClientLogos`, `CaseStudyURL`, `SourceURL`\n\n   **Quality\
+  \ Criteria:** Define what constitutes a complete result. A leader entry is 'complete' if it includes\
+  \ at least `LeaderName`, `CaseStudyURL`, and one of `HourlyRate`, `TechStack`, or `ClientLogos`. If\
+  \ criteria cannot be met for 3 leaders, the sub-agent should still list what they found and mark the\
+  \ file as `partial`.\n\n#### Phase 2 — Parallel Delegation\n\n2. Launch ALL 60 sub-agent calls in a\
+  \ SINGLE message. This parallel execution is critical for efficiency. Your coordinator turn should only\
+  \ consist of these 60 `llm_call` invocations.\n\n   Each `llm_call` must include:\n   - **Assignment\
+  \ reference:** \"You are sub-agent N. Your task is to research the functional role listed at line N\
+  \ in `/mnt/agent/output/plan.md`.\"\n   - **Entity scope:** The specific functional role to research.\n\
+  \   - **Output file:** `/mnt/agent/output/result_{NNN}.tsv` (zero-padded).\n   - **fork_mode:** `none`\
+  \ — each task is self-contained and relies on the central plan file.\n   - **Research instructions:**\
+  \ \"Use the `browse` tool to search LinkedIn, Toptal, and personal portfolio sites. Use targeted queries\
+  \ like '[Role] fractional consultant case study' or 'interim [Role] Toptal'. For each of the top 3 leaders\
+  \ you find, extract the required data points defined in the plan's Output Schema.\"\n   - **Result format:**\
+  \ \"Write results as tab-separated rows (one row per leader) to your assigned result file. Do not include\
+  \ a header row. The first line of the file must be `STATUS: complete` or `STATUS: partial — [reason\
+  \ for partial result, e.g., 'could not find hourly rates']`.\"\n\n   CRITICAL: Issuing all `llm_call`s\
+  \ in the same message is mandatory for parallel execution. Sequential delegation will fail the task.\n\
+  \n#### Phase 3 — Quality Audit & Gap Fill\n\n3. Once all 60 sub-agents have completed, perform a quality\
+  \ audit:\n   - Use `str_replace_editor.view` to read the first line (the `STATUS` line) of each of the\
+  \ 60 result files.\n   - Tally the number of `complete`, `partial`, and any missing files (if a sub-agent\
+  \ failed).\n   - For any `partial` or missing results, launch a single batch of follow-up `llm_call`s\
+  \ (up to 10 agents) with more specific instructions or alternative search terms to fill the gaps.\n\
+  \   - Limit this to ONE round of follow-ups to avoid diminishing returns.\n\n#### Phase 4 — Assemble\
+  \ Final Output\n\n4. Consolidate all individual results into the final deliverable.\n   - Read all `result_*.tsv`\
+  \ files.\n   - Create a new file `/mnt/agent/output/final.tsv`.\n   - Write the header row first, as\
+  \ defined in the `plan.md` file: `Role`, `LeaderName`, `HourlyRate`, ...\n   - Append the content from\
+  \ all result files, skipping the `STATUS` lines.\n   - Ensure the final TSV is well-formatted and can\
+  \ be easily imported into a spreadsheet or Airtable.\n\n5. Write a brief summary report in `/mnt/agent/output/summary.md`:\n\
+  \   - Total functional roles researched: 60\n   - Total leaders identified: [count]\n   - Completion\
+  \ rate: [count of 'complete' files] / 60\n   - Summary of challenges (e.g., \"Hourly rates were difficult\
+  \ to find for 45% of leaders.\")\n\n#### Resource Budget\n- **Phase 2 sub-agents:** 60 (one per functional\
+  \ role)\n- **Phase 3 follow-ups:** up to 10 (for gaps/partials)\n- **Sub-agent tools:** `browse`, `str_replace_editor`\n\
+  - **Max messages per sub-agent:** 25\n- **Coordinator critical-path target:** <15% of total swarm tokens"
+single_agent_prompt: "### DELEGATION WORKFLOW — Fractional Exec Marketplace\n\n**Objective:** Coordinate\
+  \ 60 parallel sub-agents to research 1 functional role each (e.g., RevOps, Chief of Staff) and identify\
+  \ the top 3 fractional leaders with public case studies. Your role as coordinator is to plan, delegate,\
+  \ and synthesize the final dataset. Do NOT research entities yourself — every lookup must be delegated\
+  \ via `llm_call`. Your coordinator messages should be <15% of total assistant tokens across the swarm.\n\
+  \n#### Phase 1 — Create the Plan\n\n1. Write a detailed plan file to `/mnt/agent/output/plan.md` using\
+  \ `str_replace_editor.create`. This plan is the single source of truth for all sub-agents. It must contain:\n\
+  \n   **Header:** A brief task description, specifying the goal of finding 3 fractional leaders per role.\n\
+  \n   **Assignment Table:** A numbered list of all 60 functional roles, one per line. This is the master\
+  \ list of assignments.\n   ```\n   1. [Functional Role 1] — Find top 3 fractional leaders — result file:\
+  \ result_001.tsv\n   2. [Functional Role 2] — Find top 3 fractional leaders — result file: result_002.tsv\n\
+  \   ...\n   60. [Functional Role 60] — Find top 3 fractional leaders — result file: result_060.tsv\n\
+  \   ```\n\n   **Output Schema:** Define the EXACT TSV column headers each sub-agent must use:\n   `Role`,\
+  \ `LeaderName`, `HourlyRate`, `TechStack`, `ClientLogos`, `CaseStudyURL`, `SourceURL`\n\n   **Quality\
+  \ Criteria:** Define what constitutes a complete result. A leader entry is 'complete' if it includes\
+  \ at least `LeaderName`, `CaseStudyURL`, and one of `HourlyRate`, `TechStack`, or `ClientLogos`. If\
+  \ criteria cannot be met for 3 leaders, the sub-agent should still list what they found and mark the\
+  \ file as `partial`.\n\n#### Phase 2 — Parallel Delegation\n\n2. Launch ALL 60 sub-agent calls in a\
+  \ SINGLE message. This parallel execution is critical for efficiency. Your coordinator turn should only\
+  \ consist of these 60 `llm_call` invocations.\n\n   Each `llm_call` must include:\n   - **Assignment\
+  \ reference:** \"You are sub-agent N. Your task is to research the functional role listed at line N\
+  \ in `/mnt/agent/output/plan.md`.\"\n   - **Entity scope:** The specific functional role to research.\n\
+  \   - **Output file:** `/mnt/agent/output/result_{NNN}.tsv` (zero-padded).\n   - **fork_mode:** `none`\
+  \ — each task is self-contained and relies on the central plan file.\n   - **Research instructions:**\
+  \ \"Use the `browse` tool to search LinkedIn, Toptal, and personal portfolio sites. Use targeted queries\
+  \ like '[Role] fractional consultant case study' or 'interim [Role] Toptal'. For each of the top 3 leaders\
+  \ you find, extract the required data points defined in the plan's Output Schema.\"\n   - **Result format:**\
+  \ \"Write results as tab-separated rows (one row per leader) to your assigned result file. Do not include\
+  \ a header row. The first line of the file must be `STATUS: complete` or `STATUS: partial — [reason\
+  \ for partial result, e.g., 'could not find hourly rates']`.\"\n\n   CRITICAL: Issuing all `llm_call`s\
+  \ in the same message is mandatory for parallel execution. Sequential delegation will fail the task.\n\
+  \n#### Phase 3 — Quality Audit & Gap Fill\n\n3. Once all 60 sub-agents have completed, perform a quality\
+  \ audit:\n   - Use `str_replace_editor.view` to read the first line (the `STATUS` line) of each of the\
+  \ 60 result files.\n   - Tally the number of `complete`, `partial`, and any missing files (if a sub-agent\
+  \ failed).\n   - For any `partial` or missing results, launch a single batch of follow-up `llm_call`s\
+  \ (up to 10 agents) with more specific instructions or alternative search terms to fill the gaps.\n\
+  \   - Limit this to ONE round of follow-ups to avoid diminishing returns.\n\n#### Phase 4 — Assemble\
+  \ Final Output\n\n4. Consolidate all individual results into the final deliverable.\n   - Read all `result_*.tsv`\
+  \ files.\n   - Create a new file `/mnt/agent/output/final.tsv`.\n   - Write the header row first, as\
+  \ defined in the `plan.md` file: `Role`, `LeaderName`, `HourlyRate`, ...\n   - Append the content from\
+  \ all result files, skipping the `STATUS` lines.\n   - Ensure the final TSV is well-formatted and can\
+  \ be easily imported into a spreadsheet or Airtable.\n\n5. Write a brief summary report in `/mnt/agent/output/summary.md`:\n\
+  \   - Total functional roles researched: 60\n   - Total leaders identified: [count]\n   - Completion\
+  \ rate: [count of 'complete' files] / 60\n   - Summary of challenges (e.g., \"Hourly rates were difficult\
+  \ to find for 45% of leaders.\")\n\n#### Resource Budget\n- **Phase 2 sub-agents:** 60 (one per functional\
+  \ role)\n- **Phase 3 follow-ups:** up to 10 (for gaps/partials)\n- **Sub-agent tools:** `browse`, `str_replace_editor`\n\
+  - **Max messages per sub-agent:** 25\n- **Coordinator critical-path target:** <15% of total swarm tokens"
+metadata:
+  ppp_id: PPP_6
+  n_research_agents: 60
+  n_followups: 10
+  entity_unit: functional role
+  entity_unit_plural: functional roles
+  final_output_filename: final.tsv
+  output_schema_columns:
+  - Role
+  - LeaderName
+  - HourlyRate
+  - TechStack
+  - ClientLogos
+  - CaseStudyURL
+  - SourceURL
+  research_summary: Search LinkedIn, Toptal, and personal portfolios for active fractional leaders in
+    the assigned role; capture hourly rate, tech stack, client logos, and at least one public case-study
+    URL per leader.
+  data_sources:
+  - LinkedIn profile search
+  - Toptal / Continuum / Bolster directories
+  - Personal portfolio sites and case study posts

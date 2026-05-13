@@ -1,0 +1,148 @@
+task_id: swarm__non_faang_maintainers__ppp4
+name: Open Source Maintainer Map — top 3 non-FAANG maintainers for 70 npm/PyPI packages
+domain: swarm_research
+difficulty: easy
+primary_pattern: map_reduce
+coordination_pattern: map_reduce
+estimated_sub_agents: 71
+has_dependencies: true
+sandbox: docker
+sandbox_image: swarm-bench-general:latest
+simulated_actors: []
+tools:
+- llm_call
+- str_replace_editor
+- browse
+- read_file
+- list_files
+- submit_deliverable
+time_limit: 5400
+prompt: "### DELEGATION WORKFLOW — Open Source Maintainer Map\n\n**Objective:** Coordinate 70 parallel\
+  \ sub-agents to research one critical npm/PyPI package each, identifying the top 3 most active maintainers\
+  \ not employed by a FAANG company. Your role as coordinator is to plan, delegate, audit, and synthesize\
+  \ the final dossier. Do NOT perform any research yourself; every lookup must be delegated via `llm_call`.\
+  \ Your coordinator messages should be less than 15% of the total swarm token count.\n\n#### Phase 1\
+  \ — Create the Plan\n\n1.  Write a plan file to `/mnt/agent/output/plan.md` using `str_replace_editor.create`.\
+  \ This file is the single source of truth for all sub-agents. It must contain:\n\n    **Header:** A\
+  \ brief description of the task, the goal of finding non-FAANG maintainers, and the final output format\
+  \ (TSV).\n\n    **Assignment Table:** A numbered list of all 70 npm/PyPI packages, one per line. This\
+  \ defines the scope for each sub-agent.\n    ```\n    1. [Package 1 Name] — Find top 3 non-FAANG maintainers\
+  \ — result file: result_001.tsv\n    2. [Package 2 Name] — Find top 3 non-FAANG maintainers — result\
+  \ file: result_002.tsv\n    ...\n    70. [Package 70 Name] — Find top 3 non-FAANG maintainers — result\
+  \ file: result_070.tsv\n    ```\n\n    **Output Schema:** Define the exact TSV column headers each sub-agent\
+  \ must use. This ensures consistency for the final assembly.\n    `PackageName`, `MaintainerName`, `GitHubProfileURL`,\
+  \ `ContactInfo`, `EstimatedTimezone`, `SponsorshipStatus`, `CurrentEmployer`, `NonFAANG_EvidenceURL`\n\
+  \n    **Quality Criteria:** A `complete` result requires all fields to be filled for at least one maintainer.\
+  \ A result is `partial` if key information like `CurrentEmployer` or `ContactInfo` is missing. Explicitly\
+  \ state that any maintainer working at Meta, Apple, Amazon, Netflix, or Google must be excluded.\n\n\
+  #### Phase 2 — Parallel Delegation\n\n2.  Launch ALL 70 sub-agent calls in a SINGLE message. This parallel\
+  \ execution is critical for efficiency. Your single coordinator message will trigger a massive research\
+  \ effort.\n\n    Each `llm_call` must be precisely structured:\n    -   **Assignment reference:** \"\
+  You are sub-agent N. Read `/mnt/agent/output/plan.md` and find your assigned package on line N.\"\n\
+  \    -   **Entity scope:** The specific npm/PyPI package name to research.\n    -   **Output file:**\
+  \ `/mnt/agent/output/result_{NNN}.tsv` (zero-padded).\n    -   **fork_mode:** `none` — each task is\
+  \ self-contained using the plan file.\n    -   **Research instructions:** Provide a clear research workflow.\
+  \ \"Use the `browse` tool. Start by finding the package's official GitHub repository. Analyze the 'Contributors'\
+  \ page and recent commit history to identify highly active individuals. For each promising candidate,\
+  \ investigate their GitHub profile, personal website, Twitter, and LinkedIn to determine their current\
+  \ employer. You MUST verify they do not work for a FAANG company; document the evidence URL. Search\
+  \ for their sponsorship status on GitHub Sponsors or OpenCollective. Find a contact method (email or\
+  \ social media handle) and estimate their timezone. Identify the top 3 maintainers who meet all criteria.\"\
+  \n    -   **Result format:** \"Write your findings as tab-separated rows (one row per maintainer) to\
+  \ your assigned result file using `str_replace_editor`. Do NOT include a header row. The first line\
+  \ of the file must be `STATUS: complete` or `STATUS: partial — [reason for partial status]`.\"\n\n \
+  \   CRITICAL: All 70 `llm_call` invocations must be in the same message to enable parallel execution.\n\
+  \n#### Phase 3 — Quality Audit & Gap Fill\n\n3.  Once the sub-agents complete, perform a quality check.\
+  \ Do not read the full content of every file yet.\n    -   Use `str_replace_editor.view` with `view_range=(0,\
+  \ 1)` to read only the `STATUS` line of all 70 result files.\n    -   Tally the number of `complete`,\
+  \ `partial`, and missing files.\n    -   For `partial` results (e.g., employer could not be confirmed),\
+  \ launch a small, targeted batch of follow-up sub-agents in a single message. Give them specific instructions,\
+  \ like, \"Confirm the employer for [MaintainerName] of package [PackageName].\"\n    -   Limit this\
+  \ to a single round of follow-ups for no more than 20% of the initial assignments.\n\n#### Phase 4 —\
+  \ Assemble Final Output\n\n4.  Consolidate all verified results into the final deliverable.\n    - \
+  \  Read all `result_*.tsv` files that have a `STATUS: complete` line.\n    -   Create a new file `/mnt/agent/output/final_dossier.tsv`.\n\
+  \    -   Write the header row as defined in the `plan.md` schema.\n    -   Append the content from all\
+  \ the individual result files, skipping the `STATUS` line for each.\n    -   Sort the final table by\
+  \ `PackageName`.\n\n5.  Write a brief summary report in `/mnt/agent/output/summary.md`.\n    -   Total\
+  \ packages analyzed: 70\n    -   Packages with complete results: [count]\n    -   Total maintainers\
+  \ identified: [count]\n    -   Notes on common challenges (e.g., difficulty verifying employment for\
+  \ independent consultants).\n\n#### Resource Budget\n-   **Phase 2 sub-agents:** 70 (one per package)\n\
+  -   **Phase 3 follow-ups:** up to 14 (for gaps/partials)\n-   **Sub-agent tools:** browse, str_replace_editor\n\
+  -   **Max messages per sub-agent:** 25\n-   **Coordinator critical-path target:** <15% of total swarm\
+  \ tokens"
+single_agent_prompt: "### DELEGATION WORKFLOW — Open Source Maintainer Map\n\n**Objective:** Coordinate\
+  \ 70 parallel sub-agents to research one critical npm/PyPI package each, identifying the top 3 most\
+  \ active maintainers not employed by a FAANG company. Your role as coordinator is to plan, delegate,\
+  \ audit, and synthesize the final dossier. Do NOT perform any research yourself; every lookup must be\
+  \ delegated via `llm_call`. Your coordinator messages should be less than 15% of the total swarm token\
+  \ count.\n\n#### Phase 1 — Create the Plan\n\n1.  Write a plan file to `/mnt/agent/output/plan.md` using\
+  \ `str_replace_editor.create`. This file is the single source of truth for all sub-agents. It must contain:\n\
+  \n    **Header:** A brief description of the task, the goal of finding non-FAANG maintainers, and the\
+  \ final output format (TSV).\n\n    **Assignment Table:** A numbered list of all 70 npm/PyPI packages,\
+  \ one per line. This defines the scope for each sub-agent.\n    ```\n    1. [Package 1 Name] — Find\
+  \ top 3 non-FAANG maintainers — result file: result_001.tsv\n    2. [Package 2 Name] — Find top 3 non-FAANG\
+  \ maintainers — result file: result_002.tsv\n    ...\n    70. [Package 70 Name] — Find top 3 non-FAANG\
+  \ maintainers — result file: result_070.tsv\n    ```\n\n    **Output Schema:** Define the exact TSV\
+  \ column headers each sub-agent must use. This ensures consistency for the final assembly.\n    `PackageName`,\
+  \ `MaintainerName`, `GitHubProfileURL`, `ContactInfo`, `EstimatedTimezone`, `SponsorshipStatus`, `CurrentEmployer`,\
+  \ `NonFAANG_EvidenceURL`\n\n    **Quality Criteria:** A `complete` result requires all fields to be\
+  \ filled for at least one maintainer. A result is `partial` if key information like `CurrentEmployer`\
+  \ or `ContactInfo` is missing. Explicitly state that any maintainer working at Meta, Apple, Amazon,\
+  \ Netflix, or Google must be excluded.\n\n#### Phase 2 — Parallel Delegation\n\n2.  Launch ALL 70 sub-agent\
+  \ calls in a SINGLE message. This parallel execution is critical for efficiency. Your single coordinator\
+  \ message will trigger a massive research effort.\n\n    Each `llm_call` must be precisely structured:\n\
+  \    -   **Assignment reference:** \"You are sub-agent N. Read `/mnt/agent/output/plan.md` and find\
+  \ your assigned package on line N.\"\n    -   **Entity scope:** The specific npm/PyPI package name to\
+  \ research.\n    -   **Output file:** `/mnt/agent/output/result_{NNN}.tsv` (zero-padded).\n    -   **fork_mode:**\
+  \ `none` — each task is self-contained using the plan file.\n    -   **Research instructions:** Provide\
+  \ a clear research workflow. \"Use the `browse` tool. Start by finding the package's official GitHub\
+  \ repository. Analyze the 'Contributors' page and recent commit history to identify highly active individuals.\
+  \ For each promising candidate, investigate their GitHub profile, personal website, Twitter, and LinkedIn\
+  \ to determine their current employer. You MUST verify they do not work for a FAANG company; document\
+  \ the evidence URL. Search for their sponsorship status on GitHub Sponsors or OpenCollective. Find a\
+  \ contact method (email or social media handle) and estimate their timezone. Identify the top 3 maintainers\
+  \ who meet all criteria.\"\n    -   **Result format:** \"Write your findings as tab-separated rows (one\
+  \ row per maintainer) to your assigned result file using `str_replace_editor`. Do NOT include a header\
+  \ row. The first line of the file must be `STATUS: complete` or `STATUS: partial — [reason for partial\
+  \ status]`.\"\n\n    CRITICAL: All 70 `llm_call` invocations must be in the same message to enable parallel\
+  \ execution.\n\n#### Phase 3 — Quality Audit & Gap Fill\n\n3.  Once the sub-agents complete, perform\
+  \ a quality check. Do not read the full content of every file yet.\n    -   Use `str_replace_editor.view`\
+  \ with `view_range=(0, 1)` to read only the `STATUS` line of all 70 result files.\n    -   Tally the\
+  \ number of `complete`, `partial`, and missing files.\n    -   For `partial` results (e.g., employer\
+  \ could not be confirmed), launch a small, targeted batch of follow-up sub-agents in a single message.\
+  \ Give them specific instructions, like, \"Confirm the employer for [MaintainerName] of package [PackageName].\"\
+  \n    -   Limit this to a single round of follow-ups for no more than 20% of the initial assignments.\n\
+  \n#### Phase 4 — Assemble Final Output\n\n4.  Consolidate all verified results into the final deliverable.\n\
+  \    -   Read all `result_*.tsv` files that have a `STATUS: complete` line.\n    -   Create a new file\
+  \ `/mnt/agent/output/final_dossier.tsv`.\n    -   Write the header row as defined in the `plan.md` schema.\n\
+  \    -   Append the content from all the individual result files, skipping the `STATUS` line for each.\n\
+  \    -   Sort the final table by `PackageName`.\n\n5.  Write a brief summary report in `/mnt/agent/output/summary.md`.\n\
+  \    -   Total packages analyzed: 70\n    -   Packages with complete results: [count]\n    -   Total\
+  \ maintainers identified: [count]\n    -   Notes on common challenges (e.g., difficulty verifying employment\
+  \ for independent consultants).\n\n#### Resource Budget\n-   **Phase 2 sub-agents:** 70 (one per package)\n\
+  -   **Phase 3 follow-ups:** up to 14 (for gaps/partials)\n-   **Sub-agent tools:** browse, str_replace_editor\n\
+  -   **Max messages per sub-agent:** 25\n-   **Coordinator critical-path target:** <15% of total swarm\
+  \ tokens"
+metadata:
+  ppp_id: PPP_4
+  n_research_agents: 70
+  n_followups: 14
+  entity_unit: npm/PyPI package
+  entity_unit_plural: npm/PyPI packages
+  final_output_filename: final_dossier.tsv
+  output_schema_columns:
+  - PackageName
+  - MaintainerName
+  - GitHubProfileURL
+  - ContactInfo
+  - EstimatedTimezone
+  - SponsorshipStatus
+  - CurrentEmployer
+  - NonFAANG_EvidenceURL
+  research_summary: Find the package's GitHub repo, scan recent commit history and Contributors page for
+    active maintainers, verify employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google,
+    record sponsorship + contact + timezone.
+  data_sources:
+  - GitHub repo Contributors / commit history
+  - Maintainer personal websites, Twitter, LinkedIn
+  - GitHub Sponsors / OpenCollective

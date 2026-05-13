@@ -1,0 +1,146 @@
+task_id: swarm__micro_pe_rollups__ppp7
+name: Micro-PE Rollup Targets — top 3 acquisition candidates across 75 niches
+domain: swarm_research
+difficulty: easy
+primary_pattern: map_reduce
+coordination_pattern: map_reduce
+estimated_sub_agents: 76
+has_dependencies: true
+sandbox: docker
+sandbox_image: swarm-bench-general:latest
+simulated_actors: []
+tools:
+- llm_call
+- str_replace_editor
+- browse
+- read_file
+- list_files
+- submit_deliverable
+time_limit: 5400
+prompt: "### DELEGATION WORKFLOW — Micro-PE Rollup Targets\n\n**Objective:** Coordinate 75 parallel sub-agents\
+  \ to research one “boring” business niche each (e.g., HVAC, elevator repair, car wash). Each sub-agent\
+  \ will identify the top 3 potential acquisition targets within their assigned niche that meet specific\
+  \ financial and demographic criteria ($1M-$5M EBITDA, owner age 55+). The final output will be a collection\
+  \ of CIM-style teaser decks for each identified company. Your role as coordinator is to plan, delegate,\
+  \ audit, and synthesize. Do NOT perform any research yourself; all data gathering must be delegated\
+  \ via `llm_call`. Your coordinator messages must constitute less than 15% of the total swarm token usage.\n\
+  \n#### Phase 1 — Create the Plan\n\n1.  Write a detailed plan to `/mnt/agent/output/plan.md` using `str_replace_editor.create`.\
+  \ This file is the single source of truth for all sub-agents. It must contain:\n\n    **Header:** A\
+  \ brief overview of the task, its objective, and a description of the final deliverable.\n\n    **Assignment\
+  \ Table:** A numbered list of all 75 business niches, one per line. This list defines the scope for\
+  \ each sub-agent.\n    ```\n    1. HVAC Services — find 3 companies — result file: result_001.md\n \
+  \   2. Commercial Elevator Repair — find 3 companies — result file: result_002.md\n    ...\n    75.\
+  \ Self-Storage Facilities — find 3 companies — result file: result_075.md\n    ```\n\n    **Output Schema:**\
+  \ A detailed markdown template for the CIM-style teaser deck. Each sub-agent must use this exact structure\
+  \ for each of the 3 companies they find. The schema must include sections for Company Overview, Financial\
+  \ Snapshot (with estimated EBITDA), Ownership Profile (with estimated owner age), Investment Rationale,\
+  \ and a list of Source URLs.\n\n    **Quality Criteria:** Define what constitutes a `complete` vs. `partial`\
+  \ result. A complete result must include all sections of the teaser deck for 3 companies, with credible\
+  \ estimates for EBITDA and owner age, supported by evidence from the specified data sources (state business\
+  \ registries, BuiltWith, local news, industry-specific directories).\n\n#### Phase 2 — Parallel Delegation\n\
+  \n2.  Launch ALL 75 sub-agent calls in a SINGLE message. This parallel execution is critical for efficiency.\
+  \ Your single coordinator turn will spawn a massive research effort.\n\n    Each `llm_call` must specify:\n\
+  \    *   **Assignment reference:** \"You are sub-agent N. Your task is defined in `/mnt/agent/output/plan.md`\
+  \ on line N of the Assignment Table.\"\n    *   **Entity scope:** The specific business niche to research\
+  \ (e.g., \"HVAC Services\").\n    *   **Output file:** The designated result file, e.g., `/mnt/agent/output/result_{NNN}.md`\
+  \ (zero-padded).\n    *   **fork_mode:** `none`. Each task is self-contained and guided by the central\
+  \ plan file.\n    *   **Research instructions:** Instruct the sub-agent to use the `browse` tool to\
+  \ query sources like state business registries, company database tools like BuiltWith or Apollo.io,\
+  \ and local business news articles. Queries should be specific, such as \"[niche] companies in [state/region]\
+  \ owner retiring\" or \"[company name] executive team age\". The goal is to find companies fitting the\
+  \ $1M-$5M EBITDA and 55+ owner age criteria.\n    *   **Result format:** Write the three teaser decks\
+  \ into the assigned result file using the exact markdown schema from the plan. The very first line of\
+  \ the file must be `STATUS: complete` or `STATUS: partial — [reason for incompleteness]`. For each company,\
+  \ all fields must be populated.\n\n#### Phase 3 — Quality Audit & Gap Fill\n\n3.  Once the sub-agents\
+  \ have completed their work, perform a quality audit. Do not read the full content of every file initially.\n\
+  \    *   Use `str_replace_editor.view` with a small `view_range` (e.g., lines 1-2) to read the `STATUS`\
+  \ line of all 75 result files.\n    *   Tally the number of `complete`, `partial`, and missing files.\n\
+  \    *   For any `partial` or missing results, launch a targeted follow-up wave of `llm_call`s (again,\
+  \ in a single message) to address the gaps. Provide these agents with more specific instructions or\
+  \ alternative search strategies.\n    *   Fully review 3-5 `complete` files to ensure the output format\
+  \ is correct and the quality of research is high.\n\n#### Phase 4 — Assemble Final Output\n\n4.  Consolidate\
+  \ the individual results into a comprehensive final report.\n    *   Read the content of all `complete`\
+  \ result files.\n    *   Assemble them into a single document: `/mnt/agent/output/final_report.md`.\n\
+  \    *   Generate a Table of Contents at the beginning of the report, linking to each business niche\
+  \ section.\n    *   Ensure consistent formatting and headers throughout the document.\n\n5.  Write a\
+  \ brief executive summary at the top of the final report, including:\n    *   Total niches researched:\
+  \ 75\n    *   Total target companies identified: [count]\n    *   Completion rate: [count of complete\
+  \ results] / 75\n    *   Date of research.\n\nThis final, consolidated document is the deliverable for\
+  \ the task.\n\n#### Resource Budget\n*   **Phase 2 sub-agents:** 75 (one per business niche)\n*   **Phase\
+  \ 3 follow-ups:** up to 15 (for gaps/partials)\n*   **Sub-agent tools:** browse, str_replace_editor\n\
+  *   **Max messages per sub-agent:** 25\n*   **Coordinator critical-path target:** <15% of total swarm\
+  \ tokens"
+single_agent_prompt: "### DELEGATION WORKFLOW — Micro-PE Rollup Targets\n\n**Objective:** Coordinate 75\
+  \ parallel sub-agents to research one “boring” business niche each (e.g., HVAC, elevator repair, car\
+  \ wash). Each sub-agent will identify the top 3 potential acquisition targets within their assigned\
+  \ niche that meet specific financial and demographic criteria ($1M-$5M EBITDA, owner age 55+). The final\
+  \ output will be a collection of CIM-style teaser decks for each identified company. Your role as coordinator\
+  \ is to plan, delegate, audit, and synthesize. Do NOT perform any research yourself; all data gathering\
+  \ must be delegated via `llm_call`. Your coordinator messages must constitute less than 15% of the total\
+  \ swarm token usage.\n\n#### Phase 1 — Create the Plan\n\n1.  Write a detailed plan to `/mnt/agent/output/plan.md`\
+  \ using `str_replace_editor.create`. This file is the single source of truth for all sub-agents. It\
+  \ must contain:\n\n    **Header:** A brief overview of the task, its objective, and a description of\
+  \ the final deliverable.\n\n    **Assignment Table:** A numbered list of all 75 business niches, one\
+  \ per line. This list defines the scope for each sub-agent.\n    ```\n    1. HVAC Services — find 3\
+  \ companies — result file: result_001.md\n    2. Commercial Elevator Repair — find 3 companies — result\
+  \ file: result_002.md\n    ...\n    75. Self-Storage Facilities — find 3 companies — result file: result_075.md\n\
+  \    ```\n\n    **Output Schema:** A detailed markdown template for the CIM-style teaser deck. Each\
+  \ sub-agent must use this exact structure for each of the 3 companies they find. The schema must include\
+  \ sections for Company Overview, Financial Snapshot (with estimated EBITDA), Ownership Profile (with\
+  \ estimated owner age), Investment Rationale, and a list of Source URLs.\n\n    **Quality Criteria:**\
+  \ Define what constitutes a `complete` vs. `partial` result. A complete result must include all sections\
+  \ of the teaser deck for 3 companies, with credible estimates for EBITDA and owner age, supported by\
+  \ evidence from the specified data sources (state business registries, BuiltWith, local news, industry-specific\
+  \ directories).\n\n#### Phase 2 — Parallel Delegation\n\n2.  Launch ALL 75 sub-agent calls in a SINGLE\
+  \ message. This parallel execution is critical for efficiency. Your single coordinator turn will spawn\
+  \ a massive research effort.\n\n    Each `llm_call` must specify:\n    *   **Assignment reference:**\
+  \ \"You are sub-agent N. Your task is defined in `/mnt/agent/output/plan.md` on line N of the Assignment\
+  \ Table.\"\n    *   **Entity scope:** The specific business niche to research (e.g., \"HVAC Services\"\
+  ).\n    *   **Output file:** The designated result file, e.g., `/mnt/agent/output/result_{NNN}.md` (zero-padded).\n\
+  \    *   **fork_mode:** `none`. Each task is self-contained and guided by the central plan file.\n \
+  \   *   **Research instructions:** Instruct the sub-agent to use the `browse` tool to query sources\
+  \ like state business registries, company database tools like BuiltWith or Apollo.io, and local business\
+  \ news articles. Queries should be specific, such as \"[niche] companies in [state/region] owner retiring\"\
+  \ or \"[company name] executive team age\". The goal is to find companies fitting the $1M-$5M EBITDA\
+  \ and 55+ owner age criteria.\n    *   **Result format:** Write the three teaser decks into the assigned\
+  \ result file using the exact markdown schema from the plan. The very first line of the file must be\
+  \ `STATUS: complete` or `STATUS: partial — [reason for incompleteness]`. For each company, all fields\
+  \ must be populated.\n\n#### Phase 3 — Quality Audit & Gap Fill\n\n3.  Once the sub-agents have completed\
+  \ their work, perform a quality audit. Do not read the full content of every file initially.\n    *\
+  \   Use `str_replace_editor.view` with a small `view_range` (e.g., lines 1-2) to read the `STATUS` line\
+  \ of all 75 result files.\n    *   Tally the number of `complete`, `partial`, and missing files.\n \
+  \   *   For any `partial` or missing results, launch a targeted follow-up wave of `llm_call`s (again,\
+  \ in a single message) to address the gaps. Provide these agents with more specific instructions or\
+  \ alternative search strategies.\n    *   Fully review 3-5 `complete` files to ensure the output format\
+  \ is correct and the quality of research is high.\n\n#### Phase 4 — Assemble Final Output\n\n4.  Consolidate\
+  \ the individual results into a comprehensive final report.\n    *   Read the content of all `complete`\
+  \ result files.\n    *   Assemble them into a single document: `/mnt/agent/output/final_report.md`.\n\
+  \    *   Generate a Table of Contents at the beginning of the report, linking to each business niche\
+  \ section.\n    *   Ensure consistent formatting and headers throughout the document.\n\n5.  Write a\
+  \ brief executive summary at the top of the final report, including:\n    *   Total niches researched:\
+  \ 75\n    *   Total target companies identified: [count]\n    *   Completion rate: [count of complete\
+  \ results] / 75\n    *   Date of research.\n\nThis final, consolidated document is the deliverable for\
+  \ the task.\n\n#### Resource Budget\n*   **Phase 2 sub-agents:** 75 (one per business niche)\n*   **Phase\
+  \ 3 follow-ups:** up to 15 (for gaps/partials)\n*   **Sub-agent tools:** browse, str_replace_editor\n\
+  *   **Max messages per sub-agent:** 25\n*   **Coordinator critical-path target:** <15% of total swarm\
+  \ tokens"
+metadata:
+  ppp_id: PPP_7
+  n_research_agents: 75
+  n_followups: 15
+  entity_unit: business niche
+  entity_unit_plural: business niches
+  final_output_filename: final_report.md
+  output_schema_columns:
+  - CompanyOverview
+  - FinancialSnapshot
+  - OwnershipProfile
+  - InvestmentRationale
+  - SourceURLs
+  research_summary: Use state business registries, BuiltWith / Apollo, and local news to find owner-operated
+    SMBs in the niche with $1M-$5M EBITDA and an owner 55+; write a CIM-style teaser deck per company
+    with overview, financial snapshot, ownership profile, investment rationale, and sources.
+  data_sources:
+  - State business registries
+  - Apollo.io / BuiltWith / ZoomInfo
+  - Local business news and trade press

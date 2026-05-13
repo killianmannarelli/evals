@@ -1,0 +1,1073 @@
+task_id: swarm__non_faang_maintainers__ppp4
+primary_decomposition:
+- subtask_id: coordinator
+  description: 'Coordinator role. Phase 1: write /mnt/agent/output/plan.md containing the task header,
+    a numbered assignment table of 70 npm/PyPI packages (one per research sub-agent), the exact output
+    schema columns (PackageName, MaintainerName, GitHubProfileURL, ContactInfo, EstimatedTimezone, SponsorshipStatus,
+    CurrentEmployer, NonFAANG_EvidenceURL), and quality criteria (complete vs. partial). Phase 2: dispatch
+    all 70 research sub-agents in a single message with `fork_mode: none`, each pointing at its zero-padded
+    result file. Phase 3: audit STATUS lines via `str_replace_editor.view` with a tiny `view_range`, tally
+    complete/partial/missing, then launch up to 14 follow-up sub-agents in one batch (single round). Phase
+    4: read every complete result_NNN.tsv, assemble /mnt/agent/output/final_dossier.tsv with the schema
+    header row, sort by the first schema column, and write /mnt/agent/output/summary.md. Coordinator messages
+    must stay under 15% of total swarm tokens.'
+  expected_input: Master task prompt for Open Source Maintainer Map — top 3 non-FAANG maintainers for
+    70 npm/PyPI packages (see task.yaml `prompt`).
+  expected_output: /mnt/agent/output/plan.md (plan with assignment table + schema + quality criteria);
+    /mnt/agent/output/final_dossier.tsv (assembled deliverable, schema header + sorted rows); /mnt/agent/output/summary.md
+    (tally of complete/partial/missing + brief notes).
+  depends_on: []
+  is_parallelizable: false
+- subtask_id: research_agent_001
+  description: 'Research one npm/PyPI package assigned at line 1 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_001.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 1 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_001.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_002
+  description: 'Research one npm/PyPI package assigned at line 2 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_002.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 2 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_002.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_003
+  description: 'Research one npm/PyPI package assigned at line 3 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_003.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 3 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_003.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_004
+  description: 'Research one npm/PyPI package assigned at line 4 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_004.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 4 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_004.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_005
+  description: 'Research one npm/PyPI package assigned at line 5 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_005.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 5 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_005.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_006
+  description: 'Research one npm/PyPI package assigned at line 6 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_006.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 6 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_006.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_007
+  description: 'Research one npm/PyPI package assigned at line 7 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_007.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 7 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_007.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_008
+  description: 'Research one npm/PyPI package assigned at line 8 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_008.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 8 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_008.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_009
+  description: 'Research one npm/PyPI package assigned at line 9 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_009.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 9 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_009.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_010
+  description: 'Research one npm/PyPI package assigned at line 10 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_010.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 10 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_010.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_011
+  description: 'Research one npm/PyPI package assigned at line 11 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_011.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 11 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_011.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_012
+  description: 'Research one npm/PyPI package assigned at line 12 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_012.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 12 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_012.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_013
+  description: 'Research one npm/PyPI package assigned at line 13 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_013.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 13 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_013.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_014
+  description: 'Research one npm/PyPI package assigned at line 14 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_014.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 14 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_014.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_015
+  description: 'Research one npm/PyPI package assigned at line 15 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_015.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 15 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_015.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_016
+  description: 'Research one npm/PyPI package assigned at line 16 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_016.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 16 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_016.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_017
+  description: 'Research one npm/PyPI package assigned at line 17 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_017.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 17 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_017.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_018
+  description: 'Research one npm/PyPI package assigned at line 18 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_018.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 18 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_018.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_019
+  description: 'Research one npm/PyPI package assigned at line 19 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_019.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 19 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_019.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_020
+  description: 'Research one npm/PyPI package assigned at line 20 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_020.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 20 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_020.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_021
+  description: 'Research one npm/PyPI package assigned at line 21 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_021.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 21 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_021.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_022
+  description: 'Research one npm/PyPI package assigned at line 22 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_022.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 22 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_022.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_023
+  description: 'Research one npm/PyPI package assigned at line 23 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_023.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 23 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_023.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_024
+  description: 'Research one npm/PyPI package assigned at line 24 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_024.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 24 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_024.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_025
+  description: 'Research one npm/PyPI package assigned at line 25 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_025.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 25 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_025.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_026
+  description: 'Research one npm/PyPI package assigned at line 26 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_026.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 26 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_026.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_027
+  description: 'Research one npm/PyPI package assigned at line 27 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_027.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 27 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_027.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_028
+  description: 'Research one npm/PyPI package assigned at line 28 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_028.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 28 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_028.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_029
+  description: 'Research one npm/PyPI package assigned at line 29 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_029.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 29 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_029.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_030
+  description: 'Research one npm/PyPI package assigned at line 30 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_030.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 30 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_030.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_031
+  description: 'Research one npm/PyPI package assigned at line 31 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_031.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 31 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_031.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_032
+  description: 'Research one npm/PyPI package assigned at line 32 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_032.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 32 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_032.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_033
+  description: 'Research one npm/PyPI package assigned at line 33 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_033.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 33 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_033.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_034
+  description: 'Research one npm/PyPI package assigned at line 34 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_034.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 34 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_034.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_035
+  description: 'Research one npm/PyPI package assigned at line 35 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_035.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 35 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_035.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_036
+  description: 'Research one npm/PyPI package assigned at line 36 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_036.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 36 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_036.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_037
+  description: 'Research one npm/PyPI package assigned at line 37 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_037.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 37 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_037.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_038
+  description: 'Research one npm/PyPI package assigned at line 38 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_038.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 38 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_038.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_039
+  description: 'Research one npm/PyPI package assigned at line 39 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_039.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 39 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_039.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_040
+  description: 'Research one npm/PyPI package assigned at line 40 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_040.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 40 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_040.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_041
+  description: 'Research one npm/PyPI package assigned at line 41 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_041.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 41 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_041.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_042
+  description: 'Research one npm/PyPI package assigned at line 42 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_042.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 42 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_042.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_043
+  description: 'Research one npm/PyPI package assigned at line 43 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_043.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 43 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_043.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_044
+  description: 'Research one npm/PyPI package assigned at line 44 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_044.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 44 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_044.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_045
+  description: 'Research one npm/PyPI package assigned at line 45 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_045.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 45 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_045.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_046
+  description: 'Research one npm/PyPI package assigned at line 46 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_046.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 46 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_046.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_047
+  description: 'Research one npm/PyPI package assigned at line 47 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_047.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 47 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_047.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_048
+  description: 'Research one npm/PyPI package assigned at line 48 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_048.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 48 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_048.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_049
+  description: 'Research one npm/PyPI package assigned at line 49 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_049.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 49 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_049.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_050
+  description: 'Research one npm/PyPI package assigned at line 50 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_050.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 50 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_050.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_051
+  description: 'Research one npm/PyPI package assigned at line 51 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_051.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 51 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_051.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_052
+  description: 'Research one npm/PyPI package assigned at line 52 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_052.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 52 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_052.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_053
+  description: 'Research one npm/PyPI package assigned at line 53 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_053.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 53 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_053.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_054
+  description: 'Research one npm/PyPI package assigned at line 54 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_054.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 54 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_054.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_055
+  description: 'Research one npm/PyPI package assigned at line 55 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_055.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 55 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_055.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_056
+  description: 'Research one npm/PyPI package assigned at line 56 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_056.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 56 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_056.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_057
+  description: 'Research one npm/PyPI package assigned at line 57 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_057.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 57 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_057.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_058
+  description: 'Research one npm/PyPI package assigned at line 58 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_058.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 58 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_058.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_059
+  description: 'Research one npm/PyPI package assigned at line 59 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_059.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 59 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_059.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_060
+  description: 'Research one npm/PyPI package assigned at line 60 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_060.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 60 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_060.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_061
+  description: 'Research one npm/PyPI package assigned at line 61 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_061.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 61 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_061.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_062
+  description: 'Research one npm/PyPI package assigned at line 62 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_062.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 62 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_062.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_063
+  description: 'Research one npm/PyPI package assigned at line 63 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_063.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 63 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_063.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_064
+  description: 'Research one npm/PyPI package assigned at line 64 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_064.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 64 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_064.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_065
+  description: 'Research one npm/PyPI package assigned at line 65 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_065.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 65 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_065.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_066
+  description: 'Research one npm/PyPI package assigned at line 66 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_066.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 66 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_066.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_067
+  description: 'Research one npm/PyPI package assigned at line 67 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_067.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 67 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_067.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_068
+  description: 'Research one npm/PyPI package assigned at line 68 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_068.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 68 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_068.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_069
+  description: 'Research one npm/PyPI package assigned at line 69 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_069.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 69 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_069.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+- subtask_id: research_agent_070
+  description: 'Research one npm/PyPI package assigned at line 70 of /mnt/agent/output/plan.md. Find the
+    package''s GitHub repo, scan recent commit history and Contributors page for active maintainers, verify
+    employer from profile/personal site/LinkedIn, exclude Meta/Apple/Amazon/Netflix/Google, record sponsorship
+    + contact + timezone. Write up to 3 maintainer rows to /mnt/agent/output/result_070.tsv. The first
+    line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason]`. Subsequent lines are
+    the data rows; do NOT include the schema header in this file (coordinator owns the final header).
+    Hard ceiling: 25 sub-agent messages.'
+  expected_input: /mnt/agent/output/plan.md (read line 70 for the npm/PyPI package assignment + the shared
+    output schema and quality criteria).
+  expected_output: /mnt/agent/output/result_070.tsv (STATUS line + up to 3 maintainer rows matching the
+    schema defined in plan.md).
+  depends_on:
+  - coordinator
+  is_parallelizable: true
+minimum_viable_agents: 1
+optimal_agents: 71
+maximum_useful_agents: 85
