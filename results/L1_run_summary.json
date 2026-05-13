@@ -1,18 +1,18 @@
 {
   "skill": "QC Auditor \u2014 created by Marius Delahay",
-  "tasks_audited": 7,
+  "tasks_audited": 10,
   "tasks_clean": 0,
   "tasks_incomplete": 0,
-  "raw_findings": 55,
-  "post_merge_findings": 41,
-  "confirmed_findings": 28,
-  "rejected_findings": 13,
-  "merge_rate": 0.2545,
-  "drop_rate": 0.3171,
+  "raw_findings": 77,
+  "post_merge_findings": 49,
+  "confirmed_findings": 35,
+  "rejected_findings": 14,
+  "merge_rate": 0.3636,
+  "drop_rate": 0.2857,
   "agreement_breakdown": {
-    "3/3": 4,
-    "2/3": 6,
-    "1/3": 18
+    "3/3": 8,
+    "2/3": 12,
+    "1/3": 15
   },
   "reaudit": {
     "tasks_reaudited": 0,
@@ -22,19 +22,15 @@
   "top_failure_categories": [
     [
       "Non-Fail - Unlisted Minor Errors",
-      6
+      7
     ],
     [
       "Non-Fail - Missing Coverage",
-      4
-    ],
-    [
-      "Non-Fail - Objectivity / Specificity",
-      3
+      6
     ],
     [
       "Fail - Rubric Misaligned with GOLD.yaml",
-      3
+      2
     ],
     [
       "Fail - Missing Coverage",
@@ -45,21 +41,25 @@
       2
     ],
     [
-      "Fail - Invalid Modification of GOLD.yaml",
+      "Non-Fail - GOLD.yaml Justification Misaligned",
       2
     ],
     [
-      "Non-Fail - Extra Criteria",
+      "Non-Fail - Criteria Accuracy",
+      2
+    ],
+    [
+      "Non-Fail - Rubric Partially Misaligned with GOLD.yaml",
+      2
+    ],
+    [
+      "Non-Fail - Imprecise GOLD.yaml Claims",
       2
     ],
     [
       "Fail - Criteria Atomicity",
       1
-    ],
-    [
-      "Non-Fail - Slightly Incorrect GOLD.yaml",
-      1
     ]
   ],
-  "csv_path": "/home/user/evals/qc-auditor-workspace/69bee012be45f06904292c9a_L1_20260513T090006Z/audit_results.csv"
+  "csv_path": "/home/user/evals/qc-auditor-workspace/69bee012be45f06904292c9a_L1_20260513T140952Z/audit_results.csv"
 }
