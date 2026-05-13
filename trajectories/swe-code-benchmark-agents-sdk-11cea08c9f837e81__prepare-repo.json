@@ -1,0 +1,283 @@
+[
+  {
+    "name": "generation",
+    "context": {
+      "trace_id": "0x699c3c49f4b39534621031c24d79c2be",
+      "span_id": "0xd68899ad18c7c1e9",
+      "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": "0x2d0416b7e8a4dc5c",
+    "start_time": "2026-05-13T05:40:23.875526Z",
+    "end_time": "2026-05-13T05:40:28.090917Z",
+    "status": {
+      "status_code": "OK"
+    },
+    "attributes": {
+      "llm.system": "openai",
+      "llm.model_name": "claude-opus-4-6",
+      "llm.invocation_parameters": "{\"base_url\": \"https://litellm-proxy.ml.scale.com/v1/\"}",
+      "input.value": "[{\"content\": \"You are a bootstrap agent preparing a SWE/code benchmark environment. Your ONLY job is to clone a specific repository at a specific commit and extract its file tree (NO git history) into /app/artifact/repo/. Execute the provided shell commands exactly \u2014 do not improvise, do not read source files, do not fetch anything else. After running, verify the guardrails passed and stop.\", \"role\": \"system\"}, {\"role\": \"user\", \"content\": \"You are a bootstrap agent preparing a SWE/code benchmark environment. Your ONLY job is to clone a specific repository at a specific commit and extract its file tree (NO git history) into /app/artifact/repo/. Execute the provided shell commands exactly via your bash tool \u2014 do not improvise, do not read source files, do not fetch anything else. After running, verify the guardrails passed and stop.\\n\\nRepository: https://github.com/ccfos/nightingale\\nBase commit: 1016ad24855fc7c0d0a608b581d2d743335307c1\\n\\nRun exactly these commands via your bash tool. Do not add anything else.\\n\\n```bash\\nmkdir -p /app/scratch\\ncd /app/scratch\\ngit clone https://github.com/ccfos/nightingale repo\\ncd repo\\ngit checkout 1016ad24855fc7c0d0a608b581d2d743335307c1\\n\\nmkdir -p /app/artifact\\ngit archive HEAD --prefix=repo/ | tar -x -C /app/artifact/\\n\\ncd /app\\nrm -rf /app/scratch\\n\\n# --- GUARDRAILS ---\\nif find /app/artifact -name .git -print 2>/dev/null | grep -q .; then\\n  echo \\\"FAIL: .git directory found under /app/artifact\\\" >&2\\n  exit 1\\nfi\\n\\nif [ ! -d /app/artifact/repo ] || [ -z \\\"$(ls -A /app/artifact/repo 2>/dev/null)\\\" ]; then\\n  echo \\\"FAIL: /app/artifact/repo is missing or empty\\\" >&2\\n  exit 1\\nfi\\n\\necho \\\"OK: /app/artifact/repo prepared at 1016ad24855fc7c0d0a608b581d2d743335307c1\\\"\\nls /app/artifact/repo | head -20\\ndu -sh /app/artifact/repo\\n```\\n\\nExecute each command via your bash tool and report the output. If any command fails, STOP and report the failure \u2014 do not try to recover or improvise. Do NOT spawn sub-agents for this step \u2014 run the bash commands yourself directly.\\n\"}]",
+      "input.mime_type": "application/json",
+      "llm.input_messages.0.message.role": "system",
+      "llm.input_messages.0.message.content": "You are a bootstrap agent preparing a SWE/code benchmark environment. Your ONLY job is to clone a specific repository at a specific commit and extract its file tree (NO git history) into /app/artifact/repo/. Execute the provided shell commands exactly \u2014 do not improvise, do not read source files, do not fetch anything else. After running, verify the guardrails passed and stop.",
+      "llm.input_messages.1.message.role": "user",
+      "llm.input_messages.1.message.content": "You are a bootstrap agent preparing a SWE/code benchmark environment. Your ONLY job is to clone a specific repository at a specific commit and extract its file tree (NO git history) into /app/artifact/repo/. Execute the provided shell commands exactly via your bash tool \u2014 do not improvise, do not read source files, do not fetch anything else. After running, verify the guardrails passed and stop.\n\nRepository: https://github.com/ccfos/nightingale\nBase commit: 1016ad24855fc7c0d0a608b581d2d743335307c1\n\nRun exactly these commands via your bash tool. Do not add anything else.\n\n```bash\nmkdir -p /app/scratch\ncd /app/scratch\ngit clone https://github.com/ccfos/nightingale repo\ncd repo\ngit checkout 1016ad24855fc7c0d0a608b581d2d743335307c1\n\nmkdir -p /app/artifact\ngit archive HEAD --prefix=repo/ | tar -x -C /app/artifact/\n\ncd /app\nrm -rf /app/scratch\n\n# --- GUARDRAILS ---\nif find /app/artifact -name .git -print 2>/dev/null | grep -q .; then\n  echo \"FAIL: .git directory found under /app/artifact\" >&2\n  exit 1\nfi\n\nif [ ! -d /app/artifact/repo ] || [ -z \"$(ls -A /app/artifact/repo 2>/dev/null)\" ]; then\n  echo \"FAIL: /app/artifact/repo is missing or empty\" >&2\n  exit 1\nfi\n\necho \"OK: /app/artifact/repo prepared at 1016ad24855fc7c0d0a608b581d2d743335307c1\"\nls /app/artifact/repo | head -20\ndu -sh /app/artifact/repo\n```\n\nExecute each command via your bash tool and report the output. If any command fails, STOP and report the failure \u2014 do not try to recover or improvise. Do NOT spawn sub-agents for this step \u2014 run the bash commands yourself directly.\n",
+      "output.value": "[{\"content\": null, \"refusal\": null, \"role\": \"assistant\", \"annotations\": null, \"audio\": null, \"function_call\": null, \"tool_calls\": [{\"id\": \"toolu_01RqS8KQXS3NyUERNaUnYYR2\", \"function\": {\"arguments\": \"{\\\"command\\\": \\\"mkdir -p /app/scratch\\\\ncd /app/scratch\\\\ngit clone https://github.com/ccfos/nightingale repo\\\\ncd repo\\\\ngit checkout 1016ad24855fc7c0d0a608b581d2d743335307c1\\\\n\\\\nmkdir -p /app/artifact\\\\ngit archive HEAD --prefix=repo/ | tar -x -C /app/artifact/\\\\n\\\\ncd /app\\\\nrm -rf /app/scratch\\\\n\\\\n# --- GUARDRAILS ---\\\\nif find /app/artifact -name .git -print 2>/dev/null | grep -q .; then\\\\n  echo \\\\\\\"FAIL: .git directory found under /app/artifact\\\\\\\" >&2\\\\n  exit 1\\\\nfi\\\\n\\\\nif [ ! -d /app/artifact/repo ] || [ -z \\\\\\\"$(ls -A /app/artifact/repo 2>/dev/null)\\\\\\\" ]; then\\\\n  echo \\\\\\\"FAIL: /app/artifact/repo is missing or empty\\\\\\\" >&2\\\\n  exit 1\\\\nfi\\\\n\\\\necho \\\\\\\"OK: /app/artifact/repo prepared at 1016ad24855fc7c0d0a608b581d2d743335307c1\\\\\\\"\\\\nls /app/artifact/repo | head -20\\\\ndu -sh /app/artifact/repo\\\", \\\"timeout_s\\\": 300}\", \"name\": \"bash\"}, \"type\": \"function\", \"index\": 0, \"caller\": {\"type\": \"direct\"}}], \"provider_specific_fields\": {\"citations\": null, \"thinking_blocks\": null}}]",
+      "output.mime_type": "application/json",
+      "llm.output_messages.0.message.role": "assistant",
+      "llm.output_messages.0.message.tool_calls.0.tool_call.id": "toolu_01RqS8KQXS3NyUERNaUnYYR2",
+      "llm.output_messages.0.message.tool_calls.0.tool_call.function.name": "bash",
+      "llm.output_messages.0.message.tool_calls.0.tool_call.function.arguments": "{\"command\": \"mkdir -p /app/scratch\\ncd /app/scratch\\ngit clone https://github.com/ccfos/nightingale repo\\ncd repo\\ngit checkout 1016ad24855fc7c0d0a608b581d2d743335307c1\\n\\nmkdir -p /app/artifact\\ngit archive HEAD --prefix=repo/ | tar -x -C /app/artifact/\\n\\ncd /app\\nrm -rf /app/scratch\\n\\n# --- GUARDRAILS ---\\nif find /app/artifact -name .git -print 2>/dev/null | grep -q .; then\\n  echo \\\"FAIL: .git directory found under /app/artifact\\\" >&2\\n  exit 1\\nfi\\n\\nif [ ! -d /app/artifact/repo ] || [ -z \\\"$(ls -A /app/artifact/repo 2>/dev/null)\\\" ]; then\\n  echo \\\"FAIL: /app/artifact/repo is missing or empty\\\" >&2\\n  exit 1\\nfi\\n\\necho \\\"OK: /app/artifact/repo prepared at 1016ad24855fc7c0d0a608b581d2d743335307c1\\\"\\nls /app/artifact/repo | head -20\\ndu -sh /app/artifact/repo\", \"timeout_s\": 300}",
+      "llm.token_count.prompt": 1844,
+      "llm.token_count.completion": 357,
+      "openinference.span.kind": "LLM"
+    },
+    "events": [],
+    "links": [],
+    "resource": {
+      "attributes": {
+        "telemetry.sdk.language": "python",
+        "telemetry.sdk.name": "opentelemetry",
+        "telemetry.sdk.version": "1.41.1",
+        "service.name": "unknown_service"
+      },
+      "schema_url": ""
+    }
+  },
+  {
+    "name": "bash",
+    "context": {
+      "trace_id": "0x699c3c49f4b39534621031c24d79c2be",
+      "span_id": "0xb4aaa34d74b2fcc5",
+      "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": "0x2d0416b7e8a4dc5c",
+    "start_time": "2026-05-13T05:40:28.091707Z",
+    "end_time": "2026-05-13T05:40:32.706049Z",
+    "status": {
+      "status_code": "OK"
+    },
+    "attributes": {
+      "llm.system": "openai",
+      "tool.name": "bash",
+      "input.value": "{\"command\": \"mkdir -p /app/scratch\\ncd /app/scratch\\ngit clone https://github.com/ccfos/nightingale repo\\ncd repo\\ngit checkout 1016ad24855fc7c0d0a608b581d2d743335307c1\\n\\nmkdir -p /app/artifact\\ngit archive HEAD --prefix=repo/ | tar -x -C /app/artifact/\\n\\ncd /app\\nrm -rf /app/scratch\\n\\n# --- GUARDRAILS ---\\nif find /app/artifact -name .git -print 2>/dev/null | grep -q .; then\\n  echo \\\"FAIL: .git directory found under /app/artifact\\\" >&2\\n  exit 1\\nfi\\n\\nif [ ! -d /app/artifact/repo ] || [ -z \\\"$(ls -A /app/artifact/repo 2>/dev/null)\\\" ]; then\\n  echo \\\"FAIL: /app/artifact/repo is missing or empty\\\" >&2\\n  exit 1\\nfi\\n\\necho \\\"OK: /app/artifact/repo prepared at 1016ad24855fc7c0d0a608b581d2d743335307c1\\\"\\nls /app/artifact/repo | head -20\\ndu -sh /app/artifact/repo\", \"timeout_s\": 300}",
+      "input.mime_type": "application/json",
+      "output.value": "Cloning into 'repo'...\nNote: switching to '1016ad24855fc7c0d0a608b581d2d743335307c1'.\n\nYou are in 'detached HEAD' state. You can look around, make experimental\nchanges and commit them, and you can discard any commits you make in this\nstate without impacting any branches by switching back to a branch.\n\nIf you want to create a new branch to retain commits you create, you may\ndo so (now or later) by using -c with the switch command. Example:\n\n  git switch -c <new-branch-name>\n\nOr undo this operation with:\n\n  git switch -\n\nTurn off this advice by setting config variable advice.detachedHead to false\n\nHEAD is now at 1016ad24 feat: support agent a2a api (#3147)\nOK: /app/artifact/repo prepared at 1016ad24855fc7c0d0a608b581d2d743335307c1\nLICENSE\nMakefile\nREADME.md\nREADME_zh.md\naiagent\nalert\ncenter\ncli\ncmd\nconf\ncron\ndatasource\ndoc\ndocker\ndscache\ndskit\ndumper\netc\nfe.sh\nfront\n51M\t/app/artifact/repo\n",
+      "openinference.span.kind": "TOOL"
+    },
+    "events": [],
+    "links": [],
+    "resource": {
+      "attributes": {
+        "telemetry.sdk.language": "python",
+        "telemetry.sdk.name": "opentelemetry",
+        "telemetry.sdk.version": "1.41.1",
+        "service.name": "unknown_service"
+      },
+      "schema_url": ""
+    }
+  },
+  {
+    "name": "turn",
+    "context": {
+      "trace_id": "0x699c3c49f4b39534621031c24d79c2be",
+      "span_id": "0x2d0416b7e8a4dc5c",
+      "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": "0x9cbb299c528976df",
+    "start_time": "2026-05-13T05:40:23.875014Z",
+    "end_time": "2026-05-13T05:40:32.707976Z",
+    "status": {
+      "status_code": "OK"
+    },
+    "attributes": {
+      "llm.system": "openai",
+      "openinference.span.kind": "CHAIN"
+    },
+    "events": [],
+    "links": [],
+    "resource": {
+      "attributes": {
+        "telemetry.sdk.language": "python",
+        "telemetry.sdk.name": "opentelemetry",
+        "telemetry.sdk.version": "1.41.1",
+        "service.name": "unknown_service"
+      },
+      "schema_url": ""
+    }
+  },
+  {
+    "name": "generation",
+    "context": {
+      "trace_id": "0x699c3c49f4b39534621031c24d79c2be",
+      "span_id": "0xfe40596a39fb0845",
+      "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": "0xfaf446176fdb3dbe",
+    "start_time": "2026-05-13T05:40:32.709884Z",
+    "end_time": "2026-05-13T05:40:36.043383Z",
+    "status": {
+      "status_code": "OK"
+    },
+    "attributes": {
+      "llm.system": "openai",
+      "llm.model_name": "claude-opus-4-6",
+      "llm.invocation_parameters": "{\"base_url\": \"https://litellm-proxy.ml.scale.com/v1/\"}",
+      "input.value": "[{\"content\": \"You are a bootstrap agent preparing a SWE/code benchmark environment. Your ONLY job is to clone a specific repository at a specific commit and extract its file tree (NO git history) into /app/artifact/repo/. Execute the provided shell commands exactly \u2014 do not improvise, do not read source files, do not fetch anything else. After running, verify the guardrails passed and stop.\", \"role\": \"system\"}, {\"role\": \"user\", \"content\": \"You are a bootstrap agent preparing a SWE/code benchmark environment. Your ONLY job is to clone a specific repository at a specific commit and extract its file tree (NO git history) into /app/artifact/repo/. Execute the provided shell commands exactly via your bash tool \u2014 do not improvise, do not read source files, do not fetch anything else. After running, verify the guardrails passed and stop.\\n\\nRepository: https://github.com/ccfos/nightingale\\nBase commit: 1016ad24855fc7c0d0a608b581d2d743335307c1\\n\\nRun exactly these commands via your bash tool. Do not add anything else.\\n\\n```bash\\nmkdir -p /app/scratch\\ncd /app/scratch\\ngit clone https://github.com/ccfos/nightingale repo\\ncd repo\\ngit checkout 1016ad24855fc7c0d0a608b581d2d743335307c1\\n\\nmkdir -p /app/artifact\\ngit archive HEAD --prefix=repo/ | tar -x -C /app/artifact/\\n\\ncd /app\\nrm -rf /app/scratch\\n\\n# --- GUARDRAILS ---\\nif find /app/artifact -name .git -print 2>/dev/null | grep -q .; then\\n  echo \\\"FAIL: .git directory found under /app/artifact\\\" >&2\\n  exit 1\\nfi\\n\\nif [ ! -d /app/artifact/repo ] || [ -z \\\"$(ls -A /app/artifact/repo 2>/dev/null)\\\" ]; then\\n  echo \\\"FAIL: /app/artifact/repo is missing or empty\\\" >&2\\n  exit 1\\nfi\\n\\necho \\\"OK: /app/artifact/repo prepared at 1016ad24855fc7c0d0a608b581d2d743335307c1\\\"\\nls /app/artifact/repo | head -20\\ndu -sh /app/artifact/repo\\n```\\n\\nExecute each command via your bash tool and report the output. If any command fails, STOP and report the failure \u2014 do not try to recover or improvise. Do NOT spawn sub-agents for this step \u2014 run the bash commands yourself directly.\\n\"}, {\"role\": \"assistant\", \"content\": null, \"tool_calls\": [{\"id\": \"toolu_01RqS8KQXS3NyUERNaUnYYR2\", \"type\": \"function\", \"function\": {\"name\": \"bash\", \"arguments\": \"{\\\"command\\\": \\\"mkdir -p /app/scratch\\\\ncd /app/scratch\\\\ngit clone https://github.com/ccfos/nightingale repo\\\\ncd repo\\\\ngit checkout 1016ad24855fc7c0d0a608b581d2d743335307c1\\\\n\\\\nmkdir -p /app/artifact\\\\ngit archive HEAD --prefix=repo/ | tar -x -C /app/artifact/\\\\n\\\\ncd /app\\\\nrm -rf /app/scratch\\\\n\\\\n# --- GUARDRAILS ---\\\\nif find /app/artifact -name .git -print 2>/dev/null | grep -q .; then\\\\n  echo \\\\\\\"FAIL: .git directory found under /app/artifact\\\\\\\" >&2\\\\n  exit 1\\\\nfi\\\\n\\\\nif [ ! -d /app/artifact/repo ] || [ -z \\\\\\\"$(ls -A /app/artifact/repo 2>/dev/null)\\\\\\\" ]; then\\\\n  echo \\\\\\\"FAIL: /app/artifact/repo is missing or empty\\\\\\\" >&2\\\\n  exit 1\\\\nfi\\\\n\\\\necho \\\\\\\"OK: /app/artifact/repo prepared at 1016ad24855fc7c0d0a608b581d2d743335307c1\\\\\\\"\\\\nls /app/artifact/repo | head -20\\\\ndu -sh /app/artifact/repo\\\", \\\"timeout_s\\\": 300}\"}}]}, {\"role\": \"tool\", \"tool_call_id\": \"toolu_01RqS8KQXS3NyUERNaUnYYR2\", \"content\": \"Cloning into 'repo'...\\nNote: switching to '1016ad24855fc7c0d0a608b581d2d743335307c1'.\\n\\nYou are in 'detached HEAD' state. You can look around, make experimental\\nchanges and commit them, and you can discard any commits you make in this\\nstate without impacting any branches by switching back to a branch.\\n\\nIf you want to create a new branch to retain commits you create, you may\\ndo so (now or later) by using -c with the switch command. Example:\\n\\n  git switch -c <new-branch-name>\\n\\nOr undo this operation with:\\n\\n  git switch -\\n\\nTurn off this advice by setting config variable advice.detachedHead to false\\n\\nHEAD is now at 1016ad24 feat: support agent a2a api (#3147)\\nOK: /app/artifact/repo prepared at 1016ad24855fc7c0d0a608b581d2d743335307c1\\nLICENSE\\nMakefile\\nREADME.md\\nREADME_zh.md\\naiagent\\nalert\\ncenter\\ncli\\ncmd\\nconf\\ncron\\ndatasource\\ndoc\\ndocker\\ndscache\\ndskit\\ndumper\\netc\\nfe.sh\\nfront\\n51M\\t/app/artifact/repo\\n\"}]",
+      "input.mime_type": "application/json",
+      "llm.input_messages.0.message.role": "system",
+      "llm.input_messages.0.message.content": "You are a bootstrap agent preparing a SWE/code benchmark environment. Your ONLY job is to clone a specific repository at a specific commit and extract its file tree (NO git history) into /app/artifact/repo/. Execute the provided shell commands exactly \u2014 do not improvise, do not read source files, do not fetch anything else. After running, verify the guardrails passed and stop.",
+      "llm.input_messages.1.message.role": "user",
+      "llm.input_messages.1.message.content": "You are a bootstrap agent preparing a SWE/code benchmark environment. Your ONLY job is to clone a specific repository at a specific commit and extract its file tree (NO git history) into /app/artifact/repo/. Execute the provided shell commands exactly via your bash tool \u2014 do not improvise, do not read source files, do not fetch anything else. After running, verify the guardrails passed and stop.\n\nRepository: https://github.com/ccfos/nightingale\nBase commit: 1016ad24855fc7c0d0a608b581d2d743335307c1\n\nRun exactly these commands via your bash tool. Do not add anything else.\n\n```bash\nmkdir -p /app/scratch\ncd /app/scratch\ngit clone https://github.com/ccfos/nightingale repo\ncd repo\ngit checkout 1016ad24855fc7c0d0a608b581d2d743335307c1\n\nmkdir -p /app/artifact\ngit archive HEAD --prefix=repo/ | tar -x -C /app/artifact/\n\ncd /app\nrm -rf /app/scratch\n\n# --- GUARDRAILS ---\nif find /app/artifact -name .git -print 2>/dev/null | grep -q .; then\n  echo \"FAIL: .git directory found under /app/artifact\" >&2\n  exit 1\nfi\n\nif [ ! -d /app/artifact/repo ] || [ -z \"$(ls -A /app/artifact/repo 2>/dev/null)\" ]; then\n  echo \"FAIL: /app/artifact/repo is missing or empty\" >&2\n  exit 1\nfi\n\necho \"OK: /app/artifact/repo prepared at 1016ad24855fc7c0d0a608b581d2d743335307c1\"\nls /app/artifact/repo | head -20\ndu -sh /app/artifact/repo\n```\n\nExecute each command via your bash tool and report the output. If any command fails, STOP and report the failure \u2014 do not try to recover or improvise. Do NOT spawn sub-agents for this step \u2014 run the bash commands yourself directly.\n",
+      "llm.input_messages.2.message.role": "assistant",
+      "llm.input_messages.2.message.tool_calls.0.tool_call.id": "toolu_01RqS8KQXS3NyUERNaUnYYR2",
+      "llm.input_messages.2.message.tool_calls.0.tool_call.function.name": "bash",
+      "llm.input_messages.2.message.tool_calls.0.tool_call.function.arguments": "{\"command\": \"mkdir -p /app/scratch\\ncd /app/scratch\\ngit clone https://github.com/ccfos/nightingale repo\\ncd repo\\ngit checkout 1016ad24855fc7c0d0a608b581d2d743335307c1\\n\\nmkdir -p /app/artifact\\ngit archive HEAD --prefix=repo/ | tar -x -C /app/artifact/\\n\\ncd /app\\nrm -rf /app/scratch\\n\\n# --- GUARDRAILS ---\\nif find /app/artifact -name .git -print 2>/dev/null | grep -q .; then\\n  echo \\\"FAIL: .git directory found under /app/artifact\\\" >&2\\n  exit 1\\nfi\\n\\nif [ ! -d /app/artifact/repo ] || [ -z \\\"$(ls -A /app/artifact/repo 2>/dev/null)\\\" ]; then\\n  echo \\\"FAIL: /app/artifact/repo is missing or empty\\\" >&2\\n  exit 1\\nfi\\n\\necho \\\"OK: /app/artifact/repo prepared at 1016ad24855fc7c0d0a608b581d2d743335307c1\\\"\\nls /app/artifact/repo | head -20\\ndu -sh /app/artifact/repo\", \"timeout_s\": 300}",
+      "llm.input_messages.3.message.role": "tool",
+      "llm.input_messages.3.message.content": "Cloning into 'repo'...\nNote: switching to '1016ad24855fc7c0d0a608b581d2d743335307c1'.\n\nYou are in 'detached HEAD' state. You can look around, make experimental\nchanges and commit them, and you can discard any commits you make in this\nstate without impacting any branches by switching back to a branch.\n\nIf you want to create a new branch to retain commits you create, you may\ndo so (now or later) by using -c with the switch command. Example:\n\n  git switch -c <new-branch-name>\n\nOr undo this operation with:\n\n  git switch -\n\nTurn off this advice by setting config variable advice.detachedHead to false\n\nHEAD is now at 1016ad24 feat: support agent a2a api (#3147)\nOK: /app/artifact/repo prepared at 1016ad24855fc7c0d0a608b581d2d743335307c1\nLICENSE\nMakefile\nREADME.md\nREADME_zh.md\naiagent\nalert\ncenter\ncli\ncmd\nconf\ncron\ndatasource\ndoc\ndocker\ndscache\ndskit\ndumper\netc\nfe.sh\nfront\n51M\t/app/artifact/repo\n",
+      "llm.input_messages.3.message.tool_call_id": "toolu_01RqS8KQXS3NyUERNaUnYYR2",
+      "output.value": "[{\"content\": \"All commands executed successfully. Here's the summary:\\n\\n- **Repository cloned**: `https://github.com/ccfos/nightingale`\\n- **Commit checked out**: `1016ad24855fc7c0d0a608b581d2d743335307c1` (feat: support agent a2a api (#3147))\\n- **Extracted to**: `/app/artifact/repo/` (51MB, no `.git` directory)\\n- **Guardrails**: All passed \u2705\", \"refusal\": null, \"role\": \"assistant\", \"annotations\": null, \"audio\": null, \"function_call\": null, \"tool_calls\": null, \"provider_specific_fields\": {\"citations\": null, \"thinking_blocks\": null}}]",
+      "output.mime_type": "application/json",
+      "llm.output_messages.0.message.role": "assistant",
+      "llm.output_messages.0.message.content": "All commands executed successfully. Here's the summary:\n\n- **Repository cloned**: `https://github.com/ccfos/nightingale`\n- **Commit checked out**: `1016ad24855fc7c0d0a608b581d2d743335307c1` (feat: support agent a2a api (#3147))\n- **Extracted to**: `/app/artifact/repo/` (51MB, no `.git` directory)\n- **Guardrails**: All passed \u2705",
+      "llm.token_count.prompt": 2508,
+      "llm.token_count.completion": 119,
+      "openinference.span.kind": "LLM"
+    },
+    "events": [],
+    "links": [],
+    "resource": {
+      "attributes": {
+        "telemetry.sdk.language": "python",
+        "telemetry.sdk.name": "opentelemetry",
+        "telemetry.sdk.version": "1.41.1",
+        "service.name": "unknown_service"
+      },
+      "schema_url": ""
+    }
+  },
+  {
+    "name": "turn",
+    "context": {
+      "trace_id": "0x699c3c49f4b39534621031c24d79c2be",
+      "span_id": "0xfaf446176fdb3dbe",
+      "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": "0x9cbb299c528976df",
+    "start_time": "2026-05-13T05:40:32.708397Z",
+    "end_time": "2026-05-13T05:40:36.044394Z",
+    "status": {
+      "status_code": "OK"
+    },
+    "attributes": {
+      "llm.system": "openai",
+      "openinference.span.kind": "CHAIN"
+    },
+    "events": [],
+    "links": [],
+    "resource": {
+      "attributes": {
+        "telemetry.sdk.language": "python",
+        "telemetry.sdk.name": "opentelemetry",
+        "telemetry.sdk.version": "1.41.1",
+        "service.name": "unknown_service"
+      },
+      "schema_url": ""
+    }
+  },
+  {
+    "name": "Orchestrator",
+    "context": {
+      "trace_id": "0x699c3c49f4b39534621031c24d79c2be",
+      "span_id": "0x9cbb299c528976df",
+      "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": "0x043cc821ff040f72",
+    "start_time": "2026-05-13T05:40:23.874843Z",
+    "end_time": "2026-05-13T05:40:36.044798Z",
+    "status": {
+      "status_code": "OK"
+    },
+    "attributes": {
+      "llm.system": "openai",
+      "graph.node.id": "Orchestrator",
+      "openinference.span.kind": "AGENT"
+    },
+    "events": [],
+    "links": [],
+    "resource": {
+      "attributes": {
+        "telemetry.sdk.language": "python",
+        "telemetry.sdk.name": "opentelemetry",
+        "telemetry.sdk.version": "1.41.1",
+        "service.name": "unknown_service"
+      },
+      "schema_url": ""
+    }
+  },
+  {
+    "name": "Agent workflow",
+    "context": {
+      "trace_id": "0x699c3c49f4b39534621031c24d79c2be",
+      "span_id": "0x043cc821ff040f72",
+      "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": "0xea82dc708b04e3ca",
+    "start_time": "2026-05-13T05:40:23.873360Z",
+    "end_time": "2026-05-13T05:40:36.044895Z",
+    "status": {
+      "status_code": "OK"
+    },
+    "attributes": {
+      "llm.system": "openai",
+      "openinference.span.kind": "CHAIN"
+    },
+    "events": [],
+    "links": [],
+    "resource": {
+      "attributes": {
+        "telemetry.sdk.language": "python",
+        "telemetry.sdk.name": "opentelemetry",
+        "telemetry.sdk.version": "1.41.1",
+        "service.name": "unknown_service"
+      },
+      "schema_url": ""
+    }
+  },
+  {
+    "name": "Agent workflow",
+    "context": {
+      "trace_id": "0x699c3c49f4b39534621031c24d79c2be",
+      "span_id": "0xea82dc708b04e3ca",
+      "trace_state": "[]"
+    },
+    "kind": "SpanKind.INTERNAL",
+    "parent_id": null,
+    "start_time": "2026-05-13T05:40:23.872867Z",
+    "end_time": "2026-05-13T05:40:36.044953Z",
+    "status": {
+      "status_code": "OK"
+    },
+    "attributes": {
+      "openinference.span.kind": "AGENT"
+    },
+    "events": [],
+    "links": [],
+    "resource": {
+      "attributes": {
+        "telemetry.sdk.language": "python",
+        "telemetry.sdk.name": "opentelemetry",
+        "telemetry.sdk.version": "1.41.1",
+        "service.name": "unknown_service"
+      },
+      "schema_url": ""
+    }
+  }
+]
