@@ -26,11 +26,15 @@ For each layer in `L0 L1 L10`:
    (only on the first layer; copy the resulting `spec.md` to the other layers' workspaces)
 3. Run `~/.claude/skills/qc-auditor/scripts/fetch_tasks.py --project 69bee012be45f06904292c9a --layer <layer> --api-key $REDASH_KEY --out <workspace>/tasks/`
 4. If task count is 0, skip to next layer.
-5. For every task, spawn 3 auditor sub-agents in parallel (`general-purpose`), batching ~30 per turn. Each sub-agent reads `~/.claude/skills/qc-auditor/agents/auditor.md` and gets `TASK_PATH / SPEC_PATH / PROJECT_OVERRIDES_PATH / USER_NOTES (empty) / OUTPUT_PATH=findings/<tid>/auditor_<N>.json / FETCH_ARTIFACTS=true`.
-6. After all auditors finish, spawn one master per task using `~/.claude/skills/qc-auditor/agents/master_auditor.md` with `RETRY_ROUND=0`.
-7. For every task whose validated file has `status == "needs_reaudit"`, run a single re-audit round (3 fresh auditors → 1 round-1 master). Cap at one re-audit per task.
-8. `~/.claude/skills/qc-auditor/scripts/compile_csv.py <workspace>/validated/ <workspace>/audit_results.csv`
-9. Copy `audit_results.csv` and `run_summary.json` to `/home/user/evals/results/<layer>_audit_results.csv` and `<layer>_run_summary.json` (overwrite per layer).
+5. **Linter pre-pass** (Thoth-specific; runs in parallel with step 6):
+   `GOLD_CHECKER_PATH=~/swarmImprove/gold_checker_vercel python3 ~/.claude/skills/qc-auditor/scripts/run_linter.py --workspace <workspace> --api-key $REDASH_KEY`
+   If the package isn't present, the script exits 0 silently and the linter columns in the CSV stay empty — log it and continue.
+6. For every task, spawn 3 auditor sub-agents in parallel (`general-purpose`), batching ~30 per turn. Each sub-agent reads `~/.claude/skills/qc-auditor/agents/auditor.md` and gets `TASK_PATH / SPEC_PATH / PROJECT_OVERRIDES_PATH / USER_NOTES (empty) / OUTPUT_PATH=findings/<tid>/auditor_<N>.json / FETCH_ARTIFACTS=true`.
+7. After all auditors finish, spawn one master per task using `~/.claude/skills/qc-auditor/agents/master_auditor.md` with `RETRY_ROUND=0`.
+8. For every task whose validated file has `status == "needs_reaudit"`, run a single re-audit round (3 fresh auditors → 1 round-1 master). Cap at one re-audit per task.
+9. `~/.claude/skills/qc-auditor/scripts/compile_csv.py <workspace>/validated/ <workspace>/audit_results.csv`
+   (compile_csv joins the linter outputs into the CSV when `<workspace>/linter/` exists)
+10. Copy `audit_results.csv` and `run_summary.json` to `/home/user/evals/results/<layer>_audit_results.csv` and `<layer>_run_summary.json` (overwrite per layer).
 
 ## 3. Push to InfoHub
 
