@@ -1,0 +1,268 @@
+task_id,source_url,gold_yaml,justification
+6a03066bbedbbd40de721aec,https://static.remotasks.com/uploads/69bee012be45f06904292c9a/argoproj_argo_cd_27674_gold.yaml,"task_id: swe__argoproj_argo_cd__pr27674
+primary_decomposition:
+- subtask_id: primary_implementer
+  description: 'Implement the changes described in single_agent_prompt by editing the primary source files in artifacts/repo/ at the base commit. Stay grounded in what each file actually needs to change;
+    the goal is to produce a unified diff that achieves: feat: Add suspend/resume actions for MariaDB (#27675). Primary files in scope: resource_customizations/k8s.mariadb.com/MariaDB/actions/discovery.lua,
+    resource_customizations/k8s.mariadb.com/MariaDB/actions/resume/action.lua, resource_customizations/k8s.mariadb.com/MariaDB/actions/suspend/action.lua.'
+  expected_input: 'artifacts/repo/ (full repository checkout at the base commit). Primary source files in scope: resource_customizations/k8s.mariadb.com/MariaDB/actions/discovery.lua, resource_customizations/k8s.mariadb.com/MariaDB/actions/resume/action.lua,
+    resource_customizations/k8s.mariadb.com/MariaDB/actions/suspend/action.lua.'
+  expected_output: 'Modified primary source files producing the substantive code changes for the goal. Files: resource_customizations/k8s.mariadb.com/MariaDB/actions/discovery.lua, resource_customizations/k8s.mariadb.com/MariaDB/actions/resume/action.lua,
+    resource_customizations/k8s.mariadb.com/MariaDB/actions/suspend/action.lua.'
+  depends_on: []
+  is_parallelizable: true
+- subtask_id: integration_verifier
+  description: 'Update any ancillary files (configuration, tests, documentation, manifests) in artifacts/repo/ that the primary changes require, verify the complete set of edits is consistent (no dangling
+    imports, no references to removed symbols, all manifest files updated), and produce the final unified diff that applies cleanly on top of the base commit and achieves the stated goal. Ancillary files
+    in scope: docs/operator-manual/resource_actions_builtin.md, resource_customizations/k8s.mariadb.com/MariaDB/actions/action_test.yaml, resource_customizations/k8s.mariadb.com/MariaDB/actions/testdata/cluster_healthy.yaml,
+    resource_customizations/k8s.mariadb.com/MariaDB/actions/testdata/cluster_suspended.yaml.'
+  expected_input: 'output of primary_implementer, artifacts/repo/ ancillary files: docs/operator-manual/resource_actions_builtin.md, resource_customizations/k8s.mariadb.com/MariaDB/actions/action_test.yaml,
+    resource_customizations/k8s.mariadb.com/MariaDB/actions/testdata/cluster_healthy.yaml, resource_customizations/k8s.mariadb.com/MariaDB/actions/testdata/cluster_suspended.yaml.'
+  expected_output: Complete verified unified diff ready for submission via submit_deliverable.
+  depends_on:
+  - primary_implementer
+  is_parallelizable: false
+minimum_viable_agents: 1
+optimal_agents: 2
+maximum_useful_agents: 2
+",No modifications needed
+6a03066bbedbbd40de721af3,https://static.remotasks.com/uploads/69bee012be45f06904292c9a/knoxio_pops_2613_gold.yaml,"task_id: swe__knoxio_pops__pr2613
+primary_decomposition:
+- subtask_id: primary_implementer
+  description: 'Implement the changes described in single_agent_prompt by editing the primary source files in artifacts/repo/ at the base commit. Stay grounded in what each file actually needs to change;
+    the goal is to produce a unified diff that achieves: fix(i18n): add missing cerebrum sub-nav labels + transactions date column (#2611). Primary files in scope: apps/pops-shell/src/i18n/locales/en-AU/finance.json,
+    apps/pops-shell/src/i18n/locales/en-AU/navigation.json, apps/pops-shell/src/i18n/locales/pt-BR/finance.json, apps/pops-shell/src/i18n/locales/pt-BR/navigation.json.'
+  expected_input: 'artifacts/repo/ (full repository checkout at the base commit). Primary source files in scope: apps/pops-shell/src/i18n/locales/en-AU/finance.json, apps/pops-shell/src/i18n/locales/en-AU/navigation.json,
+    apps/pops-shell/src/i18n/locales/pt-BR/finance.json, apps/pops-shell/src/i18n/locales/pt-BR/navigation.json.'
+  expected_output: 'Modified primary source files producing the substantive code changes for the goal. Files: apps/pops-shell/src/i18n/locales/en-AU/finance.json, apps/pops-shell/src/i18n/locales/en-AU/navigation.json,
+    apps/pops-shell/src/i18n/locales/pt-BR/finance.json, apps/pops-shell/src/i18n/locales/pt-BR/navigation.json.'
+  depends_on: []
+  is_parallelizable: true
+- subtask_id: integration_verifier
+  description: 'Update any ancillary files (configuration, tests, documentation, manifests) in artifacts/repo/ that the primary changes require, verify the complete set of edits is consistent (no dangling
+    imports, no references to removed symbols, all manifest files updated), and produce the final unified diff that applies cleanly on top of the base commit and achieves the stated goal. Ancillary files
+    in scope: apps/pops-shell/src/i18n/index.test.ts.'
+  expected_input: 'output of primary_implementer, artifacts/repo/ ancillary files: apps/pops-shell/src/i18n/index.test.ts.'
+  expected_output: Complete verified unified diff ready for submission via submit_deliverable.
+  depends_on:
+  - primary_implementer
+  is_parallelizable: false
+minimum_viable_agents: 1
+optimal_agents: 2
+maximum_useful_agents: 2
+",No modifications needed
+6a03066bbedbbd40de721af4,https://static.remotasks.com/uploads/69bee012be45f06904292c9a/kubernetes_sigs_kustomize_6037_gold.yaml,"task_id: swe__kubernetes_sigs_kustomize__pr6037
+primary_decomposition:
+- subtask_id: primary_implementer
+  description: 'Implement the changes described in single_agent_prompt by editing the primary source files in artifacts/repo/ at the base commit. Stay grounded in what each file actually needs to change;
+    the goal is to produce a unified diff that achieves: feat: add support for ''kustomize edit add configuration'' command. Primary files in scope: kustomize/commands/edit/add/addconfiguration.go, kustomize/commands/edit/add/all.go.'
+  expected_input: 'artifacts/repo/ (full repository checkout at the base commit). Primary source files in scope: kustomize/commands/edit/add/addconfiguration.go, kustomize/commands/edit/add/all.go.'
+  expected_output: 'Modified primary source files producing the substantive code changes for the goal. Files: kustomize/commands/edit/add/addconfiguration.go, kustomize/commands/edit/add/all.go.'
+  depends_on: []
+  is_parallelizable: true
+- subtask_id: integration_verifier
+  description: 'Update any ancillary files (configuration, tests, documentation, manifests) in artifacts/repo/ that the primary changes require, verify the complete set of edits is consistent (no dangling
+    imports, no references to removed symbols, all manifest files updated), and produce the final unified diff that applies cleanly on top of the base commit and achieves the stated goal. Ancillary files
+    in scope: kustomize/commands/edit/add/addconfiguration_test.go.'
+  expected_input: 'output of primary_implementer, artifacts/repo/ ancillary files: kustomize/commands/edit/add/addconfiguration_test.go.'
+  expected_output: Complete verified unified diff ready for submission via submit_deliverable.
+  depends_on:
+  - primary_implementer
+  is_parallelizable: false
+minimum_viable_agents: 1
+optimal_agents: 2
+maximum_useful_agents: 2
+",No modifications needed
+6a03066bbedbbd40de721af5,https://static.remotasks.com/uploads/69bee012be45f06904292c9a/modelcontextprotocol_python_sdk_2380_gold.yaml,"task_id: swe__modelcontextprotocol_python_sdk__pr2380
+primary_decomposition:
+- subtask_id: primary_implementer
+  description: 'Implement the changes described in single_agent_prompt by editing the primary source files in artifacts/repo/ at the base commit. Stay grounded in what each file actually needs to change;
+    the goal is to produce a unified diff that achieves: Don''t block the event loop on sync resource and prompt functions. Primary files in scope: src/mcp/server/mcpserver/prompts/base.py, src/mcp/server/mcpserver/resources/templates.py,
+    src/mcp/server/mcpserver/resources/types.py.'
+  expected_input: 'artifacts/repo/ (full repository checkout at the base commit). Primary source files in scope: src/mcp/server/mcpserver/prompts/base.py, src/mcp/server/mcpserver/resources/templates.py,
+    src/mcp/server/mcpserver/resources/types.py.'
+  expected_output: 'Modified primary source files producing the substantive code changes for the goal. Files: src/mcp/server/mcpserver/prompts/base.py, src/mcp/server/mcpserver/resources/templates.py, src/mcp/server/mcpserver/resources/types.py.'
+  depends_on: []
+  is_parallelizable: true
+- subtask_id: integration_verifier
+  description: 'Update any ancillary files (configuration, tests, documentation, manifests) in artifacts/repo/ that the primary changes require, verify the complete set of edits is consistent (no dangling
+    imports, no references to removed symbols, all manifest files updated), and produce the final unified diff that applies cleanly on top of the base commit and achieves the stated goal. Ancillary files
+    in scope: tests/server/mcpserver/prompts/test_base.py, tests/server/mcpserver/resources/test_function_resources.py, tests/server/mcpserver/resources/test_resource_template.py.'
+  expected_input: 'output of primary_implementer, artifacts/repo/ ancillary files: tests/server/mcpserver/prompts/test_base.py, tests/server/mcpserver/resources/test_function_resources.py, tests/server/mcpserver/resources/test_resource_template.py.'
+  expected_output: Complete verified unified diff ready for submission via submit_deliverable.
+  depends_on:
+  - primary_implementer
+  is_parallelizable: false
+minimum_viable_agents: 1
+optimal_agents: 2
+maximum_useful_agents: 2
+",No modifications needed
+6a03066bbedbbd40de721af8,https://static.remotasks.com/uploads/69bee012be45f06904292c9a/refcell_edge-rs_9_gold.yaml,"task_id: swe__refcell_edge-rs__pr9
+primary_decomposition:
+- subtask_id: planner
+  description: 'Analyze the edge-rs repository at base commit 23c44a632f2c and plan the implementation of PR #9 (Egglog-based
+    IR, codegen, bytecode optimizer, and comprehensive test suite). The PR touches files under bin, book, crates, examples,
+    solidity-bench (extensions: edge, egg, hex, md, rs, sol, toml). Read the relevant source to determine the change pattern,
+    identify which files drive the core change and which are downstream updates, and produce a step-by-step plan. The full
+    PR-modified file list is in expected_input.'
+  expected_input: 'artifacts/repo/ (full repository checkout at base commit). Primary source files in PR: bin/edgec/src/cli.rs,
+    bin/edgec/src/main.rs, crates/ast/src/item.rs, crates/codegen/src/assembler.rs, crates/codegen/src/bytecode_opt/convert.rs,
+    crates/codegen/src/bytecode_opt/costs.rs, crates/codegen/src/bytecode_opt/mod.rs, crates/codegen/src/bytecode_opt/rules.rs,
+    crates/codegen/src/bytecode_opt/schedule.rs, crates/codegen/src/bytecode_opt/schema.rs, crates/codegen/src/contract.rs,
+    crates/codegen/src/dispatcher.rs, crates/codegen/src/expr_compiler.rs, crates/codegen/src/gen.rs, crates/codegen/src/lib.rs,
+    crates/codegen/src/opcode.rs, crates/codegen/src/pretty_asm.rs, crates/codegen/src/subroutine_extract.rs, crates/driver/src/compiler.rs,
+    crates/driver/src/config.rs, crates/evm-tests/src/lib.rs, crates/ir/src/ast_helpers.rs, crates/ir/src/cleanup.rs, crates/ir/src/costs.rs,
+    crates/ir/src/instruction.rs, crates/ir/src/lib.rs, crates/ir/src/lower.rs, crates/ir/src/optimizations/mod.rs, crates/ir/src/pretty.rs,
+    crates/ir/src/program.rs, crates/ir/src/schedule.rs, crates/ir/src/schema.rs, crates/ir/src/sexp.rs, crates/ir/src/storage_hoist.rs,
+    crates/ir/src/to_egglog.rs, crates/ir/src/u256_sort.rs, crates/ir/src/var_opt.rs, crates/lexer/src/lexer.rs, crates/parser/src/parser.rs,
+    crates/typeck/src/checker.rs, crates/types/src/bytes.rs, solidity-bench/src/Counter.sol, solidity-bench/src/ERC20.sol.
+    Secondary files in PR: Cargo.toml, bin/edgec/Cargo.toml, book/SUMMARY.md, book/compiler/overview.md, crates/codegen/Cargo.toml,
+    crates/driver/Cargo.toml, crates/driver/tests/compile_tests.rs, crates/driver/tests/golden/counter_o0.hex, crates/driver/tests/golden/erc20_o0.hex,
+    crates/e2e/tests/access_exec.rs, crates/e2e/tests/calldata_args.rs, crates/e2e/tests/counter.rs, crates/e2e/tests/erc20.rs,
+    crates/e2e/tests/examples.rs, crates/e2e/tests/expressions.rs, crates/e2e/tests/features_exec.rs, crates/e2e/tests/finance_exec.rs,
+    crates/e2e/tests/patterns_exec.rs, crates/e2e/tests/tokens_exec.rs, crates/e2e/tests/type_demos_exec.rs, crates/e2e/tests/types_exec.rs,
+    crates/e2e/tests/utils_exec.rs, crates/evm-tests/Cargo.toml, crates/evm-tests/tests/checked_elision.rs, crates/evm-tests/tests/counter.rs,
+    crates/evm-tests/tests/erc20.rs, crates/evm-tests/tests/gas_bench.rs, crates/evm-tests/tests/gas_stats.rs, crates/evm-tests/tests/loop_extraction.rs,
+    crates/evm-tests/tests/o2_size_debug.rs, crates/evm-tests/tests/opt_efficiency.rs, crates/evm-tests/tests/opt_equivalence.rs,
+    crates/evm-tests/tests/spec_compliance.rs, crates/evm-tests/tests/stress.rs, crates/evm-tests/tests/subroutine.rs, crates/evm-tests/tests/transient.rs,
+    crates/ir/Cargo.toml, crates/ir/src/optimizations/arithmetic.egg, crates/ir/src/optimizations/checked_arithmetic.egg,
+    crates/ir/src/optimizations/cse.egg, crates/ir/src/optimizations/dead_code.egg, crates/ir/src/optimizations/memory.egg,
+    crates/ir/src/optimizations/peepholes.egg, crates/ir/src/optimizations/range_analysis.egg, crates/ir/src/optimizations/storage.egg,
+    crates/ir/src/optimizations/type_propagation.egg, crates/ir/src/optimizations/u256_const_fold.egg, crates/ir/src/schema.egg,
+    crates/lexer/tests/operators.rs, deny.toml, examples/loop_extraction.edge, examples/optimizable.edge, examples/stress_conditionals.edge,
+    examples/stress_loops.edge, examples/stress_storage.edge, examples/stress_variables.edge, examples/test_arrays.edge, examples/test_builtins.edge,
+    examples/test_checked_arith.edge, examples/test_checked_elision.edge, examples/test_constants.edge, examples/test_control_flow.edge,
+    examples/test_elision_simple.edge, examples/test_enums2.edge, examples/test_erc20.edge, examples/test_events_heavy.edge,
+    examples/test_functions.edge, examples/test_inline.edge, examples/test_logs.edge, examples/test_loop_storage.edge, examples/test_mappings.edge,
+    examples/test_merkle.edge, examples/test_operators.edge, examples/test_storage_heavy.edge, examples/test_structs.edge,
+    examples/test_transient.edge, examples/transient.edge, solidity-bench/.gitignore, solidity-bench/foundry.toml, solidity-bench/test/CounterGas.t.sol,
+    solidity-bench/test/ERC20Gas.t.sol.'
+  expected_output: Detailed file-level change plan specifying which files to create, modify, or delete and the exact nature
+    of each change
+  depends_on: []
+  is_parallelizable: true
+- subtask_id: primary_implementer
+  description: 'Implement the core changes for PR #9 (Egglog-based IR, codegen, bytecode optimizer, and comprehensive test
+    suite) by editing the primary source files in artifacts/repo/: bin/edgec/src/cli.rs, bin/edgec/src/main.rs, crates/ast/src/item.rs,
+    crates/codegen/src/assembler.rs, crates/codegen/src/bytecode_opt/convert.rs, crates/codegen/src/bytecode_opt/costs.rs,
+    crates/codegen/src/bytecode_opt/mod.rs, crates/codegen/src/bytecode_opt/rules.rs, crates/codegen/src/bytecode_opt/schedule.rs,
+    crates/codegen/src/bytecode_opt/schema.rs, crates/codegen/src/contract.rs, crates/codegen/src/dispatcher.rs, crates/codegen/src/expr_compiler.rs,
+    crates/codegen/src/gen.rs, crates/codegen/src/lib.rs, crates/codegen/src/opcode.rs, crates/codegen/src/pretty_asm.rs,
+    crates/codegen/src/subroutine_extract.rs, crates/driver/src/compiler.rs, crates/driver/src/config.rs, crates/evm-tests/src/lib.rs,
+    crates/ir/src/ast_helpers.rs, crates/ir/src/cleanup.rs, crates/ir/src/costs.rs, crates/ir/src/instruction.rs, crates/ir/src/lib.rs,
+    crates/ir/src/lower.rs, crates/ir/src/optimizations/mod.rs, crates/ir/src/pretty.rs, crates/ir/src/program.rs, crates/ir/src/schedule.rs,
+    crates/ir/src/schema.rs, crates/ir/src/sexp.rs, crates/ir/src/storage_hoist.rs, crates/ir/src/to_egglog.rs, crates/ir/src/u256_sort.rs,
+    crates/ir/src/var_opt.rs, crates/lexer/src/lexer.rs, crates/parser/src/parser.rs, crates/typeck/src/checker.rs, crates/types/src/bytes.rs,
+    solidity-bench/src/Counter.sol, solidity-bench/src/ERC20.sol. Follow the plan from the planner; the specific edits depend
+    on the PR''s intent (new feature, refactor, bug fix, etc.) — stay grounded in what the source files actually need to change.'
+  expected_input: 'output of planner, artifacts/repo/ source files: bin/edgec/src/cli.rs, bin/edgec/src/main.rs, crates/ast/src/item.rs,
+    crates/codegen/src/assembler.rs, crates/codegen/src/bytecode_opt/convert.rs, crates/codegen/src/bytecode_opt/costs.rs,
+    crates/codegen/src/bytecode_opt/mod.rs, crates/codegen/src/bytecode_opt/rules.rs, crates/codegen/src/bytecode_opt/schedule.rs,
+    crates/codegen/src/bytecode_opt/schema.rs, crates/codegen/src/contract.rs, crates/codegen/src/dispatcher.rs, crates/codegen/src/expr_compiler.rs,
+    crates/codegen/src/gen.rs, crates/codegen/src/lib.rs, crates/codegen/src/opcode.rs, crates/codegen/src/pretty_asm.rs,
+    crates/codegen/src/subroutine_extract.rs, crates/driver/src/compiler.rs, crates/driver/src/config.rs, crates/evm-tests/src/lib.rs,
+    crates/ir/src/ast_helpers.rs, crates/ir/src/cleanup.rs, crates/ir/src/costs.rs, crates/ir/src/instruction.rs, crates/ir/src/lib.rs,
+    crates/ir/src/lower.rs, crates/ir/src/optimizations/mod.rs, crates/ir/src/pretty.rs, crates/ir/src/program.rs, crates/ir/src/schedule.rs,
+    crates/ir/src/schema.rs, crates/ir/src/sexp.rs, crates/ir/src/storage_hoist.rs, crates/ir/src/to_egglog.rs, crates/ir/src/u256_sort.rs,
+    crates/ir/src/var_opt.rs, crates/lexer/src/lexer.rs, crates/parser/src/parser.rs, crates/typeck/src/checker.rs, crates/types/src/bytes.rs,
+    solidity-bench/src/Counter.sol, solidity-bench/src/ERC20.sol'
+  expected_output: 'Modified primary source files: bin/edgec/src/cli.rs, bin/edgec/src/main.rs, crates/ast/src/item.rs, crates/codegen/src/assembler.rs,
+    crates/codegen/src/bytecode_opt/convert.rs, crates/codegen/src/bytecode_opt/costs.rs, crates/codegen/src/bytecode_opt/mod.rs,
+    crates/codegen/src/bytecode_opt/rules.rs, crates/codegen/src/bytecode_opt/schedule.rs, crates/codegen/src/bytecode_opt/schema.rs,
+    crates/codegen/src/contract.rs, crates/codegen/src/dispatcher.rs, crates/codegen/src/expr_compiler.rs, crates/codegen/src/gen.rs,
+    crates/codegen/src/lib.rs, crates/codegen/src/opcode.rs, crates/codegen/src/pretty_asm.rs, crates/codegen/src/subroutine_extract.rs,
+    crates/driver/src/compiler.rs, crates/driver/src/config.rs, crates/evm-tests/src/lib.rs, crates/ir/src/ast_helpers.rs,
+    crates/ir/src/cleanup.rs, crates/ir/src/costs.rs, crates/ir/src/instruction.rs, crates/ir/src/lib.rs, crates/ir/src/lower.rs,
+    crates/ir/src/optimizations/mod.rs, crates/ir/src/pretty.rs, crates/ir/src/program.rs, crates/ir/src/schedule.rs, crates/ir/src/schema.rs,
+    crates/ir/src/sexp.rs, crates/ir/src/storage_hoist.rs, crates/ir/src/to_egglog.rs, crates/ir/src/u256_sort.rs, crates/ir/src/var_opt.rs,
+    crates/lexer/src/lexer.rs, crates/parser/src/parser.rs, crates/typeck/src/checker.rs, crates/types/src/bytes.rs, solidity-bench/src/Counter.sol,
+    solidity-bench/src/ERC20.sol'
+  depends_on:
+  - planner
+  is_parallelizable: true
+- subtask_id: secondary_updater
+  description: 'Update the secondary files for PR #9 (Egglog-based IR, codegen, bytecode optimizer, and comprehensive test
+    suite) in artifacts/repo/: Cargo.toml, bin/edgec/Cargo.toml, book/SUMMARY.md, book/compiler/overview.md, crates/codegen/Cargo.toml,
+    crates/driver/Cargo.toml, crates/driver/tests/compile_tests.rs, crates/driver/tests/golden/counter_o0.hex, crates/driver/tests/golden/erc20_o0.hex,
+    crates/e2e/tests/access_exec.rs, crates/e2e/tests/calldata_args.rs, crates/e2e/tests/counter.rs, crates/e2e/tests/erc20.rs,
+    crates/e2e/tests/examples.rs, crates/e2e/tests/expressions.rs, crates/e2e/tests/features_exec.rs, crates/e2e/tests/finance_exec.rs,
+    crates/e2e/tests/patterns_exec.rs, crates/e2e/tests/tokens_exec.rs, crates/e2e/tests/type_demos_exec.rs, crates/e2e/tests/types_exec.rs,
+    crates/e2e/tests/utils_exec.rs, crates/evm-tests/Cargo.toml, crates/evm-tests/tests/checked_elision.rs, crates/evm-tests/tests/counter.rs,
+    crates/evm-tests/tests/erc20.rs, crates/evm-tests/tests/gas_bench.rs, crates/evm-tests/tests/gas_stats.rs, crates/evm-tests/tests/loop_extraction.rs,
+    crates/evm-tests/tests/o2_size_debug.rs, crates/evm-tests/tests/opt_efficiency.rs, crates/evm-tests/tests/opt_equivalence.rs,
+    crates/evm-tests/tests/spec_compliance.rs, crates/evm-tests/tests/stress.rs, crates/evm-tests/tests/subroutine.rs, crates/evm-tests/tests/transient.rs,
+    crates/ir/Cargo.toml, crates/ir/src/optimizations/arithmetic.egg, crates/ir/src/optimizations/checked_arithmetic.egg,
+    crates/ir/src/optimizations/cse.egg, crates/ir/src/optimizations/dead_code.egg, crates/ir/src/optimizations/memory.egg,
+    crates/ir/src/optimizations/peepholes.egg, crates/ir/src/optimizations/range_analysis.egg, crates/ir/src/optimizations/storage.egg,
+    crates/ir/src/optimizations/type_propagation.egg, crates/ir/src/optimizations/u256_const_fold.egg, crates/ir/src/schema.egg,
+    crates/lexer/tests/operators.rs, deny.toml, examples/loop_extraction.edge, examples/optimizable.edge, examples/stress_conditionals.edge,
+    examples/stress_loops.edge, examples/stress_storage.edge, examples/stress_variables.edge, examples/test_arrays.edge, examples/test_builtins.edge,
+    examples/test_checked_arith.edge, examples/test_checked_elision.edge, examples/test_constants.edge, examples/test_control_flow.edge,
+    examples/test_elision_simple.edge, examples/test_enums2.edge, examples/test_erc20.edge, examples/test_events_heavy.edge,
+    examples/test_functions.edge, examples/test_inline.edge, examples/test_logs.edge, examples/test_loop_storage.edge, examples/test_mappings.edge,
+    examples/test_merkle.edge, examples/test_operators.edge, examples/test_storage_heavy.edge, examples/test_structs.edge,
+    examples/test_transient.edge, examples/transient.edge, solidity-bench/.gitignore, solidity-bench/foundry.toml, solidity-bench/test/CounterGas.t.sol,
+    solidity-bench/test/ERC20Gas.t.sol. These typically include build configuration, test files, CI workflows, documentation,
+    and downstream references that need to stay in sync with the primary changes. Only update what the actual primary edits
+    require.'
+  expected_input: 'output of planner, output of primary_implementer, artifacts/repo/ configuration and test files: Cargo.toml,
+    bin/edgec/Cargo.toml, book/SUMMARY.md, book/compiler/overview.md, crates/codegen/Cargo.toml, crates/driver/Cargo.toml,
+    crates/driver/tests/compile_tests.rs, crates/driver/tests/golden/counter_o0.hex, crates/driver/tests/golden/erc20_o0.hex,
+    crates/e2e/tests/access_exec.rs, crates/e2e/tests/calldata_args.rs, crates/e2e/tests/counter.rs, crates/e2e/tests/erc20.rs,
+    crates/e2e/tests/examples.rs, crates/e2e/tests/expressions.rs, crates/e2e/tests/features_exec.rs, crates/e2e/tests/finance_exec.rs,
+    crates/e2e/tests/patterns_exec.rs, crates/e2e/tests/tokens_exec.rs, crates/e2e/tests/type_demos_exec.rs, crates/e2e/tests/types_exec.rs,
+    crates/e2e/tests/utils_exec.rs, crates/evm-tests/Cargo.toml, crates/evm-tests/tests/checked_elision.rs, crates/evm-tests/tests/counter.rs,
+    crates/evm-tests/tests/erc20.rs, crates/evm-tests/tests/gas_bench.rs, crates/evm-tests/tests/gas_stats.rs, crates/evm-tests/tests/loop_extraction.rs,
+    crates/evm-tests/tests/o2_size_debug.rs, crates/evm-tests/tests/opt_efficiency.rs, crates/evm-tests/tests/opt_equivalence.rs,
+    crates/evm-tests/tests/spec_compliance.rs, crates/evm-tests/tests/stress.rs, crates/evm-tests/tests/subroutine.rs, crates/evm-tests/tests/transient.rs,
+    crates/ir/Cargo.toml, crates/ir/src/optimizations/arithmetic.egg, crates/ir/src/optimizations/checked_arithmetic.egg,
+    crates/ir/src/optimizations/cse.egg, crates/ir/src/optimizations/dead_code.egg, crates/ir/src/optimizations/memory.egg,
+    crates/ir/src/optimizations/peepholes.egg, crates/ir/src/optimizations/range_analysis.egg, crates/ir/src/optimizations/storage.egg,
+    crates/ir/src/optimizations/type_propagation.egg, crates/ir/src/optimizations/u256_const_fold.egg, crates/ir/src/schema.egg,
+    crates/lexer/tests/operators.rs, deny.toml, examples/loop_extraction.edge, examples/optimizable.edge, examples/stress_conditionals.edge,
+    examples/stress_loops.edge, examples/stress_storage.edge, examples/stress_variables.edge, examples/test_arrays.edge, examples/test_builtins.edge,
+    examples/test_checked_arith.edge, examples/test_checked_elision.edge, examples/test_constants.edge, examples/test_control_flow.edge,
+    examples/test_elision_simple.edge, examples/test_enums2.edge, examples/test_erc20.edge, examples/test_events_heavy.edge,
+    examples/test_functions.edge, examples/test_inline.edge, examples/test_logs.edge, examples/test_loop_storage.edge, examples/test_mappings.edge,
+    examples/test_merkle.edge, examples/test_operators.edge, examples/test_storage_heavy.edge, examples/test_structs.edge,
+    examples/test_transient.edge, examples/transient.edge, solidity-bench/.gitignore, solidity-bench/foundry.toml, solidity-bench/test/CounterGas.t.sol,
+    solidity-bench/test/ERC20Gas.t.sol'
+  expected_output: 'Updated secondary files: Cargo.toml, bin/edgec/Cargo.toml, book/SUMMARY.md, book/compiler/overview.md,
+    crates/codegen/Cargo.toml, crates/driver/Cargo.toml, crates/driver/tests/compile_tests.rs, crates/driver/tests/golden/counter_o0.hex,
+    crates/driver/tests/golden/erc20_o0.hex, crates/e2e/tests/access_exec.rs, crates/e2e/tests/calldata_args.rs, crates/e2e/tests/counter.rs,
+    crates/e2e/tests/erc20.rs, crates/e2e/tests/examples.rs, crates/e2e/tests/expressions.rs, crates/e2e/tests/features_exec.rs,
+    crates/e2e/tests/finance_exec.rs, crates/e2e/tests/patterns_exec.rs, crates/e2e/tests/tokens_exec.rs, crates/e2e/tests/type_demos_exec.rs,
+    crates/e2e/tests/types_exec.rs, crates/e2e/tests/utils_exec.rs, crates/evm-tests/Cargo.toml, crates/evm-tests/tests/checked_elision.rs,
+    crates/evm-tests/tests/counter.rs, crates/evm-tests/tests/erc20.rs, crates/evm-tests/tests/gas_bench.rs, crates/evm-tests/tests/gas_stats.rs,
+    crates/evm-tests/tests/loop_extraction.rs, crates/evm-tests/tests/o2_size_debug.rs, crates/evm-tests/tests/opt_efficiency.rs,
+    crates/evm-tests/tests/opt_equivalence.rs, crates/evm-tests/tests/spec_compliance.rs, crates/evm-tests/tests/stress.rs,
+    crates/evm-tests/tests/subroutine.rs, crates/evm-tests/tests/transient.rs, crates/ir/Cargo.toml, crates/ir/src/optimizations/arithmetic.egg,
+    crates/ir/src/optimizations/checked_arithmetic.egg, crates/ir/src/optimizations/cse.egg, crates/ir/src/optimizations/dead_code.egg,
+    crates/ir/src/optimizations/memory.egg, crates/ir/src/optimizations/peepholes.egg, crates/ir/src/optimizations/range_analysis.egg,
+    crates/ir/src/optimizations/storage.egg, crates/ir/src/optimizations/type_propagation.egg, crates/ir/src/optimizations/u256_const_fold.egg,
+    crates/ir/src/schema.egg, crates/lexer/tests/operators.rs, deny.toml, examples/loop_extraction.edge, examples/optimizable.edge,
+    examples/stress_conditionals.edge, examples/stress_loops.edge, examples/stress_storage.edge, examples/stress_variables.edge,
+    examples/test_arrays.edge, examples/test_builtins.edge, examples/test_checked_arith.edge, examples/test_checked_elision.edge,
+    examples/test_constants.edge, examples/test_control_flow.edge, examples/test_elision_simple.edge, examples/test_enums2.edge,
+    examples/test_erc20.edge, examples/test_events_heavy.edge, examples/test_functions.edge, examples/test_inline.edge, examples/test_logs.edge,
+    examples/test_loop_storage.edge, examples/test_mappings.edge, examples/test_merkle.edge, examples/test_operators.edge,
+    examples/test_storage_heavy.edge, examples/test_structs.edge, examples/test_transient.edge, examples/transient.edge, solidity-bench/.gitignore,
+    solidity-bench/foundry.toml, solidity-bench/test/CounterGas.t.sol, solidity-bench/test/ERC20Gas.t.sol'
+  depends_on:
+  - planner
+  - primary_implementer
+  is_parallelizable: true
+- subtask_id: integration_verifier
+  description: 'Verify the complete set of changes for PR #9 is consistent. Check that no dangling imports reference removed
+    or renamed symbols, all build configuration files are updated, and the unified diff applies cleanly on top of the base
+    commit 23c44a632f2c and reproduces the PR''s intent.'
+  expected_input: output of primary_implementer, output of secondary_updater
+  expected_output: Complete verified unified diff matching the PR, ready for submission via submit_deliverable
+  depends_on:
+  - primary_implementer
+  - secondary_updater
+  is_parallelizable: false
+minimum_viable_agents: 2
+optimal_agents: 5
+maximum_useful_agents: 7
+",No modifications needed
