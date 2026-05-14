@@ -1,7 +1,8 @@
+!.env.example
+*.pyc
+.creds/
 .env
 .env.*
-!.env.example
-.creds/
-qc-auditor-workspace/
 __pycache__/
-*.pyc
+qc-auditor-workspace/
+trajectories2/
