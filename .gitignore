@@ -4,5 +4,6 @@
 .creds/
 qc-auditor-workspace/
 cb-fix-workspace/
+cb-attempter-workspace/
 __pycache__/
 *.pyc
