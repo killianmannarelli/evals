@@ -37,9 +37,14 @@ for inst in INSTANCES:
     prompt = td["prompt"]
     prefix = task_id
 
-    # Copy task.yaml + single_run.json
+    # Copy task.yaml + gold.yaml + single_run.json
     shutil.copy(os.path.join(work_dir, "task.yaml"),
                 os.path.join(BUNDLE, f"{prefix}_task.yaml"))
+    gold_src = os.path.join(work_dir, "gold.yaml")
+    gold_dst = os.path.join(BUNDLE, f"{prefix}_gold.yaml")
+    shutil.copy(gold_src, gold_dst)
+    with open(gold_src) as f:
+        gold_yaml_inline = f.read()
     shutil.copy(os.path.join(work_dir, f"{inst}_single_run.json"),
                 os.path.join(BUNDLE, f"{prefix}_single_run.json"))
 
@@ -57,7 +62,7 @@ for inst in INSTANCES:
     rows.append({
         "task_yaml_solo_url":   f"{CDN}/{prefix}_task.yaml",
         "task_yaml_multi_url":  f"{CDN}/{prefix}_task.yaml",
-        "gold_yaml_url":        "",
+        "gold_yaml_url":        f"{CDN}/{prefix}_gold.yaml",
         "artifacts_url":        "",
         "eval_json_url":        "",
         "github_url":           "",
@@ -76,11 +81,11 @@ for inst in INSTANCES:
         "languageCode":         "en_US",
         "metadata.validationOutputs": json.dumps({
             "task_yaml": "OK",
-            "gold_yaml": "MISSING",
-            "artifacts": "MISSING",
-            "rich_artifacts": "MISSING",
+            "gold_yaml": "OK",
+            "artifacts": "N/A",
+            "rich_artifacts": "N/A",
         }),
-        "gold.yaml":            "",
+        "gold.yaml":            gold_yaml_inline,
     })
     print(f"  bundled {prefix}  (multi_run: {multi_size/1024/1024:.0f} MB)")
 

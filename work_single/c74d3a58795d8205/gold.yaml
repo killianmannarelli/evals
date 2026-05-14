@@ -1,0 +1,25 @@
+task_id: multi_agent_swarm__c74d3a58795d8205
+primary_decomposition:
+- subtask_id: coordinator_planner
+  description: 'Read the supplied task prompt, design the 51-way work breakdown, and write /app/artifact/plan.md as the single source of truth. plan.md must contain: a header describing the core asset/goal, an assignment table listing all 51 sub-agent assignments numbered 1..51, the per-result file schema, and the quality criteria for a complete vs partial result.'
+  expected_input: Supplied task prompt (the multi-agent-swarm orchestrator prompt).
+  expected_output: /app/artifact/plan.md containing header, 51-row numbered assignment table, output schema, and quality criteria.
+  depends_on: []
+  is_parallelizable: false
+- subtask_id: parallel_workers
+  description: In parallel, produce one result per assignment from plan.md (51 privacy-law jurisdiction chapters (GDPR + 50 US states)). Each worker writes result_NNN.* files into /app/artifact/ per the schema in plan.md. Workers operate independently and do not communicate.
+  expected_input: /app/artifact/plan.md (assignment N, schema, quality criteria).
+  expected_output: '51 sets of result_NNN.* files in /app/artifact/ matching the schema. Each result file begins with STATUS: complete (or STATUS: partial with reason).'
+  depends_on:
+  - coordinator_planner
+  is_parallelizable: true
+- subtask_id: integration_assembler
+  description: 'Audit all 51 result files for completeness and schema compliance, refine up to 10 failures via a focused retry batch, then assemble the final consolidated deliverables: result_NNN.md per jurisdiction (Core Definitions / Consumer Rights / Penalties & Enforcement / Notable Enforcement Actions); compliance_matrix.tsv (7 cols, 1 row per jurisdiction); final_guide.md. Write a brief /app/artifact/summary.md with totals and any unresolved gaps.'
+  expected_input: All 51 result_NNN.* files from parallel_workers plus /app/artifact/plan.md.
+  expected_output: Final assembled deliverables in /app/artifact/ matching the task prompt's Phase 4 specification, plus summary.md reporting coverage and any failed-and-not-recovered items.
+  depends_on:
+  - parallel_workers
+  is_parallelizable: false
+minimum_viable_agents: 1
+optimal_agents: 53
+maximum_useful_agents: 53

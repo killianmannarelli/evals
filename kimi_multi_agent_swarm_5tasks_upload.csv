@@ -1,5 +1,5 @@
 "task_yaml_solo_url","task_yaml_multi_url","gold_yaml_url","artifacts_url","eval_json_url","github_url","domain","coordination_pattern","difficulty_rating","single_agent_run_url","multi_agent_run_url","task_yaml_url","sub_agents_needed","sub_tasks_have_dependencies","prompt_single_agent","prompt_multi_agent","prompt","difficulty_ratings","languageCode","metadata.validationOutputs","gold.yaml"
-"https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__067f8c638802ea8e_task.yaml","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__067f8c638802ea8e_task.yaml","","","","","creative_research","map_reduce","medium","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__067f8c638802ea8e_single_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__067f8c638802ea8e_multi_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__067f8c638802ea8e_task.yaml","100","false","### DELEGATION WORKFLOW — Meta-Analysis of 100 Psychology Replication Studies
+"https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__067f8c638802ea8e_task.yaml","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__067f8c638802ea8e_task.yaml","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__067f8c638802ea8e_gold.yaml","","","","creative_research","map_reduce","medium","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__067f8c638802ea8e_single_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__067f8c638802ea8e_multi_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__067f8c638802ea8e_task.yaml","100","false","### DELEGATION WORKFLOW — Meta-Analysis of 100 Psychology Replication Studies
 
 **Objective:** Coordinate 100 parallel sub-agents to analyze 100 specific psychology replication studies published between 2015-2025. Your role as coordinator is to plan, delegate, audit, and synthesize the findings into a comprehensive meta-analysis document. Do NOT perform the primary research yourself—every paper analysis must be delegated. Your token usage must be <15% of the swarm's total.
 
@@ -236,8 +236,33 @@
     - A synthesis section discussing the overall findings.
     - The individual 2-page summaries, concatenated from all 100 result files.
     - A consolidated, alphabetized APA7 reference list, compiled from the `full_citation_apa7` field of each result file.
-***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","medium","en_US","{""task_yaml"": ""OK"", ""gold_yaml"": ""MISSING"", ""artifacts"": ""MISSING"", ""rich_artifacts"": ""MISSING""}",""
-"https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__329c9e6e4c87121d_task.yaml","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__329c9e6e4c87121d_task.yaml","","","","","creative_research","map_reduce","medium","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__329c9e6e4c87121d_single_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__329c9e6e4c87121d_multi_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__329c9e6e4c87121d_task.yaml","80","false","### DELEGATION WORKFLOW — Cross-Cultural Negotiation Handbook
+***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","medium","en_US","{""task_yaml"": ""OK"", ""gold_yaml"": ""OK"", ""artifacts"": ""N/A"", ""rich_artifacts"": ""N/A""}","task_id: multi_agent_swarm__067f8c638802ea8e
+primary_decomposition:
+- subtask_id: coordinator_planner
+  description: 'Read the supplied task prompt, design the 100-way work breakdown, and write /app/artifact/plan.md as the single source of truth. plan.md must contain: a header describing the core asset/goal, an assignment table listing all 100 sub-agent assignments numbered 1..100, the per-result file schema, and the quality criteria for a complete vs partial result.'
+  expected_input: Supplied task prompt (the multi-agent-swarm orchestrator prompt).
+  expected_output: /app/artifact/plan.md containing header, 100-row numbered assignment table, output schema, and quality criteria.
+  depends_on: []
+  is_parallelizable: false
+- subtask_id: parallel_workers
+  description: In parallel, produce one result per assignment from plan.md (100 psychology replication studies). Each worker writes result_NNN.* files into /app/artifact/ per the schema in plan.md. Workers operate independently and do not communicate.
+  expected_input: /app/artifact/plan.md (assignment N, schema, quality criteria).
+  expected_output: '100 sets of result_NNN.* files in /app/artifact/ matching the schema. Each result file begins with STATUS: complete (or STATUS: partial with reason).'
+  depends_on:
+  - coordinator_planner
+  is_parallelizable: true
+- subtask_id: integration_assembler
+  description: 'Audit all 100 result files for completeness and schema compliance, refine up to 10 failures via a focused retry batch, then assemble the final consolidated deliverables: result_NNN.md (YAML frontmatter + >=500-word narrative) per study; meta_analysis_data.csv; forest_plot.png; bias_table.md; final_report.md. Write a brief /app/artifact/summary.md with totals and any unresolved gaps.'
+  expected_input: All 100 result_NNN.* files from parallel_workers plus /app/artifact/plan.md.
+  expected_output: Final assembled deliverables in /app/artifact/ matching the task prompt's Phase 4 specification, plus summary.md reporting coverage and any failed-and-not-recovered items.
+  depends_on:
+  - parallel_workers
+  is_parallelizable: false
+minimum_viable_agents: 1
+optimal_agents: 102
+maximum_useful_agents: 102
+"
+"https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__329c9e6e4c87121d_task.yaml","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__329c9e6e4c87121d_task.yaml","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__329c9e6e4c87121d_gold.yaml","","","","creative_research","map_reduce","medium","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__329c9e6e4c87121d_single_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__329c9e6e4c87121d_multi_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__329c9e6e4c87121d_task.yaml","80","false","### DELEGATION WORKFLOW — Cross-Cultural Negotiation Handbook
 
 **Objective:** Coordinate 80 parallel sub-agents, each assigned to one country, to research and write a detailed chapter on negotiation practices. Your role as the coordinator is to orchestrate this large-scale research and writing effort, ensuring consistency and quality before assembling the final 250-page handbook. You must not perform any research yourself; delegate all information gathering via `llm_call`. Your coordinator messages must constitute less than 15% of the total tokens used by the swarm.
 
@@ -396,8 +421,33 @@
 *   **Sub-agent tools:** browser, str_replace_editor
 *   **Max messages per sub-agent:** 30
 *   **Coordinator critical-path target:** <15% of total swarm tokens
-***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","medium","en_US","{""task_yaml"": ""OK"", ""gold_yaml"": ""MISSING"", ""artifacts"": ""MISSING"", ""rich_artifacts"": ""MISSING""}",""
-"https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__7f9d0ff26bd9eec7_task.yaml","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__7f9d0ff26bd9eec7_task.yaml","","","","","creative_research","map_reduce","medium","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__7f9d0ff26bd9eec7_single_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__7f9d0ff26bd9eec7_multi_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__7f9d0ff26bd9eec7_task.yaml","45","false","### DELEGATION WORKFLOW — Sneaker Drop: Global Edition
+***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","medium","en_US","{""task_yaml"": ""OK"", ""gold_yaml"": ""OK"", ""artifacts"": ""N/A"", ""rich_artifacts"": ""N/A""}","task_id: multi_agent_swarm__329c9e6e4c87121d
+primary_decomposition:
+- subtask_id: coordinator_planner
+  description: 'Read the supplied task prompt, design the 80-way work breakdown, and write /app/artifact/plan.md as the single source of truth. plan.md must contain: a header describing the core asset/goal, an assignment table listing all 80 sub-agent assignments numbered 1..80, the per-result file schema, and the quality criteria for a complete vs partial result.'
+  expected_input: Supplied task prompt (the multi-agent-swarm orchestrator prompt).
+  expected_output: /app/artifact/plan.md containing header, 80-row numbered assignment table, output schema, and quality criteria.
+  depends_on: []
+  is_parallelizable: false
+- subtask_id: parallel_workers
+  description: In parallel, produce one result per assignment from plan.md (80 country negotiation chapters). Each worker writes result_NNN.* files into /app/artifact/ per the schema in plan.md. Workers operate independently and do not communicate.
+  expected_input: /app/artifact/plan.md (assignment N, schema, quality criteria).
+  expected_output: '80 sets of result_NNN.* files in /app/artifact/ matching the schema. Each result file begins with STATUS: complete (or STATUS: partial with reason).'
+  depends_on:
+  - coordinator_planner
+  is_parallelizable: true
+- subtask_id: integration_assembler
+  description: 'Audit all 80 result files for completeness and schema compliance, refine up to 10 failures via a focused retry batch, then assemble the final consolidated deliverables: result_NNN.md per country (Cultural Context / Legal Framework / Case Study / Do''s & Don''ts table >=5 rows / References); index.csv; final_handbook.md; summary.md. Write a brief /app/artifact/summary.md with totals and any unresolved gaps.'
+  expected_input: All 80 result_NNN.* files from parallel_workers plus /app/artifact/plan.md.
+  expected_output: Final assembled deliverables in /app/artifact/ matching the task prompt's Phase 4 specification, plus summary.md reporting coverage and any failed-and-not-recovered items.
+  depends_on:
+  - parallel_workers
+  is_parallelizable: false
+minimum_viable_agents: 1
+optimal_agents: 82
+maximum_useful_agents: 82
+"
+"https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__7f9d0ff26bd9eec7_task.yaml","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__7f9d0ff26bd9eec7_task.yaml","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__7f9d0ff26bd9eec7_gold.yaml","","","","creative_research","map_reduce","medium","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__7f9d0ff26bd9eec7_single_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__7f9d0ff26bd9eec7_multi_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__7f9d0ff26bd9eec7_task.yaml","45","false","### DELEGATION WORKFLOW — Sneaker Drop: Global Edition
 
 **Objective:** Coordinate 45 parallel sub-agents to generate unique, localized campaign visuals for a new sneaker. Each sub-agent is assigned one of 45 global cities. Your role as coordinator is to plan the campaign, delegate image generation, audit completion, and assemble the final web assets. Do NOT generate images yourself — every creative task must be delegated via `llm_call`. Target: your coordinator messages should be <15% of total assistant tokens across the swarm.
 
@@ -577,8 +627,33 @@
 - **Sub-agent tools:** mango, str_replace_editor
 - **Max messages per sub-agent:** 10
 - **Coordinator critical-path target:** <15% of total swarm tokens
-***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","medium","en_US","{""task_yaml"": ""OK"", ""gold_yaml"": ""MISSING"", ""artifacts"": ""MISSING"", ""rich_artifacts"": ""MISSING""}",""
-"https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__adcf16d169322aa2_task.yaml","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__adcf16d169322aa2_task.yaml","","","","","creative_research","map_reduce","medium","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__adcf16d169322aa2_single_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__adcf16d169322aa2_multi_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__adcf16d169322aa2_task.yaml","60","false","### DELEGATION WORKFLOW — Product in 60 Homes
+***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","medium","en_US","{""task_yaml"": ""OK"", ""gold_yaml"": ""OK"", ""artifacts"": ""N/A"", ""rich_artifacts"": ""N/A""}","task_id: multi_agent_swarm__7f9d0ff26bd9eec7
+primary_decomposition:
+- subtask_id: coordinator_planner
+  description: 'Read the supplied task prompt, design the 45-way work breakdown, and write /app/artifact/plan.md as the single source of truth. plan.md must contain: a header describing the core asset/goal, an assignment table listing all 45 sub-agent assignments numbered 1..45, the per-result file schema, and the quality criteria for a complete vs partial result.'
+  expected_input: Supplied task prompt (the multi-agent-swarm orchestrator prompt).
+  expected_output: /app/artifact/plan.md containing header, 45-row numbered assignment table, output schema, and quality criteria.
+  depends_on: []
+  is_parallelizable: false
+- subtask_id: parallel_workers
+  description: In parallel, produce one result per assignment from plan.md (45 sneaker drop city campaigns). Each worker writes result_NNN.* files into /app/artifact/ per the schema in plan.md. Workers operate independently and do not communicate.
+  expected_input: /app/artifact/plan.md (assignment N, schema, quality criteria).
+  expected_output: '45 sets of result_NNN.* files in /app/artifact/ matching the schema. Each result file begins with STATUS: complete (or STATUS: partial with reason).'
+  depends_on:
+  - coordinator_planner
+  is_parallelizable: true
+- subtask_id: integration_assembler
+  description: 'Audit all 45 result files for completeness and schema compliance, refine up to 10 failures via a focused retry batch, then assemble the final consolidated deliverables: result_NNN.jpg (16:9 key visual) + result_NNN.txt (STATUS: complete + mango prompt) per city; <slug>.html landing pages; index.html portal; summary.md. Write a brief /app/artifact/summary.md with totals and any unresolved gaps.'
+  expected_input: All 45 result_NNN.* files from parallel_workers plus /app/artifact/plan.md.
+  expected_output: Final assembled deliverables in /app/artifact/ matching the task prompt's Phase 4 specification, plus summary.md reporting coverage and any failed-and-not-recovered items.
+  depends_on:
+  - parallel_workers
+  is_parallelizable: false
+minimum_viable_agents: 1
+optimal_agents: 47
+maximum_useful_agents: 47
+"
+"https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__adcf16d169322aa2_task.yaml","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__adcf16d169322aa2_task.yaml","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__adcf16d169322aa2_gold.yaml","","","","creative_research","map_reduce","medium","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__adcf16d169322aa2_single_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__adcf16d169322aa2_multi_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__adcf16d169322aa2_task.yaml","60","false","### DELEGATION WORKFLOW — Product in 60 Homes
 
 **Objective:** Coordinate 60 parallel sub-agents to generate photorealistic lifestyle images of a single DTC lamp placed in 60 diverse global household settings. Your role as coordinator is to plan the visual campaign, delegate image generation, and assemble the final asset collection. Do NOT perform any research or image generation yourself—every creative and research task must be delegated via `llm_call`. Your coordinator messages must be <15% of the total swarm token count.
 
@@ -698,8 +773,33 @@
 - **Phase 3 follow-ups:** up to 10 (for failures)
 - **Sub-agent tools:** browse, mango, str_replace_editor
 - **Coordinator critical-path target:** <15% of total swarm tokens
-***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","medium","en_US","{""task_yaml"": ""OK"", ""gold_yaml"": ""MISSING"", ""artifacts"": ""MISSING"", ""rich_artifacts"": ""MISSING""}",""
-"https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__c74d3a58795d8205_task.yaml","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__c74d3a58795d8205_task.yaml","","","","","creative_research","map_reduce","medium","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__c74d3a58795d8205_single_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__c74d3a58795d8205_multi_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__c74d3a58795d8205_task.yaml","51","false","### DELEGATION WORKFLOW — GDPR vs 50 State Privacy Laws Comparison
+***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","medium","en_US","{""task_yaml"": ""OK"", ""gold_yaml"": ""OK"", ""artifacts"": ""N/A"", ""rich_artifacts"": ""N/A""}","task_id: multi_agent_swarm__adcf16d169322aa2
+primary_decomposition:
+- subtask_id: coordinator_planner
+  description: 'Read the supplied task prompt, design the 60-way work breakdown, and write /app/artifact/plan.md as the single source of truth. plan.md must contain: a header describing the core asset/goal, an assignment table listing all 60 sub-agent assignments numbered 1..60, the per-result file schema, and the quality criteria for a complete vs partial result.'
+  expected_input: Supplied task prompt (the multi-agent-swarm orchestrator prompt).
+  expected_output: /app/artifact/plan.md containing header, 60-row numbered assignment table, output schema, and quality criteria.
+  depends_on: []
+  is_parallelizable: false
+- subtask_id: parallel_workers
+  description: In parallel, produce one result per assignment from plan.md (60 lifestyle lamp placements). Each worker writes result_NNN.* files into /app/artifact/ per the schema in plan.md. Workers operate independently and do not communicate.
+  expected_input: /app/artifact/plan.md (assignment N, schema, quality criteria).
+  expected_output: '60 sets of result_NNN.* files in /app/artifact/ matching the schema. Each result file begins with STATUS: complete (or STATUS: partial with reason).'
+  depends_on:
+  - coordinator_planner
+  is_parallelizable: true
+- subtask_id: integration_assembler
+  description: 'Audit all 60 result files for completeness and schema compliance, refine up to 10 failures via a focused retry batch, then assemble the final consolidated deliverables: result_NNN.png/jpg + result_NNN.json (status + image_path + prompt_used + region_outlet) per setting; pdp_carousel_manifest.json; summary.md. Write a brief /app/artifact/summary.md with totals and any unresolved gaps.'
+  expected_input: All 60 result_NNN.* files from parallel_workers plus /app/artifact/plan.md.
+  expected_output: Final assembled deliverables in /app/artifact/ matching the task prompt's Phase 4 specification, plus summary.md reporting coverage and any failed-and-not-recovered items.
+  depends_on:
+  - parallel_workers
+  is_parallelizable: false
+minimum_viable_agents: 1
+optimal_agents: 62
+maximum_useful_agents: 62
+"
+"https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__c74d3a58795d8205_task.yaml","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__c74d3a58795d8205_task.yaml","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__c74d3a58795d8205_gold.yaml","","","","creative_research","map_reduce","medium","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__c74d3a58795d8205_single_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__c74d3a58795d8205_multi_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__c74d3a58795d8205_task.yaml","51","false","### DELEGATION WORKFLOW — GDPR vs 50 State Privacy Laws Comparison
 
 **Objective:** Coordinate 51 parallel sub-agents—one for GDPR and one for each of the 50 US states—to produce a comprehensive analysis of privacy legislation. Each sub-agent will research its assigned jurisdiction and write a detailed chapter. Your role as the coordinator is to orchestrate this research, ensure quality, and assemble the final 220-page compliance guide and matrix. Do NOT perform legal research yourself; delegate all analysis via `llm_call`. Your coordinator messages must be less than 15% of the total swarm token usage.
 
@@ -867,4 +967,29 @@
 *   **Sub-agent tools:** `browse`, `str_replace_editor`
 *   **Max messages per sub-agent:** 25
 *   **Coordinator critical-path target:** <15% of total swarm tokens
-***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","medium","en_US","{""task_yaml"": ""OK"", ""gold_yaml"": ""MISSING"", ""artifacts"": ""MISSING"", ""rich_artifacts"": ""MISSING""}",""
+***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","medium","en_US","{""task_yaml"": ""OK"", ""gold_yaml"": ""OK"", ""artifacts"": ""N/A"", ""rich_artifacts"": ""N/A""}","task_id: multi_agent_swarm__c74d3a58795d8205
+primary_decomposition:
+- subtask_id: coordinator_planner
+  description: 'Read the supplied task prompt, design the 51-way work breakdown, and write /app/artifact/plan.md as the single source of truth. plan.md must contain: a header describing the core asset/goal, an assignment table listing all 51 sub-agent assignments numbered 1..51, the per-result file schema, and the quality criteria for a complete vs partial result.'
+  expected_input: Supplied task prompt (the multi-agent-swarm orchestrator prompt).
+  expected_output: /app/artifact/plan.md containing header, 51-row numbered assignment table, output schema, and quality criteria.
+  depends_on: []
+  is_parallelizable: false
+- subtask_id: parallel_workers
+  description: In parallel, produce one result per assignment from plan.md (51 privacy-law jurisdiction chapters (GDPR + 50 US states)). Each worker writes result_NNN.* files into /app/artifact/ per the schema in plan.md. Workers operate independently and do not communicate.
+  expected_input: /app/artifact/plan.md (assignment N, schema, quality criteria).
+  expected_output: '51 sets of result_NNN.* files in /app/artifact/ matching the schema. Each result file begins with STATUS: complete (or STATUS: partial with reason).'
+  depends_on:
+  - coordinator_planner
+  is_parallelizable: true
+- subtask_id: integration_assembler
+  description: 'Audit all 51 result files for completeness and schema compliance, refine up to 10 failures via a focused retry batch, then assemble the final consolidated deliverables: result_NNN.md per jurisdiction (Core Definitions / Consumer Rights / Penalties & Enforcement / Notable Enforcement Actions); compliance_matrix.tsv (7 cols, 1 row per jurisdiction); final_guide.md. Write a brief /app/artifact/summary.md with totals and any unresolved gaps.'
+  expected_input: All 51 result_NNN.* files from parallel_workers plus /app/artifact/plan.md.
+  expected_output: Final assembled deliverables in /app/artifact/ matching the task prompt's Phase 4 specification, plus summary.md reporting coverage and any failed-and-not-recovered items.
+  depends_on:
+  - parallel_workers
+  is_parallelizable: false
+minimum_viable_agents: 1
+optimal_agents: 53
+maximum_useful_agents: 53
+"
