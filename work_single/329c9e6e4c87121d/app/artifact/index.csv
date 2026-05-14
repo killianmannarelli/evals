@@ -1,0 +1,81 @@
+chapter_number,country,region,file
+1,Japan,East Asia,result_001.md
+2,China,East Asia,result_002.md
+3,South Korea,East Asia,result_003.md
+4,Taiwan,East Asia,result_004.md
+5,Hong Kong,East Asia,result_005.md
+6,Singapore,Southeast Asia,result_006.md
+7,Indonesia,Southeast Asia,result_007.md
+8,Thailand,Southeast Asia,result_008.md
+9,Vietnam,Southeast Asia,result_009.md
+10,Malaysia,Southeast Asia,result_010.md
+11,Philippines,Southeast Asia,result_011.md
+12,India,South Asia,result_012.md
+13,Pakistan,South Asia,result_013.md
+14,Bangladesh,South Asia,result_014.md
+15,Sri Lanka,South Asia,result_015.md
+16,Saudi Arabia,Middle East,result_016.md
+17,United Arab Emirates,Middle East,result_017.md
+18,Qatar,Middle East,result_018.md
+19,Iran,Middle East,result_019.md
+20,Israel,Middle East,result_020.md
+21,Turkey,Middle East,result_021.md
+22,Egypt,Middle East,result_022.md
+23,Jordan,Middle East,result_023.md
+24,Lebanon,Middle East,result_024.md
+25,Nigeria,Sub-Saharan Africa,result_025.md
+26,South Africa,Sub-Saharan Africa,result_026.md
+27,Kenya,Sub-Saharan Africa,result_027.md
+28,Ethiopia,Sub-Saharan Africa,result_028.md
+29,Ghana,Sub-Saharan Africa,result_029.md
+30,Tanzania,Sub-Saharan Africa,result_030.md
+31,Senegal,Sub-Saharan Africa,result_031.md
+32,Morocco,North Africa,result_032.md
+33,Algeria,North Africa,result_033.md
+34,Tunisia,North Africa,result_034.md
+35,Germany,Europe,result_035.md
+36,France,Europe,result_036.md
+37,United Kingdom,Europe,result_037.md
+38,Italy,Europe,result_038.md
+39,Spain,Europe,result_039.md
+40,Netherlands,Europe,result_040.md
+41,Belgium,Europe,result_041.md
+42,Sweden,Europe,result_042.md
+43,Norway,Europe,result_043.md
+44,Finland,Europe,result_044.md
+45,Denmark,Europe,result_045.md
+46,Poland,Europe,result_046.md
+47,Czech Republic,Europe,result_047.md
+48,Hungary,Europe,result_048.md
+49,Romania,Europe,result_049.md
+50,Greece,Europe,result_050.md
+51,Portugal,Europe,result_051.md
+52,Switzerland,Europe,result_052.md
+53,Austria,Europe,result_053.md
+54,Ireland,Europe,result_054.md
+55,Russia,Russia/CIS,result_055.md
+56,Ukraine,Russia/CIS,result_056.md
+57,Kazakhstan,Russia/CIS,result_057.md
+58,Brazil,Latin America,result_058.md
+59,Mexico,Latin America,result_059.md
+60,Argentina,Latin America,result_060.md
+61,Chile,Latin America,result_061.md
+62,Colombia,Latin America,result_062.md
+63,Peru,Latin America,result_063.md
+64,Venezuela,Latin America,result_064.md
+65,Cuba,Latin America,result_065.md
+66,United States,North America,result_066.md
+67,Canada,North America,result_067.md
+68,Jamaica,Caribbean,result_068.md
+69,Australia,Oceania,result_069.md
+70,New Zealand,Oceania,result_070.md
+71,Bulgaria,Europe,result_071.md
+72,Croatia,Europe,result_072.md
+73,Slovakia,Europe,result_073.md
+74,Slovenia,Europe,result_074.md
+75,Estonia,Europe,result_075.md
+76,Iceland,Europe,result_076.md
+77,Uzbekistan,Russia/CIS,result_077.md
+78,Azerbaijan,Russia/CIS,result_078.md
+79,Belarus,Russia/CIS,result_079.md
+80,Ecuador,Latin America,result_080.md
