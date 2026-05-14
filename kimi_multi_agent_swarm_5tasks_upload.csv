@@ -1,0 +1,870 @@
+"task_yaml_solo_url","task_yaml_multi_url","gold_yaml_url","artifacts_url","eval_json_url","github_url","domain","coordination_pattern","difficulty_rating","single_agent_run_url","multi_agent_run_url","task_yaml_url","sub_agents_needed","sub_tasks_have_dependencies","prompt_single_agent","prompt_multi_agent","prompt","difficulty_ratings","languageCode","metadata.validationOutputs","gold.yaml"
+"https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__067f8c638802ea8e_task.yaml","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__067f8c638802ea8e_task.yaml","","","","","creative_research","map_reduce","medium","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__067f8c638802ea8e_single_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__067f8c638802ea8e_multi_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__067f8c638802ea8e_task.yaml","100","false","### DELEGATION WORKFLOW — Meta-Analysis of 100 Psychology Replication Studies
+
+**Objective:** Coordinate 100 parallel sub-agents to analyze 100 specific psychology replication studies published between 2015-2025. Your role as coordinator is to plan, delegate, audit, and synthesize the findings into a comprehensive meta-analysis document. Do NOT perform the primary research yourself—every paper analysis must be delegated. Your token usage must be <15% of the swarm's total.
+
+#### Phase 1 — Create the Plan
+
+1.  Your first step is to identify 100 significant replication studies in psychology from the 2015-2025 period. Use the `browse` tool to find curated lists, such as from the Reproducibility Project: Psychology, or by searching databases like Google Scholar for highly cited meta-analyses or special issues on replicability. 
+2.  Once you have the list of 100 papers (with titles and DOIs), create a plan file at `/mnt/agent/output/plan.md` using `str_replace_editor.create`. This plan is the blueprint for the entire operation and must contain:
+
+    **Header:** A brief overview of the project, its goal (meta-analysis of replication outcomes), and a description of the final output structure.
+
+    **Assignment Table:** A numbered list of all 100 papers. Each line must assign one paper to a sub-agent.
+    ```
+    1. [Paper Title 1, DOI] — result file: result_001.md
+    2. [Paper Title 2, DOI] — result file: result_002.md
+    ...
+    100. [Paper Title 100, DOI] — result file: result_100.md
+    ```
+
+    **Output Schema:** A strict template for the sub-agent result files. This is critical for the automated synthesis in Phase 4. Each file must contain a YAML frontmatter block for structured data, followed by the narrative summary.
+    ```yaml
+    --- 
+    STATUS: complete
+    original_effect_size: [value]
+    original_sample_size: [value]
+    replication_effect_size: [value]
+    replication_sample_size: [value]
+    outcome: [successful_replication / failed_replication]
+    risk_of_bias_score: [1-5]
+    full_citation_apa7: ""[Full APA7 Citation]""
+    ---
+
+    ## Summary of [Paper Title]
+    
+    ### Original Study Method
+    [...]
+    
+    ### Replication Study Method
+    [...]
+    
+    ### Outcome Analysis
+    [...] 
+    ```
+
+    **Quality Criteria:** A 'complete' status requires all YAML fields to be filled and the summary to be at least 500 words. A 'partial' status should be used if a specific data point (e.g., effect size) is not reported in the paper.
+
+#### Phase 2 — Parallel Delegation
+
+3.  In a SINGLE message, launch all 100 `llm_call` invocations. This parallel execution is the core of the swarm strategy.
+
+    Each `llm_call` must specify:
+    - **Assignment reference:** ""You are sub-agent N. Your assigned paper is line N in `/mnt/agent/output/plan.md`.""
+    - **Entity scope:** The title and DOI of the specific paper.
+    - **Output file:** The corresponding `/mnt/agent/output/result_{NNN}.md`.
+    - **fork_mode:** `none`.
+    - **Research instructions:** ""Use the `browse` tool to find and access the full text of the assigned paper. Read the paper thoroughly to extract the data points required by the plan's YAML schema. Write a detailed 2-page summary covering the methodology and outcomes as specified. Format your entire output precisely according to the schema in `plan.md`.""
+    - **Result format:** Use `str_replace_editor` to write the full, formatted content to your assigned result file. The `STATUS` line in the YAML block is mandatory.
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+4.  Once the sub-agents complete their work, methodically audit the results. Use `str_replace_editor.view` to read the first 15 lines of each of the 100 result files to check the `STATUS` and YAML data.
+5.  Tally the `complete`, `partial`, and any missing files. For any `partial` results, launch a small batch of follow-up `llm_call`s. These new agents should be given specific instructions to find the missing data points, potentially by searching for secondary sources that analyze the original paper.
+
+#### Phase 4 — Assemble Final Output
+
+6.  **Data Aggregation:** Create a script to read the YAML frontmatter from all 100 `result_XXX.md` files. Consolidate this structured data into a single CSV file named `/mnt/agent/output/meta_analysis_data.csv`. This CSV will be the input for your statistical analysis.
+7.  **Analysis and Visualization:** Use the `python` tool to execute a script that:
+    - Loads `/mnt/agent/output/meta_analysis_data.csv` into a pandas DataFrame.
+    - Performs a meta-analysis on the effect sizes. Use libraries like `metafor` or `pymare` if available, or implement the calculations directly.
+    - Generates a forest plot visualizing the effect sizes and the overall summary effect. Save this plot as `/mnt/agent/output/forest_plot.png`.
+    - Generates a summary table of the risk-of-bias scores and saves it as `/mnt/agent/output/bias_table.md`.
+8.  **Final Document Synthesis:** Use `str_replace_editor` to construct the final 200-page report, `/mnt/agent/output/final_report.md`. Assemble it in this order:
+    - Title page and abstract.
+    - Introduction explaining the replication crisis and the study's methodology.
+    - The risk-of-bias table (`bias_table.md`).
+    - The forest plot image (`forest_plot.png`) with a detailed caption.
+    - A synthesis section discussing the overall findings.
+    - The individual 2-page summaries, concatenated from all 100 result files.
+    - A consolidated, alphabetized APA7 reference list, compiled from the `full_citation_apa7` field of each result file.
+***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","### DELEGATION WORKFLOW — Meta-Analysis of 100 Psychology Replication Studies
+
+**Objective:** Coordinate 100 parallel sub-agents to analyze 100 specific psychology replication studies published between 2015-2025. Your role as coordinator is to plan, delegate, audit, and synthesize the findings into a comprehensive meta-analysis document. Do NOT perform the primary research yourself—every paper analysis must be delegated. Your token usage must be <15% of the swarm's total.
+
+#### Phase 1 — Create the Plan
+
+1.  Your first step is to identify 100 significant replication studies in psychology from the 2015-2025 period. Use the `browse` tool to find curated lists, such as from the Reproducibility Project: Psychology, or by searching databases like Google Scholar for highly cited meta-analyses or special issues on replicability. 
+2.  Once you have the list of 100 papers (with titles and DOIs), create a plan file at `/mnt/agent/output/plan.md` using `str_replace_editor.create`. This plan is the blueprint for the entire operation and must contain:
+
+    **Header:** A brief overview of the project, its goal (meta-analysis of replication outcomes), and a description of the final output structure.
+
+    **Assignment Table:** A numbered list of all 100 papers. Each line must assign one paper to a sub-agent.
+    ```
+    1. [Paper Title 1, DOI] — result file: result_001.md
+    2. [Paper Title 2, DOI] — result file: result_002.md
+    ...
+    100. [Paper Title 100, DOI] — result file: result_100.md
+    ```
+
+    **Output Schema:** A strict template for the sub-agent result files. This is critical for the automated synthesis in Phase 4. Each file must contain a YAML frontmatter block for structured data, followed by the narrative summary.
+    ```yaml
+    --- 
+    STATUS: complete
+    original_effect_size: [value]
+    original_sample_size: [value]
+    replication_effect_size: [value]
+    replication_sample_size: [value]
+    outcome: [successful_replication / failed_replication]
+    risk_of_bias_score: [1-5]
+    full_citation_apa7: ""[Full APA7 Citation]""
+    ---
+
+    ## Summary of [Paper Title]
+    
+    ### Original Study Method
+    [...]
+    
+    ### Replication Study Method
+    [...]
+    
+    ### Outcome Analysis
+    [...] 
+    ```
+
+    **Quality Criteria:** A 'complete' status requires all YAML fields to be filled and the summary to be at least 500 words. A 'partial' status should be used if a specific data point (e.g., effect size) is not reported in the paper.
+
+#### Phase 2 — Parallel Delegation
+
+3.  In a SINGLE message, launch all 100 `llm_call` invocations. This parallel execution is the core of the swarm strategy.
+
+    Each `llm_call` must specify:
+    - **Assignment reference:** ""You are sub-agent N. Your assigned paper is line N in `/mnt/agent/output/plan.md`.""
+    - **Entity scope:** The title and DOI of the specific paper.
+    - **Output file:** The corresponding `/mnt/agent/output/result_{NNN}.md`.
+    - **fork_mode:** `none`.
+    - **Research instructions:** ""Use the `browse` tool to find and access the full text of the assigned paper. Read the paper thoroughly to extract the data points required by the plan's YAML schema. Write a detailed 2-page summary covering the methodology and outcomes as specified. Format your entire output precisely according to the schema in `plan.md`.""
+    - **Result format:** Use `str_replace_editor` to write the full, formatted content to your assigned result file. The `STATUS` line in the YAML block is mandatory.
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+4.  Once the sub-agents complete their work, methodically audit the results. Use `str_replace_editor.view` to read the first 15 lines of each of the 100 result files to check the `STATUS` and YAML data.
+5.  Tally the `complete`, `partial`, and any missing files. For any `partial` results, launch a small batch of follow-up `llm_call`s. These new agents should be given specific instructions to find the missing data points, potentially by searching for secondary sources that analyze the original paper.
+
+#### Phase 4 — Assemble Final Output
+
+6.  **Data Aggregation:** Create a script to read the YAML frontmatter from all 100 `result_XXX.md` files. Consolidate this structured data into a single CSV file named `/mnt/agent/output/meta_analysis_data.csv`. This CSV will be the input for your statistical analysis.
+7.  **Analysis and Visualization:** Use the `python` tool to execute a script that:
+    - Loads `/mnt/agent/output/meta_analysis_data.csv` into a pandas DataFrame.
+    - Performs a meta-analysis on the effect sizes. Use libraries like `metafor` or `pymare` if available, or implement the calculations directly.
+    - Generates a forest plot visualizing the effect sizes and the overall summary effect. Save this plot as `/mnt/agent/output/forest_plot.png`.
+    - Generates a summary table of the risk-of-bias scores and saves it as `/mnt/agent/output/bias_table.md`.
+8.  **Final Document Synthesis:** Use `str_replace_editor` to construct the final 200-page report, `/mnt/agent/output/final_report.md`. Assemble it in this order:
+    - Title page and abstract.
+    - Introduction explaining the replication crisis and the study's methodology.
+    - The risk-of-bias table (`bias_table.md`).
+    - The forest plot image (`forest_plot.png`) with a detailed caption.
+    - A synthesis section discussing the overall findings.
+    - The individual 2-page summaries, concatenated from all 100 result files.
+    - A consolidated, alphabetized APA7 reference list, compiled from the `full_citation_apa7` field of each result file.
+***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","### DELEGATION WORKFLOW — Meta-Analysis of 100 Psychology Replication Studies
+
+**Objective:** Coordinate 100 parallel sub-agents to analyze 100 specific psychology replication studies published between 2015-2025. Your role as coordinator is to plan, delegate, audit, and synthesize the findings into a comprehensive meta-analysis document. Do NOT perform the primary research yourself—every paper analysis must be delegated. Your token usage must be <15% of the swarm's total.
+
+#### Phase 1 — Create the Plan
+
+1.  Your first step is to identify 100 significant replication studies in psychology from the 2015-2025 period. Use the `browse` tool to find curated lists, such as from the Reproducibility Project: Psychology, or by searching databases like Google Scholar for highly cited meta-analyses or special issues on replicability. 
+2.  Once you have the list of 100 papers (with titles and DOIs), create a plan file at `/mnt/agent/output/plan.md` using `str_replace_editor.create`. This plan is the blueprint for the entire operation and must contain:
+
+    **Header:** A brief overview of the project, its goal (meta-analysis of replication outcomes), and a description of the final output structure.
+
+    **Assignment Table:** A numbered list of all 100 papers. Each line must assign one paper to a sub-agent.
+    ```
+    1. [Paper Title 1, DOI] — result file: result_001.md
+    2. [Paper Title 2, DOI] — result file: result_002.md
+    ...
+    100. [Paper Title 100, DOI] — result file: result_100.md
+    ```
+
+    **Output Schema:** A strict template for the sub-agent result files. This is critical for the automated synthesis in Phase 4. Each file must contain a YAML frontmatter block for structured data, followed by the narrative summary.
+    ```yaml
+    --- 
+    STATUS: complete
+    original_effect_size: [value]
+    original_sample_size: [value]
+    replication_effect_size: [value]
+    replication_sample_size: [value]
+    outcome: [successful_replication / failed_replication]
+    risk_of_bias_score: [1-5]
+    full_citation_apa7: ""[Full APA7 Citation]""
+    ---
+
+    ## Summary of [Paper Title]
+    
+    ### Original Study Method
+    [...]
+    
+    ### Replication Study Method
+    [...]
+    
+    ### Outcome Analysis
+    [...] 
+    ```
+
+    **Quality Criteria:** A 'complete' status requires all YAML fields to be filled and the summary to be at least 500 words. A 'partial' status should be used if a specific data point (e.g., effect size) is not reported in the paper.
+
+#### Phase 2 — Parallel Delegation
+
+3.  In a SINGLE message, launch all 100 `llm_call` invocations. This parallel execution is the core of the swarm strategy.
+
+    Each `llm_call` must specify:
+    - **Assignment reference:** ""You are sub-agent N. Your assigned paper is line N in `/mnt/agent/output/plan.md`.""
+    - **Entity scope:** The title and DOI of the specific paper.
+    - **Output file:** The corresponding `/mnt/agent/output/result_{NNN}.md`.
+    - **fork_mode:** `none`.
+    - **Research instructions:** ""Use the `browse` tool to find and access the full text of the assigned paper. Read the paper thoroughly to extract the data points required by the plan's YAML schema. Write a detailed 2-page summary covering the methodology and outcomes as specified. Format your entire output precisely according to the schema in `plan.md`.""
+    - **Result format:** Use `str_replace_editor` to write the full, formatted content to your assigned result file. The `STATUS` line in the YAML block is mandatory.
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+4.  Once the sub-agents complete their work, methodically audit the results. Use `str_replace_editor.view` to read the first 15 lines of each of the 100 result files to check the `STATUS` and YAML data.
+5.  Tally the `complete`, `partial`, and any missing files. For any `partial` results, launch a small batch of follow-up `llm_call`s. These new agents should be given specific instructions to find the missing data points, potentially by searching for secondary sources that analyze the original paper.
+
+#### Phase 4 — Assemble Final Output
+
+6.  **Data Aggregation:** Create a script to read the YAML frontmatter from all 100 `result_XXX.md` files. Consolidate this structured data into a single CSV file named `/mnt/agent/output/meta_analysis_data.csv`. This CSV will be the input for your statistical analysis.
+7.  **Analysis and Visualization:** Use the `python` tool to execute a script that:
+    - Loads `/mnt/agent/output/meta_analysis_data.csv` into a pandas DataFrame.
+    - Performs a meta-analysis on the effect sizes. Use libraries like `metafor` or `pymare` if available, or implement the calculations directly.
+    - Generates a forest plot visualizing the effect sizes and the overall summary effect. Save this plot as `/mnt/agent/output/forest_plot.png`.
+    - Generates a summary table of the risk-of-bias scores and saves it as `/mnt/agent/output/bias_table.md`.
+8.  **Final Document Synthesis:** Use `str_replace_editor` to construct the final 200-page report, `/mnt/agent/output/final_report.md`. Assemble it in this order:
+    - Title page and abstract.
+    - Introduction explaining the replication crisis and the study's methodology.
+    - The risk-of-bias table (`bias_table.md`).
+    - The forest plot image (`forest_plot.png`) with a detailed caption.
+    - A synthesis section discussing the overall findings.
+    - The individual 2-page summaries, concatenated from all 100 result files.
+    - A consolidated, alphabetized APA7 reference list, compiled from the `full_citation_apa7` field of each result file.
+***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","medium","en_US","{""task_yaml"": ""OK"", ""gold_yaml"": ""MISSING"", ""artifacts"": ""MISSING"", ""rich_artifacts"": ""MISSING""}",""
+"https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__329c9e6e4c87121d_task.yaml","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__329c9e6e4c87121d_task.yaml","","","","","creative_research","map_reduce","medium","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__329c9e6e4c87121d_single_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__329c9e6e4c87121d_multi_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__329c9e6e4c87121d_task.yaml","80","false","### DELEGATION WORKFLOW — Cross-Cultural Negotiation Handbook
+
+**Objective:** Coordinate 80 parallel sub-agents, each assigned to one country, to research and write a detailed chapter on negotiation practices. Your role as the coordinator is to orchestrate this large-scale research and writing effort, ensuring consistency and quality before assembling the final 250-page handbook. You must not perform any research yourself; delegate all information gathering via `llm_call`. Your coordinator messages must constitute less than 15% of the total tokens used by the swarm.
+
+#### Phase 1 — Create the Plan
+
+1.  Begin by creating a detailed plan file at `/mnt/agent/output/plan.md` using `str_replace_editor.create`. This file is the master blueprint for all sub-agents. It must include:
+
+    *   **Header:** A clear description of the task: to create a comprehensive handbook on cross-cultural negotiation, with one chapter per country.
+    *   **Assignment Table:** A numbered list of all 80 countries, assigning each to a sub-agent and specifying the output file.
+        ```
+        1.  Japan — cultural norms, legal quirks, case study, do/don't table — result file: result_001.md
+        2.  Brazil — cultural norms, legal quirks, case study, do/don't table — result file: result_002.md
+        ...
+        80. Nigeria — cultural norms, legal quirks, case study, do/don't table — result file: result_080.md
+        ```
+    *   **Output Schema (Chapter Template):** A precise markdown template that every sub-agent must follow. This ensures structural consistency across the final handbook. The template should include sections for cultural context, legal framework, a real-world case study, and a summary table. Crucially, mandate the use of footnotes for all claims and data (e.g., `[1]`, `[2]`) with a corresponding reference list at the end of the chapter.
+    *   **Quality Criteria:** Define what constitutes a `complete` result (all sections populated with substantial content, at least 3-5 citations, case study identified) versus a `partial` result (missing sections, no case study, or insufficient detail).
+
+#### Phase 2 — Parallel Delegation
+
+2.  In a SINGLE message, launch all 80 `llm_call` instances to run concurrently. This parallel execution is the core of the swarm's efficiency.
+
+    Each `llm_call` must be precisely configured:
+    *   **Assignment reference:** ""You are sub-agent N. Your assignment is item N in `/mnt/agent/output/plan.md`. Read the plan carefully to understand the required structure and quality standards.""
+    *   **Entity scope:** The specific country name you are delegating (e.g., ""Japan"").
+    *   **Output file:** The designated result file, e.g., `/mnt/agent/output/result_{NNN}.md` (zero-padded).
+    *   **fork_mode:** `none`, as each sub-agent's task is self-contained based on the plan.
+    *   **Research instructions:** Direct sub-agents to use the `browse` tool to consult authoritative sources like the World Bank, university publications on international business, diplomatic guides, and reputable news outlets (e.g., The Economist, HBR). Instruct them to search for specific negotiation styles, common business etiquette, contract law basics, and a verifiable negotiation case study (e.g., a major corporate merger or a diplomatic agreement).
+    *   **Result format:** Sub-agents must write their 3-page chapter in markdown to their assigned result file, strictly adhering to the template in the plan. The very first line of the file must be `STATUS: complete` or `STATUS: partial — [reason for incompleteness]`.
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+3.  Once the parallel sub-agent calls complete, perform a quality assurance check.
+    *   Systematically scan the first line of each of the 80 result files to read the `STATUS` line.
+    *   Tally the number of `complete`, `partial`, and missing files. Document the reasons for partial submissions.
+    *   For all `partial` or missing chapters, launch a targeted follow-up wave of `llm_call`s in a single message. Provide these agents with more specific instructions or alternative search queries to fill the identified gaps.
+    *   Randomly sample 5-7 `complete` files and review them for quality, factual accuracy, and proper citation format.
+
+#### Phase 4 — Assemble Final Output
+
+4.  With all chapters collected and quality-checked, assemble the final handbook.
+    *   Read all `result_*.md` files into memory.
+    *   Create the final document at `/mnt/agent/output/final_handbook.md`. Start with a title page, an introduction explaining the handbook's purpose, and a hyperlinked Table of Contents that lists all 80 countries.
+    *   Concatenate the content of each result file in alphabetical order by country. Ensure consistent heading levels and formatting throughout.
+    *   Conclude the handbook with a summary section that includes the completion statistics (e.g., ""80 countries researched, 75 complete, 5 partial"").
+
+#### Resource Budget
+*   **Phase 2 sub-agents:** 80 (one per country)
+*   **Phase 3 follow-ups:** up to 16 (for gaps/partials)
+*   **Sub-agent tools:** browser, str_replace_editor
+*   **Max messages per sub-agent:** 30
+*   **Coordinator critical-path target:** <15% of total swarm tokens
+***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","### DELEGATION WORKFLOW — Cross-Cultural Negotiation Handbook
+
+**Objective:** Coordinate 80 parallel sub-agents, each assigned to one country, to research and write a detailed chapter on negotiation practices. Your role as the coordinator is to orchestrate this large-scale research and writing effort, ensuring consistency and quality before assembling the final 250-page handbook. You must not perform any research yourself; delegate all information gathering via `llm_call`. Your coordinator messages must constitute less than 15% of the total tokens used by the swarm.
+
+#### Phase 1 — Create the Plan
+
+1.  Begin by creating a detailed plan file at `/mnt/agent/output/plan.md` using `str_replace_editor.create`. This file is the master blueprint for all sub-agents. It must include:
+
+    *   **Header:** A clear description of the task: to create a comprehensive handbook on cross-cultural negotiation, with one chapter per country.
+    *   **Assignment Table:** A numbered list of all 80 countries, assigning each to a sub-agent and specifying the output file.
+        ```
+        1.  Japan — cultural norms, legal quirks, case study, do/don't table — result file: result_001.md
+        2.  Brazil — cultural norms, legal quirks, case study, do/don't table — result file: result_002.md
+        ...
+        80. Nigeria — cultural norms, legal quirks, case study, do/don't table — result file: result_080.md
+        ```
+    *   **Output Schema (Chapter Template):** A precise markdown template that every sub-agent must follow. This ensures structural consistency across the final handbook. The template should include sections for cultural context, legal framework, a real-world case study, and a summary table. Crucially, mandate the use of footnotes for all claims and data (e.g., `[1]`, `[2]`) with a corresponding reference list at the end of the chapter.
+    *   **Quality Criteria:** Define what constitutes a `complete` result (all sections populated with substantial content, at least 3-5 citations, case study identified) versus a `partial` result (missing sections, no case study, or insufficient detail).
+
+#### Phase 2 — Parallel Delegation
+
+2.  In a SINGLE message, launch all 80 `llm_call` instances to run concurrently. This parallel execution is the core of the swarm's efficiency.
+
+    Each `llm_call` must be precisely configured:
+    *   **Assignment reference:** ""You are sub-agent N. Your assignment is item N in `/mnt/agent/output/plan.md`. Read the plan carefully to understand the required structure and quality standards.""
+    *   **Entity scope:** The specific country name you are delegating (e.g., ""Japan"").
+    *   **Output file:** The designated result file, e.g., `/mnt/agent/output/result_{NNN}.md` (zero-padded).
+    *   **fork_mode:** `none`, as each sub-agent's task is self-contained based on the plan.
+    *   **Research instructions:** Direct sub-agents to use the `browse` tool to consult authoritative sources like the World Bank, university publications on international business, diplomatic guides, and reputable news outlets (e.g., The Economist, HBR). Instruct them to search for specific negotiation styles, common business etiquette, contract law basics, and a verifiable negotiation case study (e.g., a major corporate merger or a diplomatic agreement).
+    *   **Result format:** Sub-agents must write their 3-page chapter in markdown to their assigned result file, strictly adhering to the template in the plan. The very first line of the file must be `STATUS: complete` or `STATUS: partial — [reason for incompleteness]`.
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+3.  Once the parallel sub-agent calls complete, perform a quality assurance check.
+    *   Systematically scan the first line of each of the 80 result files to read the `STATUS` line.
+    *   Tally the number of `complete`, `partial`, and missing files. Document the reasons for partial submissions.
+    *   For all `partial` or missing chapters, launch a targeted follow-up wave of `llm_call`s in a single message. Provide these agents with more specific instructions or alternative search queries to fill the identified gaps.
+    *   Randomly sample 5-7 `complete` files and review them for quality, factual accuracy, and proper citation format.
+
+#### Phase 4 — Assemble Final Output
+
+4.  With all chapters collected and quality-checked, assemble the final handbook.
+    *   Read all `result_*.md` files into memory.
+    *   Create the final document at `/mnt/agent/output/final_handbook.md`. Start with a title page, an introduction explaining the handbook's purpose, and a hyperlinked Table of Contents that lists all 80 countries.
+    *   Concatenate the content of each result file in alphabetical order by country. Ensure consistent heading levels and formatting throughout.
+    *   Conclude the handbook with a summary section that includes the completion statistics (e.g., ""80 countries researched, 75 complete, 5 partial"").
+
+#### Resource Budget
+*   **Phase 2 sub-agents:** 80 (one per country)
+*   **Phase 3 follow-ups:** up to 16 (for gaps/partials)
+*   **Sub-agent tools:** browser, str_replace_editor
+*   **Max messages per sub-agent:** 30
+*   **Coordinator critical-path target:** <15% of total swarm tokens
+***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","### DELEGATION WORKFLOW — Cross-Cultural Negotiation Handbook
+
+**Objective:** Coordinate 80 parallel sub-agents, each assigned to one country, to research and write a detailed chapter on negotiation practices. Your role as the coordinator is to orchestrate this large-scale research and writing effort, ensuring consistency and quality before assembling the final 250-page handbook. You must not perform any research yourself; delegate all information gathering via `llm_call`. Your coordinator messages must constitute less than 15% of the total tokens used by the swarm.
+
+#### Phase 1 — Create the Plan
+
+1.  Begin by creating a detailed plan file at `/mnt/agent/output/plan.md` using `str_replace_editor.create`. This file is the master blueprint for all sub-agents. It must include:
+
+    *   **Header:** A clear description of the task: to create a comprehensive handbook on cross-cultural negotiation, with one chapter per country.
+    *   **Assignment Table:** A numbered list of all 80 countries, assigning each to a sub-agent and specifying the output file.
+        ```
+        1.  Japan — cultural norms, legal quirks, case study, do/don't table — result file: result_001.md
+        2.  Brazil — cultural norms, legal quirks, case study, do/don't table — result file: result_002.md
+        ...
+        80. Nigeria — cultural norms, legal quirks, case study, do/don't table — result file: result_080.md
+        ```
+    *   **Output Schema (Chapter Template):** A precise markdown template that every sub-agent must follow. This ensures structural consistency across the final handbook. The template should include sections for cultural context, legal framework, a real-world case study, and a summary table. Crucially, mandate the use of footnotes for all claims and data (e.g., `[1]`, `[2]`) with a corresponding reference list at the end of the chapter.
+    *   **Quality Criteria:** Define what constitutes a `complete` result (all sections populated with substantial content, at least 3-5 citations, case study identified) versus a `partial` result (missing sections, no case study, or insufficient detail).
+
+#### Phase 2 — Parallel Delegation
+
+2.  In a SINGLE message, launch all 80 `llm_call` instances to run concurrently. This parallel execution is the core of the swarm's efficiency.
+
+    Each `llm_call` must be precisely configured:
+    *   **Assignment reference:** ""You are sub-agent N. Your assignment is item N in `/mnt/agent/output/plan.md`. Read the plan carefully to understand the required structure and quality standards.""
+    *   **Entity scope:** The specific country name you are delegating (e.g., ""Japan"").
+    *   **Output file:** The designated result file, e.g., `/mnt/agent/output/result_{NNN}.md` (zero-padded).
+    *   **fork_mode:** `none`, as each sub-agent's task is self-contained based on the plan.
+    *   **Research instructions:** Direct sub-agents to use the `browse` tool to consult authoritative sources like the World Bank, university publications on international business, diplomatic guides, and reputable news outlets (e.g., The Economist, HBR). Instruct them to search for specific negotiation styles, common business etiquette, contract law basics, and a verifiable negotiation case study (e.g., a major corporate merger or a diplomatic agreement).
+    *   **Result format:** Sub-agents must write their 3-page chapter in markdown to their assigned result file, strictly adhering to the template in the plan. The very first line of the file must be `STATUS: complete` or `STATUS: partial — [reason for incompleteness]`.
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+3.  Once the parallel sub-agent calls complete, perform a quality assurance check.
+    *   Systematically scan the first line of each of the 80 result files to read the `STATUS` line.
+    *   Tally the number of `complete`, `partial`, and missing files. Document the reasons for partial submissions.
+    *   For all `partial` or missing chapters, launch a targeted follow-up wave of `llm_call`s in a single message. Provide these agents with more specific instructions or alternative search queries to fill the identified gaps.
+    *   Randomly sample 5-7 `complete` files and review them for quality, factual accuracy, and proper citation format.
+
+#### Phase 4 — Assemble Final Output
+
+4.  With all chapters collected and quality-checked, assemble the final handbook.
+    *   Read all `result_*.md` files into memory.
+    *   Create the final document at `/mnt/agent/output/final_handbook.md`. Start with a title page, an introduction explaining the handbook's purpose, and a hyperlinked Table of Contents that lists all 80 countries.
+    *   Concatenate the content of each result file in alphabetical order by country. Ensure consistent heading levels and formatting throughout.
+    *   Conclude the handbook with a summary section that includes the completion statistics (e.g., ""80 countries researched, 75 complete, 5 partial"").
+
+#### Resource Budget
+*   **Phase 2 sub-agents:** 80 (one per country)
+*   **Phase 3 follow-ups:** up to 16 (for gaps/partials)
+*   **Sub-agent tools:** browser, str_replace_editor
+*   **Max messages per sub-agent:** 30
+*   **Coordinator critical-path target:** <15% of total swarm tokens
+***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","medium","en_US","{""task_yaml"": ""OK"", ""gold_yaml"": ""MISSING"", ""artifacts"": ""MISSING"", ""rich_artifacts"": ""MISSING""}",""
+"https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__7f9d0ff26bd9eec7_task.yaml","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__7f9d0ff26bd9eec7_task.yaml","","","","","creative_research","map_reduce","medium","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__7f9d0ff26bd9eec7_single_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__7f9d0ff26bd9eec7_multi_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__7f9d0ff26bd9eec7_task.yaml","45","false","### DELEGATION WORKFLOW — Sneaker Drop: Global Edition
+
+**Objective:** Coordinate 45 parallel sub-agents to generate unique, localized campaign visuals for a new sneaker. Each sub-agent is assigned one of 45 global cities. Your role as coordinator is to plan the campaign, delegate image generation, audit completion, and assemble the final web assets. Do NOT generate images yourself — every creative task must be delegated via `llm_call`. Target: your coordinator messages should be <15% of total assistant tokens across the swarm.
+
+#### Phase 1 — Create the Plan
+
+1. Write `/mnt/agent/output/plan.md` using `str_replace_editor.create`. This plan is the single source of truth for all sub-agents. It must contain:
+
+   **Header:** A detailed description of the task and the sneaker. This is critical for product consistency. Describe the sneaker from the seed 3D model in detail: colorway, materials (e.g., 'white leather upper with suede overlays'), sole design, unique features (e.g., 'translucent heel tab').
+
+   **Assignment Table:** A numbered list of all 45 sneakerhead cities, one per line. This maps each sub-agent ID to a location.
+   ```
+   1. Tokyo, Japan — generate key visual — result file: result_001
+   2. New York City, USA — generate key visual — result file: result_002
+   ...
+   45. Berlin, Germany — generate key visual — result file: result_045
+   ```
+
+   **Output Schema:** Each sub-agent must produce two files: `result_{NNN}.jpg` (the 16:9 image) and `result_{NNN}.txt` (a status file).
+
+   **Quality & Style Criteria:** Define the creative direction. The image should be 'editorial fashion photography' style. It must feature a person ('local influencer') wearing the sneakers. The background must evoke the assigned city, incorporating elements like iconic architecture, public transit, or local street art styles. The overall mood should be 'hype' and 'exclusive'.
+
+#### Phase 2 — Parallel Delegation
+
+2. Launch ALL 45 sub-agent calls in a SINGLE message. This parallel execution is essential for efficiency.
+
+   Each `llm_call` must instruct the sub-agent to perform a two-step process:
+   - **Assignment reference:** ""You are sub-agent N. Read `/mnt/agent/output/plan.md`, find your assigned city under item N.""
+   - **Entity scope:** The specific city to generate a visual for.
+   - **Output file:** The base name for the output, e.g., `/mnt/agent/output/result_{NNN}`.
+   - **fork_mode:** `none`
+   - **Generation Instructions:** Instruct the agent to use its creativity to craft a detailed prompt for the `mango` tool based on the plan. This prompt must synthesize: a) the detailed sneaker description, b) the assigned city's vibe, c) the influencer and styling, and d) the overall photographic style. Then, it must execute `mango` to generate the image, saving it as `result_{NNN}.jpg`.
+   - **Result Format:** After saving the image, the sub-agent must use `str_replace_editor` to create `result_{NNN}.txt` containing two lines: the status (`STATUS: complete`) and the exact `mango` prompt used. This is for auditing and reproducibility.
+
+   CRITICAL: All 45 `llm_call` invocations must be in the same message to leverage parallel processing.
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+3. Once the sub-agents complete, verify their output. You cannot 'see' the images, but you can check for their existence and metadata.
+   - Use `bash` or `str_replace_editor` to list all `result_*.txt` and `result_*.jpg` files.
+   - For each of the 45 assignments, confirm that both the `.txt` and `.jpg` files exist and are non-empty.
+   - Read the `STATUS` line from each `.txt` file.
+   - Count `complete` vs. missing assignments.
+   - For any missing pairs of files, launch a single batch of follow-up `llm_call`s to regenerate them. Limit this to one follow-up round.
+
+#### Phase 4 — Assemble Final Output
+
+4. Your final task is to build the set of region-locked landing pages. This will be a collection of simple HTML files.
+   - Create a main `index.html` file that serves as a portal, with a list of links to each city page (e.g., ""View the Tokyo Campaign"").
+   - For each of the 45 cities, generate a corresponding `[city_name].html` file (e.g., `tokyo.html`).
+   - Each city page should have a title (e.g., ""[Sneaker Name] - Tokyo Drop"") and embed the corresponding image (`<img src=""result_{NNN}.jpg"" ...>`).
+   - Use `str_replace_editor` to create all 46 HTML files (`index.html` + 45 city pages) in `/mnt/agent/output/`.
+   - Write a final `summary.md` file detailing the project's completion: total images generated, number of successful pages created, and a list of any cities that failed.
+
+#### Resource Budget
+- **Phase 2 sub-agents:** 45 (one per city)
+- **Phase 3 follow-ups:** up to 10 (for gaps/failures)
+- **Sub-agent tools:** mango, str_replace_editor
+- **Max messages per sub-agent:** 10
+- **Coordinator critical-path target:** <15% of total swarm tokens
+***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","### DELEGATION WORKFLOW — Sneaker Drop: Global Edition
+
+**Objective:** Coordinate 45 parallel sub-agents to generate unique, localized campaign visuals for a new sneaker. Each sub-agent is assigned one of 45 global cities. Your role as coordinator is to plan the campaign, delegate image generation, audit completion, and assemble the final web assets. Do NOT generate images yourself — every creative task must be delegated via `llm_call`. Target: your coordinator messages should be <15% of total assistant tokens across the swarm.
+
+#### Phase 1 — Create the Plan
+
+1. Write `/mnt/agent/output/plan.md` using `str_replace_editor.create`. This plan is the single source of truth for all sub-agents. It must contain:
+
+   **Header:** A detailed description of the task and the sneaker. This is critical for product consistency. Describe the sneaker from the seed 3D model in detail: colorway, materials (e.g., 'white leather upper with suede overlays'), sole design, unique features (e.g., 'translucent heel tab').
+
+   **Assignment Table:** A numbered list of all 45 sneakerhead cities, one per line. This maps each sub-agent ID to a location.
+   ```
+   1. Tokyo, Japan — generate key visual — result file: result_001
+   2. New York City, USA — generate key visual — result file: result_002
+   ...
+   45. Berlin, Germany — generate key visual — result file: result_045
+   ```
+
+   **Output Schema:** Each sub-agent must produce two files: `result_{NNN}.jpg` (the 16:9 image) and `result_{NNN}.txt` (a status file).
+
+   **Quality & Style Criteria:** Define the creative direction. The image should be 'editorial fashion photography' style. It must feature a person ('local influencer') wearing the sneakers. The background must evoke the assigned city, incorporating elements like iconic architecture, public transit, or local street art styles. The overall mood should be 'hype' and 'exclusive'.
+
+#### Phase 2 — Parallel Delegation
+
+2. Launch ALL 45 sub-agent calls in a SINGLE message. This parallel execution is essential for efficiency.
+
+   Each `llm_call` must instruct the sub-agent to perform a two-step process:
+   - **Assignment reference:** ""You are sub-agent N. Read `/mnt/agent/output/plan.md`, find your assigned city under item N.""
+   - **Entity scope:** The specific city to generate a visual for.
+   - **Output file:** The base name for the output, e.g., `/mnt/agent/output/result_{NNN}`.
+   - **fork_mode:** `none`
+   - **Generation Instructions:** Instruct the agent to use its creativity to craft a detailed prompt for the `mango` tool based on the plan. This prompt must synthesize: a) the detailed sneaker description, b) the assigned city's vibe, c) the influencer and styling, and d) the overall photographic style. Then, it must execute `mango` to generate the image, saving it as `result_{NNN}.jpg`.
+   - **Result Format:** After saving the image, the sub-agent must use `str_replace_editor` to create `result_{NNN}.txt` containing two lines: the status (`STATUS: complete`) and the exact `mango` prompt used. This is for auditing and reproducibility.
+
+   CRITICAL: All 45 `llm_call` invocations must be in the same message to leverage parallel processing.
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+3. Once the sub-agents complete, verify their output. You cannot 'see' the images, but you can check for their existence and metadata.
+   - Use `bash` or `str_replace_editor` to list all `result_*.txt` and `result_*.jpg` files.
+   - For each of the 45 assignments, confirm that both the `.txt` and `.jpg` files exist and are non-empty.
+   - Read the `STATUS` line from each `.txt` file.
+   - Count `complete` vs. missing assignments.
+   - For any missing pairs of files, launch a single batch of follow-up `llm_call`s to regenerate them. Limit this to one follow-up round.
+
+#### Phase 4 — Assemble Final Output
+
+4. Your final task is to build the set of region-locked landing pages. This will be a collection of simple HTML files.
+   - Create a main `index.html` file that serves as a portal, with a list of links to each city page (e.g., ""View the Tokyo Campaign"").
+   - For each of the 45 cities, generate a corresponding `[city_name].html` file (e.g., `tokyo.html`).
+   - Each city page should have a title (e.g., ""[Sneaker Name] - Tokyo Drop"") and embed the corresponding image (`<img src=""result_{NNN}.jpg"" ...>`).
+   - Use `str_replace_editor` to create all 46 HTML files (`index.html` + 45 city pages) in `/mnt/agent/output/`.
+   - Write a final `summary.md` file detailing the project's completion: total images generated, number of successful pages created, and a list of any cities that failed.
+
+#### Resource Budget
+- **Phase 2 sub-agents:** 45 (one per city)
+- **Phase 3 follow-ups:** up to 10 (for gaps/failures)
+- **Sub-agent tools:** mango, str_replace_editor
+- **Max messages per sub-agent:** 10
+- **Coordinator critical-path target:** <15% of total swarm tokens
+***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","### DELEGATION WORKFLOW — Sneaker Drop: Global Edition
+
+**Objective:** Coordinate 45 parallel sub-agents to generate unique, localized campaign visuals for a new sneaker. Each sub-agent is assigned one of 45 global cities. Your role as coordinator is to plan the campaign, delegate image generation, audit completion, and assemble the final web assets. Do NOT generate images yourself — every creative task must be delegated via `llm_call`. Target: your coordinator messages should be <15% of total assistant tokens across the swarm.
+
+#### Phase 1 — Create the Plan
+
+1. Write `/mnt/agent/output/plan.md` using `str_replace_editor.create`. This plan is the single source of truth for all sub-agents. It must contain:
+
+   **Header:** A detailed description of the task and the sneaker. This is critical for product consistency. Describe the sneaker from the seed 3D model in detail: colorway, materials (e.g., 'white leather upper with suede overlays'), sole design, unique features (e.g., 'translucent heel tab').
+
+   **Assignment Table:** A numbered list of all 45 sneakerhead cities, one per line. This maps each sub-agent ID to a location.
+   ```
+   1. Tokyo, Japan — generate key visual — result file: result_001
+   2. New York City, USA — generate key visual — result file: result_002
+   ...
+   45. Berlin, Germany — generate key visual — result file: result_045
+   ```
+
+   **Output Schema:** Each sub-agent must produce two files: `result_{NNN}.jpg` (the 16:9 image) and `result_{NNN}.txt` (a status file).
+
+   **Quality & Style Criteria:** Define the creative direction. The image should be 'editorial fashion photography' style. It must feature a person ('local influencer') wearing the sneakers. The background must evoke the assigned city, incorporating elements like iconic architecture, public transit, or local street art styles. The overall mood should be 'hype' and 'exclusive'.
+
+#### Phase 2 — Parallel Delegation
+
+2. Launch ALL 45 sub-agent calls in a SINGLE message. This parallel execution is essential for efficiency.
+
+   Each `llm_call` must instruct the sub-agent to perform a two-step process:
+   - **Assignment reference:** ""You are sub-agent N. Read `/mnt/agent/output/plan.md`, find your assigned city under item N.""
+   - **Entity scope:** The specific city to generate a visual for.
+   - **Output file:** The base name for the output, e.g., `/mnt/agent/output/result_{NNN}`.
+   - **fork_mode:** `none`
+   - **Generation Instructions:** Instruct the agent to use its creativity to craft a detailed prompt for the `mango` tool based on the plan. This prompt must synthesize: a) the detailed sneaker description, b) the assigned city's vibe, c) the influencer and styling, and d) the overall photographic style. Then, it must execute `mango` to generate the image, saving it as `result_{NNN}.jpg`.
+   - **Result Format:** After saving the image, the sub-agent must use `str_replace_editor` to create `result_{NNN}.txt` containing two lines: the status (`STATUS: complete`) and the exact `mango` prompt used. This is for auditing and reproducibility.
+
+   CRITICAL: All 45 `llm_call` invocations must be in the same message to leverage parallel processing.
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+3. Once the sub-agents complete, verify their output. You cannot 'see' the images, but you can check for their existence and metadata.
+   - Use `bash` or `str_replace_editor` to list all `result_*.txt` and `result_*.jpg` files.
+   - For each of the 45 assignments, confirm that both the `.txt` and `.jpg` files exist and are non-empty.
+   - Read the `STATUS` line from each `.txt` file.
+   - Count `complete` vs. missing assignments.
+   - For any missing pairs of files, launch a single batch of follow-up `llm_call`s to regenerate them. Limit this to one follow-up round.
+
+#### Phase 4 — Assemble Final Output
+
+4. Your final task is to build the set of region-locked landing pages. This will be a collection of simple HTML files.
+   - Create a main `index.html` file that serves as a portal, with a list of links to each city page (e.g., ""View the Tokyo Campaign"").
+   - For each of the 45 cities, generate a corresponding `[city_name].html` file (e.g., `tokyo.html`).
+   - Each city page should have a title (e.g., ""[Sneaker Name] - Tokyo Drop"") and embed the corresponding image (`<img src=""result_{NNN}.jpg"" ...>`).
+   - Use `str_replace_editor` to create all 46 HTML files (`index.html` + 45 city pages) in `/mnt/agent/output/`.
+   - Write a final `summary.md` file detailing the project's completion: total images generated, number of successful pages created, and a list of any cities that failed.
+
+#### Resource Budget
+- **Phase 2 sub-agents:** 45 (one per city)
+- **Phase 3 follow-ups:** up to 10 (for gaps/failures)
+- **Sub-agent tools:** mango, str_replace_editor
+- **Max messages per sub-agent:** 10
+- **Coordinator critical-path target:** <15% of total swarm tokens
+***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","medium","en_US","{""task_yaml"": ""OK"", ""gold_yaml"": ""MISSING"", ""artifacts"": ""MISSING"", ""rich_artifacts"": ""MISSING""}",""
+"https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__adcf16d169322aa2_task.yaml","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__adcf16d169322aa2_task.yaml","","","","","creative_research","map_reduce","medium","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__adcf16d169322aa2_single_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__adcf16d169322aa2_multi_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__adcf16d169322aa2_task.yaml","60","false","### DELEGATION WORKFLOW — Product in 60 Homes
+
+**Objective:** Coordinate 60 parallel sub-agents to generate photorealistic lifestyle images of a single DTC lamp placed in 60 diverse global household settings. Your role as coordinator is to plan the visual campaign, delegate image generation, and assemble the final asset collection. Do NOT perform any research or image generation yourself—every creative and research task must be delegated via `llm_call`. Your coordinator messages must be <15% of the total swarm token count.
+
+#### Phase 1 — Create the Plan
+
+1.  **Define the Core Asset:** Before planning, analyze the source product. Note its key visual characteristics: shape, material, color, size. This description will be the core of every image generation prompt.
+2.  **Write the Plan File:** Use `str_replace_editor.create` to write `/mnt/agent/output/plan.md`. This plan is the single source of truth for all sub-agents. It must contain:
+
+    *   **Header:** A detailed description of the lamp (e.g., ""A 16-inch tall minimalist desk lamp with a conical-shaped matte black metal shade, a thin brass stem, and a round marble base.""). Also, state the overall goal: to create a diverse set of 60 marketing images.
+    *   **Assignment Table:** A numbered list of 60 distinct household types and locations, one per line. Be creative and specific (e.g., ""1. Tokyo micro-apartment"", ""2. Kenyan farmhouse near Naivasha"", ""3. Brooklyn loft with exposed brick"", ""4. Parisian Haussmann apartment with herringbone floors"", ""5. Modernist glass house in a Brazilian rainforest""). Each line should map to an output file: `1. [Entity] - result file: result_001.json`
+    *   **Output Schema:** Each sub-agent must produce one image file (e.g., `/mnt/agent/output/images/result_001.png`) and one JSON status file (`/mnt/agent/output/results/result_001.json`). The JSON file must contain the status, the path to the generated image, and the exact `mango` prompt used.
+    *   **Quality Criteria:** A complete result requires a high-resolution, photorealistic image where the lamp is clearly visible and unchanged, the environment matches the assigned location, and details like electrical outlets are region-appropriate.
+
+#### Phase 2 — Parallel Delegation
+
+3.  Launch ALL 60 sub-agent calls in a SINGLE message. This parallel execution is critical for efficiency.
+
+    Each `llm_call` must instruct the sub-agent to perform a two-step process:
+
+    *   **Research Step:** ""You are sub-agent N, assigned to the '[Entity Name]' setting. First, use the `browse` tool to research this environment. Find images and descriptions of the typical architecture, interior design, color palettes, and electrical outlets (e.g., 'what electrical socket is used in Kenya'). Synthesize these details into a descriptive paragraph.""
+    *   **Generation Step:** ""Next, construct a detailed prompt for the `mango` tool. This prompt must combine the core lamp description from `plan.md` with the environmental details you just researched. The prompt should be a single, cohesive paragraph describing a complete scene. Example: 'Photorealistic lifestyle photo of a [lamp description] on a rustic wooden desk inside a Kenyan farmhouse. Sunlight streams through a window, illuminating dust motes. The background shows handcrafted furniture and local textiles. The lamp is plugged into a British-style Type G socket on the wall.'""
+    *   **Execution & Reporting:** Instruct the agent to call `mango` with the crafted prompt, saving the output to `/mnt/agent/output/images/result_{NNN}.png`. Then, use `str_replace_editor` to write the status file `/mnt/agent/output/results/result_{NNN}.json` containing `{""status"": ""complete"", ""image_path"": ""/mnt/agent/output/images/result_{NNN}.png"", ""prompt_used"": ""...""}`. If generation fails, the status should be `partial` with an error reason.
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+4.  After the parallel jobs complete, systematically check the output. Use `bash` or `str_replace_editor` to list files in `/mnt/agent/output/results/` and read the status from each JSON file.
+5.  Tally the `complete`, `partial`, and missing results. For up to 10 failed or low-quality generations, launch a single follow-up batch of `llm_call`s. For these, provide refined instructions, such as simplifying the prompt or suggesting a different angle (e.g., ""Focus on a close-up shot of the lamp on a surface, with the background blurred."").
+
+#### Phase 4 — Assemble Final Output
+
+6.  Consolidate all successful results into a final asset manifest. Read all the `result_NNN.json` files and compile them into a single `/mnt/agent/output/pdp_carousel_manifest.json`.
+7.  This manifest should be an array of objects, where each object contains the location, the path to the generated image, and the prompt used. This JSON file is the final deliverable, ready to power a dynamic product-page image carousel.
+8.  Write a brief `/mnt/agent/output/summary.md` report detailing the project's success: total images generated, list of all locations covered, and a list of any locations that failed generation.
+
+#### Resource Budget
+- **Phase 2 sub-agents:** 60 (one per household type)
+- **Phase 3 follow-ups:** up to 10 (for failures)
+- **Sub-agent tools:** browse, mango, str_replace_editor
+- **Coordinator critical-path target:** <15% of total swarm tokens
+***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","### DELEGATION WORKFLOW — Product in 60 Homes
+
+**Objective:** Coordinate 60 parallel sub-agents to generate photorealistic lifestyle images of a single DTC lamp placed in 60 diverse global household settings. Your role as coordinator is to plan the visual campaign, delegate image generation, and assemble the final asset collection. Do NOT perform any research or image generation yourself—every creative and research task must be delegated via `llm_call`. Your coordinator messages must be <15% of the total swarm token count.
+
+#### Phase 1 — Create the Plan
+
+1.  **Define the Core Asset:** Before planning, analyze the source product. Note its key visual characteristics: shape, material, color, size. This description will be the core of every image generation prompt.
+2.  **Write the Plan File:** Use `str_replace_editor.create` to write `/mnt/agent/output/plan.md`. This plan is the single source of truth for all sub-agents. It must contain:
+
+    *   **Header:** A detailed description of the lamp (e.g., ""A 16-inch tall minimalist desk lamp with a conical-shaped matte black metal shade, a thin brass stem, and a round marble base.""). Also, state the overall goal: to create a diverse set of 60 marketing images.
+    *   **Assignment Table:** A numbered list of 60 distinct household types and locations, one per line. Be creative and specific (e.g., ""1. Tokyo micro-apartment"", ""2. Kenyan farmhouse near Naivasha"", ""3. Brooklyn loft with exposed brick"", ""4. Parisian Haussmann apartment with herringbone floors"", ""5. Modernist glass house in a Brazilian rainforest""). Each line should map to an output file: `1. [Entity] - result file: result_001.json`
+    *   **Output Schema:** Each sub-agent must produce one image file (e.g., `/mnt/agent/output/images/result_001.png`) and one JSON status file (`/mnt/agent/output/results/result_001.json`). The JSON file must contain the status, the path to the generated image, and the exact `mango` prompt used.
+    *   **Quality Criteria:** A complete result requires a high-resolution, photorealistic image where the lamp is clearly visible and unchanged, the environment matches the assigned location, and details like electrical outlets are region-appropriate.
+
+#### Phase 2 — Parallel Delegation
+
+3.  Launch ALL 60 sub-agent calls in a SINGLE message. This parallel execution is critical for efficiency.
+
+    Each `llm_call` must instruct the sub-agent to perform a two-step process:
+
+    *   **Research Step:** ""You are sub-agent N, assigned to the '[Entity Name]' setting. First, use the `browse` tool to research this environment. Find images and descriptions of the typical architecture, interior design, color palettes, and electrical outlets (e.g., 'what electrical socket is used in Kenya'). Synthesize these details into a descriptive paragraph.""
+    *   **Generation Step:** ""Next, construct a detailed prompt for the `mango` tool. This prompt must combine the core lamp description from `plan.md` with the environmental details you just researched. The prompt should be a single, cohesive paragraph describing a complete scene. Example: 'Photorealistic lifestyle photo of a [lamp description] on a rustic wooden desk inside a Kenyan farmhouse. Sunlight streams through a window, illuminating dust motes. The background shows handcrafted furniture and local textiles. The lamp is plugged into a British-style Type G socket on the wall.'""
+    *   **Execution & Reporting:** Instruct the agent to call `mango` with the crafted prompt, saving the output to `/mnt/agent/output/images/result_{NNN}.png`. Then, use `str_replace_editor` to write the status file `/mnt/agent/output/results/result_{NNN}.json` containing `{""status"": ""complete"", ""image_path"": ""/mnt/agent/output/images/result_{NNN}.png"", ""prompt_used"": ""...""}`. If generation fails, the status should be `partial` with an error reason.
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+4.  After the parallel jobs complete, systematically check the output. Use `bash` or `str_replace_editor` to list files in `/mnt/agent/output/results/` and read the status from each JSON file.
+5.  Tally the `complete`, `partial`, and missing results. For up to 10 failed or low-quality generations, launch a single follow-up batch of `llm_call`s. For these, provide refined instructions, such as simplifying the prompt or suggesting a different angle (e.g., ""Focus on a close-up shot of the lamp on a surface, with the background blurred."").
+
+#### Phase 4 — Assemble Final Output
+
+6.  Consolidate all successful results into a final asset manifest. Read all the `result_NNN.json` files and compile them into a single `/mnt/agent/output/pdp_carousel_manifest.json`.
+7.  This manifest should be an array of objects, where each object contains the location, the path to the generated image, and the prompt used. This JSON file is the final deliverable, ready to power a dynamic product-page image carousel.
+8.  Write a brief `/mnt/agent/output/summary.md` report detailing the project's success: total images generated, list of all locations covered, and a list of any locations that failed generation.
+
+#### Resource Budget
+- **Phase 2 sub-agents:** 60 (one per household type)
+- **Phase 3 follow-ups:** up to 10 (for failures)
+- **Sub-agent tools:** browse, mango, str_replace_editor
+- **Coordinator critical-path target:** <15% of total swarm tokens
+***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","### DELEGATION WORKFLOW — Product in 60 Homes
+
+**Objective:** Coordinate 60 parallel sub-agents to generate photorealistic lifestyle images of a single DTC lamp placed in 60 diverse global household settings. Your role as coordinator is to plan the visual campaign, delegate image generation, and assemble the final asset collection. Do NOT perform any research or image generation yourself—every creative and research task must be delegated via `llm_call`. Your coordinator messages must be <15% of the total swarm token count.
+
+#### Phase 1 — Create the Plan
+
+1.  **Define the Core Asset:** Before planning, analyze the source product. Note its key visual characteristics: shape, material, color, size. This description will be the core of every image generation prompt.
+2.  **Write the Plan File:** Use `str_replace_editor.create` to write `/mnt/agent/output/plan.md`. This plan is the single source of truth for all sub-agents. It must contain:
+
+    *   **Header:** A detailed description of the lamp (e.g., ""A 16-inch tall minimalist desk lamp with a conical-shaped matte black metal shade, a thin brass stem, and a round marble base.""). Also, state the overall goal: to create a diverse set of 60 marketing images.
+    *   **Assignment Table:** A numbered list of 60 distinct household types and locations, one per line. Be creative and specific (e.g., ""1. Tokyo micro-apartment"", ""2. Kenyan farmhouse near Naivasha"", ""3. Brooklyn loft with exposed brick"", ""4. Parisian Haussmann apartment with herringbone floors"", ""5. Modernist glass house in a Brazilian rainforest""). Each line should map to an output file: `1. [Entity] - result file: result_001.json`
+    *   **Output Schema:** Each sub-agent must produce one image file (e.g., `/mnt/agent/output/images/result_001.png`) and one JSON status file (`/mnt/agent/output/results/result_001.json`). The JSON file must contain the status, the path to the generated image, and the exact `mango` prompt used.
+    *   **Quality Criteria:** A complete result requires a high-resolution, photorealistic image where the lamp is clearly visible and unchanged, the environment matches the assigned location, and details like electrical outlets are region-appropriate.
+
+#### Phase 2 — Parallel Delegation
+
+3.  Launch ALL 60 sub-agent calls in a SINGLE message. This parallel execution is critical for efficiency.
+
+    Each `llm_call` must instruct the sub-agent to perform a two-step process:
+
+    *   **Research Step:** ""You are sub-agent N, assigned to the '[Entity Name]' setting. First, use the `browse` tool to research this environment. Find images and descriptions of the typical architecture, interior design, color palettes, and electrical outlets (e.g., 'what electrical socket is used in Kenya'). Synthesize these details into a descriptive paragraph.""
+    *   **Generation Step:** ""Next, construct a detailed prompt for the `mango` tool. This prompt must combine the core lamp description from `plan.md` with the environmental details you just researched. The prompt should be a single, cohesive paragraph describing a complete scene. Example: 'Photorealistic lifestyle photo of a [lamp description] on a rustic wooden desk inside a Kenyan farmhouse. Sunlight streams through a window, illuminating dust motes. The background shows handcrafted furniture and local textiles. The lamp is plugged into a British-style Type G socket on the wall.'""
+    *   **Execution & Reporting:** Instruct the agent to call `mango` with the crafted prompt, saving the output to `/mnt/agent/output/images/result_{NNN}.png`. Then, use `str_replace_editor` to write the status file `/mnt/agent/output/results/result_{NNN}.json` containing `{""status"": ""complete"", ""image_path"": ""/mnt/agent/output/images/result_{NNN}.png"", ""prompt_used"": ""...""}`. If generation fails, the status should be `partial` with an error reason.
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+4.  After the parallel jobs complete, systematically check the output. Use `bash` or `str_replace_editor` to list files in `/mnt/agent/output/results/` and read the status from each JSON file.
+5.  Tally the `complete`, `partial`, and missing results. For up to 10 failed or low-quality generations, launch a single follow-up batch of `llm_call`s. For these, provide refined instructions, such as simplifying the prompt or suggesting a different angle (e.g., ""Focus on a close-up shot of the lamp on a surface, with the background blurred."").
+
+#### Phase 4 — Assemble Final Output
+
+6.  Consolidate all successful results into a final asset manifest. Read all the `result_NNN.json` files and compile them into a single `/mnt/agent/output/pdp_carousel_manifest.json`.
+7.  This manifest should be an array of objects, where each object contains the location, the path to the generated image, and the prompt used. This JSON file is the final deliverable, ready to power a dynamic product-page image carousel.
+8.  Write a brief `/mnt/agent/output/summary.md` report detailing the project's success: total images generated, list of all locations covered, and a list of any locations that failed generation.
+
+#### Resource Budget
+- **Phase 2 sub-agents:** 60 (one per household type)
+- **Phase 3 follow-ups:** up to 10 (for failures)
+- **Sub-agent tools:** browse, mango, str_replace_editor
+- **Coordinator critical-path target:** <15% of total swarm tokens
+***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","medium","en_US","{""task_yaml"": ""OK"", ""gold_yaml"": ""MISSING"", ""artifacts"": ""MISSING"", ""rich_artifacts"": ""MISSING""}",""
+"https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__c74d3a58795d8205_task.yaml","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__c74d3a58795d8205_task.yaml","","","","","creative_research","map_reduce","medium","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__c74d3a58795d8205_single_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__c74d3a58795d8205_multi_run.json","https://static.remotasks.com/uploads/69bee012be45f06904292c9a/multi_agent_swarm__c74d3a58795d8205_task.yaml","51","false","### DELEGATION WORKFLOW — GDPR vs 50 State Privacy Laws Comparison
+
+**Objective:** Coordinate 51 parallel sub-agents—one for GDPR and one for each of the 50 US states—to produce a comprehensive analysis of privacy legislation. Each sub-agent will research its assigned jurisdiction and write a detailed chapter. Your role as the coordinator is to orchestrate this research, ensure quality, and assemble the final 220-page compliance guide and matrix. Do NOT perform legal research yourself; delegate all analysis via `llm_call`. Your coordinator messages must be less than 15% of the total swarm token usage.
+
+#### Phase 1 — Create the Plan
+
+1.  Write `/mnt/agent/output/plan.md` using `str_replace_editor.create`. This plan is the single source of truth for all sub-agents. It must contain:
+
+    **Header:** A brief overview of the task, emphasizing the goal of comparing GDPR with US state privacy laws.
+
+    **Assignment Table:** A numbered list of all 51 jurisdictions. The list must be precise:
+    ```
+    1.  GDPR (General Data Protection Regulation) — result file: result_001.md
+    2.  Alabama — result file: result_002.md
+    3.  Alaska — result file: result_003.md
+    ...
+    51. Wyoming — result file: result_051.md
+    ```
+
+    **Output Schema (Chapter Template):** A strict markdown template for each sub-agent's output file. This ensures consistency for the final assembly. Each chapter must include these H2 sections:
+    *   `## Core Definitions`: Key terms like ""Personal Data,"" ""Consumer,"" ""Processing,"" ""Sale,"" and ""Controller/Processor.""
+    *   `## Consumer Rights`: Detailed explanation of rights such as Access, Deletion, Correction, Opt-Out of Sale/Sharing, and Portability.
+    *   `## Penalties & Enforcement`: Statutory fine amounts, per-violation penalties, and the primary enforcement body (e.g., Attorney General).
+    *   `## Notable Enforcement Actions`: Summaries of 1-2 significant real-world cases or settlements under the law.
+
+    **Quality Criteria:** A `complete` result must fill all four sections with substantive, sourced information. A `partial` result is one missing a section or providing only placeholder content.
+
+#### Phase 2 — Parallel Delegation
+
+2.  Launch ALL 51 sub-agent calls in a SINGLE message. This parallel execution is critical for efficiency. Your coordinator turn will dispatch the entire research swarm at once.
+
+    Each `llm_call` must include:
+    *   **Assignment reference:** ""You are sub-agent N. Read `/mnt/agent/output/plan.md` and find your assigned jurisdiction under item N.""
+    *   **Entity scope:** The specific law/state to research (e.g., ""GDPR"", ""California (CCPA/CPRA)"").
+    *   **Output file:** `/mnt/agent/output/result_{NNN}.md` (zero-padded).
+    *   **fork_mode:** `none`
+    *   **Research instructions:** ""Use the `browse` tool to find authoritative sources. Search official legislative websites, state Attorney General pages, the IAPP resource center, and reputable legal-tech publications. Synthesize the findings for your assigned jurisdiction.""
+    *   **Result format:** ""Write your findings into your assigned result file using `str_replace_editor`. The first line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason for incompleteness]`. The content must strictly follow the chapter template defined in `plan.md`.""
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+3.  Once the sub-agents complete, systematically verify their work. Use `str_replace_editor.view` with a `view_range` of `(0, 1)` to read the `STATUS` line of all 51 result files.
+4.  Tally the number of `complete`, `partial`, and missing files. For any non-complete results, launch a targeted follow-up `llm_call` (in a single batch) with more specific instructions (e.g., ""Focus on finding penalty information for Delaware's privacy law, which was missing in the first attempt.""). Limit this to one round of follow-ups.
+
+#### Phase 4 — Assemble Final Output
+
+5.  **Assemble the Narrative Guide:** Read all 51 `result_XXX.md` files. Concatenate them into a single document: `/mnt/agent/output/final_guide.md`. Generate a Table of Contents at the top, linking to each jurisdiction's chapter.
+6.  **Create the Compliance Matrix:** This is a crucial step. Create a new file, `/mnt/agent/output/compliance_matrix.tsv`. The first row will be headers: `Jurisdiction`, `Applies To`, `Personal_Data_Definition`, `Right_to_Access`, `Right_to_Delete`, `Opt-Out_of_Sale`, `Max_Civil_Penalty`. Then, for each of the 51 jurisdictions, re-read its corresponding result file and programmatically extract or summarize the key data points to populate one row in the TSV. This provides an at-a-glance comparison.
+7.  **Write the Introduction:** Add a 2-page executive summary to the beginning of `final_guide.md`. This summary should introduce the project, provide a high-level overview of the trends in US privacy law versus the GDPR, and include a metadata section with the completion date and stats (e.g., ""51/51 jurisdictions covered, 48 complete, 3 partial"").
+
+#### Resource Budget
+*   **Phase 2 sub-agents:** 51
+*   **Phase 3 follow-ups:** up to 10
+*   **Sub-agent tools:** `browse`, `str_replace_editor`
+*   **Max messages per sub-agent:** 25
+*   **Coordinator critical-path target:** <15% of total swarm tokens
+***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","### DELEGATION WORKFLOW — GDPR vs 50 State Privacy Laws Comparison
+
+**Objective:** Coordinate 51 parallel sub-agents—one for GDPR and one for each of the 50 US states—to produce a comprehensive analysis of privacy legislation. Each sub-agent will research its assigned jurisdiction and write a detailed chapter. Your role as the coordinator is to orchestrate this research, ensure quality, and assemble the final 220-page compliance guide and matrix. Do NOT perform legal research yourself; delegate all analysis via `llm_call`. Your coordinator messages must be less than 15% of the total swarm token usage.
+
+#### Phase 1 — Create the Plan
+
+1.  Write `/mnt/agent/output/plan.md` using `str_replace_editor.create`. This plan is the single source of truth for all sub-agents. It must contain:
+
+    **Header:** A brief overview of the task, emphasizing the goal of comparing GDPR with US state privacy laws.
+
+    **Assignment Table:** A numbered list of all 51 jurisdictions. The list must be precise:
+    ```
+    1.  GDPR (General Data Protection Regulation) — result file: result_001.md
+    2.  Alabama — result file: result_002.md
+    3.  Alaska — result file: result_003.md
+    ...
+    51. Wyoming — result file: result_051.md
+    ```
+
+    **Output Schema (Chapter Template):** A strict markdown template for each sub-agent's output file. This ensures consistency for the final assembly. Each chapter must include these H2 sections:
+    *   `## Core Definitions`: Key terms like ""Personal Data,"" ""Consumer,"" ""Processing,"" ""Sale,"" and ""Controller/Processor.""
+    *   `## Consumer Rights`: Detailed explanation of rights such as Access, Deletion, Correction, Opt-Out of Sale/Sharing, and Portability.
+    *   `## Penalties & Enforcement`: Statutory fine amounts, per-violation penalties, and the primary enforcement body (e.g., Attorney General).
+    *   `## Notable Enforcement Actions`: Summaries of 1-2 significant real-world cases or settlements under the law.
+
+    **Quality Criteria:** A `complete` result must fill all four sections with substantive, sourced information. A `partial` result is one missing a section or providing only placeholder content.
+
+#### Phase 2 — Parallel Delegation
+
+2.  Launch ALL 51 sub-agent calls in a SINGLE message. This parallel execution is critical for efficiency. Your coordinator turn will dispatch the entire research swarm at once.
+
+    Each `llm_call` must include:
+    *   **Assignment reference:** ""You are sub-agent N. Read `/mnt/agent/output/plan.md` and find your assigned jurisdiction under item N.""
+    *   **Entity scope:** The specific law/state to research (e.g., ""GDPR"", ""California (CCPA/CPRA)"").
+    *   **Output file:** `/mnt/agent/output/result_{NNN}.md` (zero-padded).
+    *   **fork_mode:** `none`
+    *   **Research instructions:** ""Use the `browse` tool to find authoritative sources. Search official legislative websites, state Attorney General pages, the IAPP resource center, and reputable legal-tech publications. Synthesize the findings for your assigned jurisdiction.""
+    *   **Result format:** ""Write your findings into your assigned result file using `str_replace_editor`. The first line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason for incompleteness]`. The content must strictly follow the chapter template defined in `plan.md`.""
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+3.  Once the sub-agents complete, systematically verify their work. Use `str_replace_editor.view` with a `view_range` of `(0, 1)` to read the `STATUS` line of all 51 result files.
+4.  Tally the number of `complete`, `partial`, and missing files. For any non-complete results, launch a targeted follow-up `llm_call` (in a single batch) with more specific instructions (e.g., ""Focus on finding penalty information for Delaware's privacy law, which was missing in the first attempt.""). Limit this to one round of follow-ups.
+
+#### Phase 4 — Assemble Final Output
+
+5.  **Assemble the Narrative Guide:** Read all 51 `result_XXX.md` files. Concatenate them into a single document: `/mnt/agent/output/final_guide.md`. Generate a Table of Contents at the top, linking to each jurisdiction's chapter.
+6.  **Create the Compliance Matrix:** This is a crucial step. Create a new file, `/mnt/agent/output/compliance_matrix.tsv`. The first row will be headers: `Jurisdiction`, `Applies To`, `Personal_Data_Definition`, `Right_to_Access`, `Right_to_Delete`, `Opt-Out_of_Sale`, `Max_Civil_Penalty`. Then, for each of the 51 jurisdictions, re-read its corresponding result file and programmatically extract or summarize the key data points to populate one row in the TSV. This provides an at-a-glance comparison.
+7.  **Write the Introduction:** Add a 2-page executive summary to the beginning of `final_guide.md`. This summary should introduce the project, provide a high-level overview of the trends in US privacy law versus the GDPR, and include a metadata section with the completion date and stats (e.g., ""51/51 jurisdictions covered, 48 complete, 3 partial"").
+
+#### Resource Budget
+*   **Phase 2 sub-agents:** 51
+*   **Phase 3 follow-ups:** up to 10
+*   **Sub-agent tools:** `browse`, `str_replace_editor`
+*   **Max messages per sub-agent:** 25
+*   **Coordinator critical-path target:** <15% of total swarm tokens
+***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","### DELEGATION WORKFLOW — GDPR vs 50 State Privacy Laws Comparison
+
+**Objective:** Coordinate 51 parallel sub-agents—one for GDPR and one for each of the 50 US states—to produce a comprehensive analysis of privacy legislation. Each sub-agent will research its assigned jurisdiction and write a detailed chapter. Your role as the coordinator is to orchestrate this research, ensure quality, and assemble the final 220-page compliance guide and matrix. Do NOT perform legal research yourself; delegate all analysis via `llm_call`. Your coordinator messages must be less than 15% of the total swarm token usage.
+
+#### Phase 1 — Create the Plan
+
+1.  Write `/mnt/agent/output/plan.md` using `str_replace_editor.create`. This plan is the single source of truth for all sub-agents. It must contain:
+
+    **Header:** A brief overview of the task, emphasizing the goal of comparing GDPR with US state privacy laws.
+
+    **Assignment Table:** A numbered list of all 51 jurisdictions. The list must be precise:
+    ```
+    1.  GDPR (General Data Protection Regulation) — result file: result_001.md
+    2.  Alabama — result file: result_002.md
+    3.  Alaska — result file: result_003.md
+    ...
+    51. Wyoming — result file: result_051.md
+    ```
+
+    **Output Schema (Chapter Template):** A strict markdown template for each sub-agent's output file. This ensures consistency for the final assembly. Each chapter must include these H2 sections:
+    *   `## Core Definitions`: Key terms like ""Personal Data,"" ""Consumer,"" ""Processing,"" ""Sale,"" and ""Controller/Processor.""
+    *   `## Consumer Rights`: Detailed explanation of rights such as Access, Deletion, Correction, Opt-Out of Sale/Sharing, and Portability.
+    *   `## Penalties & Enforcement`: Statutory fine amounts, per-violation penalties, and the primary enforcement body (e.g., Attorney General).
+    *   `## Notable Enforcement Actions`: Summaries of 1-2 significant real-world cases or settlements under the law.
+
+    **Quality Criteria:** A `complete` result must fill all four sections with substantive, sourced information. A `partial` result is one missing a section or providing only placeholder content.
+
+#### Phase 2 — Parallel Delegation
+
+2.  Launch ALL 51 sub-agent calls in a SINGLE message. This parallel execution is critical for efficiency. Your coordinator turn will dispatch the entire research swarm at once.
+
+    Each `llm_call` must include:
+    *   **Assignment reference:** ""You are sub-agent N. Read `/mnt/agent/output/plan.md` and find your assigned jurisdiction under item N.""
+    *   **Entity scope:** The specific law/state to research (e.g., ""GDPR"", ""California (CCPA/CPRA)"").
+    *   **Output file:** `/mnt/agent/output/result_{NNN}.md` (zero-padded).
+    *   **fork_mode:** `none`
+    *   **Research instructions:** ""Use the `browse` tool to find authoritative sources. Search official legislative websites, state Attorney General pages, the IAPP resource center, and reputable legal-tech publications. Synthesize the findings for your assigned jurisdiction.""
+    *   **Result format:** ""Write your findings into your assigned result file using `str_replace_editor`. The first line of the file MUST be `STATUS: complete` or `STATUS: partial — [reason for incompleteness]`. The content must strictly follow the chapter template defined in `plan.md`.""
+
+#### Phase 3 — Quality Audit & Gap Fill
+
+3.  Once the sub-agents complete, systematically verify their work. Use `str_replace_editor.view` with a `view_range` of `(0, 1)` to read the `STATUS` line of all 51 result files.
+4.  Tally the number of `complete`, `partial`, and missing files. For any non-complete results, launch a targeted follow-up `llm_call` (in a single batch) with more specific instructions (e.g., ""Focus on finding penalty information for Delaware's privacy law, which was missing in the first attempt.""). Limit this to one round of follow-ups.
+
+#### Phase 4 — Assemble Final Output
+
+5.  **Assemble the Narrative Guide:** Read all 51 `result_XXX.md` files. Concatenate them into a single document: `/mnt/agent/output/final_guide.md`. Generate a Table of Contents at the top, linking to each jurisdiction's chapter.
+6.  **Create the Compliance Matrix:** This is a crucial step. Create a new file, `/mnt/agent/output/compliance_matrix.tsv`. The first row will be headers: `Jurisdiction`, `Applies To`, `Personal_Data_Definition`, `Right_to_Access`, `Right_to_Delete`, `Opt-Out_of_Sale`, `Max_Civil_Penalty`. Then, for each of the 51 jurisdictions, re-read its corresponding result file and programmatically extract or summarize the key data points to populate one row in the TSV. This provides an at-a-glance comparison.
+7.  **Write the Introduction:** Add a 2-page executive summary to the beginning of `final_guide.md`. This summary should introduce the project, provide a high-level overview of the trends in US privacy law versus the GDPR, and include a metadata section with the completion date and stats (e.g., ""51/51 jurisdictions covered, 48 complete, 3 partial"").
+
+#### Resource Budget
+*   **Phase 2 sub-agents:** 51
+*   **Phase 3 follow-ups:** up to 10
+*   **Sub-agent tools:** `browse`, `str_replace_editor`
+*   **Max messages per sub-agent:** 25
+*   **Coordinator critical-path target:** <15% of total swarm tokens
+***CRITICAL***: Please ensure ALL files if you create any are written to ""/app/artifact"" directory","medium","en_US","{""task_yaml"": ""OK"", ""gold_yaml"": ""MISSING"", ""artifacts"": ""MISSING"", ""rich_artifacts"": ""MISSING""}",""
