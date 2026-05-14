@@ -1,16 +1,16 @@
 {
   "skill": "QC Auditor \u2014 created by Marius Delahay",
-  "tasks_audited": 16,
+  "tasks_audited": 17,
   "tasks_clean": 1,
   "tasks_incomplete": 0,
   "raw_findings": 442,
-  "post_merge_findings": 184,
-  "confirmed_findings": 151,
-  "rejected_findings": 33,
-  "merge_rate": 0.5837,
-  "drop_rate": 0.1793,
+  "post_merge_findings": 186,
+  "confirmed_findings": 152,
+  "rejected_findings": 34,
+  "merge_rate": 0.5792,
+  "drop_rate": 0.1828,
   "agreement_breakdown": {
-    "3/3": 116,
+    "3/3": 117,
     "2/3": 15,
     "1/3": 20
   },
