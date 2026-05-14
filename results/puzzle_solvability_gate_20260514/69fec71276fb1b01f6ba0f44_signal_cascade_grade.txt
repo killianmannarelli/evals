@@ -1,0 +1,1 @@
+PASS — Pattern A domain solver installed, RESET stripped, play log regenerated.

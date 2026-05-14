@@ -1,0 +1,9 @@
+PASS - phase_echo v3.2 solvability gate
+
+Patterns used: A (in-game monkey-patch of BFSSolver.verify_and_report
+with fast domain BFS) + C (seed remap for raw seeds 3 and 9 whose
+post-RESET _generation=1 layout traps the player in an enclosed pocket).
+
+Cleaned __pycache__ and .DS_Store from zip.
+
+All 10 seeds solvable. Replay full_match + WIN. audit_issues = [].

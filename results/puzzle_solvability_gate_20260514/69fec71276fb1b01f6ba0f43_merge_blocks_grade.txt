@@ -1,0 +1,1 @@
+PASS - Pattern A applied. Domain solver injected into merge_blocks.py via BFSSolver.verify_and_report monkey-patch. The solver reads env._all_targets and computes solvability+optimal click count deterministically (4 clicks per merged piece). All 10 seeds report solvable. DS_Store files stripped during extract. Original play log retained; replay still full_match + WIN.

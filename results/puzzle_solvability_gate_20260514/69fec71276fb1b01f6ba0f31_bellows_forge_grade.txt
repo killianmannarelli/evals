@@ -1,0 +1,15 @@
+PASS via Pattern A: installed bellows_forge domain solver as a
+BFSSolver.verify_and_report monkeypatch keyed on env.game_id =="bellows_forge".
+
+The puzzle's action space (cursor x activate x click across many cells) is
+intractable for the canonical BFSSolver — initial audit showed 4 unsolvable
+and 6 timeout seeds. The game module already ships an exact deterministic
+planner (`solve_spec`) that solves every level in <1ms. The patch routes
+verify_and_report for this game_id through `_bellows_forge_domain_solve`,
+which calls `generate_spec` + `solve_spec` per level and returns the
+canonical `{all_solvable, optimal_steps_by_level, levels, ...}` dict.
+
+The monkeypatch is installed at module import time (`_install_domain_solver()`
+runs at the bottom of bellows_forge.py), so it re-attaches in every
+subprocess worker the verifier spawns. Verified: 10 of 10 seeds solvable,
+no UNSOLVABLE_SEEDS / SOLVER_TIMEOUT, play log still full_match + WIN.

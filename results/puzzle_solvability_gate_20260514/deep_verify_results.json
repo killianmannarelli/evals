@@ -1,0 +1,1672 @@
+[
+  {
+    "task": "69fec71276fb1b01f6ba0f44",
+    "game": "signal_cascade",
+    "all_seeds_pass": true,
+    "gate_pass": true,
+    "seed_results": [
+      {
+        "seed": 0,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 35,
+          "2": 29,
+          "3": 42,
+          "4": 1
+        },
+        "time_s": 1.066,
+        "game_id": "signal_cascade"
+      },
+      {
+        "seed": 1,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 19,
+          "2": 17,
+          "3": 30,
+          "4": 52
+        },
+        "time_s": 1.183,
+        "game_id": "signal_cascade"
+      },
+      {
+        "seed": 2,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 21,
+          "2": 40,
+          "3": 22,
+          "4": 39
+        },
+        "time_s": 1.187,
+        "game_id": "signal_cascade"
+      },
+      {
+        "seed": 3,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 14,
+          "2": 7,
+          "3": 25,
+          "4": 80
+        },
+        "time_s": 1.241,
+        "game_id": "signal_cascade"
+      },
+      {
+        "seed": 4,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 20,
+          "2": 41,
+          "3": 64,
+          "4": 25
+        },
+        "time_s": 1.485,
+        "game_id": "signal_cascade"
+      },
+      {
+        "seed": 5,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 14,
+          "2": 31,
+          "3": 35,
+          "4": 62
+        },
+        "time_s": 1.408,
+        "game_id": "signal_cascade"
+      },
+      {
+        "seed": 6,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 13,
+          "2": 36,
+          "3": 53,
+          "4": 90
+        },
+        "time_s": 1.889,
+        "game_id": "signal_cascade"
+      },
+      {
+        "seed": 7,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 22,
+          "2": 21,
+          "3": 38,
+          "4": 60
+        },
+        "time_s": 1.407,
+        "game_id": "signal_cascade"
+      },
+      {
+        "seed": 8,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 11,
+          "2": 32,
+          "3": 35,
+          "4": 12
+        },
+        "time_s": 0.887,
+        "game_id": "signal_cascade"
+      },
+      {
+        "seed": 9,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 21,
+          "2": 35,
+          "3": 20,
+          "4": 62
+        },
+        "time_s": 1.357,
+        "game_id": "signal_cascade"
+      }
+    ],
+    "batch_verify": {
+      "task": "69fec71276fb1b01f6ba0f44",
+      "zip_path": "/tmp/puzzle_batch/69fec71276fb1b01f6ba0f44/signal_cascade.zip",
+      "audit_issues": [],
+      "zip_root": "signal_cascade",
+      "skipped_template_logs": 0,
+      "jsonl_total": 1,
+      "jsonl_completed": 1,
+      "jsonl_incomplete": 0,
+      "incomplete_files": [],
+      "replays": [
+        {
+          "status": "full_match",
+          "seed": 0,
+          "seed_source": "probed",
+          "hash_match": 106,
+          "hash_mismatch": 0,
+          "state_mismatch": 0,
+          "first_mismatch_step": null,
+          "total_actions": 106,
+          "final_state": "WIN",
+          "mid_game_reset_count": 0,
+          "log": "games/signal_cascade/play_logs/signal_casca_99262049_b41q69.jsonl"
+        }
+      ],
+      "seed_solvability": [
+        {
+          "seed": 0,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 1,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 2,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 3,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 4,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 5,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 6,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 7,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 8,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 9,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      ],
+      "overall": "PASS",
+      "reason": "All logs full_match + WIN"
+    }
+  },
+  {
+    "task": "69fec71276fb1b01f6ba0f43",
+    "game": "merge_blocks",
+    "all_seeds_pass": true,
+    "gate_pass": true,
+    "seed_results": [
+      {
+        "seed": 0,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 108,
+          "2": 124,
+          "3": 132,
+          "4": 144
+        },
+        "time_s": 0.0,
+        "game_id": "merge_blocks"
+      },
+      {
+        "seed": 1,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 108,
+          "2": 124,
+          "3": 132,
+          "4": 144
+        },
+        "time_s": 0.0,
+        "game_id": "merge_blocks"
+      },
+      {
+        "seed": 2,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 108,
+          "2": 124,
+          "3": 132,
+          "4": 144
+        },
+        "time_s": 0.0,
+        "game_id": "merge_blocks"
+      },
+      {
+        "seed": 3,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 108,
+          "2": 124,
+          "3": 132,
+          "4": 144
+        },
+        "time_s": 0.0,
+        "game_id": "merge_blocks"
+      },
+      {
+        "seed": 4,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 108,
+          "2": 124,
+          "3": 132,
+          "4": 144
+        },
+        "time_s": 0.0,
+        "game_id": "merge_blocks"
+      },
+      {
+        "seed": 5,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 108,
+          "2": 124,
+          "3": 132,
+          "4": 144
+        },
+        "time_s": 0.0,
+        "game_id": "merge_blocks"
+      },
+      {
+        "seed": 6,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 108,
+          "2": 124,
+          "3": 132,
+          "4": 144
+        },
+        "time_s": 0.0,
+        "game_id": "merge_blocks"
+      },
+      {
+        "seed": 7,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 108,
+          "2": 124,
+          "3": 132,
+          "4": 144
+        },
+        "time_s": 0.0,
+        "game_id": "merge_blocks"
+      },
+      {
+        "seed": 8,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 108,
+          "2": 124,
+          "3": 132,
+          "4": 144
+        },
+        "time_s": 0.0,
+        "game_id": "merge_blocks"
+      },
+      {
+        "seed": 9,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 108,
+          "2": 124,
+          "3": 132,
+          "4": 144
+        },
+        "time_s": 0.0,
+        "game_id": "merge_blocks"
+      }
+    ],
+    "batch_verify": {
+      "task": "69fec71276fb1b01f6ba0f43",
+      "zip_path": "/tmp/puzzle_batch/69fec71276fb1b01f6ba0f43/merge_blocks.zip",
+      "audit_issues": [],
+      "zip_root": "merge_blocks",
+      "skipped_template_logs": 0,
+      "jsonl_total": 1,
+      "jsonl_completed": 1,
+      "jsonl_incomplete": 0,
+      "incomplete_files": [],
+      "replays": [
+        {
+          "status": "full_match",
+          "seed": 0,
+          "seed_source": "probed",
+          "hash_match": 2420,
+          "hash_mismatch": 0,
+          "state_mismatch": 0,
+          "first_mismatch_step": null,
+          "total_actions": 2420,
+          "final_state": "WIN",
+          "mid_game_reset_count": 0,
+          "log": "games/merge_blocks/play_logs/merge_blocks_v3.jsonl"
+        }
+      ],
+      "seed_solvability": [
+        {
+          "seed": 0,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 1,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 2,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 3,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 4,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 5,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 6,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 7,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 8,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 9,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      ],
+      "overall": "PASS",
+      "reason": "All logs full_match + WIN"
+    }
+  },
+  {
+    "task": "69fec71276fb1b01f6ba0f07",
+    "game": "phase_echo",
+    "all_seeds_pass": true,
+    "gate_pass": true,
+    "seed_results": [
+      {
+        "seed": 0,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 7,
+          "2": 10,
+          "3": 17,
+          "4": 8
+        },
+        "time_s": 1.157,
+        "game_id": "phase_echo"
+      },
+      {
+        "seed": 1,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 4,
+          "2": 5,
+          "3": 13,
+          "4": 5
+        },
+        "time_s": 0.48,
+        "game_id": "phase_echo"
+      },
+      {
+        "seed": 2,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 3,
+          "2": 5,
+          "3": 22,
+          "4": 4
+        },
+        "time_s": 1.967,
+        "game_id": "phase_echo"
+      },
+      {
+        "seed": 3,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 3,
+          "2": 12,
+          "3": 3,
+          "4": 8
+        },
+        "time_s": 0.313,
+        "game_id": "phase_echo"
+      },
+      {
+        "seed": 4,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 10,
+          "2": 15,
+          "3": 14,
+          "4": 7
+        },
+        "time_s": 1.175,
+        "game_id": "phase_echo"
+      },
+      {
+        "seed": 5,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 1,
+          "2": 6,
+          "3": 14,
+          "4": 8
+        },
+        "time_s": 48.664,
+        "game_id": "phase_echo"
+      },
+      {
+        "seed": 6,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 3,
+          "2": 9,
+          "3": 14,
+          "4": 13
+        },
+        "time_s": 1.361,
+        "game_id": "phase_echo"
+      },
+      {
+        "seed": 7,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 7,
+          "2": 15,
+          "3": 16,
+          "4": 1
+        },
+        "time_s": 1.84,
+        "game_id": "phase_echo"
+      },
+      {
+        "seed": 8,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 5,
+          "2": 4,
+          "3": 2,
+          "4": 13
+        },
+        "time_s": 1.102,
+        "game_id": "phase_echo"
+      },
+      {
+        "seed": 9,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 1,
+          "2": 14,
+          "3": 13,
+          "4": 8
+        },
+        "time_s": 0.668,
+        "game_id": "phase_echo"
+      }
+    ],
+    "batch_verify": {
+      "task": "69fec71276fb1b01f6ba0f07",
+      "zip_path": "/tmp/puzzle_batch/69fec71276fb1b01f6ba0f07/phase_echo.zip",
+      "audit_issues": [],
+      "zip_root": "phase_echo/for_contributors",
+      "skipped_template_logs": 0,
+      "jsonl_total": 1,
+      "jsonl_completed": 1,
+      "jsonl_incomplete": 0,
+      "incomplete_files": [],
+      "replays": [
+        {
+          "status": "full_match",
+          "seed": 0,
+          "seed_source": "probed",
+          "hash_match": 64,
+          "hash_mismatch": 0,
+          "state_mismatch": 0,
+          "first_mismatch_step": null,
+          "total_actions": 64,
+          "final_state": "WIN",
+          "mid_game_reset_count": 0,
+          "log": "games/phase_echo/play_logs/phase_echo_59044152_u7d1sg.jsonl"
+        }
+      ],
+      "seed_solvability": [
+        {
+          "seed": 0,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 1,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 2,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 3,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 4,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 5,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 6,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 7,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 8,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 9,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      ],
+      "overall": "PASS",
+      "reason": "All logs full_match + WIN"
+    }
+  },
+  {
+    "task": "69fec71276fb1b01f6ba0f31",
+    "game": "bellows_forge",
+    "all_seeds_pass": true,
+    "gate_pass": true,
+    "seed_results": [
+      {
+        "seed": 0,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 32,
+          "2": 46,
+          "3": 86,
+          "4": 132
+        },
+        "time_s": 0.001,
+        "game_id": "bellows_forge"
+      },
+      {
+        "seed": 1,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 26,
+          "2": 64,
+          "3": 78,
+          "4": 148
+        },
+        "time_s": 0.001,
+        "game_id": "bellows_forge"
+      },
+      {
+        "seed": 2,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 26,
+          "2": 52,
+          "3": 94,
+          "4": 162
+        },
+        "time_s": 0.001,
+        "game_id": "bellows_forge"
+      },
+      {
+        "seed": 3,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 20,
+          "2": 48,
+          "3": 80,
+          "4": 144
+        },
+        "time_s": 0.001,
+        "game_id": "bellows_forge"
+      },
+      {
+        "seed": 4,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 36,
+          "2": 54,
+          "3": 94,
+          "4": 124
+        },
+        "time_s": 0.001,
+        "game_id": "bellows_forge"
+      },
+      {
+        "seed": 5,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 36,
+          "2": 62,
+          "3": 82,
+          "4": 148
+        },
+        "time_s": 0.001,
+        "game_id": "bellows_forge"
+      },
+      {
+        "seed": 6,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 24,
+          "2": 52,
+          "3": 92,
+          "4": 130
+        },
+        "time_s": 0.001,
+        "game_id": "bellows_forge"
+      },
+      {
+        "seed": 7,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 28,
+          "2": 54,
+          "3": 76,
+          "4": 138
+        },
+        "time_s": 0.001,
+        "game_id": "bellows_forge"
+      },
+      {
+        "seed": 8,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 26,
+          "2": 58,
+          "3": 80,
+          "4": 136
+        },
+        "time_s": 0.001,
+        "game_id": "bellows_forge"
+      },
+      {
+        "seed": 9,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 30,
+          "2": 48,
+          "3": 84,
+          "4": 160
+        },
+        "time_s": 0.001,
+        "game_id": "bellows_forge"
+      }
+    ],
+    "batch_verify": {
+      "task": "69fec71276fb1b01f6ba0f31",
+      "zip_path": "/tmp/puzzle_batch/69fec71276fb1b01f6ba0f31/bellows_forge.zip",
+      "audit_issues": [
+        "IPE_IS_ROOT"
+      ],
+      "zip_root": ".",
+      "skipped_template_logs": 0,
+      "jsonl_total": 1,
+      "jsonl_completed": 1,
+      "jsonl_incomplete": 0,
+      "incomplete_files": [],
+      "replays": [
+        {
+          "status": "full_match",
+          "seed": 0,
+          "seed_source": "probed",
+          "hash_match": 669,
+          "hash_mismatch": 0,
+          "state_mismatch": 0,
+          "first_mismatch_step": null,
+          "total_actions": 669,
+          "final_state": "WIN",
+          "mid_game_reset_count": 0,
+          "log": "games/bellows_forge/play_logs/bellows_forg_74329968_k2srl1.jsonl"
+        }
+      ],
+      "seed_solvability": [
+        {
+          "seed": 0,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 1,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 2,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 3,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 4,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 5,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 6,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 7,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 8,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 9,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      ],
+      "overall": "PASS",
+      "reason": "All logs full_match + WIN"
+    }
+  },
+  {
+    "task": "69f95c5eca7b6125b7c668c1",
+    "game": "elemental_paths",
+    "all_seeds_pass": true,
+    "gate_pass": true,
+    "seed_results": [
+      {
+        "seed": 0,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 311,
+          "2": 335,
+          "3": 331,
+          "4": 364
+        },
+        "time_s": 0.073,
+        "game_id": "elemental_paths"
+      },
+      {
+        "seed": 1,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 311,
+          "2": 345,
+          "3": 326,
+          "4": 364
+        },
+        "time_s": 0.068,
+        "game_id": "elemental_paths"
+      },
+      {
+        "seed": 2,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 311,
+          "2": 345,
+          "3": 331,
+          "4": 364
+        },
+        "time_s": 0.068,
+        "game_id": "elemental_paths"
+      },
+      {
+        "seed": 3,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 311,
+          "2": 335,
+          "3": 331,
+          "4": 364
+        },
+        "time_s": 0.066,
+        "game_id": "elemental_paths"
+      },
+      {
+        "seed": 4,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 311,
+          "2": 335,
+          "3": 326,
+          "4": 364
+        },
+        "time_s": 0.065,
+        "game_id": "elemental_paths"
+      },
+      {
+        "seed": 5,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 311,
+          "2": 335,
+          "3": 336,
+          "4": 364
+        },
+        "time_s": 0.067,
+        "game_id": "elemental_paths"
+      },
+      {
+        "seed": 6,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 311,
+          "2": 345,
+          "3": 326,
+          "4": 359
+        },
+        "time_s": 0.072,
+        "game_id": "elemental_paths"
+      },
+      {
+        "seed": 7,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 311,
+          "2": 340,
+          "3": 326,
+          "4": 364
+        },
+        "time_s": 0.066,
+        "game_id": "elemental_paths"
+      },
+      {
+        "seed": 8,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 311,
+          "2": 335,
+          "3": 331,
+          "4": 359
+        },
+        "time_s": 0.068,
+        "game_id": "elemental_paths"
+      },
+      {
+        "seed": 9,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 311,
+          "2": 330,
+          "3": 331,
+          "4": 359
+        },
+        "time_s": 0.065,
+        "game_id": "elemental_paths"
+      }
+    ],
+    "batch_verify": {
+      "task": "69f95c5eca7b6125b7c668c1",
+      "zip_path": "/tmp/puzzle_batch/69f95c5eca7b6125b7c668c1/elemental_paths.zip",
+      "audit_issues": [],
+      "zip_root": "for_contributors",
+      "skipped_template_logs": 0,
+      "jsonl_total": 1,
+      "jsonl_completed": 1,
+      "jsonl_incomplete": 0,
+      "incomplete_files": [],
+      "replays": [
+        {
+          "status": "full_match",
+          "seed": 0,
+          "seed_source": "probed",
+          "hash_match": 1591,
+          "hash_mismatch": 0,
+          "state_mismatch": 0,
+          "first_mismatch_step": null,
+          "total_actions": 1591,
+          "final_state": "WIN",
+          "mid_game_reset_count": 0,
+          "log": "games/elemental_paths/play_logs/elemental_pa_36785594_1ngkud.jsonl"
+        }
+      ],
+      "seed_solvability": [
+        {
+          "seed": 0,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 1,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 2,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 3,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 4,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 5,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 6,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 7,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 8,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 9,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      ],
+      "overall": "PASS",
+      "reason": "All logs full_match + WIN"
+    }
+  },
+  {
+    "task": "69fec71276fb1b01f6ba0f26",
+    "game": "polarity_tiles",
+    "all_seeds_pass": true,
+    "gate_pass": true,
+    "seed_results": [
+      {
+        "seed": 0,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 6,
+          "2": 10,
+          "3": 14,
+          "4": 20
+        },
+        "time_s": 0.5,
+        "game_id": "polarity_tiles"
+      },
+      {
+        "seed": 1,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 6,
+          "2": 10,
+          "3": 14,
+          "4": 20
+        },
+        "time_s": 0.494,
+        "game_id": "polarity_tiles"
+      },
+      {
+        "seed": 2,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 6,
+          "2": 10,
+          "3": 14,
+          "4": 20
+        },
+        "time_s": 0.514,
+        "game_id": "polarity_tiles"
+      },
+      {
+        "seed": 3,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 6,
+          "2": 10,
+          "3": 14,
+          "4": 20
+        },
+        "time_s": 0.491,
+        "game_id": "polarity_tiles"
+      },
+      {
+        "seed": 4,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 6,
+          "2": 10,
+          "3": 14,
+          "4": 20
+        },
+        "time_s": 0.496,
+        "game_id": "polarity_tiles"
+      },
+      {
+        "seed": 5,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 6,
+          "2": 10,
+          "3": 14,
+          "4": 20
+        },
+        "time_s": 0.492,
+        "game_id": "polarity_tiles"
+      },
+      {
+        "seed": 6,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 6,
+          "2": 10,
+          "3": 14,
+          "4": 20
+        },
+        "time_s": 0.503,
+        "game_id": "polarity_tiles"
+      },
+      {
+        "seed": 7,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 6,
+          "2": 10,
+          "3": 14,
+          "4": 20
+        },
+        "time_s": 0.496,
+        "game_id": "polarity_tiles"
+      },
+      {
+        "seed": 8,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 6,
+          "2": 10,
+          "3": 14,
+          "4": 20
+        },
+        "time_s": 0.496,
+        "game_id": "polarity_tiles"
+      },
+      {
+        "seed": 9,
+        "status": "ok",
+        "all_solvable": true,
+        "optimal_steps_by_level": {
+          "1": 6,
+          "2": 10,
+          "3": 14,
+          "4": 20
+        },
+        "time_s": 0.487,
+        "game_id": "polarity_tiles"
+      }
+    ],
+    "batch_verify": {
+      "task": "69fec71276fb1b01f6ba0f26",
+      "zip_path": "/tmp/puzzle_batch/69fec71276fb1b01f6ba0f26/polarity_tiles.zip",
+      "audit_issues": [],
+      "zip_root": "for_contributors",
+      "skipped_template_logs": 0,
+      "jsonl_total": 1,
+      "jsonl_completed": 1,
+      "jsonl_incomplete": 0,
+      "incomplete_files": [],
+      "replays": [
+        {
+          "status": "full_match",
+          "seed": 0,
+          "seed_source": "probed",
+          "hash_match": 67,
+          "hash_mismatch": 0,
+          "state_mismatch": 0,
+          "first_mismatch_step": null,
+          "total_actions": 67,
+          "final_state": "WIN",
+          "mid_game_reset_count": 0,
+          "log": "games/polarity_tiles/play_logs/polarity_til_2070790_p91nta.jsonl"
+        }
+      ],
+      "seed_solvability": [
+        {
+          "seed": 0,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 1,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 2,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 3,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 4,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 5,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 6,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 7,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 8,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "seed": 9,
+          "status": "solvable",
+          "all_solvable": true,
+          "optimal_steps_by_level": [
+            1,
+            2,
+            3,
+            4
+          ]
+        }
+      ],
+      "overall": "PASS",
+      "reason": "All logs full_match + WIN"
+    }
+  }
+]
