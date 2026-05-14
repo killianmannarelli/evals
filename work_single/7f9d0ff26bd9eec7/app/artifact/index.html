@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AETHER PROTO-01 - Global Drop Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root {
+  --white: #f7f8fb;
+  --ice:   #a8d2e6;
+  --coral: #ff6e6e;
+  --ink:   #0c1422;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+               Arial, sans-serif;
+  background: linear-gradient(135deg, var(--white) 0%, var(--ice) 100%);
+  color: var(--ink);
+  min-height: 100vh;
+}
+header {
+  padding: 56px 32px 24px;
+  text-align: center;
+}
+header h1 {
+  margin: 0;
+  font-size: clamp(36px, 6vw, 72px);
+  letter-spacing: -0.02em;
+  font-weight: 900;
+}
+header p {
+  margin: 12px 0 0;
+  font-size: 18px;
+  color: var(--ink);
+  opacity: 0.7;
+}
+.tagline {
+  margin-top: 20px;
+  display: inline-block;
+  background: var(--coral);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+main { padding: 24px 32px 64px; max-width: 1280px; margin: 0 auto; }
+ul.grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+.card a {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border: 1px solid rgba(12,20,34,0.08);
+  border-radius: 14px;
+  padding: 18px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.card a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(12,20,34,0.12);
+}
+.num {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--coral);
+  font-weight: 700;
+}
+.city {
+  font-size: 22px;
+  font-weight: 800;
+  margin-top: 4px;
+}
+.country {
+  font-size: 13px;
+  opacity: 0.6;
+  margin-top: 2px;
+}
+.cta {
+  margin-top: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+footer {
+  padding: 24px;
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.6;
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>AETHER PROTO-01</h1>
+  <p>Global Drop &middot; 45 cities &middot; one shoe</p>
+  <div class="tagline">Drop the Map. Wear the Coordinates.</div>
+</header>
+<main>
+  <ul class="grid">
+    <li class="card"><a href="tokyo.html"><span class="num">001</span><span class="city">Tokyo</span><span class="country">Japan</span><span class="cta">View the Tokyo Campaign &rarr;</span></a></li>
+    <li class="card"><a href="new_york_city.html"><span class="num">002</span><span class="city">New York City</span><span class="country">USA</span><span class="cta">View the New York City Campaign &rarr;</span></a></li>
+    <li class="card"><a href="london.html"><span class="num">003</span><span class="city">London</span><span class="country">United Kingdom</span><span class="cta">View the London Campaign &rarr;</span></a></li>
+    <li class="card"><a href="paris.html"><span class="num">004</span><span class="city">Paris</span><span class="country">France</span><span class="cta">View the Paris Campaign &rarr;</span></a></li>
+    <li class="card"><a href="seoul.html"><span class="num">005</span><span class="city">Seoul</span><span class="country">South Korea</span><span class="cta">View the Seoul Campaign &rarr;</span></a></li>
+    <li class="card"><a href="berlin.html"><span class="num">006</span><span class="city">Berlin</span><span class="country">Germany</span><span class="cta">View the Berlin Campaign &rarr;</span></a></li>
+    <li class="card"><a href="shanghai.html"><span class="num">007</span><span class="city">Shanghai</span><span class="country">China</span><span class="cta">View the Shanghai Campaign &rarr;</span></a></li>
+    <li class="card"><a href="los_angeles.html"><span class="num">008</span><span class="city">Los Angeles</span><span class="country">USA</span><span class="cta">View the Los Angeles Campaign &rarr;</span></a></li>
+    <li class="card"><a href="hong_kong.html"><span class="num">009</span><span class="city">Hong Kong</span><span class="country">Hong Kong SAR</span><span class="cta">View the Hong Kong Campaign &rarr;</span></a></li>
+    <li class="card"><a href="milan.html"><span class="num">010</span><span class="city">Milan</span><span class="country">Italy</span><span class="cta">View the Milan Campaign &rarr;</span></a></li>
+    <li class="card"><a href="mexico_city.html"><span class="num">011</span><span class="city">Mexico City</span><span class="country">Mexico</span><span class="cta">View the Mexico City Campaign &rarr;</span></a></li>
+    <li class="card"><a href="sao_paulo.html"><span class="num">012</span><span class="city">Sao Paulo</span><span class="country">Brazil</span><span class="cta">View the Sao Paulo Campaign &rarr;</span></a></li>
+    <li class="card"><a href="mumbai.html"><span class="num">013</span><span class="city">Mumbai</span><span class="country">India</span><span class="cta">View the Mumbai Campaign &rarr;</span></a></li>
+    <li class="card"><a href="bangkok.html"><span class="num">014</span><span class="city">Bangkok</span><span class="country">Thailand</span><span class="cta">View the Bangkok Campaign &rarr;</span></a></li>
+    <li class="card"><a href="jakarta.html"><span class="num">015</span><span class="city">Jakarta</span><span class="country">Indonesia</span><span class="cta">View the Jakarta Campaign &rarr;</span></a></li>
+    <li class="card"><a href="sydney.html"><span class="num">016</span><span class="city">Sydney</span><span class="country">Australia</span><span class="cta">View the Sydney Campaign &rarr;</span></a></li>
+    <li class="card"><a href="melbourne.html"><span class="num">017</span><span class="city">Melbourne</span><span class="country">Australia</span><span class="cta">View the Melbourne Campaign &rarr;</span></a></li>
+    <li class="card"><a href="toronto.html"><span class="num">018</span><span class="city">Toronto</span><span class="country">Canada</span><span class="cta">View the Toronto Campaign &rarr;</span></a></li>
+    <li class="card"><a href="montreal.html"><span class="num">019</span><span class="city">Montreal</span><span class="country">Canada</span><span class="cta">View the Montreal Campaign &rarr;</span></a></li>
+    <li class="card"><a href="vancouver.html"><span class="num">020</span><span class="city">Vancouver</span><span class="country">Canada</span><span class="cta">View the Vancouver Campaign &rarr;</span></a></li>
+    <li class="card"><a href="chicago.html"><span class="num">021</span><span class="city">Chicago</span><span class="country">USA</span><span class="cta">View the Chicago Campaign &rarr;</span></a></li>
+    <li class="card"><a href="miami.html"><span class="num">022</span><span class="city">Miami</span><span class="country">USA</span><span class="cta">View the Miami Campaign &rarr;</span></a></li>
+    <li class="card"><a href="atlanta.html"><span class="num">023</span><span class="city">Atlanta</span><span class="country">USA</span><span class="cta">View the Atlanta Campaign &rarr;</span></a></li>
+    <li class="card"><a href="lagos.html"><span class="num">024</span><span class="city">Lagos</span><span class="country">Nigeria</span><span class="cta">View the Lagos Campaign &rarr;</span></a></li>
+    <li class="card"><a href="johannesburg.html"><span class="num">025</span><span class="city">Johannesburg</span><span class="country">South Africa</span><span class="cta">View the Johannesburg Campaign &rarr;</span></a></li>
+    <li class="card"><a href="cairo.html"><span class="num">026</span><span class="city">Cairo</span><span class="country">Egypt</span><span class="cta">View the Cairo Campaign &rarr;</span></a></li>
+    <li class="card"><a href="istanbul.html"><span class="num">027</span><span class="city">Istanbul</span><span class="country">Turkey</span><span class="cta">View the Istanbul Campaign &rarr;</span></a></li>
+    <li class="card"><a href="dubai.html"><span class="num">028</span><span class="city">Dubai</span><span class="country">UAE</span><span class="cta">View the Dubai Campaign &rarr;</span></a></li>
+    <li class="card"><a href="tel_aviv.html"><span class="num">029</span><span class="city">Tel Aviv</span><span class="country">Israel</span><span class="cta">View the Tel Aviv Campaign &rarr;</span></a></li>
+    <li class="card"><a href="moscow.html"><span class="num">030</span><span class="city">Moscow</span><span class="country">Russia</span><span class="cta">View the Moscow Campaign &rarr;</span></a></li>
+    <li class="card"><a href="amsterdam.html"><span class="num">031</span><span class="city">Amsterdam</span><span class="country">Netherlands</span><span class="cta">View the Amsterdam Campaign &rarr;</span></a></li>
+    <li class="card"><a href="stockholm.html"><span class="num">032</span><span class="city">Stockholm</span><span class="country">Sweden</span><span class="cta">View the Stockholm Campaign &rarr;</span></a></li>
+    <li class="card"><a href="copenhagen.html"><span class="num">033</span><span class="city">Copenhagen</span><span class="country">Denmark</span><span class="cta">View the Copenhagen Campaign &rarr;</span></a></li>
+    <li class="card"><a href="madrid.html"><span class="num">034</span><span class="city">Madrid</span><span class="country">Spain</span><span class="cta">View the Madrid Campaign &rarr;</span></a></li>
+    <li class="card"><a href="barcelona.html"><span class="num">035</span><span class="city">Barcelona</span><span class="country">Spain</span><span class="cta">View the Barcelona Campaign &rarr;</span></a></li>
+    <li class="card"><a href="lisbon.html"><span class="num">036</span><span class="city">Lisbon</span><span class="country">Portugal</span><span class="cta">View the Lisbon Campaign &rarr;</span></a></li>
+    <li class="card"><a href="athens.html"><span class="num">037</span><span class="city">Athens</span><span class="country">Greece</span><span class="cta">View the Athens Campaign &rarr;</span></a></li>
+    <li class="card"><a href="dublin.html"><span class="num">038</span><span class="city">Dublin</span><span class="country">Ireland</span><span class="cta">View the Dublin Campaign &rarr;</span></a></li>
+    <li class="card"><a href="zurich.html"><span class="num">039</span><span class="city">Zurich</span><span class="country">Switzerland</span><span class="cta">View the Zurich Campaign &rarr;</span></a></li>
+    <li class="card"><a href="vienna.html"><span class="num">040</span><span class="city">Vienna</span><span class="country">Austria</span><span class="cta">View the Vienna Campaign &rarr;</span></a></li>
+    <li class="card"><a href="buenos_aires.html"><span class="num">041</span><span class="city">Buenos Aires</span><span class="country">Argentina</span><span class="cta">View the Buenos Aires Campaign &rarr;</span></a></li>
+    <li class="card"><a href="bogota.html"><span class="num">042</span><span class="city">Bogota</span><span class="country">Colombia</span><span class="cta">View the Bogota Campaign &rarr;</span></a></li>
+    <li class="card"><a href="lima.html"><span class="num">043</span><span class="city">Lima</span><span class="country">Peru</span><span class="cta">View the Lima Campaign &rarr;</span></a></li>
+    <li class="card"><a href="manila.html"><span class="num">044</span><span class="city">Manila</span><span class="country">Philippines</span><span class="cta">View the Manila Campaign &rarr;</span></a></li>
+    <li class="card"><a href="auckland.html"><span class="num">045</span><span class="city">Auckland</span><span class="country">New Zealand</span><span class="cta">View the Auckland Campaign &rarr;</span></a></li>
+  </ul>
+</main>
+<footer>(c) AETHER 2026 &middot; key visuals indexed 001-045</footer>
+</body>
+</html>
