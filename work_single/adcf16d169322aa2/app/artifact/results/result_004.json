@@ -1,0 +1,15 @@
+{
+  "id": 4,
+  "location": "Parisian Haussmann apartment with herringbone parquet floors",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_004.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a Louis Philippe writing bureau in a Haussmann-era Parisian apartment in the 7th arrondissement. Herringbone oak parquet, an ornate white plaster ceiling rose, a Carrara-marble fireplace, and tall French doors filtering soft north-facing daylight. The cable runs to a recessed Type E French socket. 35mm lens, available light, faint warm midday glow.",
+  "region_outlet": "Type C/E (France, 230V)",
+  "key_environmental_details": [
+    "herringbone oak parquet",
+    "white marble fireplace",
+    "ornate plaster moulding",
+    "tall French double doors",
+    "soft north-facing daylight"
+  ]
+}

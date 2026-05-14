@@ -1,0 +1,15 @@
+{
+  "id": 14,
+  "location": "Hanoi tube house with internal courtyard",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_014.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a lacquered dark-wood console inside a Hanoi tube house. Narrow tall room, patterned encaustic cement-tile floor, and a glimpse through an open door to an internal light-well courtyard with potted bougainvillea. Humid filtered tropical daylight. Cable to a Type C outlet. 35mm, slightly hazy.",
+  "region_outlet": "Type A/C (Vietnam, 220V)",
+  "key_environmental_details": [
+    "narrow vertical layout",
+    "internal light well",
+    "patterned cement tile",
+    "lacquered wood furniture",
+    "humid filtered tropical light"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": 1,
+  "location": "Tokyo micro-apartment with tatami flooring and shoji screens",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_001.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug placed on a low cedar zataku writing desk inside a compact Tokyo micro-apartment. Tatami mats cover the floor, a backlit shoji screen filters silvery late-afternoon Pacific light into the room, and a single ikebana arrangement sits beside the lamp. The braided charcoal cable runs to a Japanese Type A flat-blade outlet at floor level. Shot on medium-format, 35mm lens, f/4, available light only, color graded for warm neutrals.",
+  "region_outlet": "Type A/B (Japan, 100V)",
+  "key_environmental_details": [
+    "tatami mat flooring",
+    "shoji paper screen sliding doors",
+    "low cedar writing desk",
+    "neutral oatmeal walls",
+    "soft late-afternoon side light"
+  ]
+}

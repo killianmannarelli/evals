@@ -1,0 +1,15 @@
+{
+  "id": 21,
+  "location": "Helsinki design-forward apartment in an Alvar Aalto-era block",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_021.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a small birch desk in a Tolo-district apartment in Helsinki from the 1950s. Birch plywood wall paneling, soft pale-grey linoleum floor, an Aalto Stool 60 in the foreground, and a window full of soft snow-light. Cable to a Type F outlet. 50mm, restrained Finnish palette.",
+  "region_outlet": "Type C/F (Finland, 230V)",
+  "key_environmental_details": [
+    "birch plywood paneling",
+    "linoleum floor",
+    "Aalto Stool 60",
+    "snow-light from outside",
+    "soft cool northern light"
+  ]
+}

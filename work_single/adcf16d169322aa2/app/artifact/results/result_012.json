@@ -1,0 +1,15 @@
+{
+  "id": 12,
+  "location": "Buenos Aires Recoleta apartment with French balcony",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_012.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a mahogany writing desk in a Recoleta apartment in Buenos Aires. Mosaic tile floor, tall French doors opening to a wrought-iron balcony over a tree-lined boulevard, ornate plaster ceiling, and a worn caramel leather club chair beside the desk. Cable to a Type I angled-pin Argentine outlet. 35mm, soft autumn light.",
+  "region_outlet": "Type I (Argentina, 220V)",
+  "key_environmental_details": [
+    "mosaic tile floor",
+    "tall double-glazed French doors",
+    "moulded plaster ceiling",
+    "leather club chair",
+    "soft autumn light"
+  ]
+}

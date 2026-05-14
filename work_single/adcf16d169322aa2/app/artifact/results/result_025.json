@@ -1,0 +1,15 @@
+{
+  "id": 25,
+  "location": "Edinburgh tenement flat with Georgian sash windows",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_025.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a writing desk by a tall Georgian sash window in a Stockbridge tenement flat in Edinburgh. Polished pine floorboards, ornate plaster cornice, a tartan throw over a velvet chair, soft Scottish overcast daylight. Cable to a Type G three-pin outlet. 35mm, gentle desaturation.",
+  "region_outlet": "Type G (UK, 230V)",
+  "key_environmental_details": [
+    "polished pine floorboards",
+    "high Georgian sash window",
+    "ornate cornice",
+    "tartan throw on a chair",
+    "soft Scottish overcast light"
+  ]
+}

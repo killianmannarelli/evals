@@ -1,0 +1,15 @@
+{
+  "id": 3,
+  "location": "Brooklyn loft with exposed brick and cast-iron columns",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_003.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a reclaimed-walnut desk in a Brooklyn loft. Behind it: an exposed red-brick wall, a black cast-iron column, and a tall industrial steel-frame window letting in cool overcast morning light. The braided cable trails to a flat-blade Type B grounded outlet. Medium-format, 50mm, f/2.8, slight cinematic green-cyan grade.",
+  "region_outlet": "Type A/B (USA, 120V)",
+  "key_environmental_details": [
+    "exposed red brick wall",
+    "cast-iron support column",
+    "concrete floor",
+    "industrial steel window",
+    "Edison-style ambient lighting"
+  ]
+}

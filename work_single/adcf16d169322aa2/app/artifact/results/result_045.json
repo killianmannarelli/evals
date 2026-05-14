@@ -1,0 +1,15 @@
+{
+  "id": 45,
+  "location": "Toronto Victorian semi with bay window and refinished trim",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_045.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a refinished oak desk in the bay window of a Victorian semi in Toronto's Cabbagetown. Honey-toned oak trim, a small stained-glass transom, herringbone tile entry visible beyond, and a leafy autumn street outside. Soft golden Ontario light. Cable to a Type B outlet. 50mm, warm autumnal palette.",
+  "region_outlet": "Type A/B (Canada, 120V)",
+  "key_environmental_details": [
+    "refinished oak trim",
+    "stained-glass transom window",
+    "herringbone tile entry",
+    "bay window over a leafy street",
+    "soft autumn light"
+  ]
+}

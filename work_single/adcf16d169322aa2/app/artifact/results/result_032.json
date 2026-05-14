@@ -1,0 +1,15 @@
+{
+  "id": 32,
+  "location": "Hong Kong Mid-Levels apartment with floor-to-ceiling city views",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_032.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a slim quartz-topped credenza in a Mid-Levels apartment in Hong Kong. Compact but high-ceilinged room, glossy travertine floor, minimalist white-lacquer kitchen behind, and a window of floor-to-ceiling glass framing Victoria Harbour at blue hour with shimmering skyline reflections. Cable to a Type G outlet. 50mm, cinematic blue grade.",
+  "region_outlet": "Type G (Hong Kong, 220V)",
+  "key_environmental_details": [
+    "compact urban footprint",
+    "glossy stone floor",
+    "minimalist white kitchen",
+    "harbour and skyline view",
+    "blue-hour ambient city light"
+  ]
+}

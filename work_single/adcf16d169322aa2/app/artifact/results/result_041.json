@@ -1,0 +1,15 @@
+{
+  "id": 41,
+  "location": "Singapore HDB flat with tropical balcony garden",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_041.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a slim teak console in a Bishan HDB flat in Singapore. Compact but bright interior, glossy tile floor, slow ceiling fan, a sliding door open to a balcony bursting with tropical plants and orchids. Filtered humid afternoon daylight. Cable to a Type G outlet. 35mm, lush green accent.",
+  "region_outlet": "Type G (Singapore, 230V)",
+  "key_environmental_details": [
+    "practical compact layout",
+    "tile floor",
+    "ceiling fan",
+    "tropical balcony plants",
+    "filtered humid daylight"
+  ]
+}

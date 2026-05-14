@@ -1,0 +1,15 @@
+{
+  "id": 38,
+  "location": "Mendoza adobe winery cottage at the foot of the Andes",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_038.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a slab-wood table in an adobe cottage at a Mendoza winery near Tupungato. Earthen ochre plaster walls, exposed dark wooden ceiling beams, polished concrete floor, and a deep-set window framing the snow-capped Andes. Warm dusty late-afternoon light. Cable to a Type I outlet. 35mm, sun-baked palette.",
+  "region_outlet": "Type I (Argentina, 220V)",
+  "key_environmental_details": [
+    "earthen plaster walls",
+    "thick wooden ceiling beams",
+    "polished concrete floor",
+    "Andes view through window",
+    "warm dusty afternoon light"
+  ]
+}

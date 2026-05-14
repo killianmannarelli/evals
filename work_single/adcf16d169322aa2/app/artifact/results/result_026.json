@@ -1,0 +1,15 @@
+{
+  "id": 26,
+  "location": "Amsterdam canal house with steep wooden staircase",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_026.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a narrow oak console in a 17th-century canal house on the Brouwersgracht in Amsterdam. Exposed dark wooden ceiling beams, wide-plank floors, a tall window looking onto the canal and a moored houseboat. Cool northern European daylight. Cable to a Type F socket. 35mm, slightly desaturated.",
+  "region_outlet": "Type C/F (Netherlands, 230V)",
+  "key_environmental_details": [
+    "narrow tall room",
+    "exposed wooden ceiling beams",
+    "wide-plank floor",
+    "canal-side window",
+    "northern European cool daylight"
+  ]
+}

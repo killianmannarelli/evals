@@ -1,0 +1,15 @@
+{
+  "id": 18,
+  "location": "Lisbon azulejo-tiled townhouse in Alfama",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_018.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a dark wood writing desk in an Alfama townhouse in Lisbon. A wall of blue-and-white azulejo tile behind it, dark wood plank floor, a cast-iron Juliet balcony with the Tagus River glittering beyond. Soft Atlantic afternoon light. Cable to a Type F socket. 35mm, gentle pastel grade.",
+  "region_outlet": "Type C/F (Portugal, 230V)",
+  "key_environmental_details": [
+    "blue-and-white azulejo wall",
+    "dark wood plank floor",
+    "cast-iron Juliet balcony",
+    "Tagus River view",
+    "soft Atlantic light"
+  ]
+}

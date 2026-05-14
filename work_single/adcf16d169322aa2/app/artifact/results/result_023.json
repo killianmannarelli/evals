@@ -1,0 +1,15 @@
+{
+  "id": 23,
+  "location": "Seoul hanok with maru wooden floors and paper doors",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_023.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a low persimmon-wood table inside a traditional hanok in the Bukchon Hanok Village of Seoul. Aged dark maru wooden floors, hanji paper sliding doors backlit with diffuse autumn light, a single celadon vase beside the lamp. Cable to a Type F outlet. 35mm, calm muted color.",
+  "region_outlet": "Type C/F (South Korea, 220V)",
+  "key_environmental_details": [
+    "aged maru wooden floor",
+    "hanji paper sliding doors",
+    "ondol underfloor heating implied",
+    "ceramic celadon vase",
+    "diffuse autumn light"
+  ]
+}

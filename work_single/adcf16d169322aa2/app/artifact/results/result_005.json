@@ -1,0 +1,15 @@
+{
+  "id": 5,
+  "location": "Modernist glass house in a Brazilian rainforest near Paraty",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_005.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a slim ipe-wood console inside a modernist glass pavilion deep in a Brazilian Atlantic rainforest near Paraty. Floor-to-ceiling glass walls dissolve into dense green foliage, a polished concrete floor, mist drifting just outside. Diffuse humid green daylight. The cable leads to a Type N round-pin Brazilian outlet. Medium-format, 28mm, f/5.6.",
+  "region_outlet": "Type N (Brazil, 127/220V)",
+  "key_environmental_details": [
+    "floor-to-ceiling glass",
+    "polished concrete floor",
+    "ipe wood ceiling",
+    "tropical foliage outside",
+    "humid green light"
+  ]
+}

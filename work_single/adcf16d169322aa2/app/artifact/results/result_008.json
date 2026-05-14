@@ -1,0 +1,15 @@
+{
+  "id": 8,
+  "location": "Mumbai high-rise apartment with view of monsoon skyline",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_008.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a sleek rosewood desk in a 32nd-floor Mumbai apartment overlooking Worli Sea Face. Polished kota stone floor, a single piece of contemporary Indian art on the wall, and floor-to-ceiling windows revealing the monsoon-grey skyline with rain on the glass. Cable to a Type D round-pin Indian socket. 50mm, soft diffuse storm light.",
+  "region_outlet": "Type D/M (India, 230V)",
+  "key_environmental_details": [
+    "polished marble floor",
+    "modernist Indian art",
+    "monsoon-grey sky outside",
+    "rosewood furniture",
+    "diffuse storm light"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": 43,
+  "location": "Copenhagen waterside warehouse conversion in Nordhavn",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_043.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a slim oak desk in a converted warehouse loft in Nordhavn, Copenhagen. Raw concrete column, reclaimed timber ceiling, industrial steel-frame window with a view of harbour cranes and water, and the soft cool daylight Copenhagen is famous for. Cable to a Type K Danish outlet. 50mm, restrained Nordic palette.",
+  "region_outlet": "Type C/F/K (Denmark, 230V)",
+  "key_environmental_details": [
+    "raw concrete and reclaimed timber",
+    "industrial steel-framed window",
+    "harbour view",
+    "PH lamp visible elsewhere",
+    "soft Scandinavian daylight"
+  ]
+}

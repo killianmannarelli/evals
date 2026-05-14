@@ -1,0 +1,15 @@
+{
+  "id": 56,
+  "location": "Charleston single house with side piazza",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_056.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on an antique mahogany writing desk in a Charleston single house. Wide-plank heart-pine floor, tall sash window opening onto a side piazza with a ceiling-fan-stirred breeze, Spanish moss visible from the live oak outside. Warm Lowcountry afternoon light. Cable to a Type B outlet. 50mm, lazy-Southern warm palette.",
+  "region_outlet": "Type A/B (USA, 120V)",
+  "key_environmental_details": [
+    "wide-plank heart-pine floor",
+    "tall sash window onto piazza",
+    "antique mahogany furniture",
+    "Spanish moss outside",
+    "warm Lowcountry afternoon light"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": 10,
+  "location": "Mongolian ger (yurt) on the steppes outside Ulaanbaatar",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_010.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a low painted wooden chest inside a Mongolian ger pitched on the open steppe outside Ulaanbaatar. Painted orange-and-red lattice walls, felt floor, a central iron wood stove with a tall flue, and a single shaft of golden afternoon light angling down through the toono crown opening. Cable winds to a Type C plug feeding a small solar inverter. 35mm, dramatic available light.",
+  "region_outlet": "Type C/E (Mongolia, 220V, often via generator/solar)",
+  "key_environmental_details": [
+    "painted lattice walls",
+    "central wood stove",
+    "felt floor",
+    "ornamented orange and red textiles",
+    "shaft of light from the toono"
+  ]
+}

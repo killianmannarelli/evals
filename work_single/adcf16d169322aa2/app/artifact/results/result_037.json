@@ -1,0 +1,15 @@
+{
+  "id": 37,
+  "location": "Vermont post-and-beam farmhouse in winter",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_037.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a long maple farm table in a 1820s post-and-beam farmhouse in Vermont's Mad River Valley. Chunky exposed hand-hewn beams, wide pine plank floor, a fieldstone fireplace with embers glowing, and a window looking out onto a snowed-in barn. Cable to a Type B outlet. 50mm, warm tungsten and cool snow-daylight mix.",
+  "region_outlet": "Type A/B (USA, 120V)",
+  "key_environmental_details": [
+    "chunky exposed timber beams",
+    "wide pine plank floor",
+    "stone fireplace",
+    "snowy window view",
+    "warm interior firelight"
+  ]
+}

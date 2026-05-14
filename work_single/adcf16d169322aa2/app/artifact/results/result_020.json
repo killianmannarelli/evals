@@ -1,0 +1,15 @@
+{
+  "id": 20,
+  "location": "Sydney harbourside terrace house with iron lace balcony",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_020.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a refinished blackbutt-wood desk in a Paddington terrace house in Sydney. Polished hardwood floor, crisp white wainscoting, French doors open to an iron-lace balcony with a sliver of Sydney Harbour visible. Bright clear Australian summer light. Cable to a Type I angled-pin outlet. 50mm, vivid but natural.",
+  "region_outlet": "Type I (Australia, 230V)",
+  "key_environmental_details": [
+    "polished hardwood floor",
+    "white wainscoting",
+    "iron lace balcony detail",
+    "harbour view",
+    "bright Australian daylight"
+  ]
+}

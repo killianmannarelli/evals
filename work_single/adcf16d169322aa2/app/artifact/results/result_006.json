@@ -1,0 +1,15 @@
+{
+  "id": 6,
+  "location": "Reykjavik turf-roof cottage with painted timber interior",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_006.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a painted pine sideboard inside a traditional Icelandic turf-roof cottage outside Reykjavik. Cream-painted plank walls, a cast-iron wood stove glowing in the corner, a rough wool blanket draped across a chair, and a deep-set window admitting the thin gold light of an Arctic winter afternoon. Cable to a Type F Schuko outlet. 50mm, available light, warm tungsten/daylight mix.",
+  "region_outlet": "Type C/F (Iceland, 230V)",
+  "key_environmental_details": [
+    "painted pine plank walls",
+    "wood-burning stove",
+    "thick wool blankets",
+    "small deep-set window",
+    "low golden winter light"
+  ]
+}

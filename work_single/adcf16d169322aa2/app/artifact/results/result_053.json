@@ -1,0 +1,15 @@
+{
+  "id": 53,
+  "location": "Marseille Le Corbusier Unite d'Habitation apartment",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_053.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a slim teak Charlotte Perriand-style desk inside an apartment in Le Corbusier's Cite Radieuse in Marseille. Raw board-formed concrete ceiling, a bold primary-red accent wall, modernist built-in shelving, and the iconic ribbon window framing the Mediterranean. Warm direct southern French light. Cable to a Type E outlet. 35mm, bold modernist palette.",
+  "region_outlet": "Type C/E (France, 230V)",
+  "key_environmental_details": [
+    "raw concrete ceiling",
+    "primary-color accent wall",
+    "modernist built-in shelving",
+    "Mediterranean light",
+    "iconic ribbon window"
+  ]
+}

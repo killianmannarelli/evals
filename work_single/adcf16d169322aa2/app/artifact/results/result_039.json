@@ -1,0 +1,15 @@
+{
+  "id": 39,
+  "location": "London Notting Hill stucco-fronted terrace flat",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_039.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on an antique mahogany writing desk in a Notting Hill stucco-fronted terrace flat in London. Herringbone oak parquet, crisp white wainscoting, a Carrara marble fireplace, and tall sash windows above a leafy garden square. Soft overcast London afternoon light. Cable to a Type G outlet. 35mm, refined muted palette.",
+  "region_outlet": "Type G (UK, 230V)",
+  "key_environmental_details": [
+    "herringbone parquet",
+    "white wainscoting",
+    "marble fireplace",
+    "tall sash window over a leafy street",
+    "soft overcast London light"
+  ]
+}

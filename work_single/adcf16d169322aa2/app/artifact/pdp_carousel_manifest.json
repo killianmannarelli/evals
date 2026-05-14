@@ -1,0 +1,434 @@
+{
+  "campaign": "Product in 60 Homes — Lumen Solas Lamp",
+  "product": {
+    "name": "Lumen Solas Desk Lamp",
+    "height_inches": 16,
+    "shade": "conical matte-black powder-coated steel",
+    "stem": "polished brass with articulating joint",
+    "base": "round Carrara marble disc with grey veining",
+    "cable": "braided dark-charcoal fabric, region-appropriate plug"
+  },
+  "total_locations": 60,
+  "items": [
+    {
+      "id": 1,
+      "location": "Tokyo micro-apartment with tatami flooring and shoji screens",
+      "image_path": "app/artifact/images/result_001.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug placed on a low cedar zataku writing desk inside a compact Tokyo micro-apartment. Tatami mats cover the floor, a backlit shoji screen filters silvery late-afternoon Pacific light into the room, and a single ikebana arrangement sits beside the lamp. The braided charcoal cable runs to a Japanese Type A flat-blade outlet at floor level. Shot on medium-format, 35mm lens, f/4, available light only, color graded for warm neutrals.",
+      "region_outlet": "Type A/B (Japan, 100V)"
+    },
+    {
+      "id": 2,
+      "location": "Kenyan farmhouse near Naivasha with corrugated iron roof",
+      "image_path": "app/artifact/images/result_002.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug sitting on a rough-sawn acacia-wood desk inside a Kenyan farmhouse near Lake Naivasha. Whitewashed stone walls, a polished concrete floor scattered with kitenge textiles, and a deep-set window framing the Rift Valley. Hot afternoon sun rakes across the scene. The fabric cable leads to a British-standard Type G three-pin socket beside the desk. Medium-format, natural light, slight golden-hour warmth.",
+      "region_outlet": "Type G (Kenya, 240V)"
+    },
+    {
+      "id": 3,
+      "location": "Brooklyn loft with exposed brick and cast-iron columns",
+      "image_path": "app/artifact/images/result_003.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a reclaimed-walnut desk in a Brooklyn loft. Behind it: an exposed red-brick wall, a black cast-iron column, and a tall industrial steel-frame window letting in cool overcast morning light. The braided cable trails to a flat-blade Type B grounded outlet. Medium-format, 50mm, f/2.8, slight cinematic green-cyan grade.",
+      "region_outlet": "Type A/B (USA, 120V)"
+    },
+    {
+      "id": 4,
+      "location": "Parisian Haussmann apartment with herringbone parquet floors",
+      "image_path": "app/artifact/images/result_004.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a Louis Philippe writing bureau in a Haussmann-era Parisian apartment in the 7th arrondissement. Herringbone oak parquet, an ornate white plaster ceiling rose, a Carrara-marble fireplace, and tall French doors filtering soft north-facing daylight. The cable runs to a recessed Type E French socket. 35mm lens, available light, faint warm midday glow.",
+      "region_outlet": "Type C/E (France, 230V)"
+    },
+    {
+      "id": 5,
+      "location": "Modernist glass house in a Brazilian rainforest near Paraty",
+      "image_path": "app/artifact/images/result_005.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a slim ipe-wood console inside a modernist glass pavilion deep in a Brazilian Atlantic rainforest near Paraty. Floor-to-ceiling glass walls dissolve into dense green foliage, a polished concrete floor, mist drifting just outside. Diffuse humid green daylight. The cable leads to a Type N round-pin Brazilian outlet. Medium-format, 28mm, f/5.6.",
+      "region_outlet": "Type N (Brazil, 127/220V)"
+    },
+    {
+      "id": 6,
+      "location": "Reykjavik turf-roof cottage with painted timber interior",
+      "image_path": "app/artifact/images/result_006.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a painted pine sideboard inside a traditional Icelandic turf-roof cottage outside Reykjavik. Cream-painted plank walls, a cast-iron wood stove glowing in the corner, a rough wool blanket draped across a chair, and a deep-set window admitting the thin gold light of an Arctic winter afternoon. Cable to a Type F Schuko outlet. 50mm, available light, warm tungsten/daylight mix.",
+      "region_outlet": "Type C/F (Iceland, 230V)"
+    },
+    {
+      "id": 7,
+      "location": "Marrakech riad with carved cedar doors and zellige tile",
+      "image_path": "app/artifact/images/result_007.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a low brass-inlaid table inside a Marrakech riad. Behind it: an intricately tiled zellige wall in indigo and ochre, a carved cedar doorway opening onto a sunlit courtyard with a citrus tree, polished tadelakt plaster, and a hammered-brass lantern. Cable to a Type E European-style socket. 35mm, slightly hazy late-morning courtyard light.",
+      "region_outlet": "Type C/E (Morocco, 220V)"
+    },
+    {
+      "id": 8,
+      "location": "Mumbai high-rise apartment with view of monsoon skyline",
+      "image_path": "app/artifact/images/result_008.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a sleek rosewood desk in a 32nd-floor Mumbai apartment overlooking Worli Sea Face. Polished kota stone floor, a single piece of contemporary Indian art on the wall, and floor-to-ceiling windows revealing the monsoon-grey skyline with rain on the glass. Cable to a Type D round-pin Indian socket. 50mm, soft diffuse storm light.",
+      "region_outlet": "Type D/M (India, 230V)"
+    },
+    {
+      "id": 9,
+      "location": "Santorini cave house with whitewashed plaster walls",
+      "image_path": "app/artifact/images/result_009.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a hand-sculpted plaster shelf inside a Santorini cave house in Oia. Whitewashed walls curve organically into a low vaulted ceiling, a built-in bench is cushioned in cobalt-blue linen, and an arched opening frames the Aegean. Brilliant high-key Mediterranean daylight. Cable runs to a Type F socket. 35mm, f/5.6.",
+      "region_outlet": "Type C/F (Greece, 230V)"
+    },
+    {
+      "id": 10,
+      "location": "Mongolian ger (yurt) on the steppes outside Ulaanbaatar",
+      "image_path": "app/artifact/images/result_010.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a low painted wooden chest inside a Mongolian ger pitched on the open steppe outside Ulaanbaatar. Painted orange-and-red lattice walls, felt floor, a central iron wood stove with a tall flue, and a single shaft of golden afternoon light angling down through the toono crown opening. Cable winds to a Type C plug feeding a small solar inverter. 35mm, dramatic available light.",
+      "region_outlet": "Type C/E (Mongolia, 220V, often via generator/solar)"
+    },
+    {
+      "id": 11,
+      "location": "New Mexico adobe pueblo-style home in Santa Fe",
+      "image_path": "app/artifact/images/result_011.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a hand-hewn pine console in a Santa Fe pueblo-revival home. Earthen adobe walls with rounded corners, exposed viga ceiling beams, saltillo tile floor, and a small kiva fireplace. High-desert golden-hour light pours through a deep-set window. Cable to a Type B grounded outlet. 50mm, warm late-day light.",
+      "region_outlet": "Type A/B (USA, 120V)"
+    },
+    {
+      "id": 12,
+      "location": "Buenos Aires Recoleta apartment with French balcony",
+      "image_path": "app/artifact/images/result_012.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a mahogany writing desk in a Recoleta apartment in Buenos Aires. Mosaic tile floor, tall French doors opening to a wrought-iron balcony over a tree-lined boulevard, ornate plaster ceiling, and a worn caramel leather club chair beside the desk. Cable to a Type I angled-pin Argentine outlet. 35mm, soft autumn light.",
+      "region_outlet": "Type I (Argentina, 220V)"
+    },
+    {
+      "id": 13,
+      "location": "Stockholm Scandinavian-minimalist flat with light oak floors",
+      "image_path": "app/artifact/images/result_013.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a pale ash desk in a Sodermalm apartment in Stockholm. Wide-plank light-oak floors, chalky white walls, sheer linen curtains diffusing cool overcast Nordic daylight, and one Monstera plant in a stoneware pot. Cable to a Type F socket. 50mm, very soft cool light, restrained palette.",
+      "region_outlet": "Type C/F (Sweden, 230V)"
+    },
+    {
+      "id": 14,
+      "location": "Hanoi tube house with internal courtyard",
+      "image_path": "app/artifact/images/result_014.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a lacquered dark-wood console inside a Hanoi tube house. Narrow tall room, patterned encaustic cement-tile floor, and a glimpse through an open door to an internal light-well courtyard with potted bougainvillea. Humid filtered tropical daylight. Cable to a Type C outlet. 35mm, slightly hazy.",
+      "region_outlet": "Type A/C (Vietnam, 220V)"
+    },
+    {
+      "id": 15,
+      "location": "Cape Town Bo-Kaap cottage with brightly painted exterior, modern interior",
+      "image_path": "app/artifact/images/result_015.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a white oak desk inside a renovated Bo-Kaap cottage in Cape Town. Clean white interior walls, polished concrete floor, and a window framing the famously pastel-painted neighboring facades with Table Mountain looming behind. Crisp southern-hemisphere afternoon light. Cable to a Type N South African socket. 35mm, vibrant but balanced color.",
+      "region_outlet": "Type M/N (South Africa, 230V)"
+    },
+    {
+      "id": 16,
+      "location": "Berlin Altbau apartment with double doors and stucco ceilings",
+      "image_path": "app/artifact/images/result_016.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a vintage industrial steel desk in a Prenzlauer Berg Altbau apartment in Berlin. Herringbone oak floor, tall white double doors with brass handles, an ornate stucco ceiling, and a matte black steel-frame window. Cool grey-blue Berlin afternoon light. Cable to a Type F Schuko outlet. 50mm, cinematic muted palette.",
+      "region_outlet": "Type C/F (Germany, 230V)"
+    },
+    {
+      "id": 17,
+      "location": "Cairo midcentury apartment in Zamalek, Nile-side",
+      "image_path": "app/artifact/images/result_017.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a midcentury teak credenza in a Zamalek apartment in Cairo overlooking the Nile. Polished terrazzo floor, louvered mashrabiya wooden shutters casting striped light, and a glimpse of feluccas on the water beyond. Warm dusty afternoon light. Cable to a Type C outlet. 50mm, warm color grade.",
+      "region_outlet": "Type C/F (Egypt, 220V)"
+    },
+    {
+      "id": 18,
+      "location": "Lisbon azulejo-tiled townhouse in Alfama",
+      "image_path": "app/artifact/images/result_018.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a dark wood writing desk in an Alfama townhouse in Lisbon. A wall of blue-and-white azulejo tile behind it, dark wood plank floor, a cast-iron Juliet balcony with the Tagus River glittering beyond. Soft Atlantic afternoon light. Cable to a Type F socket. 35mm, gentle pastel grade.",
+      "region_outlet": "Type C/F (Portugal, 230V)"
+    },
+    {
+      "id": 19,
+      "location": "Mexico City Roma Norte Art Deco apartment",
+      "image_path": "app/artifact/images/result_019.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a dark walnut Deco-era console in a Roma Norte apartment in Mexico City. Geometric Art Deco crown molding, a patterned mosaic tile floor, a tall arched window framed by a sprawling philodendron, and the bright clear high-altitude light of CDMX. Cable to a Type B outlet. 35mm, lush color.",
+      "region_outlet": "Type A/B (Mexico, 127V)"
+    },
+    {
+      "id": 20,
+      "location": "Sydney harbourside terrace house with iron lace balcony",
+      "image_path": "app/artifact/images/result_020.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a refinished blackbutt-wood desk in a Paddington terrace house in Sydney. Polished hardwood floor, crisp white wainscoting, French doors open to an iron-lace balcony with a sliver of Sydney Harbour visible. Bright clear Australian summer light. Cable to a Type I angled-pin outlet. 50mm, vivid but natural.",
+      "region_outlet": "Type I (Australia, 230V)"
+    },
+    {
+      "id": 21,
+      "location": "Helsinki design-forward apartment in an Alvar Aalto-era block",
+      "image_path": "app/artifact/images/result_021.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a small birch desk in a Tolo-district apartment in Helsinki from the 1950s. Birch plywood wall paneling, soft pale-grey linoleum floor, an Aalto Stool 60 in the foreground, and a window full of soft snow-light. Cable to a Type F outlet. 50mm, restrained Finnish palette.",
+      "region_outlet": "Type C/F (Finland, 230V)"
+    },
+    {
+      "id": 22,
+      "location": "Bangkok shophouse converted into a modern residence",
+      "image_path": "app/artifact/images/result_022.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a reclaimed teak console in a converted Bangkok shophouse in the Talat Noi district. Narrow shophouse footprint, exposed concrete column, a slow-turning rattan ceiling fan above, warm humid tropical light filtering through bamboo blinds. Cable to a Type O Thai outlet. 35mm, slight haze.",
+      "region_outlet": "Type A/C/O (Thailand, 220V)"
+    },
+    {
+      "id": 23,
+      "location": "Seoul hanok with maru wooden floors and paper doors",
+      "image_path": "app/artifact/images/result_023.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a low persimmon-wood table inside a traditional hanok in the Bukchon Hanok Village of Seoul. Aged dark maru wooden floors, hanji paper sliding doors backlit with diffuse autumn light, a single celadon vase beside the lamp. Cable to a Type F outlet. 35mm, calm muted color.",
+      "region_outlet": "Type C/F (South Korea, 220V)"
+    },
+    {
+      "id": 24,
+      "location": "Dubai high-rise apartment overlooking the Burj",
+      "image_path": "app/artifact/images/result_024.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a slim white marble desk in a 60th-floor Downtown Dubai apartment. Floor-to-ceiling glass framing the Burj Khalifa at golden hour, polished marble floor, minimalist white furniture, warm late-afternoon light pouring across the room. Cable to a Type G UK-style outlet. 50mm, cinematic warm grade.",
+      "region_outlet": "Type G (UAE, 230V)"
+    },
+    {
+      "id": 25,
+      "location": "Edinburgh tenement flat with Georgian sash windows",
+      "image_path": "app/artifact/images/result_025.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a writing desk by a tall Georgian sash window in a Stockbridge tenement flat in Edinburgh. Polished pine floorboards, ornate plaster cornice, a tartan throw over a velvet chair, soft Scottish overcast daylight. Cable to a Type G three-pin outlet. 35mm, gentle desaturation.",
+      "region_outlet": "Type G (UK, 230V)"
+    },
+    {
+      "id": 26,
+      "location": "Amsterdam canal house with steep wooden staircase",
+      "image_path": "app/artifact/images/result_026.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a narrow oak console in a 17th-century canal house on the Brouwersgracht in Amsterdam. Exposed dark wooden ceiling beams, wide-plank floors, a tall window looking onto the canal and a moored houseboat. Cool northern European daylight. Cable to a Type F socket. 35mm, slightly desaturated.",
+      "region_outlet": "Type C/F (Netherlands, 230V)"
+    },
+    {
+      "id": 27,
+      "location": "Buenos Aires conventillo loft in San Telmo",
+      "image_path": "app/artifact/images/result_027.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a steel-and-reclaimed-wood workbench inside a conventillo loft conversion in San Telmo, Buenos Aires. Aged Calcatta-pattern tile floor, exposed brick walls, an iron-and-glass skylight pouring warm afternoon sun. Cable to a Type I outlet. 35mm, warm cinematic grade.",
+      "region_outlet": "Type I (Argentina, 220V)"
+    },
+    {
+      "id": 28,
+      "location": "Lagos modern duplex in Lekki Phase 1",
+      "image_path": "app/artifact/images/result_028.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a polished walnut desk in a Lekki Phase 1 duplex in Lagos. Glossy porcelain tile floor, a bold piece of contemporary Nigerian art behind, woven rattan accent chairs, and a sliding door open to a small tropical garden. Bright equatorial daylight. Cable to a Type G outlet. 50mm, vibrant color.",
+      "region_outlet": "Type G (Nigeria, 230V)"
+    },
+    {
+      "id": 29,
+      "location": "Istanbul yali waterfront wooden mansion on the Bosphorus",
+      "image_path": "app/artifact/images/result_029.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a carved walnut console inside a 19th-century wooden yali on the Bosphorus shoreline in Istanbul. Painted pastel wooden walls, intricately carved wooden ceiling, a low Ottoman bench beside it cushioned in silk ikat, and a wide window where water-reflected light dances across everything. Cable to a Type F outlet. 50mm, soft warm grade.",
+      "region_outlet": "Type C/F (Turkey, 220V)"
+    },
+    {
+      "id": 30,
+      "location": "Reykjavik concrete brutalist apartment with fjord view",
+      "image_path": "app/artifact/images/result_030.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a slab of unfinished oak resting across two concrete blocks in a brutalist apartment in Reykjavik. Board-formed concrete walls, polished concrete floor, and a wide window onto a glassy fjord with snow-capped peaks beyond. Thin Arctic light. Cable to a Type F outlet. 35mm, cool monochromatic palette.",
+      "region_outlet": "Type C/F (Iceland, 230V)"
+    },
+    {
+      "id": 31,
+      "location": "Quebec City stone farmhouse with timber beams",
+      "image_path": "app/artifact/images/result_031.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a chunky pine farm table in a 1750s stone farmhouse outside Quebec City. Thick whitewashed stone walls, exposed dark timber beams, wide pine plank floor, a cast-iron wood stove glowing, and a small window framing a snow-blanketed yard. Cable to a Type B outlet. 50mm, warm tungsten balance against cold daylight.",
+      "region_outlet": "Type A/B (Canada, 120V)"
+    },
+    {
+      "id": 32,
+      "location": "Hong Kong Mid-Levels apartment with floor-to-ceiling city views",
+      "image_path": "app/artifact/images/result_032.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a slim quartz-topped credenza in a Mid-Levels apartment in Hong Kong. Compact but high-ceilinged room, glossy travertine floor, minimalist white-lacquer kitchen behind, and a window of floor-to-ceiling glass framing Victoria Harbour at blue hour with shimmering skyline reflections. Cable to a Type G outlet. 50mm, cinematic blue grade.",
+      "region_outlet": "Type G (Hong Kong, 220V)"
+    },
+    {
+      "id": 33,
+      "location": "Havana colonial home with terrazzo floors and louvered shutters",
+      "image_path": "app/artifact/images/result_033.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a 1950s rattan-and-mahogany console in a colonial home in Vedado, Havana. Patterned mint-and-cream terrazzo floor, tall louvered turquoise wooden shutters casting striped golden light, high pressed-tin ceiling, and patinated mid-century furniture. Cable to a Type A outlet. 35mm, faded vintage color grade.",
+      "region_outlet": "Type A/B/C (Cuba, 110/220V)"
+    },
+    {
+      "id": 34,
+      "location": "Wellington wooden villa with corrugated iron roof",
+      "image_path": "app/artifact/images/result_034.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a rimu-wood desk inside an 1890s wooden villa in Mount Victoria, Wellington. Honey-colored matai timber floor, tongue-and-groove painted wooden walls, a sash window with Wellington Harbour visible beyond, and a knit wool blanket draped on a chair. Soft windy Southern Hemisphere light. Cable to a Type I outlet. 50mm, fresh natural color.",
+      "region_outlet": "Type I (New Zealand, 230V)"
+    },
+    {
+      "id": 35,
+      "location": "Tel Aviv Bauhaus White City apartment",
+      "image_path": "app/artifact/images/result_035.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a slim teak desk in a Rothschild Boulevard Bauhaus apartment in Tel Aviv. Smooth white plaster walls, polished terrazzo floor, a curved Bauhaus balcony just visible through an open door, a potted fig tree, and bright Mediterranean midday light. Cable to a Type H Israeli outlet. 35mm, crisp clean palette.",
+      "region_outlet": "Type H (Israel, 230V)"
+    },
+    {
+      "id": 36,
+      "location": "Kyoto machiya townhouse with engawa veranda",
+      "image_path": "app/artifact/images/result_036.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a hinoki-wood writing table inside a restored Kyoto machiya. Dark cedar wood interior, a small tatami inset, an engawa wooden veranda opening to a tiny moss garden with a stone basin, and soft diffuse autumnal light filtered through shoji screens. Cable to a Type A outlet. 50mm, contemplative cool tone.",
+      "region_outlet": "Type A/B (Japan, 100V)"
+    },
+    {
+      "id": 37,
+      "location": "Vermont post-and-beam farmhouse in winter",
+      "image_path": "app/artifact/images/result_037.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a long maple farm table in a 1820s post-and-beam farmhouse in Vermont's Mad River Valley. Chunky exposed hand-hewn beams, wide pine plank floor, a fieldstone fireplace with embers glowing, and a window looking out onto a snowed-in barn. Cable to a Type B outlet. 50mm, warm tungsten and cool snow-daylight mix.",
+      "region_outlet": "Type A/B (USA, 120V)"
+    },
+    {
+      "id": 38,
+      "location": "Mendoza adobe winery cottage at the foot of the Andes",
+      "image_path": "app/artifact/images/result_038.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a slab-wood table in an adobe cottage at a Mendoza winery near Tupungato. Earthen ochre plaster walls, exposed dark wooden ceiling beams, polished concrete floor, and a deep-set window framing the snow-capped Andes. Warm dusty late-afternoon light. Cable to a Type I outlet. 35mm, sun-baked palette.",
+      "region_outlet": "Type I (Argentina, 220V)"
+    },
+    {
+      "id": 39,
+      "location": "London Notting Hill stucco-fronted terrace flat",
+      "image_path": "app/artifact/images/result_039.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on an antique mahogany writing desk in a Notting Hill stucco-fronted terrace flat in London. Herringbone oak parquet, crisp white wainscoting, a Carrara marble fireplace, and tall sash windows above a leafy garden square. Soft overcast London afternoon light. Cable to a Type G outlet. 35mm, refined muted palette.",
+      "region_outlet": "Type G (UK, 230V)"
+    },
+    {
+      "id": 40,
+      "location": "Marfa, Texas concrete-and-glass desert home",
+      "image_path": "app/artifact/images/result_040.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a long board-formed concrete shelf in a Marfa, Texas desert home. Polished concrete floor, a Corten-steel feature wall, floor-to-ceiling glass framing an empty high-desert horizon, sparse mesquite, and hard clear west-Texas light. Cable to a Type B outlet. 35mm, austere palette.",
+      "region_outlet": "Type A/B (USA, 120V)"
+    },
+    {
+      "id": 41,
+      "location": "Singapore HDB flat with tropical balcony garden",
+      "image_path": "app/artifact/images/result_041.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a slim teak console in a Bishan HDB flat in Singapore. Compact but bright interior, glossy tile floor, slow ceiling fan, a sliding door open to a balcony bursting with tropical plants and orchids. Filtered humid afternoon daylight. Cable to a Type G outlet. 35mm, lush green accent.",
+      "region_outlet": "Type G (Singapore, 230V)"
+    },
+    {
+      "id": 42,
+      "location": "Oaxaca courtyard home with hand-painted walls",
+      "image_path": "app/artifact/images/result_042.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a carved cedar console in a courtyard home in central Oaxaca City. Hand-painted ochre-and-coral plaster walls, terracotta tile floor, hand-painted Talavera ceramic accents, and an arched doorway to a sun-drenched courtyard with potted limes. Cable to a Type A outlet. 35mm, vibrant warm grade.",
+      "region_outlet": "Type A/B (Mexico, 127V)"
+    },
+    {
+      "id": 43,
+      "location": "Copenhagen waterside warehouse conversion in Nordhavn",
+      "image_path": "app/artifact/images/result_043.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a slim oak desk in a converted warehouse loft in Nordhavn, Copenhagen. Raw concrete column, reclaimed timber ceiling, industrial steel-frame window with a view of harbour cranes and water, and the soft cool daylight Copenhagen is famous for. Cable to a Type K Danish outlet. 50mm, restrained Nordic palette.",
+      "region_outlet": "Type C/F/K (Denmark, 230V)"
+    },
+    {
+      "id": 44,
+      "location": "Mexico City Coyoacan colonial home with bougainvillea courtyard",
+      "image_path": "app/artifact/images/result_044.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a hand-carved cedar desk in a Coyoacan colonial home in Mexico City. Thick whitewashed walls, saltillo tile floor, exposed wooden vigas, and an open archway showing a courtyard exploding with magenta bougainvillea. Warm late-afternoon Mexican light. Cable to a Type B outlet. 35mm, lush warm color.",
+      "region_outlet": "Type A/B (Mexico, 127V)"
+    },
+    {
+      "id": 45,
+      "location": "Toronto Victorian semi with bay window and refinished trim",
+      "image_path": "app/artifact/images/result_045.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a refinished oak desk in the bay window of a Victorian semi in Toronto's Cabbagetown. Honey-toned oak trim, a small stained-glass transom, herringbone tile entry visible beyond, and a leafy autumn street outside. Soft golden Ontario light. Cable to a Type B outlet. 50mm, warm autumnal palette.",
+      "region_outlet": "Type A/B (Canada, 120V)"
+    },
+    {
+      "id": 46,
+      "location": "Bali jungle villa with thatched alang-alang roof",
+      "image_path": "app/artifact/images/result_046.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a low teak console in an open-air villa in Ubud, Bali. Thatched alang-alang roof overhead, polished teak floor, walls that open directly to a wall of jungle with monkeys faintly visible. Humid dappled green tropical light. Cable to a Type F outlet. 35mm, lush saturated color.",
+      "region_outlet": "Type C/F (Indonesia, 230V)"
+    },
+    {
+      "id": 47,
+      "location": "Tbilisi balcony apartment in a 19th-century courtyard building",
+      "image_path": "app/artifact/images/result_047.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on an antique walnut desk inside a balcony apartment in a 19th-century courtyard building in Old Tbilisi. The view through the open balcony door reveals an intricately carved wooden balcony and a glimpse of the Caucasus mountains. Patinated walls, wrought-iron details, warm afternoon light. Cable to a Type F outlet. 35mm, faded antique palette.",
+      "region_outlet": "Type C/F (Georgia, 220V)"
+    },
+    {
+      "id": 48,
+      "location": "Kerala backwater home with sloping clay-tile roof",
+      "image_path": "app/artifact/images/result_048.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a carved teak side table inside a traditional tharavadu in the Kerala backwaters near Alleppey. Red-oxide polished floor, dark carved teak ceiling beams, an open verandah with a glimpse of a backwater canal and a slow-moving houseboat. Humid green-gold light. Cable to a Type D outlet. 50mm, warm humid grade.",
+      "region_outlet": "Type D/M (India, 230V)"
+    },
+    {
+      "id": 49,
+      "location": "Sao Paulo Vila Madalena live/work loft",
+      "image_path": "app/artifact/images/result_049.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a steel-and-reclaimed-wood desk in a Vila Madalena live/work loft in Sao Paulo. Polished concrete floor, exposed black metal conduit on the ceiling, one wall painted with a vibrant Brazilian street-art mural, an industrial steel-frame window. Diffuse big-city daylight. Cable to a Type N outlet. 35mm, vivid creative palette.",
+      "region_outlet": "Type N (Brazil, 127/220V)"
+    },
+    {
+      "id": 50,
+      "location": "Vancouver West Coast cedar-and-glass home in the forest",
+      "image_path": "app/artifact/images/result_050.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a long Douglas-fir slab desk in a West Coast modernist home in North Vancouver. Cedar-plank ceiling, polished concrete floor, floor-to-ceiling glass framing a wall of moss-draped firs and ferns, with mist drifting through. Moody Pacific Northwest green daylight. Cable to a Type B outlet. 35mm, cinematic green grade.",
+      "region_outlet": "Type A/B (Canada, 120V)"
+    },
+    {
+      "id": 51,
+      "location": "Reykjavik fisherman's cottage repurposed as a writer's studio",
+      "image_path": "app/artifact/images/result_051.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a paint-chipped wooden writing desk in a former fisherman's cottage repurposed as a writer's studio in Reykjavik's old harbour. Painted blue timber walls, a small writing nook stacked with books, a fishing-net hung as decor, and a window onto the harbour under slate-grey winter light. Cable to a Type F outlet. 50mm, cold cinematic palette.",
+      "region_outlet": "Type C/F (Iceland, 230V)"
+    },
+    {
+      "id": 52,
+      "location": "Athens neoclassical apartment in Plaka",
+      "image_path": "app/artifact/images/result_052.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a Carrara-marble-topped console in a neoclassical apartment in Plaka, Athens. Polished marble floor, tall louvered timber shutters half-closed, an ornate plaster ceiling, and a window framing the Acropolis bathed in warm Attic afternoon light. Cable to a Type F outlet. 35mm, sun-warmed palette.",
+      "region_outlet": "Type C/F (Greece, 230V)"
+    },
+    {
+      "id": 53,
+      "location": "Marseille Le Corbusier Unite d'Habitation apartment",
+      "image_path": "app/artifact/images/result_053.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a slim teak Charlotte Perriand-style desk inside an apartment in Le Corbusier's Cite Radieuse in Marseille. Raw board-formed concrete ceiling, a bold primary-red accent wall, modernist built-in shelving, and the iconic ribbon window framing the Mediterranean. Warm direct southern French light. Cable to a Type E outlet. 35mm, bold modernist palette.",
+      "region_outlet": "Type C/E (France, 230V)"
+    },
+    {
+      "id": 54,
+      "location": "Phnom Penh shophouse with French-colonial louvers",
+      "image_path": "app/artifact/images/result_054.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a teak console in a converted shophouse in Phnom Penh's BKK1 district. High ceiling, tall louvered French-colonial shutters, patterned encaustic-tile floor, a slow ceiling fan, and warm humid tropical light filtering through. Cable to a Type G outlet. 35mm, sun-bleached palette.",
+      "region_outlet": "Type A/C/G (Cambodia, 230V)"
+    },
+    {
+      "id": 55,
+      "location": "Tasmanian off-grid timber cabin near Cradle Mountain",
+      "image_path": "app/artifact/images/result_055.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a slab-eucalyptus desk inside an off-grid timber cabin near Cradle Mountain, Tasmania. Raw timber-board walls, a small black wood stove, a thick wool blanket, and a window onto a forest of snow-gum eucalyptus and mountain beyond. Cold clear Tasmanian light. Cable to a Type I outlet feeding from a small solar bank. 50mm, crisp cold palette.",
+      "region_outlet": "Type I (Australia, 230V)"
+    },
+    {
+      "id": 56,
+      "location": "Charleston single house with side piazza",
+      "image_path": "app/artifact/images/result_056.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on an antique mahogany writing desk in a Charleston single house. Wide-plank heart-pine floor, tall sash window opening onto a side piazza with a ceiling-fan-stirred breeze, Spanish moss visible from the live oak outside. Warm Lowcountry afternoon light. Cable to a Type B outlet. 50mm, lazy-Southern warm palette.",
+      "region_outlet": "Type A/B (USA, 120V)"
+    },
+    {
+      "id": 57,
+      "location": "Hampi heritage stone house in rural Karnataka",
+      "image_path": "app/artifact/images/result_057.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a low carved teak chest inside a heritage stone house in Hampi, Karnataka. Thick rough stone walls, polished red-oxide floor, a rope-strung wooden charpoy nearby, and a small window framing the otherworldly boulder landscape outside. Harsh Deccan light tempered by the thick walls into a cool gloom with a single sunbeam. Cable to a Type D outlet. 35mm, earthen palette.",
+      "region_outlet": "Type D/M (India, 230V)"
+    },
+    {
+      "id": 58,
+      "location": "Beijing hutong courtyard home with grey brick walls",
+      "image_path": "app/artifact/images/result_058.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a Ming-style elmwood desk inside a hutong courtyard home in Beijing's Gulou district. Grey brick interior walls, a carved wooden window lattice opening onto a small stone courtyard with a persimmon tree, and soft dust-filtered northern Chinese light. Cable to a Type I outlet. 50mm, restrained warm-grey palette.",
+      "region_outlet": "Type A/I/C (China, 220V)"
+    },
+    {
+      "id": 59,
+      "location": "Galway stone cottage on the Wild Atlantic Way",
+      "image_path": "app/artifact/images/result_059.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a rough oak table inside a stone cottage on the Wild Atlantic Way in County Galway. Thick whitewashed stone walls, flagstone floor, a small turf fire glowing in a fireplace, and a deep-set window framing wind-swept green hills under moody Atlantic light. Cable to a Type G outlet. 50mm, cinematic green-grey palette.",
+      "region_outlet": "Type G (Ireland, 230V)"
+    },
+    {
+      "id": 60,
+      "location": "Quito colonial-era home with carved wooden balcony in the Old Town",
+      "image_path": "app/artifact/images/result_060.png",
+      "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a carved colonial-style wooden console in a 17th-century home in the historic center of Quito, Ecuador. Thick whitewashed adobe walls, a carved wooden balcony just visible through an arched doorway, terracotta-tile floor, and a window framing the red-tiled rooftops of the Old Town with Andean mountains beyond. Bright high-altitude light. Cable to a Type B outlet. 35mm, clear Andean palette.",
+      "region_outlet": "Type A/B (Ecuador, 110V)"
+    }
+  ]
+}

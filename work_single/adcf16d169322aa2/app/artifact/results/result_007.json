@@ -1,0 +1,15 @@
+{
+  "id": 7,
+  "location": "Marrakech riad with carved cedar doors and zellige tile",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_007.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a low brass-inlaid table inside a Marrakech riad. Behind it: an intricately tiled zellige wall in indigo and ochre, a carved cedar doorway opening onto a sunlit courtyard with a citrus tree, polished tadelakt plaster, and a hammered-brass lantern. Cable to a Type E European-style socket. 35mm, slightly hazy late-morning courtyard light.",
+  "region_outlet": "Type C/E (Morocco, 220V)",
+  "key_environmental_details": [
+    "zellige mosaic tile",
+    "carved cedar door",
+    "tadelakt plaster",
+    "brass lantern",
+    "courtyard daylight"
+  ]
+}

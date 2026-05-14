@@ -1,0 +1,15 @@
+{
+  "id": 34,
+  "location": "Wellington wooden villa with corrugated iron roof",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_034.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a rimu-wood desk inside an 1890s wooden villa in Mount Victoria, Wellington. Honey-colored matai timber floor, tongue-and-groove painted wooden walls, a sash window with Wellington Harbour visible beyond, and a knit wool blanket draped on a chair. Soft windy Southern Hemisphere light. Cable to a Type I outlet. 50mm, fresh natural color.",
+  "region_outlet": "Type I (New Zealand, 230V)",
+  "key_environmental_details": [
+    "matai timber floor",
+    "tongue-and-groove wooden walls",
+    "sash window with harbour view",
+    "knit wool blanket",
+    "windy soft Southern Hemisphere light"
+  ]
+}

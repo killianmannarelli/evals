@@ -1,0 +1,15 @@
+{
+  "id": 9,
+  "location": "Santorini cave house with whitewashed plaster walls",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_009.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a hand-sculpted plaster shelf inside a Santorini cave house in Oia. Whitewashed walls curve organically into a low vaulted ceiling, a built-in bench is cushioned in cobalt-blue linen, and an arched opening frames the Aegean. Brilliant high-key Mediterranean daylight. Cable runs to a Type F socket. 35mm, f/5.6.",
+  "region_outlet": "Type C/F (Greece, 230V)",
+  "key_environmental_details": [
+    "sculpted whitewashed plaster",
+    "vaulted cave ceiling",
+    "blue cushioned built-in bench",
+    "Aegean Sea view",
+    "high-key bright Mediterranean light"
+  ]
+}

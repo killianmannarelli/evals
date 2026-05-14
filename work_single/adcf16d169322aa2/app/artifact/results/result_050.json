@@ -1,0 +1,15 @@
+{
+  "id": 50,
+  "location": "Vancouver West Coast cedar-and-glass home in the forest",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_050.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a long Douglas-fir slab desk in a West Coast modernist home in North Vancouver. Cedar-plank ceiling, polished concrete floor, floor-to-ceiling glass framing a wall of moss-draped firs and ferns, with mist drifting through. Moody Pacific Northwest green daylight. Cable to a Type B outlet. 35mm, cinematic green grade.",
+  "region_outlet": "Type A/B (Canada, 120V)",
+  "key_environmental_details": [
+    "cedar plank ceiling",
+    "polished concrete floor",
+    "floor-to-ceiling glass to forest",
+    "Pacific Northwest moss and ferns outside",
+    "moody green daylight"
+  ]
+}

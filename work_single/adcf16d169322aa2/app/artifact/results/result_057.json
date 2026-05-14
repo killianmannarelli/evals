@@ -1,0 +1,15 @@
+{
+  "id": 57,
+  "location": "Hampi heritage stone house in rural Karnataka",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_057.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a low carved teak chest inside a heritage stone house in Hampi, Karnataka. Thick rough stone walls, polished red-oxide floor, a rope-strung wooden charpoy nearby, and a small window framing the otherworldly boulder landscape outside. Harsh Deccan light tempered by the thick walls into a cool gloom with a single sunbeam. Cable to a Type D outlet. 35mm, earthen palette.",
+  "region_outlet": "Type D/M (India, 230V)",
+  "key_environmental_details": [
+    "thick stone walls",
+    "polished red-oxide floor",
+    "low rope-strung charpoy",
+    "boulder landscape outside",
+    "harsh midday Deccan light tempered by deep walls"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": 36,
+  "location": "Kyoto machiya townhouse with engawa veranda",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_036.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a hinoki-wood writing table inside a restored Kyoto machiya. Dark cedar wood interior, a small tatami inset, an engawa wooden veranda opening to a tiny moss garden with a stone basin, and soft diffuse autumnal light filtered through shoji screens. Cable to a Type A outlet. 50mm, contemplative cool tone.",
+  "region_outlet": "Type A/B (Japan, 100V)",
+  "key_environmental_details": [
+    "dark cedar wood interior",
+    "tatami inset",
+    "view of small rear garden",
+    "shoji screens",
+    "soft diffuse veranda light"
+  ]
+}

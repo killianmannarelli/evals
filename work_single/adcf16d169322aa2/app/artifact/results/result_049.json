@@ -1,0 +1,15 @@
+{
+  "id": 49,
+  "location": "Sao Paulo Vila Madalena live/work loft",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_049.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a steel-and-reclaimed-wood desk in a Vila Madalena live/work loft in Sao Paulo. Polished concrete floor, exposed black metal conduit on the ceiling, one wall painted with a vibrant Brazilian street-art mural, an industrial steel-frame window. Diffuse big-city daylight. Cable to a Type N outlet. 35mm, vivid creative palette.",
+  "region_outlet": "Type N (Brazil, 127/220V)",
+  "key_environmental_details": [
+    "polished concrete floor",
+    "exposed conduit",
+    "graffiti-mural wall",
+    "industrial steel-frame window",
+    "diffuse big-city light"
+  ]
+}

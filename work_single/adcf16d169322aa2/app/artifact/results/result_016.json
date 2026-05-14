@@ -1,0 +1,15 @@
+{
+  "id": 16,
+  "location": "Berlin Altbau apartment with double doors and stucco ceilings",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_016.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a vintage industrial steel desk in a Prenzlauer Berg Altbau apartment in Berlin. Herringbone oak floor, tall white double doors with brass handles, an ornate stucco ceiling, and a matte black steel-frame window. Cool grey-blue Berlin afternoon light. Cable to a Type F Schuko outlet. 50mm, cinematic muted palette.",
+  "region_outlet": "Type C/F (Germany, 230V)",
+  "key_environmental_details": [
+    "herringbone wooden floor",
+    "white double doors",
+    "ornate stucco ceiling",
+    "matte black steel-frame window",
+    "cool grey-blue daylight"
+  ]
+}

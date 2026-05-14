@@ -1,0 +1,15 @@
+{
+  "id": 48,
+  "location": "Kerala backwater home with sloping clay-tile roof",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_048.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a carved teak side table inside a traditional tharavadu in the Kerala backwaters near Alleppey. Red-oxide polished floor, dark carved teak ceiling beams, an open verandah with a glimpse of a backwater canal and a slow-moving houseboat. Humid green-gold light. Cable to a Type D outlet. 50mm, warm humid grade.",
+  "region_outlet": "Type D/M (India, 230V)",
+  "key_environmental_details": [
+    "red oxide floor",
+    "carved teak ceiling beams",
+    "open verandah",
+    "backwater canal view",
+    "humid green-gold light"
+  ]
+}

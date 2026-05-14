@@ -1,0 +1,15 @@
+{
+  "id": 15,
+  "location": "Cape Town Bo-Kaap cottage with brightly painted exterior, modern interior",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_015.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a white oak desk inside a renovated Bo-Kaap cottage in Cape Town. Clean white interior walls, polished concrete floor, and a window framing the famously pastel-painted neighboring facades with Table Mountain looming behind. Crisp southern-hemisphere afternoon light. Cable to a Type N South African socket. 35mm, vibrant but balanced color.",
+  "region_outlet": "Type M/N (South Africa, 230V)",
+  "key_environmental_details": [
+    "white interior walls",
+    "polished concrete floor",
+    "view of pastel painted neighbors",
+    "Table Mountain in the distance",
+    "crisp southern-hemisphere light"
+  ]
+}

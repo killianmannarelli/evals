@@ -1,0 +1,15 @@
+{
+  "id": 58,
+  "location": "Beijing hutong courtyard home with grey brick walls",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_058.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a Ming-style elmwood desk inside a hutong courtyard home in Beijing's Gulou district. Grey brick interior walls, a carved wooden window lattice opening onto a small stone courtyard with a persimmon tree, and soft dust-filtered northern Chinese light. Cable to a Type I outlet. 50mm, restrained warm-grey palette.",
+  "region_outlet": "Type A/I/C (China, 220V)",
+  "key_environmental_details": [
+    "grey brick walls",
+    "carved wooden window lattice",
+    "stone-paved courtyard glimpse",
+    "Ming-style wooden furniture",
+    "soft dust-filtered northern light"
+  ]
+}

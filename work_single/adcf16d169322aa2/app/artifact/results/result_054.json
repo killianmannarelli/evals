@@ -1,0 +1,15 @@
+{
+  "id": 54,
+  "location": "Phnom Penh shophouse with French-colonial louvers",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_054.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a teak console in a converted shophouse in Phnom Penh's BKK1 district. High ceiling, tall louvered French-colonial shutters, patterned encaustic-tile floor, a slow ceiling fan, and warm humid tropical light filtering through. Cable to a Type G outlet. 35mm, sun-bleached palette.",
+  "region_outlet": "Type A/C/G (Cambodia, 230V)",
+  "key_environmental_details": [
+    "high ceiling",
+    "louvered colonial shutters",
+    "patterned encaustic tile",
+    "ceiling fan",
+    "tropical humid filtered light"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": 60,
+  "location": "Quito colonial-era home with carved wooden balcony in the Old Town",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_060.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a carved colonial-style wooden console in a 17th-century home in the historic center of Quito, Ecuador. Thick whitewashed adobe walls, a carved wooden balcony just visible through an arched doorway, terracotta-tile floor, and a window framing the red-tiled rooftops of the Old Town with Andean mountains beyond. Bright high-altitude light. Cable to a Type B outlet. 35mm, clear Andean palette.",
+  "region_outlet": "Type A/B (Ecuador, 110V)",
+  "key_environmental_details": [
+    "thick adobe walls",
+    "carved wooden balcony",
+    "terracotta tile floor",
+    "view of red-tiled roofs of Old Quito",
+    "high-altitude Andean light"
+  ]
+}

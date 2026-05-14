@@ -1,0 +1,15 @@
+{
+  "id": 17,
+  "location": "Cairo midcentury apartment in Zamalek, Nile-side",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_017.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a midcentury teak credenza in a Zamalek apartment in Cairo overlooking the Nile. Polished terrazzo floor, louvered mashrabiya wooden shutters casting striped light, and a glimpse of feluccas on the water beyond. Warm dusty afternoon light. Cable to a Type C outlet. 50mm, warm color grade.",
+  "region_outlet": "Type C/F (Egypt, 220V)",
+  "key_environmental_details": [
+    "polished terrazzo floor",
+    "louvered wooden mashrabiya shutters",
+    "midcentury teak furniture",
+    "Nile view",
+    "warm dusty afternoon light"
+  ]
+}

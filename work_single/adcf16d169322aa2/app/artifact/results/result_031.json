@@ -1,0 +1,15 @@
+{
+  "id": 31,
+  "location": "Quebec City stone farmhouse with timber beams",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_031.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a chunky pine farm table in a 1750s stone farmhouse outside Quebec City. Thick whitewashed stone walls, exposed dark timber beams, wide pine plank floor, a cast-iron wood stove glowing, and a small window framing a snow-blanketed yard. Cable to a Type B outlet. 50mm, warm tungsten balance against cold daylight.",
+  "region_outlet": "Type A/B (Canada, 120V)",
+  "key_environmental_details": [
+    "thick stone walls",
+    "exposed timber ceiling beams",
+    "wide pine plank floor",
+    "cast-iron wood stove",
+    "cold winter light through a small window"
+  ]
+}

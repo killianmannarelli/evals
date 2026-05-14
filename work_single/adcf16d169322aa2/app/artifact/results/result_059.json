@@ -1,0 +1,15 @@
+{
+  "id": 59,
+  "location": "Galway stone cottage on the Wild Atlantic Way",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_059.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a rough oak table inside a stone cottage on the Wild Atlantic Way in County Galway. Thick whitewashed stone walls, flagstone floor, a small turf fire glowing in a fireplace, and a deep-set window framing wind-swept green hills under moody Atlantic light. Cable to a Type G outlet. 50mm, cinematic green-grey palette.",
+  "region_outlet": "Type G (Ireland, 230V)",
+  "key_environmental_details": [
+    "thick whitewashed stone walls",
+    "flagstone floor",
+    "turf-burning fireplace",
+    "small deep-set window",
+    "moody Atlantic light"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": 47,
+  "location": "Tbilisi balcony apartment in a 19th-century courtyard building",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_047.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on an antique walnut desk inside a balcony apartment in a 19th-century courtyard building in Old Tbilisi. The view through the open balcony door reveals an intricately carved wooden balcony and a glimpse of the Caucasus mountains. Patinated walls, wrought-iron details, warm afternoon light. Cable to a Type F outlet. 35mm, faded antique palette.",
+  "region_outlet": "Type C/F (Georgia, 220V)",
+  "key_environmental_details": [
+    "wooden carved balcony",
+    "patinated walls",
+    "wrought-iron details",
+    "Caucasus mountain glimpse",
+    "warm Caucasian afternoon light"
+  ]
+}

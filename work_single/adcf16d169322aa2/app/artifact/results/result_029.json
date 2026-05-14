@@ -1,0 +1,15 @@
+{
+  "id": 29,
+  "location": "Istanbul yali waterfront wooden mansion on the Bosphorus",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_029.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a carved walnut console inside a 19th-century wooden yali on the Bosphorus shoreline in Istanbul. Painted pastel wooden walls, intricately carved wooden ceiling, a low Ottoman bench beside it cushioned in silk ikat, and a wide window where water-reflected light dances across everything. Cable to a Type F outlet. 50mm, soft warm grade.",
+  "region_outlet": "Type C/F (Turkey, 220V)",
+  "key_environmental_details": [
+    "painted wooden interior",
+    "carved wood ceiling",
+    "Ottoman cushioned bench",
+    "Bosphorus water view",
+    "shimmering reflected water light"
+  ]
+}

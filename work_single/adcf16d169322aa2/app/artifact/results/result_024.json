@@ -1,0 +1,15 @@
+{
+  "id": 24,
+  "location": "Dubai high-rise apartment overlooking the Burj",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_024.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a slim white marble desk in a 60th-floor Downtown Dubai apartment. Floor-to-ceiling glass framing the Burj Khalifa at golden hour, polished marble floor, minimalist white furniture, warm late-afternoon light pouring across the room. Cable to a Type G UK-style outlet. 50mm, cinematic warm grade.",
+  "region_outlet": "Type G (UAE, 230V)",
+  "key_environmental_details": [
+    "floor-to-ceiling glass",
+    "polished marble floor",
+    "minimalist white furniture",
+    "sunset over Burj Khalifa",
+    "warm golden hour through glass"
+  ]
+}

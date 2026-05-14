@@ -1,0 +1,15 @@
+{
+  "id": 13,
+  "location": "Stockholm Scandinavian-minimalist flat with light oak floors",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_013.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a pale ash desk in a Sodermalm apartment in Stockholm. Wide-plank light-oak floors, chalky white walls, sheer linen curtains diffusing cool overcast Nordic daylight, and one Monstera plant in a stoneware pot. Cable to a Type F socket. 50mm, very soft cool light, restrained palette.",
+  "region_outlet": "Type C/F (Sweden, 230V)",
+  "key_environmental_details": [
+    "wide-plank light oak floor",
+    "matte white walls",
+    "linen curtains",
+    "single houseplant",
+    "cool overcast Nordic light"
+  ]
+}

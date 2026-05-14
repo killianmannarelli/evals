@@ -1,0 +1,15 @@
+{
+  "id": 52,
+  "location": "Athens neoclassical apartment in Plaka",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_052.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a Carrara-marble-topped console in a neoclassical apartment in Plaka, Athens. Polished marble floor, tall louvered timber shutters half-closed, an ornate plaster ceiling, and a window framing the Acropolis bathed in warm Attic afternoon light. Cable to a Type F outlet. 35mm, sun-warmed palette.",
+  "region_outlet": "Type C/F (Greece, 230V)",
+  "key_environmental_details": [
+    "polished marble floor",
+    "tall shuttered window",
+    "ornate plaster ceiling",
+    "Acropolis visible through window",
+    "warm Attic afternoon light"
+  ]
+}

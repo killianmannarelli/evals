@@ -1,0 +1,15 @@
+{
+  "id": 44,
+  "location": "Mexico City Coyoacan colonial home with bougainvillea courtyard",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_044.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a hand-carved cedar desk in a Coyoacan colonial home in Mexico City. Thick whitewashed walls, saltillo tile floor, exposed wooden vigas, and an open archway showing a courtyard exploding with magenta bougainvillea. Warm late-afternoon Mexican light. Cable to a Type B outlet. 35mm, lush warm color.",
+  "region_outlet": "Type A/B (Mexico, 127V)",
+  "key_environmental_details": [
+    "thick whitewashed walls",
+    "saltillo tile floor",
+    "wooden vigas overhead",
+    "bougainvillea in courtyard",
+    "warm late-afternoon light"
+  ]
+}

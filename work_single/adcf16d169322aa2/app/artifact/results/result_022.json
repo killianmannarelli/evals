@@ -1,0 +1,15 @@
+{
+  "id": 22,
+  "location": "Bangkok shophouse converted into a modern residence",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_022.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a reclaimed teak console in a converted Bangkok shophouse in the Talat Noi district. Narrow shophouse footprint, exposed concrete column, a slow-turning rattan ceiling fan above, warm humid tropical light filtering through bamboo blinds. Cable to a Type O Thai outlet. 35mm, slight haze.",
+  "region_outlet": "Type A/C/O (Thailand, 220V)",
+  "key_environmental_details": [
+    "narrow multi-storey shophouse layout",
+    "exposed concrete and timber",
+    "ceiling fan",
+    "warm humid air visible in light",
+    "tropical city sounds implied"
+  ]
+}

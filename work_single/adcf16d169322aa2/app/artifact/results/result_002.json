@@ -1,0 +1,15 @@
+{
+  "id": 2,
+  "location": "Kenyan farmhouse near Naivasha with corrugated iron roof",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_002.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug sitting on a rough-sawn acacia-wood desk inside a Kenyan farmhouse near Lake Naivasha. Whitewashed stone walls, a polished concrete floor scattered with kitenge textiles, and a deep-set window framing the Rift Valley. Hot afternoon sun rakes across the scene. The fabric cable leads to a British-standard Type G three-pin socket beside the desk. Medium-format, natural light, slight golden-hour warmth.",
+  "region_outlet": "Type G (Kenya, 240V)",
+  "key_environmental_details": [
+    "whitewashed stone walls",
+    "polished concrete floor",
+    "kitenge textiles",
+    "acacia wood furniture",
+    "rift-valley window view"
+  ]
+}

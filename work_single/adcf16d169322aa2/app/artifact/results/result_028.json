@@ -1,0 +1,15 @@
+{
+  "id": 28,
+  "location": "Lagos modern duplex in Lekki Phase 1",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_028.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a polished walnut desk in a Lekki Phase 1 duplex in Lagos. Glossy porcelain tile floor, a bold piece of contemporary Nigerian art behind, woven rattan accent chairs, and a sliding door open to a small tropical garden. Bright equatorial daylight. Cable to a Type G outlet. 50mm, vibrant color.",
+  "region_outlet": "Type G (Nigeria, 230V)",
+  "key_environmental_details": [
+    "polished porcelain tile floor",
+    "contemporary Nigerian art",
+    "rattan accents",
+    "tropical garden view",
+    "bright equatorial light"
+  ]
+}

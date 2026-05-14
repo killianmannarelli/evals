@@ -1,0 +1,15 @@
+{
+  "id": 40,
+  "location": "Marfa, Texas concrete-and-glass desert home",
+  "status": "complete",
+  "image_path": "app/artifact/images/result_040.png",
+  "prompt_used": "Photorealistic lifestyle photograph of a 16-inch tall minimalist desk lamp with a conical matte-black powder-coated steel shade, a thin polished-brass cylindrical stem with a subtle articulating joint, a round Carrara-marble base with grey veining, and a braided dark-charcoal fabric cable terminating in a region-appropriate plug on a long board-formed concrete shelf in a Marfa, Texas desert home. Polished concrete floor, a Corten-steel feature wall, floor-to-ceiling glass framing an empty high-desert horizon, sparse mesquite, and hard clear west-Texas light. Cable to a Type B outlet. 35mm, austere palette.",
+  "region_outlet": "Type A/B (USA, 120V)",
+  "key_environmental_details": [
+    "polished concrete floor",
+    "Corten steel wall",
+    "floor-to-ceiling glass",
+    "open desert horizon",
+    "hard high-desert light"
+  ]
+}
