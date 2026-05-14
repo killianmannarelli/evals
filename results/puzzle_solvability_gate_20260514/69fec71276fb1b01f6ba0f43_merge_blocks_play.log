@@ -1,0 +1,14 @@
+Verifying solvability across 10 seeds …
+
+  Seed  0: [OK  ]  actions per level: ['108', '124', '132', '144']
+  Seed  1: [OK  ]  actions per level: ['108', '124', '132', '144']
+  Seed  2: [OK  ]  actions per level: ['108', '124', '132', '144']
+  Seed  3: [OK  ]  actions per level: ['108', '124', '132', '144']
+  Seed  4: [OK  ]  actions per level: ['108', '124', '132', '144']
+  Seed  5: [OK  ]  actions per level: ['108', '124', '132', '144']
+  Seed  6: [OK  ]  actions per level: ['108', '124', '132', '144']
+  Seed  7: [OK  ]  actions per level: ['108', '124', '132', '144']
+  Seed  8: [OK  ]  actions per level: ['108', '124', '132', '144']
+  Seed  9: [OK  ]  actions per level: ['108', '124', '132', '144']
+
+All seeds solvable!

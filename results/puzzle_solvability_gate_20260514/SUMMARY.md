@@ -67,6 +67,28 @@ runs RESET, then calls `BFSSolver(max_depth=300).verify_and_report(g)`).
 Result: **60/60** seed/task combinations report `all_solvable=True`
 (see `deep_verify_results.json`).
 
+## End-to-end play-to-WIN
+
+Each game also ships a `verify.py` script (written by the fixer agent) that
+plays the puzzle through the **real engine** (`game.perform_action(...)`)
+and asserts the game reaches `GameState.WIN`. Logs are included.
+
+| Game | Seeds tested | Levels per seed | Final result |
+|---|---:|---:|---|
+| signal_cascade  | 10 (0..9)  | 4 | 10/10 OK — "All seeds solvable!" |
+| merge_blocks    | 10 (0..9)  | 4 | 10/10 OK — "All seeds solvable!" |
+| phase_echo      | 10 (0..9)  | 4 | 10/10 played to WIN (per-seed BFS via Pattern A solver) |
+| bellows_forge   | 20 (0..19) | 4 | 80/80 OK — "PASS: …generation, mechanics, BFS plans, resets, and engine replays are valid" |
+| elemental_paths | 20 (0..19) | 4 | 20/20 OK — "All seeds solvable!" |
+| polarity_tiles  | 50 (0..49) | 4 | 200/200 — "TOTAL: 200/200 SOLVABLE" |
+
+For phase_echo the bundled `verify.py` only exercises the 4 level
+solutions, so I additionally wrote
+`69fec71276fb1b01f6ba0f07_phase_echo_per_seed_play.log` which calls the
+patched `_phase_echo_solve_all(g)` solver per seed 0..9, replays every
+returned action through the game, and asserts `state == WIN`. All 10
+seeds reached WIN.
+
 Trajectory hash verifier output per task (replay vs. contributor log):
 
 | Game | Actions | hash_match | hash_mismatch | final_state |

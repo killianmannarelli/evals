@@ -1,0 +1,14 @@
+Phase Echo per-seed end-to-end playtest
+============================================================
+seed  0 OK    final_state=WIN total_moves=48 per_level=[9, 14, 19, 6]
+seed  1 OK    final_state=WIN total_moves=37 per_level=[8, 12, 7, 10]
+seed  2 OK    final_state=WIN total_moves=41 per_level=[10, 16, 6, 9]
+seed  3 OK    final_state=WIN total_moves=30 per_level=[3, 15, 3, 9]
+seed  4 OK    final_state=WIN total_moves=36 per_level=[7, 15, 2, 12]
+seed  5 OK    final_state=WIN total_moves=38 per_level=[2, 8, 17, 11]
+seed  6 OK    final_state=WIN total_moves=55 per_level=[11, 15, 14, 15]
+seed  7 OK    final_state=WIN total_moves=39 per_level=[10, 5, 14, 10]
+seed  8 OK    final_state=WIN total_moves=43 per_level=[9, 5, 15, 14]
+seed  9 OK    final_state=WIN total_moves=36 per_level=[4, 14, 11, 7]
+============================================================
+RESULT: 10/10 seeds played to WIN via the patched solver

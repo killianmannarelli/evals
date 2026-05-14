@@ -1,0 +1,15 @@
+Signal Cascade — Solvability Verification
+Testing 10 seeds × 4 levels...
+
+  Seed  0: OK   | OK   | OK   | OK  
+  Seed  1: OK   | OK   | OK   | OK  
+  Seed  2: OK   | OK   | OK   | OK  
+  Seed  3: OK   | OK   | OK   | OK  
+  Seed  4: OK   | OK   | OK   | OK  
+  Seed  5: OK   | OK   | OK   | OK  
+  Seed  6: OK   | OK   | OK   | OK  
+  Seed  7: OK   | OK   | OK   | OK  
+  Seed  8: OK   | OK   | OK   | OK  
+  Seed  9: OK   | OK   | OK   | OK  
+
+All seeds solvable!
