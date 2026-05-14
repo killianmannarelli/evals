@@ -3,5 +3,6 @@
 !.env.example
 .creds/
 qc-auditor-workspace/
+cb-fix-workspace/
 __pycache__/
 *.pyc
