@@ -1,18 +1,18 @@
 {
   "skill": "QC Auditor \u2014 created by Marius Delahay",
-  "tasks_audited": 10,
-  "tasks_clean": 0,
+  "tasks_audited": 17,
+  "tasks_clean": 2,
   "tasks_incomplete": 0,
-  "raw_findings": 77,
-  "post_merge_findings": 49,
-  "confirmed_findings": 35,
-  "rejected_findings": 14,
-  "merge_rate": 0.3636,
-  "drop_rate": 0.2857,
+  "raw_findings": 119,
+  "post_merge_findings": 74,
+  "confirmed_findings": 51,
+  "rejected_findings": 23,
+  "merge_rate": 0.3782,
+  "drop_rate": 0.3108,
   "agreement_breakdown": {
-    "3/3": 8,
-    "2/3": 12,
-    "1/3": 15
+    "3/3": 13,
+    "2/3": 19,
+    "1/3": 19
   },
   "reaudit": {
     "tasks_reaudited": 0,
@@ -22,44 +22,44 @@
   "top_failure_categories": [
     [
       "Non-Fail - Unlisted Minor Errors",
-      7
-    ],
-    [
-      "Non-Fail - Missing Coverage",
       6
     ],
     [
-      "Fail - Rubric Misaligned with GOLD.yaml",
-      2
+      "Non-Fail - Objectivity / Specificity",
+      5
     ],
     [
-      "Fail - Missing Coverage",
-      2
-    ],
-    [
-      "Non- Fail - Phrasing",
-      2
+      "Non-Fail - Infeasible Instruction",
+      5
     ],
     [
       "Non-Fail - GOLD.yaml Justification Misaligned",
-      2
-    ],
-    [
-      "Non-Fail - Criteria Accuracy",
-      2
+      4
     ],
     [
       "Non-Fail - Rubric Partially Misaligned with GOLD.yaml",
-      2
+      4
+    ],
+    [
+      "Non-Fail - Missing Coverage",
+      3
+    ],
+    [
+      "Non-Fail - Overlap / Redundancy",
+      3
     ],
     [
       "Non-Fail - Imprecise GOLD.yaml Claims",
+      3
+    ],
+    [
+      "Fail - Objectivity / Specificity",
       2
     ],
     [
-      "Fail - Criteria Atomicity",
-      1
+      "Fail - Invalid Modification of GOLD.yaml",
+      2
     ]
   ],
-  "csv_path": "/home/user/evals/qc-auditor-workspace/69bee012be45f06904292c9a_L1_20260513T140952Z/audit_results.csv"
+  "csv_path": "/home/user/evals/qc-auditor-workspace/69bee012be45f06904292c9a_L1_20260514T152405Z/audit_results.csv"
 }

@@ -1,65 +1,65 @@
 {
   "skill": "QC Auditor \u2014 created by Marius Delahay",
-  "tasks_audited": 13,
+  "tasks_audited": 11,
   "tasks_clean": 0,
   "tasks_incomplete": 0,
-  "raw_findings": 163,
-  "post_merge_findings": 84,
-  "confirmed_findings": 66,
-  "rejected_findings": 18,
-  "merge_rate": 0.4847,
-  "drop_rate": 0.2143,
+  "raw_findings": 75,
+  "post_merge_findings": 41,
+  "confirmed_findings": 38,
+  "rejected_findings": 3,
+  "merge_rate": 0.4533,
+  "drop_rate": 0.0732,
   "agreement_breakdown": {
-    "3/3": 26,
-    "2/3": 17,
-    "1/3": 23
+    "3/3": 13,
+    "2/3": 8,
+    "1/3": 17
   },
   "reaudit": {
-    "tasks_reaudited": 1,
+    "tasks_reaudited": 0,
     "forced_decisions": 0,
     "tasks_still_needs_reaudit": 0
   },
   "top_failure_categories": [
     [
-      "Fail - Phrasing",
-      8
-    ],
-    [
-      "Fail - Criteria Accuracy",
-      8
-    ],
-    [
-      "Non-Fail - Missing Coverage",
-      6
-    ],
-    [
-      "Non-Fail - Imprecise GOLD.yaml Claims",
-      5
-    ],
-    [
       "Non-Fail - Unlisted Minor Errors",
       5
-    ],
-    [
-      "Non-Fail - Unnecessary Modification of GOLD.yaml",
-      4
     ],
     [
       "Non-Fail - GOLD.yaml Justification Misaligned",
       4
     ],
     [
-      "Fail - Incorrect GOLD.yaml",
+      "Non-Fail - Missing Coverage",
+      4
+    ],
+    [
+      "Non-Fail - Slightly Incorrect GOLD.yaml",
+      3
+    ],
+    [
+      "Fail - Phrasing",
       3
     ],
     [
       "Non-Fail - Some Incorrect Classifications",
-      3
+      2
     ],
     [
-      "Fail - Objectivity / Specificity",
+      "Non-Fail - Infeasible Instruction",
+      2
+    ],
+    [
+      "Fail - Several Incorrect Classifications",
+      2
+    ],
+    [
+      "Non-Fail - Imprecise GOLD.yaml Claims",
+      2
+    ],
+    [
+      "Non-Fail - Criteria Accuracy",
       2
     ]
   ],
-  "csv_path": "/home/user/evals/qc-auditor-workspace/69bee012be45f06904292c9a_L0_20260513T140952Z/audit_results.csv"
+  "csv_path": "/home/user/evals/qc-auditor-workspace/69bee012be45f06904292c9a_L0_20260514T152405Z/audit_results.csv"
 }
