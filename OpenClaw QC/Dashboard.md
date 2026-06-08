@@ -12,6 +12,8 @@ Built from the section-4 table of `HANDOFF — OpenClaw MM Rubrics QC (L10) · 2
 `Tasks/`. Use **`OpenClaw QC.base`** for the native Bases views; this Dashboard is the
 Dataview fallback plus the build notes.
 
+**Related:** `Spec-V6V7.md` (the rubric the verdicts are graded against — Redash query 304995, pulled live 2026-06-08, unchanged) · `Live-checks/2026-06-08.md` (current L10 queue, 6 → 13; the two carryover Fails still stuck). Each task note now also carries an **Inputs** inventory and, for the image-grounded Fails, a **pixel-verification** note.
+
 ## Dataview fallback (if Bases isn't available)
 
 ```dataview
