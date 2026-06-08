@@ -24,6 +24,18 @@
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a2299f5f3b71e3d1a55b956/index.html"
  },
  {
+  "task": "6a17cc59ea9a7319a6ca06e4",
+  "scenario": "Count craft-fair inventory from photos",
+  "did": "Tally items, prices, swatches and units into a report.",
+  "verdict": "FAIL",
+  "why": "The input files are template/vector renders, but the task presents them as 'photos' — so it isn't really testing photo-reading. (The counting checks themselves are fine.)",
+  "fix": "Use real photographs as the inputs (or reword the task so it doesn't call them photos).",
+  "platform": "50%",
+  "viewer": "Fail",
+  "agree": "Yes — both agree it fails",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a1d3ddcf0ef37baee8e45e5/index.html"
+ },
+ {
   "task": "6a17cc59ea9a7319a6ca06e6",
   "scenario": "Process expense receipts",
   "did": "Read the receipts and report what's reimbursable.",
@@ -48,16 +60,16 @@
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a1f090e73ad326cd170b9b9/index.html"
  },
  {
-  "task": "6a1fbaebeae04350ba1af20c",
-  "scenario": "Audit a set of files against a guide",
-  "did": "Review the provided files and write up issues.",
+  "task": "6a1fbaebeae04350ba1af20a",
+  "scenario": "Audit vacation-rental listings from photos",
+  "did": "Flag listings whose photos don't match.",
   "verdict": "FAIL",
-  "why": "Two checks gate on an 'audit_files.zip' archive the prompt never mentions and that isn't among the inputs (six loose files), so the correct loose-file approach is marked wrong.",
-  "fix": "Remove the ZIP-archive requirements (C11, C12); grade against the loose files that are actually provided.",
-  "platform": "46%",
+  "why": "One check tells the user NOT to tour a listing, contradicting the prompt's 'which one is worth driving out to'; another says a clearly-legible cottage photo 'cannot be discerned'; and a few checks add unrequested per-property sections.",
+  "fix": "Align C18 with the prompt, fix C8 (the photo is clear — the real issue is wrong location), and drop the unrequested sections (C5/C10/C23).",
+  "platform": "44%",
   "viewer": "Fail",
   "agree": "Yes — both agree it fails",
-  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a202a34e34753591d8f3ffb/index.html"
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a234c2f653f555c39ae478c/index.html"
  },
  {
   "task": "6a1fbaebeae04350ba1af20f",
@@ -94,6 +106,18 @@
   "viewer": "Fail",
   "agree": "Yes — both agree it fails",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a204e14bbfc160671ad37c4/index.html"
+ },
+ {
+  "task": "6a1fbaebeae04350ba1af21d",
+  "scenario": "Edit a walkthrough video and log the edits",
+  "did": "Make the requested edits and note what changed.",
+  "verdict": "FAIL",
+  "why": "One check demands an exact trailing line 'Total edits applied: 3' the prompt never asks for, plus over-specified file-location checks and a two-in-one bundle.",
+  "fix": "Drop the exact-line requirement (C7), relax the file-location checks (C1/C5), and split C4.",
+  "platform": "47%",
+  "viewer": "Fail",
+  "agree": "Yes — both agree it fails",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a205c525dba06039a72fc9a/index.html"
  },
  {
   "task": "6a1fbaebeae04350ba1af224",
@@ -144,6 +168,18 @@
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a246b471f64c5d5dfb83f1e/index.html"
  },
  {
+  "task": "6a20b7ac31ff797fdf7c3022",
+  "scenario": "Audit a dairy ad campaign against brand rules",
+  "did": "Check each asset against the rules and flag violations.",
+  "verdict": "FAIL",
+  "why": "Several checks each fold two separate things into one line (e.g. content accuracy + tone), so a partly-correct answer can't be scored fairly.",
+  "fix": "Split the bundled checks (C2, C4, C5, C9, C13) so each tests one thing.",
+  "platform": "41%",
+  "viewer": "Fail",
+  "agree": "Yes — both agree it fails",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a242d08e5116ab4d1791806/index.html"
+ },
+ {
   "task": "6a20b7ac31ff797fdf7c3023",
   "scenario": "Audit a website's screenshots for issues",
   "did": "Review the screenshots and flag any problems.",
@@ -168,6 +204,18 @@
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a24975d384d7a35891ad6f5/index.html"
  },
  {
+  "task": "6a210a723e6e63649d93d630",
+  "scenario": "QA a supplement landing page",
+  "did": "Check the page's claims and prices.",
+  "verdict": "FAIL",
+  "why": "Many checks impose unrequested structure — a subjective wording requirement plus several two-in-one bundles.",
+  "fix": "Split the bundled checks (C3/C4/C5/C8/C9/C14) and drop the subjective requirement in C2.",
+  "platform": "39%",
+  "viewer": "Fail",
+  "agree": "Yes — both agree it fails",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a2336f207b7d0d8064e3b7c/index.html"
+ },
+ {
   "task": "6a2252a7226df6fc69476d47",
   "scenario": "Audit an REI order from a receipt photo",
   "did": "Read the receipt and summarize the order.",
@@ -178,6 +226,30 @@
   "viewer": "Fail",
   "agree": "Yes — both agree it fails",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a2461c2b755eed448e5e48d/index.html"
+ },
+ {
+  "task": "6a2252a7226df6fc69476d48",
+  "scenario": "Audit a vendor proposal against policy",
+  "did": "Compare the proposals to the policy and flag issues.",
+  "verdict": "FAIL",
+  "why": "Several checks combine two independent assertions into one line, and two use a confusing double-negative on a penalty.",
+  "fix": "Split C2/C6/C11 into single checks and reword the double-negatives in C14/C15.",
+  "platform": "45%",
+  "viewer": "Fail",
+  "agree": "Yes — both agree it fails",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a23e4bb829b2ecf2e5f098c/index.html"
+ },
+ {
+  "task": "6a2252a7226df6fc69476d4c",
+  "scenario": "Reconcile a proposal against deliverables",
+  "did": "Check the figures and compliance status.",
+  "verdict": "FAIL",
+  "why": "Four checks reject the answer purely on a required 'PASS/FAIL' status wording the prompt never asks for (it only names the column) — even though the figures are correct.",
+  "fix": "Drop the required PASS/FAIL wording in C4–C7 (grade the numbers, not the label); also split C10 and fix the C8 filename.",
+  "platform": "39%",
+  "viewer": "Fail",
+  "agree": "Yes — both agree it fails",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a2452e62bbd7f6afe2cc19e/index.html"
  },
  {
   "task": "6a2252a7226df6fc69476d4f",
@@ -260,7 +332,7 @@
   "fix": "Fix C10 to keep Q4 (as the note states); relax C19 so acknowledging the icon request isn't penalized.",
   "platform": "50%",
   "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up against the inputs (one issue remains)",
+  "agree": "No — the viewer fails it, but only part holds up on review",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a24d3c18f5c3873f89797c0/index.html"
  },
  {
@@ -272,7 +344,7 @@
   "fix": "Change the reshoot count in C16 to 3 to match the photos and C15/C20.",
   "platform": "47%",
   "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up against the inputs (one issue remains)",
+  "agree": "No — the viewer fails it, but only part holds up on review",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a223a80a00f8a977ab66d39/index.html"
  },
  {
@@ -284,7 +356,7 @@
   "fix": "Remove the IP-address requirement from C3.",
   "platform": "40%",
   "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up (one issue remains)",
+  "agree": "No — the viewer fails it, but only part holds up on review",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a1e72be3dc0e927ba343641/index.html"
  },
  {
@@ -296,8 +368,20 @@
   "fix": "Flip the sign on C14 (preserving the existing platforms shouldn't lose points).",
   "platform": "47%",
   "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up against the inputs (one issue remains)",
+  "agree": "No — the viewer fails it, but only part holds up on review",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a23ba823e8559ec9d82db02/index.html"
+ },
+ {
+  "task": "6a17cc59ea9a7319a6ca06dd",
+  "scenario": "Build a creator profile from a survey + photos",
+  "did": "Summarize the survey and identify the right photo/crop.",
+  "verdict": "Non-Fail",
+  "why": "Mostly clean — the golds match the survey and images. One check is worded as a confusing double-negative.",
+  "fix": "Reword C15 as a plain positive statement.",
+  "platform": "48%",
+  "viewer": "Fail",
+  "agree": "No — the viewer fails it, but only part holds up on review",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a1d680c49ce8ec7fc04e647/index.html"
  },
  {
   "task": "6a17cc59ea9a7319a6ca06f4",
@@ -308,7 +392,7 @@
   "fix": "Fix C7 to match the ball actually shown.",
   "platform": "46%",
   "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up against the inputs (one issue remains)",
+  "agree": "No — the viewer fails it, but only part holds up on review",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a22106132827b5e73eaa4a8/index.html"
  },
  {
@@ -324,16 +408,28 @@
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a219368d0e6744efc091158/index.html"
  },
  {
-  "task": "6a1fbaebeae04350ba1af20a",
-  "scenario": "Audit vacation-rental listings from photos",
-  "did": "Flag listings whose photos don't match.",
+  "task": "6a1fbaebeae04350ba1af209",
+  "scenario": "Answer questions from a textbook/lecture",
+  "did": "Work through the material and produce the requested output.",
   "verdict": "Non-Fail",
-  "why": "One check rewards saying a cottage exterior 'cannot be discerned,' but the photo is sharp and fully legible — the real issue is wrong geography, not indiscernibility.",
-  "fix": "Fix C8 to the real reason (wrong location), not 'cannot be discerned.'",
-  "platform": "44%",
+  "why": "Mostly clean; one check double-scores the two email attachments that another check already covers.",
+  "fix": "Merge the redundant attachment check (C10).",
+  "platform": "39%",
   "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up (one issue remains)",
-  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a234c2f653f555c39ae478c/index.html"
+  "agree": "No — the viewer fails it, but only part holds up on review",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a204e7ddb0ae2ee86c565e2/index.html"
+ },
+ {
+  "task": "6a1fbaebeae04350ba1af20c",
+  "scenario": "Audit a set of files against a guide",
+  "did": "Review the provided files and write up issues.",
+  "verdict": "Non-Fail",
+  "why": "Mostly sound — the audit archive the rubric expects was in fact uploaded during the run, so the earlier concern doesn't hold. One check over-specifies the exact steps to take.",
+  "fix": "Relax C11 so it doesn't require a specific archive-access procedure.",
+  "platform": "46%",
+  "viewer": "Fail",
+  "agree": "No — the viewer fails it, but only part holds up on review",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a202a34e34753591d8f3ffb/index.html"
  },
  {
   "task": "6a1fbaebeae04350ba1af213",
@@ -344,7 +440,7 @@
   "fix": "Flip C16 so the safety note earns points (or remove the penalty).",
   "platform": "66%",
   "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up against the inputs (one issue remains)",
+  "agree": "No — the viewer fails it, but only part holds up on review",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a23fc19c151b889af236a21/index.html"
  },
  {
@@ -356,7 +452,7 @@
   "fix": "Fix C4 to the real dice values and make the email in C10 optional.",
   "platform": "44%",
   "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up (one issue remains)",
+  "agree": "No — the viewer fails it, but only part holds up on review",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a217f607d0d8426c25c6054/index.html"
  },
  {
@@ -368,20 +464,8 @@
   "fix": "Fix C1 to the correct count (2).",
   "platform": "49%",
   "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up against the inputs (one issue remains)",
+  "agree": "No — the viewer fails it, but only part holds up on review",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a21ff203fbd32a684c2b98f/index.html"
- },
- {
-  "task": "6a1fbaebeae04350ba1af21d",
-  "scenario": "Edit a walkthrough video and log the edits",
-  "did": "Make the requested edits and note what changed.",
-  "verdict": "Non-Fail",
-  "why": "One check demands an exact trailing line 'Total edits applied: 3' that the prompt never asks for (it says 'just note what you changed').",
-  "fix": "Relax C7 to accept any clear edit note; merge the overlapping cleanliness check (C17).",
-  "platform": "47%",
-  "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up against the inputs (one issue remains)",
-  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a205c525dba06039a72fc9a/index.html"
  },
  {
   "task": "6a1fbaebeae04350ba1af21e",
@@ -392,7 +476,7 @@
   "fix": "Split C16 into one check per source.",
   "platform": "40%",
   "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up (one issue remains)",
+  "agree": "No — the viewer fails it, but only part holds up on review",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a21aed89f5e487429c18964/index.html"
  },
  {
@@ -404,20 +488,8 @@
   "fix": "Drop the invented threshold/format requirements in C8 (and the reuse in C14).",
   "platform": "48%",
   "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up against the inputs (one issue remains)",
+  "agree": "No — the viewer fails it, but only part holds up on review",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a24b9c016936b02089cec48/index.html"
- },
- {
-  "task": "6a20b7ac31ff797fdf7c3022",
-  "scenario": "Audit a dairy ad campaign against brand rules",
-  "did": "Check each asset against the rules and flag violations.",
-  "verdict": "Non-Fail",
-  "why": "Well-built overall (it uses conditional logic instead of hardcoding statuses). One check fuses a content-accuracy requirement with a tone requirement.",
-  "fix": "Split C8 into two checks (accuracy, tone).",
-  "platform": "41%",
-  "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up (one issue remains)",
-  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a242d08e5116ab4d1791806/index.html"
  },
  {
   "task": "6a210a723e6e63649d93d60f",
@@ -428,7 +500,7 @@
   "fix": "Update C12/C16 to the correct 5/3/1 count so 2B isn't forced to 'incorrect'.",
   "platform": "49%",
   "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up against the inputs (one issue remains)",
+  "agree": "No — the viewer fails it, but only part holds up on review",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a22a1128d5cfcfde042140b/index.html"
  },
  {
@@ -440,7 +512,7 @@
   "fix": "Flip the sign on C5 (flagging the IP should earn points) and merge the duplicate table checks (C1/C2).",
   "platform": "40%",
   "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up (one issue remains)",
+  "agree": "No — the viewer fails it, but only part holds up on review",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a2368e8d90186edab057108/index.html"
  },
  {
@@ -452,7 +524,7 @@
   "fix": "Fix C23 to the correct domain (blabliblulife.com).",
   "platform": "46%",
   "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up against the inputs (one issue remains)",
+  "agree": "No — the viewer fails it, but only part holds up on review",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a24cdc48f5c3873f89790dd/index.html"
  },
  {
@@ -464,7 +536,7 @@
   "fix": "Remove the name/address requirement from C11 (it isn't in the inputs).",
   "platform": "44%",
   "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up (one issue remains)",
+  "agree": "No — the viewer fails it, but only part holds up on review",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a2498c2243c22c4118a0912/index.html"
  },
  {
@@ -476,20 +548,8 @@
   "fix": "Change C8 to 'Dr. Keene' to match the prompt; merge the overlapping check (C16).",
   "platform": "47%",
   "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up against the inputs (one issue remains)",
+  "agree": "No — the viewer fails it, but only part holds up on review",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a238caa8a8f98bff6ba1faa/index.html"
- },
- {
-  "task": "6a210a723e6e63649d93d630",
-  "scenario": "QA a supplement landing page",
-  "did": "Check the page's claims and prices.",
-  "verdict": "Non-Fail",
-  "why": "Mostly sound — every price/claim checks out. One pair of checks scores the same 're-check freshness' point both as a reward and a penalty (double jeopardy).",
-  "fix": "Merge C13 and C18 into one check.",
-  "platform": "39%",
-  "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up (one issue remains)",
-  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a2336f207b7d0d8064e3b7c/index.html"
  },
  {
   "task": "6a2252a7226df6fc69476d46",
@@ -500,7 +560,7 @@
   "fix": "Merge the duplicate pair (C6/C16) and split C10.",
   "platform": "43%",
   "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up (one issue remains)",
+  "agree": "No — the viewer fails it, but only part holds up on review",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a22d55d3cdceac221ce135a/index.html"
  },
  {
@@ -512,20 +572,8 @@
   "fix": "Fix the filename typo in C4.",
   "platform": "41%",
   "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up (one issue remains)",
+  "agree": "No — the viewer fails it, but only part holds up on review",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a23467ec1db8376577ca804/index.html"
- },
- {
-  "task": "6a2252a7226df6fc69476d4c",
-  "scenario": "Reconcile a proposal against deliverables",
-  "did": "Check the figures and compliance status.",
-  "verdict": "Non-Fail",
-  "why": "Mostly sound — every figure recomputes correctly. One check fuses a saved-file claim with content, and one has a propagated filename mismatch.",
-  "fix": "Split C10 and fix the filename in C8.",
-  "platform": "39%",
-  "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up (one issue remains)",
-  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a2452e62bbd7f6afe2cc19e/index.html"
  },
  {
   "task": "6a2252a7226df6fc69476d5a",
@@ -536,55 +584,7 @@
   "fix": "Relax C18 so a standard 'done' note isn't penalized.",
   "platform": "44%",
   "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up against the inputs (one issue remains)",
+  "agree": "No — the viewer fails it, but only part holds up on review",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a23d6f0c151b889af22ee24/index.html"
- },
- {
-  "task": "6a17cc59ea9a7319a6ca06dd",
-  "scenario": "Build a creator profile from a survey + photos",
-  "did": "Summarize the survey and identify the right photo/crop.",
-  "verdict": "Pass",
-  "why": "No issues found — the golds match the survey and images.",
-  "fix": "None — looks good.",
-  "platform": "48%",
-  "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up against the inputs (none remain)",
-  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a1d680c49ce8ec7fc04e647/index.html"
- },
- {
-  "task": "6a17cc59ea9a7319a6ca06e4",
-  "scenario": "Count craft-fair inventory from photos",
-  "did": "Tally items, prices, swatches and units into a report.",
-  "verdict": "Pass",
-  "why": "No issues found — every count and price checks out against the photos.",
-  "fix": "None — looks good.",
-  "platform": "50%",
-  "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up against the inputs (none remain)",
-  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a1d3ddcf0ef37baee8e45e5/index.html"
- },
- {
-  "task": "6a1fbaebeae04350ba1af209",
-  "scenario": "Answer questions from a textbook/lecture",
-  "did": "Work through the material and produce the requested output.",
-  "verdict": "Pass",
-  "why": "No issues found — the checks are clear and supported.",
-  "fix": "None — looks good.",
-  "platform": "39%",
-  "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up (none remain)",
-  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a204e7ddb0ae2ee86c565e2/index.html"
- },
- {
-  "task": "6a2252a7226df6fc69476d48",
-  "scenario": "Audit a vendor proposal against policy",
-  "did": "Compare the proposals to the policy and flag issues.",
-  "verdict": "Pass",
-  "why": "No issues found — every finding checks out against the PDFs and the dashboard.",
-  "fix": "None — looks good.",
-  "platform": "45%",
-  "viewer": "Fail",
-  "agree": "No — the viewer fails it, but the checks hold up against the inputs (none remain)",
-  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a23e4bb829b2ecf2e5f098c/index.html"
  }
 ]
