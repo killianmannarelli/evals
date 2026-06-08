@@ -30,6 +30,7 @@ function readMd(rel) {
 function layout(title, active, body) {
   const nav = [
     ["index.html", "Audits", "audits"],
+    ["audit.html", "Audit runs", "audit"],
     ["spec.html", "Spec (V6/V7)", "spec"],
     ["live.html", "Live queue", "live"],
   ].map(([href, label, key]) =>
@@ -138,16 +139,15 @@ for (const t of tasks) {
 }
 
 // ---- spec + live pages (render the vault markdown) ----
-function mdPage(rel, active, fallbackTitle) {
+function mdPage(rel, active, outName, fallbackTitle) {
   const g = readMd(rel);
   if (!g) return;
-  const out = rel.includes("/") ? rel.split("/").pop().replace(/\.md$/, "") : rel.replace(/\.md$/, "");
-  const name = active === "spec" ? "spec.html" : "live.html";
   const body = `<div class="md doc">${marked.parse(g.content.trim())}</div>`;
-  fs.writeFileSync(path.join(OUT, name), layout(g.data.title || fallbackTitle, active, body));
+  fs.writeFileSync(path.join(OUT, outName), layout(g.data.title || fallbackTitle, active, body));
 }
-mdPage("Spec-V6V7.md", "spec", "V6/V7 spec");
-mdPage("Live-checks/2026-06-08.md", "live", "Live queue");
+mdPage("Spec-V6V7.md", "spec", "spec.html", "V6/V7 spec");
+mdPage("Live-checks/2026-06-08.md", "live", "live.html", "Live queue");
+mdPage("Audit-runs/2026-06-08-L10.md", "audit", "audit.html", "Audit runs");
 
 // ---- assets ----
 fs.writeFileSync(path.join(OUT, "style.css"), CSS());

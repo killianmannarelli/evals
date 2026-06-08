@@ -26,6 +26,9 @@ A queryable Obsidian database of the **L10 rubric-QC audits** for project **mj_b
   6a/6b/6c bands and the out-of-scope tests dims.
 - **`Live-checks/2026-06-08.md`** — a live Redash pull: spec unchanged + the current L10-pending
   queue (6 → 13) with the diff vs. the audit snapshot.
+- **`Audit-runs/2026-06-08-L10.md`** — the 2026-06-08 L10 re-audit: 3 auditable (753e/0eb still
+  Fail, 0f0 improved Fail → Non-Fail) + 10 `audit_incomplete` (CDS view not yet populated). The
+  three auditable verdicts also append a **Re-audit (2026-06-08)** section to their task notes.
 
 ## At a glance
 - **16 tasks** · verdict split **4 Pass · 8 Non-Fail · 4 Fail** (both runs).
