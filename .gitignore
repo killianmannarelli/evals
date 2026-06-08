@@ -3,5 +3,6 @@
 !.env.example
 .creds/
 qc-auditor-workspace/
+.openclaw_handoff/
 __pycache__/
 *.pyc

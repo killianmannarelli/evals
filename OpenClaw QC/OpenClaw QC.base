@@ -1,0 +1,35 @@
+filters:
+  and:
+    - file.inFolder("OpenClaw QC/Tasks")
+formulas:
+  agree: 'if(verdict == drawer_verdict, "✅", "⚠️")'
+views:
+  - type: table
+    name: All audits
+    order:
+      - task_id
+      - persona
+      - task_type
+      - verdict
+      - drawer_verdict
+      - formula.agree
+      - platform_pct
+      - band_6a
+      - band_6b
+      - denominator
+      - run
+    sort:
+      - property: verdict
+        direction: ASC
+  - type: table
+    name: Fails only
+    filters:
+      and:
+        - verdict == "Fail"
+    order: [task_id, persona, task_type, platform_pct, divergence]
+  - type: table
+    name: Eval divergences
+    filters:
+      and:
+        - verdict != drawer_verdict
+    order: [task_id, verdict, drawer_verdict, platform_pct, divergence]
