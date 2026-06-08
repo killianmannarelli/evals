@@ -6,6 +6,8 @@ replicate `Sheet1` exactly. `scripts/push_audit_to_sheet.py` already encodes all
 ## Structure
 - **Row 1: blank.** **Row 2: header.** Data from row 3.
 - **Freeze 2 rows.** Header row **bold**. Verdict column (D) **bold**. **Every cell `wrapStrategy: WRAP`.**
+- **Colours:** header band `#d8dde5`; verdict cell (D) by verdict — **FAIL `#f4cccc`** (red), **Non-Fail `#fcedc6`**
+  (cream), **Pass `#d9ead3`** (green). All other cells white. (`push_audit_to_sheet.py` applies these.)
 - **10 columns, header text verbatim:**
   1. `Task ID` — the **full 24-char** task id (never the `…` short form).
   2. `Scenario` — one short human line (persona + what the task is).

@@ -58,8 +58,20 @@ def main():
     ws.update(range_name="A2", values=[HEADER] + table)
     ws.freeze(rows=2)
     ws.format(f"A1:J{len(table)+2}", {"wrapStrategy": "WRAP"})   # Sheet1 wraps every cell
-    ws.format("A2:J2", {"textFormat": {"bold": True}})
+    ws.format("A2:J2", {"textFormat": {"bold": True},
+                        "backgroundColor": {"red": 0.847, "green": 0.867, "blue": 0.898}})  # header band #d8dde5
     ws.format("D3:D200", {"textFormat": {"bold": True}})
+    # verdict-cell colors (Sheet1): FAIL #f4cccc, Non-Fail #fcedc6, Pass #d9ead3.
+    # rows are sorted FAIL -> Non-Fail -> Pass, so colour contiguous D blocks.
+    VBG = {"FAIL": {"red": 0.957, "green": 0.800, "blue": 0.800},
+           "Non-Fail": {"red": 0.988, "green": 0.929, "blue": 0.776},
+           "Pass": {"red": 0.851, "green": 0.918, "blue": 0.827}}
+    _r = 3
+    for _v in ("FAIL", "Non-Fail", "Pass"):
+        _n = sum(1 for t in table if t[3] == _v)
+        if _n:
+            ws.format(f"D{_r}:D{_r + _n - 1}", {"backgroundColor": VBG[_v]})
+            _r += _n
     print(f"Wrote tab {title!r} ({len(table)} rows) to {sh.title!r}")
     print(f"  {sh.url}#gid={ws.id}")
     return 0
