@@ -1,0 +1,122 @@
+[
+ {
+  "task": "6a2252a7226df6fc69476d5b",
+  "scenario": "Audit a design layout against the brief",
+  "did": "Check the elements and log them in a report.",
+  "verdict": "Pass",
+  "why": "No issues found — the checks are clear and consistent.",
+  "fix": "None — looks good.",
+  "platform": "48%",
+  "viewer": "Fail",
+  "agree": "No — the viewer's audit is over-strict here; the checks are well-formed",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a25bc33436068ee0c4ea3d7/index.html"
+ },
+ {
+  "task": "6a17cc59ea9a7319a6ca06e6",
+  "scenario": "Process expense receipts",
+  "did": "Read the receipts and report what's reimbursable.",
+  "verdict": "Pass",
+  "why": "No issues found — the checks are clear and consistent.",
+  "fix": "None — looks good.",
+  "platform": "50%",
+  "viewer": "Fail",
+  "agree": "No — the viewer's audit is over-strict here; the checks are well-formed",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a1d4ebaebb3f9a3a8ee353c/index.html"
+ },
+ {
+  "task": "6a210a723e6e63649d93d60f",
+  "scenario": "Review a homework / problem-set submission",
+  "did": "Work through the problems and log the per-section results.",
+  "verdict": "Non-Fail",
+  "why": "Mostly fine. One check (C9) bundles two separate expectations — that the school context was checked AND that personal areas were avoided — which pass or fail independently.",
+  "fix": "Split C9 into two checks.",
+  "platform": "49%",
+  "viewer": "Fail",
+  "agree": "No — the viewer fails it, but only one small fix is needed",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a22a1128d5cfcfde042140b/index.html"
+ },
+ {
+  "task": "6a17cc59ea9a7319a6ca06de",
+  "scenario": "Audit a batch of social-media thumbnail drafts",
+  "did": "Check each draft against the brand rules and log them in a sheet.",
+  "verdict": "Non-Fail",
+  "why": "Mostly fine. Two checks spell a filename differently from the rest — IMG-5102.png / IMG-5588.png with hyphens in C14/C16, versus the underscore form used elsewhere — so they may not match the intended file.",
+  "fix": "Make the filenames in C14 and C16 consistent with the underscore form used in C1/C4.",
+  "platform": "76%",
+  "viewer": "Fail",
+  "agree": "No — the viewer fails it, but its flags are over-strict; only a small filename fix is needed",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a25ab6f1c3d1cc2af615a89/index.html"
+ },
+ {
+  "task": "6a17cc59ea9a7319a6ca06e4",
+  "scenario": "Audit a design/portfolio against a spec",
+  "did": "Check the design elements and tally them in a report.",
+  "verdict": "Non-Fail",
+  "why": "Mostly fine. One check (C14) packs five different things into one line — button counts, a grand total, a duplicate swatch, weekly units, and output file paths — so it can't be scored cleanly.",
+  "fix": "Split C14 into separate checks, one per item.",
+  "platform": "50%",
+  "viewer": "Fail",
+  "agree": "No — the viewer fails it on points that don't hold up; one real fix remains",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a1d3ddcf0ef37baee8e45e5/index.html"
+ },
+ {
+  "task": "6a17cc59ea9a7319a6ca06f7",
+  "scenario": "Review rental repair requests from photos and documents",
+  "did": "Decide which repairs are covered, count them, and report the totals.",
+  "verdict": "FAIL",
+  "why": "Two checks each fold two separate things into one line — one asks both that three values are correct AND that the item count matches the repair requests; another asks both that the save was confirmed AND that the counts are reported consistently. Two more each bundle two separate rules. A partly-correct answer can't be scored fairly.",
+  "fix": "Split C6, C9, C4 and C8 so each checks a single thing.",
+  "platform": "85%",
+  "viewer": "Fail",
+  "agree": "Yes — both agree it fails",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a1f090e73ad326cd170b9b9/index.html"
+ },
+ {
+  "task": "6a1fbaebeae04350ba1af213",
+  "scenario": "Triage a skin/symptom case from photos",
+  "did": "Review the images and write up the findings and advice.",
+  "verdict": "FAIL",
+  "why": "One check (C16) takes 5 points away for a good behavior — warning the user about a possible hallucination — so a careful, correct answer is penalized. Two other checks each combine two separate things into one line.",
+  "fix": "Flip C16 so the good behavior earns points instead of losing them, and split C2 and C11 into separate checks.",
+  "platform": "66%",
+  "viewer": "Fail",
+  "agree": "Yes — both agree it fails",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a23fc19c151b889af236a21/index.html"
+ },
+ {
+  "task": "6a1fbaebeae04350ba1af21a",
+  "scenario": "Shop for items and fit them to a savings plan",
+  "did": "Record the purchases and work out the payment/savings timeline.",
+  "verdict": "FAIL",
+  "why": "Several checks pack multiple separate facts into one line — two of them bundle four payoff figures each (months, interest, leftover, savings date), and another requires five different data sources all at once — so a partly-correct answer can't be scored fairly.",
+  "fix": "Split the bundled checks (C13, C14, C19, and C8, C15, C17, C20) so each tests one fact or one source.",
+  "platform": "49%",
+  "viewer": "Fail",
+  "agree": "Yes — both agree it fails",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a21ff203fbd32a684c2b98f/index.html"
+ },
+ {
+  "task": "6a04c2de0b4f42487f8e5e04",
+  "scenario": "Give feedback on a design portfolio",
+  "did": "Review the portfolio and write structured feedback.",
+  "verdict": "Pass",
+  "why": "No issues found — the checks are clear and consistent.",
+  "fix": "None — looks good.",
+  "platform": "50%",
+  "viewer": "Fail",
+  "agree": "No — the viewer's audit is over-strict here; the checks are well-formed",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a24d3c18f5c3873f89797c0/index.html"
+ },
+ {
+  "task": "6a1fbaebeae04350ba1af224",
+  "scenario": "Estimate a meal's nutrition from a photo",
+  "did": "Log the foods and their calorie / macro estimates.",
+  "verdict": "Pass",
+  "why": "No issues found — the checks are clear and consistent.",
+  "fix": "None — looks good.",
+  "platform": "64%",
+  "viewer": "Fail",
+  "agree": "No — the viewer's audit is over-strict here; the checks are well-formed",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a2163241205ea90d3255279/index.html"
+ }
+]
