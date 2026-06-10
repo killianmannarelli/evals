@@ -31,6 +31,7 @@ def rank(v):
     if "NON-FAIL" in u: return 1
     if u.startswith("FAIL"): return 0
     if "PASS" in u: return 2
+    if "PENDING" in u: return 3   # un-materialized tasks sort to the bottom
     return 1
 
 
@@ -65,9 +66,10 @@ def main():
     # rows are sorted FAIL -> Non-Fail -> Pass, so colour contiguous D blocks.
     VBG = {"FAIL": {"red": 0.957, "green": 0.800, "blue": 0.800},
            "Non-Fail": {"red": 0.988, "green": 0.929, "blue": 0.776},
-           "Pass": {"red": 0.851, "green": 0.918, "blue": 0.827}}
+           "Pass": {"red": 0.851, "green": 0.918, "blue": 0.827},
+           "Pending": {"red": 0.937, "green": 0.937, "blue": 0.937}}  # neutral grey for un-materialized
     _r = 3
-    for _v in ("FAIL", "Non-Fail", "Pass"):
+    for _v in ("FAIL", "Non-Fail", "Pass", "Pending"):
         _n = sum(1 for t in table if t[3] == _v)
         if _n:
             ws.format(f"D{_r}:D{_r + _n - 1}", {"backgroundColor": VBG[_v]})
