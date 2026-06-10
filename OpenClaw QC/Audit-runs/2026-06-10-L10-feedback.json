@@ -1,0 +1,62 @@
+[
+ {
+  "task": "6a210a723e6e63649d93d62a",
+  "scenario": "Audit a received shipment against the order",
+  "did": "Check the delivered unit against the paperwork and decide whether to accept or hold it.",
+  "verdict": "FAIL",
+  "why": "Six checks grade the answer against order details — a 5-axis spec, a $2,500 price, a PO number, and approver rules — that aren't in any file the agent was given and it has no way to look up. So a correct \"I can't confirm this from what I have\" gets marked wrong.",
+  "fix": "Rework C4–C9 to check only facts the agent can actually see (the packing slip, nameplate photo, and the SOP), not an order of record that isn't provided.",
+  "platform": "23%",
+  "viewer": "Non-Fail",
+  "agree": "No — I'm stricter; the viewer assumed data the agent was never given",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a27fdfe20879bb03104f748/index.html"
+ },
+ {
+  "task": "6a0b6c51dd899aff8992753e",
+  "scenario": "Read a grocery cereal shelf from photos",
+  "did": "List every cereal on the shelves with its average price into a spreadsheet.",
+  "verdict": "Non-Fail",
+  "why": "Much improved — most \"should-be-absent\" decoys are now correct. But two checks still penalize listing Krave and Cocoa Krispies, which are both clearly on the shelves, so a correct reading loses points. One summary check also adds a \"retailer promotions\" requirement the task never asks for.",
+  "fix": "Fix the two decoys (C37 Krave, C38 Cocoa Krispies — those cereals are present) and drop the promotions clause from the summary check (C4).",
+  "platform": "23%",
+  "viewer": "Non-Fail",
+  "agree": "Yes",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a287aa1be188d1b89385c11/index.html"
+ },
+ {
+  "task": "6a17cc59ea9a7319a6ca06eb",
+  "scenario": "Audit an HR dashboard against the CRM",
+  "did": "Cross-check each dashboard panel against the CRM and flag any discrepancies.",
+  "verdict": "Non-Fail",
+  "why": "Mostly sound. One check awards credit for noting the number of discrepancies in MEMORY.md but accepts any number — so a wrong count still passes.",
+  "fix": "Tighten C21 to require the correct discrepancy count, not just any integer.",
+  "platform": "5%",
+  "viewer": "Fail",
+  "agree": "No — the viewer flags it, but those points don't hold up; the rubric is sound",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a28954c3da7f0757f5fda84/index.html"
+ },
+ {
+  "task": "6a17cc59ea9a7319a6ca06f7",
+  "scenario": "Check a real-estate listing's text against its photos",
+  "did": "Compare the listing description to the images and flag mismatches.",
+  "verdict": "Pass",
+  "why": "No issues found — the mismatch checks hold up against the photos.",
+  "fix": "None — looks good.",
+  "platform": "40%",
+  "viewer": "Fail",
+  "agree": "No — the viewer flags it, but those points don't hold up; the rubric is sound",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a286ad7aabb282e49abe078/index.html"
+ },
+ {
+  "task": "6a210a723e6e63649d93d61e",
+  "scenario": "Triage a kitchen's condition from photos",
+  "did": "Classify each issue (repair / clean / not enough evidence) and log it.",
+  "verdict": "Pass",
+  "why": "No issues found — every classification checks out against the photos.",
+  "fix": "None — looks good.",
+  "platform": "49%",
+  "viewer": "Fail",
+  "agree": "No — the viewer flags it, but those points don't hold up; the rubric is sound",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a288b4edf408b6efd3d0a17/index.html"
+ }
+]
