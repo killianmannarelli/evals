@@ -1,0 +1,98 @@
+[
+ {
+  "task": "6a2252a7226df6fc69476d43",
+  "scenario": "Check a personal ticket-spending summary against actual ticket records.",
+  "did": "Review every purchase on the summary sheet, correct the matched ones from the records, and total it all up.",
+  "why": "The prompt says purchases without a matching ticket record must stay exactly as written, but C12–C17 penalize keeping those values and C9–C11 expect totals that only come out if you recalculate them anyway. C17 also misreads the handwritten Movie Night total — the sheet shows 671, not 176.",
+  "fix": "Rebuild C9–C19 around the as-written values for the six unmatched purchases and correct C17's total to 671.",
+  "verdict": "FAIL",
+  "platform": "25%",
+  "viewer": "Fail",
+  "agree": "Yes — both flag it as failing.",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a28bb60ff35652ba7f1013f/index.html"
+ },
+ {
+  "task": "6a20b7ac31ff797fdf7c3024",
+  "scenario": "Clean up a Capital One card's charges against scanned receipts.",
+  "did": "Compare the spreadsheet's Capital One entries to the receipts, fix the sloppy ones, and flag anything to dispute.",
+  "why": "The receipt images don't hold up as real scans — four different merchants share one identical template, one box reads 'FULL HD WEBCAM / WEBCAM FULL HD', and one receipt even prints a budgeting note ('Single charge - dine out') no register would. C2 also requires 'exactly these nine charges' without listing the nine anywhere the agent can see.",
+  "fix": "Replace the receipts with realistic, merchant-distinct scans and spell out the nine charges in C2.",
+  "verdict": "FAIL",
+  "platform": "39%",
+  "viewer": "Fail",
+  "agree": "Yes — both flag it as failing.",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a28e90aa2032ca8a42375cb/index.html"
+ },
+ {
+  "task": "6a1fbaebeae04350ba1af208",
+  "scenario": "Fact-check a volunteer's finding aid against nine archive scans.",
+  "did": "Go through the scans and the draft side by side and report where the draft is wrong.",
+  "why": "One check (C6) requires the 'how long at zero' answer to appear in audit_notes.md, but the task only says to report it — a correct answer given anywhere else still loses the points.",
+  "fix": "Let C6 accept the answer wherever it's reported instead of pinning it to audit_notes.md.",
+  "verdict": "Non-Fail",
+  "platform": "36%",
+  "viewer": "Non-Fail",
+  "agree": "Yes — both agree it holds up.",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a28d8da94dc8f8f37b5f833/index.html"
+ },
+ {
+  "task": "6a210a723e6e63649d93d621",
+  "scenario": "Turn a project-management lecture's handouts into a filled-in worksheet and study pack.",
+  "did": "Fill in the Projects-vs-Operations worksheet and work through the App Launch exercise using the class slides.",
+  "why": "The anti-invention check (C10) penalizes giving dates, download targets, or budget splits 'not given in the exercise brief' — but the class's own charter template requires estimated dates and its example sets a 10,000-download target, so an answer that follows the slides gets docked.",
+  "fix": "Narrow C10 so it only penalizes details absent from all the class materials, not ones the slides themselves call for.",
+  "verdict": "Non-Fail",
+  "platform": "48%",
+  "viewer": "Fail",
+  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up.",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a28c32dea4c8a6c9346dd6a/index.html"
+ },
+ {
+  "task": "6a210a723e6e63649d93d628",
+  "scenario": "Track down a missing $3,200 across messy personal and consulting records.",
+  "did": "Reconcile the expense log against the invoices and write a corrected spending summary.",
+  "why": "C9 describes the expense_summary.md file but is set to judge the chat message instead, so a correct summary loses those points. C25 and C26 also re-score what C18/C21 and C23 already cover, just with the sign flipped.",
+  "fix": "Point C9 at the summary file it describes, and remove the duplicate penalties C25/C26.",
+  "verdict": "Non-Fail",
+  "platform": "38%",
+  "viewer": "Fail",
+  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up.",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a28e1a7176dc3a718060098/index.html"
+ },
+ {
+  "task": "6a2252a7226df6fc69476d5d",
+  "scenario": "Migrate AS400 account records into a CRM from dashboard screenshots.",
+  "did": "Pull the company and contact details off the screenshots, normalize them, and import them with the required compliance notices.",
+  "why": "C14 expects a normalized address that doesn't match record 0004's screen ('10220 SW Greenburg Rd' vs the shown '1040 NW 10th Ave'), and C20 pins an email that isn't on screen (sjenkins@apexmedical.com; the record shows s.jenkins@apexmedical.org). C9 also repeats the addressee check already inside C10.",
+  "fix": "Correct C14's address and C20's email to match the screens, and fold C9 into C10.",
+  "verdict": "Non-Fail",
+  "platform": "47%",
+  "viewer": "Fail",
+  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up.",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a28f4b66682b09faabe16c9/index.html"
+ },
+ {
+  "task": "6a0b6c51dd899aff8992753e",
+  "scenario": "Read a grocery cereal shelf from photos.",
+  "did": "List every cereal on the shelves with its average price into a spreadsheet.",
+  "why": "Two checks penalize listing Krave (C37) and Cocoa Krispies (C38), but both cereals are clearly visible on the shelf photos, so a correct reading loses points. The summary check (C4) also bundles in a 'retailer promotions' requirement the task never asks for.",
+  "fix": "Remove the penalties on C37 and C38 (both cereals are on the shelves) and drop the promotions clause from C4.",
+  "verdict": "Non-Fail",
+  "platform": "23%",
+  "viewer": "Non-Fail",
+  "agree": "Yes — both agree it holds up.",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a287aa1be188d1b89385c11/index.html"
+ },
+ {
+  "task": "6a210a723e6e63649d93d61e",
+  "scenario": "Sort travel photos into trip folders from visual clues.",
+  "did": "Classify each photo into the right trip folder and explain the giveaway details.",
+  "why": "No issues found — every classification checks out against the photos.",
+  "fix": "None — looks good.",
+  "verdict": "Pass",
+  "platform": "49%",
+  "viewer": "Fail",
+  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up.",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a288b4edf408b6efd3d0a17/index.html"
+ }
+]
