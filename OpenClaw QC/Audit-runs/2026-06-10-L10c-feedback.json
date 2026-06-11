@@ -1,0 +1,74 @@
+[
+ {
+  "task": "6a04c2de0b4f42487f8e5e02",
+  "scenario": "A maker preparing for craft markets who wants photo-shooting direction for a helper.",
+  "did": "Review notes and reference product images and produce a set of photo-direction files.",
+  "verdict": "Pending",
+  "why": "A new version of this task is in flight and its run hasn't been captured yet, so the checks can't be reviewed this round.",
+  "fix": "Queued for a re-check once the run lands.",
+  "agree": "Pending — nothing to compare yet.",
+  "platform": "32%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a29b702bb10e66b461542f5/index.html"
+ },
+ {
+  "task": "6a17cc59ea9a7319a6ca06e4",
+  "scenario": "A craft-fair vendor getting supplier reorder numbers off booth photos.",
+  "did": "Transcribe the photos into price and swatch files plus a summary, and check supplier orders.",
+  "verdict": "Pending",
+  "why": "A new version of this task is in flight and its run hasn't been captured yet, so the checks can't be reviewed this round.",
+  "fix": "Queued for a re-check once the run lands.",
+  "agree": "Pending — nothing to compare yet.",
+  "platform": "47%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a2a1ecc41ec7c4b664b42cb/index.html"
+ },
+ {
+  "task": "69fb9655277dce0e70070e37",
+  "scenario": "Catalog a box of old scanned receipts.",
+  "did": "Read each receipt scan and record its date, total, and currency into a catalog.",
+  "why": "No issues found — every total, date, and currency checks out against the scans, and the two no-total / wrong-date traps are set correctly.",
+  "fix": "None — looks good.",
+  "verdict": "Pass",
+  "platform": "33%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a2955da80e565d4bfc737fe/index.html",
+  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+ },
+ {
+  "task": "6a0ffe25088789f616666871",
+  "scenario": "Audit a YouTube channel's thumbnails against its style conventions.",
+  "did": "Check each thumbnail against the channel's layout and text rules and score the series.",
+  "why": "No issues found — every layout, text, and exemption check matches the thumbnails, and the series scores are right.",
+  "fix": "None — looks good.",
+  "verdict": "Pass",
+  "platform": "49%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a29705e40f9479e97db0540/index.html",
+  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+ },
+ {
+  "task": "6a20b7ac31ff797fdf7c301e",
+  "scenario": "Spot the fake cabin listing and check whether the real one is affordable.",
+  "did": "Compare two listings to the photos, decide which is legitimate, and work out what's left after paying for it.",
+  "why": "The legitimacy and money checks are sound; two have small wording issues. C8 and C11 both score whether the final message shows the deduction math (one rewards it, one penalizes), and C9 bundles two separate things — confirming the cabin choice and stating the leftover amount — into a single check.",
+  "fix": "Merge C8 and C11 into one check, and split C9 so the cabin choice and the leftover amount are scored separately.",
+  "verdict": "Non-Fail",
+  "platform": "7%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a29a76eccfba1b4ee1370bf/index.html",
+  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+ },
+ {
+  "task": "6a271a812033c9fde3b43f73",
+  "scenario": "Correct a week's meal log against photos and a doctor's notes.",
+  "did": "Fix each day's calorie and status entries from the meal photos and write the corrected table.",
+  "why": "No issues found — the calorie corrections and status flags match the photos, the privacy and table-only checks point the right way, and the consolidation check is fine.",
+  "fix": "None — looks good.",
+  "verdict": "Pass",
+  "platform": "20%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a29a2adfc9524df5b99ff0b/index.html",
+  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+ }
+]
