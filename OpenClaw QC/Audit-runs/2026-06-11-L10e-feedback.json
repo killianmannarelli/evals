@@ -1,0 +1,26 @@
+[
+ {
+  "task": "6a2252a7226df6fc69476d4c",
+  "scenario": "Audit Capital One charges and build a dispute total.",
+  "did": "Reconcile the charges against the receipts and rules, and total the disputed amount.",
+  "why": "No issues found — every gold checks out, including the $1,170.44 dispute total reconstructed from the eight disputed charges, and the decoys are all correctly set.",
+  "fix": "None — looks good.",
+  "verdict": "Pass",
+  "platform": "42%",
+  "viewer": "Non-Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a2afa9b8b7ef7abf4a55c0b/index.html",
+  "agree": "Yes — both agree it holds up."
+ },
+ {
+  "task": "6a1fbaebeae04350ba1af21b",
+  "scenario": "QA a batch of woodworking shop listings before they go live.",
+  "did": "Check each listing against its photo and recompute the price floors.",
+  "why": "The photo checks and all three price floors are correct. One snag: C13 rewards asking the customer for their wood preference, while C21 penalizes asking for info that's already provided — and the wood ('Walnut and Maple') is already in the L13 draft row, so the two checks pull against each other.",
+  "fix": "Drop C13 (the wood preference is already given), or scope it so it doesn't collide with C21.",
+  "verdict": "Non-Fail",
+  "viewer": "Non-Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a2b9429f9b55424d400a5bc/index.html",
+  "platform": "",
+  "agree": "Yes — both agree it holds up."
+ }
+]
