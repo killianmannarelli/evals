@@ -46,7 +46,7 @@ Group structure of V3:
 | 3. Verifiers | 3 Safety | V3 narrowed Verifiers to just the Safety/Harmful-Inputs check |
 | 4. Silver Trajectory | 4a Category and Subcategory, 4b Cross-Modal & Cross-Service Synthesis | Subcategory misalignments are NOT flagged in 4a (only category-level mismatches) |
 | 5. Trajectory | 5 Architectural Depth & Friction Exposure | MEMORY.md usage required in multi-turn tasks (03/10 rule) |
-| 6. Rubric Criteria ⭐ | 6a Major, 6b Major/Moderate, 6c Major/Moderate/Minor, 6d Rubric Structure, 6e Rubric Spot Checks | Three Overall-Quality dims share denominator (= criteria the CB wrote); do not double-count criteria with multiple issues; **Missing-Criteria coverage gaps are advisory, excluded from the band — Rule 19(f)** |
+| 6. Rubric Criteria ⭐ | 6a Major, 6b Major/Moderate, 6c Major/Moderate/Minor, 6d Rubric Structure, 6e Rubric Spot Checks | Three Overall-Quality dims share denominator (= criteria the CB wrote); do not double-count criteria with multiple issues; **Missing-Criteria is BAND-COUNTING for (a) partially-covered spot-check sets (≤5 similar outcomes, only some checked → Major) and (b) explicit requirements / planted errors with ZERO coverage (no criterion AND no unit test → Major/Moderate); it stays advisory (Rule 19f) only for invented nice-to-haves or gaps a unit test already covers** |
 | 7. Ratings | 7 Validity | Counted across all trajectories |
 | 8. Tests ⭐ | 8a Correctness, 8b Underfitted, 8c Coverage, 8d Redundancy | V3 (05/04): tests covered by rubric → `Non-Fail - Incorrectly Covered by Rubric`, not Coverage Fail |
 | 9. Failed Rubric/Unit Test | 9 Justification | Three justification questions per failed rubric/test |

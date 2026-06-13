@@ -57,6 +57,14 @@ python3 scripts/fact_extractor_v3.py --task-dir "$WS/tasks/" --out-dir "$WS/sot/
 hasn't caught up; mark `audit_incomplete` and re-try later with `scripts/refetch_inputs.py` (it polls the view).
 NEVER substitute `task_metadata` for the missing inline RESPONSE (Rule 10).
 
+**2b. Surface the trajectory (every run).** Dump the agent's tool-RESULTS so auditors ground "connected-service"
+golds in the real environment responses instead of dismissing them as unverifiable:
+```
+python3 scripts/dump_trajectory.py --task "$WS/tasks/<tid>.json" --out "$WS/sot/<tid>/trajectory.md"
+```
+This fixes the most common miss — a Pass built on golds the trajectory actually disproves. Tool-RESULTS are
+admissible grounding; `desired_outcome` / Pass@K are not (dump_trajectory excludes them).
+
 **3. AUDIT YOURSELF (grounded).** Spawn one auditor per task (batch ~3/agent), prompt = `agents/grounded_auditor.md`
 (fill `<WORKSPACE>` and `<TID>`). Each reads `sot/<tid>/` and **views the input images** to verify golds → writes
 `$WS/validated/<tid>.json`.

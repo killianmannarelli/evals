@@ -12,6 +12,10 @@ For EACH task the source-of-truth bundle is <WORKSPACE>/sot/<TID>/:
 - agent_prompt.md  — the live agent prompt (what the user actually asked).
 - active_rubric.md — the contributor's criteria (each has a weight + annotations). THIS is what you audit.
 - inputs/          — the REAL input files. VIEW every image with Read (this is the point: verify golds vs pixels).
+- trajectory.md    — the agent's tool calls + the ENVIRONMENT's tool-RESULTS (skill/API/DB responses). READ THIS:
+                     it is ground truth for any value the prompt calls "actual records / connected service". A gold
+                     that contradicts a tool-RESULT here is penalize-correct Major — NOT "unverifiable". Only treat a
+                     value as UNVERIFIABLE (Rule 19c) if it is absent from BOTH inputs AND trajectory.md.
 - spec_catalog.md  — the V6/V7 spec. facts.json — authoritative facts. routes.json — vision_queue (images that matter).
 
 METHOD — ground every finding ONLY in: agent prompt + viewed images + criterion text + spec.

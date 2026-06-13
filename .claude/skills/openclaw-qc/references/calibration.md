@@ -19,8 +19,20 @@ that has two issues — take its max severity).
   unrelated assertions).
 - **Sign-inversion / invalid weight** — a weight outside {−5,−3,−1,+1,+3,+5}; or a negative weight on a *good*
   behavior (a correct response eats the penalty). Major.
-- **§9h** — internal contradiction, exact duplicate, or a complement-pair that double-scores one concern.
+- **§9h** — internal contradiction, exact duplicate, or a complement-pair that double-scores one concern. **Also
+  flag internal IRRECONCILABILITY**: when one criterion *requires* a value that another criterion *penalizes*
+  (e.g. C22/C23 demand a recalculated total of 2894.50 while C14–C19 each −3 the very per-purchase numbers that sum
+  to it) — no response can satisfy both sets, so the rubric is self-defeating. Major. Detectable with NO external data.
 - **§9d** — wrong filename, but only if internally inconsistent or contradicted by inputs.
+- **Missing criteria — IS bandable (not merely advisory):** (a) **Missing spot-checks** — a set of ≤5 similar
+  outcomes (e.g. 4 caption stages, 4 corrected fields) where the rubric checks only *some*; it should check all up
+  to 5 → **Major** Missing-Criteria. (b) **An explicit prompt requirement or planted error with ZERO coverage** —
+  no criterion AND no unit test verifies it (e.g. a required reshoot-list deliverable; a planted date error the
+  prompt asks to correct) → **Major** if the requirement is core, else **Moderate**. Count these as defective
+  criteria against the denominator. (Do NOT count purely "nice-to-have" coverage you invent — only requirements the
+  prompt or a same-set spot-check actually establishes.)
+- **Miscategorized criterion** — a sound check tagged with the wrong category (e.g. a process/Task-Completion step
+  tagged Factuality) → **Minor**.
 
 ## Ruling #1 — spot-check ≠ atomicity (the most common over-flag)
 A per-item / named-instance criterion that lists **one item's own fields**, or lists instances of the **same
@@ -28,12 +40,19 @@ concern** (e.g. "the 4 carousel images for this post", "captions missing for the
 is the **endorsed spot-check → EXEMPT**. Only flag §9a when one criterion fuses genuinely DISTINCT concerns.
 Reject drawer §9a flags of the exempt kind.
 
-## Rule 19c — unverifiable never anchors a Fail
-If confirming a gold needs an input you don't have (a connected-service value, an unrehydrated file), it is
-**UNVERIFIABLE** — record it, but it cannot drive the verdict.
+## Rule 19c — unverifiable never anchors a Fail (but CHECK THE TRAJECTORY FIRST)
+A gold is **UNVERIFIABLE** only if the value is absent from inputs **AND** from the agent's trajectory. Before
+calling anything "connected-service unverifiable", **read `sot/<tid>/trajectory.md`** — the agent's tool calls and
+the **environment's tool-RESULTS** (skill/API/DB responses) are surfaced there, and they are GROUND TRUTH for the
+"actual records" a prompt names (the orders a Ticketmaster skill returned, a balance an API read, etc.). If the
+trajectory resolves the value, the gold is **verifiable**: a criterion that contradicts it is **penalize-correct
+Major**, not unverifiable. Only when the value appears nowhere (inputs nor trajectory) is it truly UNVERIFIABLE and
+barred from the verdict. (This is the single most common miss — a Pass built on golds the trajectory actually disproves.)
+Use the tool-RESULTS (environment responses), not the agent's own claims, as the source of truth.
 
 ## Grounding (Rule 19a/g)
-Ground only in: agent prompt + viewed inputs + active criteria + spec. **Never** `story.desired_outcome` or Pass@K.
+Ground in: agent prompt + viewed inputs + active criteria + spec + **the trajectory tool-RESULTS** (`trajectory.md`).
+**Never** `story.desired_outcome` or Pass@K (these remain excluded even though they sit near the trajectory in the blob).
 Prompt-version drift (rubric grades content the live prompt doesn't ask for) = Incorrect Criteria, Major if material.
 
 ## Out of scope
