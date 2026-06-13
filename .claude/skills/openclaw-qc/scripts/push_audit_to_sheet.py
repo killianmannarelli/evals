@@ -20,10 +20,11 @@ SA = ".creds/sa.json"
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
 # Exact Sheet1 header (row 2).
 HEADER = ["Task ID", "Scenario", "What the agent had to do", "Verdict",
+          "Confidence /100 (ship as-is)",
           "Why this verdict (plain English)", "What to fix",
           "Platform score (model's auto-grade)", "Viewer 2nd opinion",
           "Do they agree?", "Open the task"]
-FIELDS = ["task", "scenario", "did", "verdict", "why", "fix", "platform", "viewer", "agree", "link"]
+FIELDS = ["task", "scenario", "did", "verdict", "confidence", "why", "fix", "platform", "viewer", "agree", "link"]
 
 
 def rank(v):
@@ -58,10 +59,12 @@ def main():
     # Row 1 blank, header on row 2, data from row 3 — mirrors Sheet1.
     ws.update(range_name="A2", values=[HEADER] + table)
     ws.freeze(rows=2)
-    ws.format(f"A1:J{len(table)+2}", {"wrapStrategy": "WRAP"})   # Sheet1 wraps every cell
-    ws.format("A2:J2", {"textFormat": {"bold": True},
+    ws.format(f"A1:K{len(table)+2}", {"wrapStrategy": "WRAP"})   # Sheet1 wraps every cell
+    ws.format("A2:K2", {"textFormat": {"bold": True},
                         "backgroundColor": {"red": 0.847, "green": 0.867, "blue": 0.898}})  # header band #d8dde5
     ws.format("D3:D200", {"textFormat": {"bold": True}})
+    # Confidence column (E): bold + centered for at-a-glance scanning.
+    ws.format("E3:E200", {"textFormat": {"bold": True}, "horizontalAlignment": "CENTER"})
     # verdict-cell colors (Sheet1): FAIL #f4cccc, Non-Fail #fcedc6, Pass #d9ead3.
     # rows are sorted FAIL -> Non-Fail -> Pass, so colour contiguous D blocks.
     VBG = {"FAIL": {"red": 0.957, "green": 0.800, "blue": 0.800},
