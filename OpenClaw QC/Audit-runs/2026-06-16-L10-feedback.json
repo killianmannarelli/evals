@@ -1,0 +1,93 @@
+[
+ {
+  "task": "6a1fbaebeae04350ba1af208",
+  "scenario": "Fact-check a volunteer's finding aid against nine archive scans.",
+  "did": "Compare the draft to the scans and correct the reactor-log readings.",
+  "why": "The checks line up with the scans and the user's own corrections; two small gaps — nothing flags that the 'Los Alamos' title can't be confirmed from the scans, and there's no check for the Img_4 page number.",
+  "fix": "Add a check that flags the unconfirmable title and one for the Img_4 page number.",
+  "verdict": "Non-Fail",
+  "confidence": 63,
+  "platform": "36%",
+  "viewer": "Non-Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a30441ea518a853176b7f80/index.html",
+  "agree": "Yes — both agree it holds up."
+ },
+ {
+  "task": "6a20b7ac31ff797fdf7c3024",
+  "scenario": "Clean up a Capital One card's March charges against receipts.",
+  "did": "Reconcile the charges against the records and flag what to dispute.",
+  "why": "Four checks (C3/C4/C5/C6) grade data that isn't in the inputs — there's no Capital One 4891 transaction source, the $445 is the amount due (not a credit to exclude), and $104.47 appears only in the sloppy spreadsheet (the receipt shows $94.47). C2 also asks for 'exactly these nine charges' without listing them.",
+  "fix": "Ground C3–C6 in data that actually exists (or drop them), and enumerate the nine charges in C2.",
+  "verdict": "FAIL",
+  "confidence": 5,
+  "platform": "39%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a305437472a9d2079f6f8e8/index.html",
+  "agree": "Yes — both flag it as failing."
+ },
+ {
+  "task": "6a2252a7226df6fc69476d65",
+  "scenario": "Check a kitchen renovation budget against quotes and photos.",
+  "did": "Total the surcharges, compare to the contract, and pick a contractor.",
+  "why": "The rubric is sound and the surcharges and math all check out; two small gaps — nothing checks the MEMORY.md summary the task asks for, and nothing checks the 'don't greenlight the contractor when the budget is short' rule.",
+  "fix": "Add checks for the MEMORY.md summary and the don't-greenlight-when-short condition.",
+  "verdict": "Non-Fail",
+  "confidence": 56,
+  "platform": "8%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a2fdd745779b170feaf274e/index.html",
+  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+ },
+ {
+  "task": "6a271a812033c9fde3b43f7b",
+  "scenario": "Prepare a skin-condition briefing from photos and health records.",
+  "did": "Assign each photo, pull the vitals, and write the triage briefing.",
+  "why": "C5 assigns the arm and back photos the opposite way from how the user regrouped them, and C13 expects a resting-heart-rate reading the records show doesn't exist — both mark a correct answer wrong. Nothing checks the email-the-office and follow-up-reminder actions either.",
+  "fix": "Swap C5's photo assignments to match the user's regrouping, remove C13's nonexistent reading, and add a check for the email/reminder steps.",
+  "verdict": "Non-Fail",
+  "confidence": 52,
+  "platform": "45%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a3051b3c377d6c87c4e24bd/index.html",
+  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+ },
+ {
+  "task": "6a2a516109edd4a3aa3056dc",
+  "scenario": "Audit a received bike-parts shipment against the order and customs records.",
+  "did": "Reconcile HS codes, duties, and line items and flag the discrepancies.",
+  "why": "No issues found — every HS code, duty figure, and line-item status checks out against the records and the viewed photos.",
+  "fix": "None — looks good.",
+  "verdict": "Pass",
+  "confidence": 100,
+  "platform": "25%",
+  "viewer": "Non-Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a305d9bae0e8ba9da84a3df/index.html",
+  "agree": "Yes — both agree it holds up."
+ },
+ {
+  "task": "6a2a516109edd4a3aa3056de",
+  "scenario": "Summarize a vegetation survey from a hand-drawn data chart.",
+  "did": "Transcribe the observer's chart values and apply the protocol.",
+  "why": "The numbers all match the observer's stated chart values; one check (C19) is set to reward the protocol violation (keeping the table value instead of overriding it) rather than penalize it.",
+  "fix": "Flip C19's weight so it penalizes the violation instead of rewarding it.",
+  "verdict": "Non-Fail",
+  "confidence": 76,
+  "platform": "16%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a2ff71409fc2333f7576d78/index.html",
+  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+ },
+ {
+  "task": "6a2a516109edd4a3aa3056e3",
+  "scenario": "(run not captured yet)",
+  "did": "—",
+  "verdict": "Pending",
+  "confidence": "",
+  "why": "A new version of this task is in flight and its run hasn't been captured yet, so the checks can't be reviewed this round.",
+  "fix": "Queued for a re-check once the run lands.",
+  "agree": "Pending — nothing to compare yet.",
+  "platform": "6%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a303438c13ec85419996f8a/index.html"
+ }
+]
