@@ -1,6 +1,9 @@
 # Calibration rulings (apply in every audit)
 
 The condensed rules. Full detail in `project_overrides.md` + `auditor.md` + `master_auditor.md`.
+**Authoritative spec = V9 ("Add missing notes").** Full dimension map + thresholds + our scope of each dimension:
+`references/spec_v9.md` (raw form: `references/spec_v9_rubric.csv`). The per-run `sot/<tid>/spec_catalog.md` is the
+same V9 spec pulled fresh from Redash 304995. The bands below ARE V9 dims 11/12/13 verbatim.
 
 ## Verdict bands (the only thing that sets Pass/Non-Fail/Fail)
 Denominator = CB-authored criteria. Count **distinct defective criteria** (never double-count one criterion
@@ -55,10 +58,28 @@ Ground in: agent prompt + viewed inputs + active criteria + spec + **the traject
 **Never** `story.desired_outcome` or Pass@K (these remain excluded even though they sit near the trajectory in the blob).
 Prompt-version drift (rubric grades content the live prompt doesn't ask for) = Incorrect Criteria, Major if material.
 
-## Out of scope
-Tests dims **8a-d** (no contributor verifier on the current pipeline). Process-targeting (`evaluation_target=
-trajectory`) is advisory, never banded. Ratings-validity (dim 16) and Justification (dim 21) are separate
-dimensions — not part of the 6a/6b/6c rubric-criteria band.
+## V9 dimensions outside the rubric-criteria band — current scope
+**In-band (set our verdict):** V9 dims 11/12/13 (the 6a/6b/6c bands), 14 (invalid weights → Major), 15 (>5
+spot-checks = Non-Fail; an under-filled ≤5 set → Major Missing-Criteria).
+**In-scope verified non-criteria Fail drivers** — a VERIFIED finding here = **Fail** even if the bands are clean
+(record `verdict=Fail`, name the driver, bands may stay 0/0/0; confidence floors to ~30). Apply each only when
+clearly verified against the prompt + viewed inputs + trajectory:
+- **MM-dependence (1)** — the prompt's explicit requests can be fully met **without** referencing any non-text input.
+- **Realism (4)** — >20% of the MM inputs (**or** any 1+ xlsx/docx/pdf) are highly unrealistic/over-curated with no
+  reasonable explanation.
+- **Leak Prevention (6)** — the solution is explicitly stated in a non-media field (filename / contributor note).
+- **Artifact Verification (5)** — **no** rubric criterion (nor test) depends on the **content** of a non-text input;
+  existence-only / filename-only checks do not count. (A whole rubric that never verifies any media content.)
+- **Safety (7)** — an input artifact contains **real PII identifying a real, existing person** (not synthetic/mocked).
+- **Feasibility (3)** — the **PRIMARY** request is impractical/impossible with the available tools. (Secondary-only
+  infeasibility = Non-Fail, not our Fail line.)
+- **Output filename (2)** — the prompt requests a file as output but never specifies its filename.
+
+**Out of scope (advisory / conditional / capped at Non-Fail — never our Fail line):** **Tests** (V9 dims 16–19;
+"only if unit tests present" — no contributor verifier on this pipeline + benchmark decision). **Justification**
+(dim 20, Non-Fail max). **Silver-Trajectory Category** (dim 8, Non-Fail max, optional). **Cross-Modal Synthesis**
+(dim 9) & **Architectural Depth** (dim 10) — trajectory/task quality, advisory. Process-targeting
+(`evaluation_target=trajectory`) is advisory, never banded. (V9 has **no** Ratings-Validity dimension — dropped.)
 
 ## The drawer (platform 2nd opinion)
 High-recall, lower-precision cross-check — **not an oracle**. Reconcile by **verified union**: adopt every drawer

@@ -25,14 +25,16 @@ VERIFIED UNION:
    unverifiable (Rule 19c — never anchors a Fail).
 3. Final = union(my verified, drawer adopted); MAX severity per criterion; count DISTINCT defective criteria.
 4. Band: denom=#criteria; 6a Major>10%, 6b Maj+Mod>15%, 6c any>20%; below all w/ >=1 = Non-Fail; 0 = Pass.
-   (A task may also Fail on an in-scope NON-criteria dimension — Input-Artifacts Realism, MM-dependence, Leak — if you
-    VERIFY it; record verdict=Fail with the driver named, bands may stay 0/0/0.)
+   (A task may also Fail on an in-scope NON-criteria V9 dimension — if you VERIFY it; record verdict=Fail with the
+    driver named in fail_drivers, bands may stay 0/0/0. The seven: MM-dependence (1), Output-filename (2),
+    Feasibility-primary (3), Realism (4), Artifact-Verification (5 — no criterion checks any non-text CONTENT),
+    Leak (6), Safety/real-PII (7). Carry over any fail_drivers from validated/<TID>.json and verify them too.)
 
 WRITE <WORKSPACE>/reconciled/<TID>.json:
 {task_id, denominator, prior_verdict, verdict, changed,
  bands:{6a:{count,pct},6b:{count,pct},6c:{count,pct}},
  confirmed_findings:[{criterion, severity, rule, source(mine|drawer), evidence, note}],
- drawer_adopted:[ids], drawer_rejected:[{id_or_rule, why}], summary}
+ fail_drivers:[{dimension, evidence}], drawer_adopted:[ids], drawer_rejected:[{id_or_rule, why}], summary}
 Return ONE line per task: "<last4>: verdict=X (prior P) | +drawer N | Major a/n, Maj+Mod b/n".
 ```
 

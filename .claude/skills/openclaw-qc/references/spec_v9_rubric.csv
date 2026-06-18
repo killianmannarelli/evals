@@ -1,0 +1,192 @@
+"id","title","questionText","questionDescription","required","useAllSteps","stepIds","useAllErrorCategories","errorCategories","rubricFailureType","answerOptionText","answerOptionScore","answerOptionRequiresJustification"
+"a53f02b5-aef3-4333-82ba-d043d5f9fdb3","Prompt - MM dependence","Rate the MM dependence of the Prompt dimension.","NOTE: This error encompasses cases where a non-text input file can be referenced, but is not necessary to reference. E.g., the prompt requests a summary of an audio file, but a transcript of the audio file is also present in the environment. Since the purpose of this project is to assess the MM reasoning of trajectories, environments/prompts that enable the agent to complete the task without such reasoning are similar to ""Leaking the Solution"" errors on other projects. See the spec doc for examples. For all options except the last, apply the error category.","true","true","","false","[All] [All] [Fail - MM Dependence]","","The prompt does not require the agent to reference non-text input files in the environment; the explicit requests of the prompt can be completely fulfilled without any multimodal reasoning or processing.","2","true"
+"","","","","","","","","","","The prompt, in the context of the environment, cannot be answered without referencing non-text files in the workspace.","5","false"
+"8ef19177-41a8-4a29-938f-3060ceb01d5b","Prompt - Output file(s) name","Rate the Output file(s) name of the Prompt dimension.","The user must specify in the prompt the name that the model should assign to the output file, if the output is expected to be a file. See the spec doc for examples. For all options except the last, apply the error category.","true","true","","false","[All] [All] [Fail - Missing output filename]","","The prompt requested a file as output, but the filename was not specified.","2","true"
+"","","","","","","","","","","The prompt requested a file as output and successfully specified the filename.","5","false"
+"b11865d7-8d86-49bf-9883-d7df68aff8f7","Prompt - Feasibility With Tools
+","Rate the Feasibility With Tools
+ of the Prompt dimension.","The model has access to all tools available in openclaw and is able to create virtual environments and install any python library. So anything that can be solved using a python library running in a linux environment is fair game. See the spec doc for examples. For all options except the last, apply an error category.","true","true","","false","[All] [All] [Non-Fail - Feasibility with Tools]; [All] [All] [Fail - Feasibility with Tools]","","The primary request is impractical or impossible and can't be answered by the tools available or enabled for the task","2","true"
+"","","","","","","","","","","One or more secondary requests are impractical or impossible and can't be answered by the tools available or enabled for the task","3","true"
+"","","","","","","","","","","The requests are completely actionable by the tool framework","5","false"
+"2e9232e5-1c19-4fe3-9006-e38717632dd0","Input Artifacts - Realism","Rate the Realism of the Input Artifacts dimension.","Tasks should match real-world use-cases and not look contrived or made up. Real user data is messy — IMG_0427.HEIC, duplicates, missing timestamps, blurry phone shots, scanned-skewed PDFs, mixed orientations. Tasks where input_files/ is a curated set of perfectly-cropped JPGs are contrived. See the spec doc for examples. For all options except the last, apply an error category.","true","true","","false","[All] [All] [Fail - Contrived Inputs]; [All] [All] [Non-Fail - Partially Contrived Inputs]","",">20% of the multimodal inputs for the task (or 1+ xlsx, docx, or pdf inputs) are highly unrealistic in the context of the prompt; They are highly artificial, overly curated, or otherwise ""too perfect"" to reflect a real-world use-case, and there is no reasonable explanation for this (e.g., curated & standardized MNIST handwriting samples are included alongside a prompt asking the agent to digitize notes)","2","true"
+"","","","","","","","","","","The multimodal inputs for the task are slightly unrealistic in the context of the prompt, but it is possible that a real user may include inputs of similar quality or standardization. A reasonable explanation exists for why the inputs may seem unnatural, but actually are not (e.g., the user mentions they're analyzing a public dataset, and this premade dataset is among the inputs), OR <=20% of the multimodal inputs for the task are highly realistic in the context of the prompt.","3","true"
+"","","","","","","","","","","The multimodal inputs for the task are plausible and realistic in the context of the prompt; A real user could reasonably have attached these same inputs.","5","false"
+"de1c93dd-491b-4303-882e-b027c2b07cfc","Input Artifacts - Artifact Verification","Rate the Artifact Verification of the Input Artifacts dimension.","The rubric or tests should verify a value, match, mismatch, visual detail, quality judgment, extraction result, or decision that depends on the media. It is not sufficient to only check for existence. See the spec doc for examples. For all options except the last, apply the error category.","true","true","","false","[All] [All] [Fail - Missing Artifact Verification]","","Across both forms of verifier (tests and rubric criteria), no test/criterion dependent on the content of a non-text file exists.
+
+Note: Tests/Criteria which only verify existence (e.g., a test asserting that some given file exists in a particular location) do not count as a test/criterion that is ""dependent on content.""","2","true"
+"","","","","","","","","","","At least one test/criterion exists which is dependent on the contents (rather than just the existence) of a non-text input file.","5","false"
+"fdb182b8-efed-44f0-87b7-509ed73a9d44","Input Artifacts - Leak Prevention
+","Rate the Leak Prevention
+ of the Input Artifacts dimension.","Evaluates the degree to which the task remains a true ""inference"" challenge by ensuring no ""spoiler"" information is present in the administrative or metadata layers. It checks that filenames, asset manifests, contributor notes, and helper documents are completely sanitized of the solutions, values, or conclusions the model is expected to derive solely from the multimodal media. See the spec doc for examples. For all options except the last, apply an error category.","true","true","","false","[All] [All] [Non-Fail - Suggestive Metadata]; [All] [All] [Fail - Direct Answer Leak]","","The solution is explicitly stated in a non-media field. For example, a file is named overdue_balance_500.pdf when the task is to find the balance, or the contributor notes state ""The agent should see the crack in the foundation"" in a field the model can access.","2","true"
+"","","","","","","","","","","The answer isn't explicitly stated, but the labeling provides heavy ""leading"" hints that narrow the search space unnaturally. For example, naming an image kitchen_sink_damage_closeup.jpg when the user’s prompt was a vague ""Find all issues in this house.""","3","true"
+"","","","","","","","","","","All non-media identifiers are strictly neutral or randomized. Filenames follow a ""messy"" real-world convention (e.g., IMG_0427.HEIC, Doc_Scan_v2.pdf) and notes are restricted to process instructions, forcing the agent to rely entirely on its multimodal perception to find the answer.","5","false"
+"8d0f233d-a6a3-4ff1-a51b-e296266b4de7","Verifiers - Safety","Rate the Safety of the Verifiers dimension.","Medical images, homework screenshots, tax/financial documents, insurance claims, seller messaging, faces, children, IDs, and private images need explicit limits and should use mocked or synthetic data where appropriate. See the spec doc for examples. For all options except the last, apply the error category.","true","true","","false","[All] [All] [Fail - Harmful Inputs]","","One or more input artifacts are harmful and include sensitive private information that can identify a real, existing person. The inputs(s) are of a sensitive nature (see notes for examples) and are not synthetic, fabricated, or mocked.","2","true"
+"","","","","","","","","","","No provided input files contain real PII.","5","false"
+"c5b2fce9-402c-42c4-937a-d95f820e8c94","Silver Trajectory - Category and Subcategory
+","Only evaluate if the silver trajectory is present -- otherwise skip this selection. Rate the Category and Subcategory of the Silver Trajectory dimension.","Categories:
+
+Visual Learning
+Users leverage academic media like worksheets or slides for content mastery. The agent interprets text and diagrams to generate study artifacts such as notes, lab reports, and guides.
+
+Subcategories: Homework/Problem Solving, Lab/Fieldwork Documentation, Textbook/Lecture Comprehension
+
+Commerce & Product
+Shoppers and sellers use marketplace imagery to manage listings. The agent matches items across platforms, audits photo quality, and ensures brand or packaging compliance.
+
+Subcategories: Visual Shopping/Comparison, Product Listing QA, Brand/Packaging Audit
+
+Creative & Media
+Creators refine existing visual content through editing and auditing. The agent applies operations like cropping, zooming, or feedback to user-shot footage and designs without generating new assets.
+
+Subcategories: Image/Video Editing, Social Media Content Audit, Design/Portfolio Review
+
+Operations & QA
+Acting as a back-office operator, the agent processes visual evidence such as receipts or screenshots. It updates systems of record, manages inventory, and validates claims against visual data.
+
+Subcategories: Document/Receipt Processing, Inventory Visual Audit, UI/UX Screenshot Audit/Form-filling
+
+Health & Wellness
+Users track physical health or nutrition through photos of meals and symptoms. The agent analyzes visual changes over time and compares them against nutritional or medical references.
+
+Subcategories: Skin/Symptom Triage, Nutrition/Meal Logging
+
+Property & Space
+Homeowners and agents assess physical environments using room or renovation photos. The agent detects progress changes, matches listings to reality, and reviews interior staging.
+
+Subcategories: Real Estate Listing Review, Interior Design/Renovation. See the spec doc for examples. For all options except the last, apply the error category.","false","true","","false","[All] [All] [Non-Fail - Category Relevance]","","The Trajectory is objectively unrelated to the selected category, or contradicts the definition of, the assigned category.
+The Trajectory is somewhat related to the selected category, but better fits a different category.
+
+Note: subcategories are not defined and misalignments should not be flagged.","3","true"
+"","","","","","","","","","","The Trajectory is clearly related to the selected category.","5","false"
+"e0d7d4ab-9431-4c83-90ba-10721398abc3","Silver Trajectory - Cross-Modal & Cross-Service Synthesis
+","Only evaluate if the silver trajectory is present -- otherwise skip this selection. Rate the Cross-Modal & Cross-Service Synthesis of the Silver Trajectory dimension.","Evaluates the agent's ability to execute complex reasoning chains where information is not just gathered, but transformed or verified across different modalities (e.g., Image → Text) or services (e.g., PDF → Calendar). It measures whether the agent can successfully use an output from one source as a mandatory predicate for the next step, or if it can identify discrepancies when cross-referencing multiple ""messy"" real-world artifacts. See the spec doc for examples. For all options except the last, apply the error category.","false","true","","false","[All] [All] [Fail - Disconnected Processing]; [All] [All] [Fail - Simple Processing]; [All] [All] [Non-Fail - Trivial Integration]","","[Fail - Disconnected Processing]
+The agent treats inputs as isolated silos. It fails to extract a necessary value from one modality to use in another (e.g., ignores a date in a blurry HEIC photo when searching a database) or provides a response based on only one source while ignoring conflicting evidence in a second source.
+
+","2","true"
+"","","","","","","","","","","[Fail - Simple Processing]
+The trajectory has no opportunity to extract a necessary value from one modality to use in another. (This means the prompt and modality is too easy and not a good task)","2","true"
+"","","","","","","","","","","[Non-Fail - Trivial Integration]
+The agent acknowledges both sources but combines them superficially. It may summarize a PDF and describe an image in the same response, but it fails to establish a logical link between them, requiring explicit manual prompting to ""connect the dots"" that should have been handled autonomously.","3","true"
+"","","","","","","","","","","The agent demonstrates a ""seamless handoff"" between modalities. It extracts a specific, non-obvious value from a primary source and uses it as the required search parameter or logic filter for a secondary source, successfully flagging any inconsistencies or dependencies between the two.","5","false"
+"fa6706f4-cf35-44a0-b3ca-804712b65b4e","Trajectory - Architectural Depth & Friction Exposure","Rate the Architectural Depth & Friction Exposure of the Trajectory dimension.","This evaluates whether the task itself meaningfully tests agent-building capability and exposes differences across models. The task must require multi-stage coordination, real tool use, cross-step dependencies, and at least one realistic friction point.
+
+// A task requires multi-system coordination when the agent must retrieve, reconcile, or act upon information across two or more distinct systems (apps, data sources, tools, or environments), where outputs from one system meaningfully influence decisions or actions in another system and/or outputs from both systems inform the final result.
+
+// MEMORY.md usage: (UPDATED 03/10)
+The prompts in multi-turn tasks have to require the model—explicitly or implicitly—to write details to the MEMORY.md file. (This file is used as “long-term” context for future conversations.) This can be done by:
+- Asking the model to write it to memory directly
+“Write this down to your memory”,
+“Remember this”
+- Implicitly needing the model to remember the information somehow to use it later:
+“track my progress”,
+“make sure you don’t post duplicates”,
+“One important thing to know about me is that I have a bad knee”,
+“I always prefer taking the subway over a cab”.","true","true","","false","[All] [All] [Fail - Major Depth Issues]; [All] [All] [Non-Fail - Minor Depth Issues]","","[Fail - Major Depth Issues]
+No meaningful tool dependency.","2","true"
+"","","","","","","","","","","[Non-Fail - Minor Depth Issues]
+- Architectural evolution is possible but not clearly required.
+- Tool use is present but not deeply integrated into reasoning.
+- Task meets minimum requirements but lacks strong differentiation power.","3","true"
+"","","","","","","","","","","The task clearly forces architectural reasoning.
+Requires modular separation or structured multi-stage planning.
+Includes real friction (e.g., conflicting data, missing fields, paywalls, normalization issues, constraint negotiation).
+Requires state reuse or refactoring.
+Meaningfully differentiates model capability","5","false"
+"70b1d8c5-f3ff-4529-85cd-25e24a062333","Rubric Criteria - Overall Rubric Quality - Major","Rate the Overall Rubric Quality - Major of the Rubric Criteria dimension.","Use the number of criteria that the CB wrote as the denominator while calculating % values. See the additional notes section for the numerator. Do NOT double count criteria while tallying even if it has multiple issues.
+
+See Rubric Quality Definitions in the spec appendix for descriptions and categorization (major/moderate/minor) for rubric criteria errors. See the spec doc for examples. For all options except the last, apply an error category.","true","true","","false","[All] [All] [Non-Fail - Up to 10% Major Errors]; [All] [All] [Fail - 10%+ Major Rubric Errors]","","More than 10% (>10%) of the criteria contain major issues","2","true"
+"","","","","","","","","","","Up to 10% (<=10%) of the criteria contain major issues","3","true"
+"","","","","","","","","","","No Major Issues","5","false"
+"fa9dae99-b292-4f14-91ad-9c4a3b7cd28f","Rubric Criteria - Overall Rubric Quality - Major/Moderate","Rate the Overall Rubric Quality - Major/Moderate of the Rubric Criteria dimension.","Use the number of criteria that the CB wrote as the denominator while calculating % values. See the additional notes section for the numerator. Do NOT double count criteria while tallying even if it has multiple issues.
+
+See Rubric Quality Definitions in the spec appendix for descriptions and categorization (major/moderate/minor) for rubric criteria errors. See the spec doc for examples. For all options except the last, apply an error category.","true","true","","false","[All] [All] [Non-Fail - Up to 15% Moderate Errors]; [All] [All] [Fail - 15%+ Moderate Rubric Errors]","","More than 15% (>15%) of the criteria contain moderate or major issues","2","true"
+"","","","","","","","","","","Up to 15% (<=15%) of criteria contain moderate or major issues (with major issues contributing lower than 5%)","3","true"
+"","","","","","","","","","","No major or moderate issues","5","false"
+"2182d2b3-2fc7-4119-9f60-d274838a0e00","Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor","Rate the Overall Rubric Quality - Major/Moderate/Minor of the Rubric Criteria dimension.","Use the number of criteria that the CB wrote as the denominator while calculating % values. See the additional notes section for the numerator. Do NOT double count criteria while tallying even if it has multiple issues.
+
+See Rubric Quality Definitions in the spec appendix for descriptions and categorization (major/moderate/minor) for rubric criteria errors. See the spec doc for examples. For all options except the last, apply an error category.","true","true","","false","[All] [All] [Non-Fail - 5-20% Minor Errors]; [All] [All] [Fail - 20%+ Minor Rubric Errors]","","More than 20% (>20%) of the criteria contain minor or moderate or major issues","2","true"
+"","","","","","","","","","","Between 5 and 20% (>=5% and <=20%) of criteria contain minor or moderate or major issues (with major issues contributing lower than 5% and moderate issues contributing lower than 15%)","3","true"
+"","","","","","","","","","","Less than 5% (<5%) of the rubrics have minor issues
+No major or moderate issues","5","false"
+"46484078-9e73-40a3-a0dc-70d99d95de19","Rubric Criteria - Rubric Structure
+","Rate the Rubric Structure
+ of the Rubric Criteria dimension.","These errors reflect structural problems within the rubric and are failing if present. Weights should be added according to the difficulty of the thing the verifier is testing, not its importance to responding to the prompt. See the spec doc for examples.","true","true","","false","[All] [All] [Fail - Invalid Weights]","","One or more criteria use weights outside of the allowed set {-5, -3, -1, +1, +3, +5}.","2","true"
+"","","","","","","","","","","All rubric criteria have weights within the set {-5, -3, -1, +1, +3, +5}","5","false"
+"91c8ddba-1e04-45fa-b421-3265464bb1e4","Rubric Criteria - Rubric Spot Checks","Rate the Rubric Spot Checks of the Rubric Criteria dimension.","CBs are expected to provide up to 5 spot checks if there are sufficiently similar outcomes as well as add a criterion to check the volume of the outcomes.
+If there are more than 5 spot checks, use the [Non-Fail - Too Many Spot Checks] category. See the spec doc for examples. For all options except the last, apply the error category.","true","true","","false","[All] [All] [Non-Fail - Too Many Spot Checks]","","There are more than 5 spot checks for any group of outcomes.","3","true"
+"","","","","","","","","","","Every group of outcomes has up to 5 spot checks","5","false"
+"94f12d94-8e6b-4ef4-926f-a5dd950c3441","Tests - Correctness","Only evaluate if the unit tests are present -- otherwise skip this selection. Rate the Correctness of the Tests dimension.","Test logic should align with the conversational and environmental context.
+
+(04/09) Overly specific unit tests are also counted as incorrect unit tests. See the spec doc for examples. For all options except the last, apply an error category.","false","true","","false","[All] [All] [Fail - Incorrect Tests]; [All] [All] [Non-Fail - Incorrect Tests]","","At least 10% of the unit tests contain incorrect logic or are misaligned with the task’s context.","2","true"
+"","","","","","","","","","","At least one of the unit tests (but fewer than 10%) contains incorrect logic or is misaligned with the task’s context.","3","true"
+"","","","","","","","","","","All of the unit tests contain correct logic and are aligned with the task’s context.","5","false"
+"13d98426-2e1a-425b-9abd-d7263ebb70a0","Tests - Underfitted Tests","Only evaluate if the unit tests are present -- otherwise skip this selection.  Rate the Underfitted Tests of the Tests dimension.","Underfitted tests are tests that are too loose, overly broad or lenient. These tests accept all the valid solutions, but also accept some incorrect, invalid or arguably undesirable ones.
+
+// NOTE: Some tests may be wider to account for artifacts which cannot be easily validated, more general prompt requests, or requests which may be fulfilled in multiple ways. In these cases, also consider whether the rubric criteria corresponding to the test in question (e.g., ""...include a column for average temperature"" -- it would be inappropriate for the test suite to enforce a specific format, unit, or name for this column) when determining if the test is truly underfitted or not (if the criteria + test cover the valid solutions for the request in question, it is not underfitted).","false","true","","false","[All] [All] [Non-Fail - Underfitted Tests]; [All] [All] [Fail - Underfitted Tests]","","More than 30% of the unit tests are underfitted","2","true"
+"","","","","","","","","","","Up to 30% of the unit tests are underfitted","3","true"
+"","","","","","","","","","","There are no underfitted tests","5","false"
+"76c7a46f-a625-4e1e-829c-8690da685c70","Tests - Coverage","Only evaluate if the unit tests are present -- otherwise skip this selection. Rate the Coverage of the Tests dimension.","Tests revolve around generated artifacts and should verify:
+- Explicit prompt requests
+- Implicit prerequisites for explicit prompt requests
+E.g., Instructions say ""respond to all my unread emails"". The model must explore and discover the unread emails. There should be test cases to check whether emails were sent to all recipients. Some emails may also contain other requirements that should be tested as well.
+
+// NOTE: Do not penalize omissions for things that should not be covered by unit tests (see notes).
+
+// Examples:
+- Prompt asks for a file -> check that file exists
+- Prompt asks to write to memory -> check that not memory is not empty
+- Prompt asks to add/remove/edit entities -> check that they were modified
+- Prompt asks for a verifiable artifact (CSV, JSON, etc.) -> check any applicable constraints (see below for more info)
+
+// What should/shouldn’t be covered by unit tests
+- Keep in mind that the expected coverage of the unit test suite highly depends on the specific requests of the conversation. If a prompt asks for a CSV while providing a pre-defined (and exact) schema, then several factors should be validated: file existence, schema definition, and content correctness. However, if the prompt requests an artifact that isn’t easily validated—such as a PDF—then it’s sufficient for the unit tests to only include structural checks, e.g., file existence.
+
+// Examples:
+- “... create a PDF for my personal calendar”
+This file format isn’t easily verifiable/extractable, so the unit tests do not need to include content validation.
+
+- “... include a column for average temperature”
+Doesn’t specify the exact column name or units, so schema definition and content correctness should not be considered in the unit tests. (This should instead be covered by the rubric, which inherently has more “wiggle room” in response evaluation.)
+
+However, there should still be a unit test to validate file existence (and perhaps the total number of columns/rows, depending on the prompt).
+
+- “... include a column called “average temperature (F°)”
+Specifies an exact schema and the expected units, so both schema definition and content correctness should be validated by the unit tests.","false","true","","false","[All] [All] [Non-Fail - Test Coverage]; [All] [All] [Fail - Test Coverage]; [All] [All] [Non-Fail - Incorrectly Covered by Rubric]","","[Fail - Test Coverage]:
+Insufficient Overall Coverage: >20% of tests are missing (see notes on calculating this proportion)
+
+// NOTE 05/04: Tests which are covered by the rubric (even if they should be covered by a test) do not count towards this error – see [Non-Fail - Incorrectly Covered by Rubric] instead. Tests should only be counted as missing if they are not covered by a verifier at all.","2","true"
+"","","","","","","","","","","[Non-Fail - Test Coverage]:
+Suboptimal Overall Coverage: 20% or fewer tests are missing (see notes on calculating this proportion and what should/shouldn’t be covered by unit tests)","3","true"
+"","","","","","","","","","","[Non-Fail - Incorrectly Covered by Rubric]
+At least one unit test is missing but is instead covered by the rubric. (See notes for what should/shouldn’t be covered by unit tests.)","3","true"
+"","","","","","","","","","","The unit tests cover all of the task’s expected constraints.","5","false"
+"184e247b-a4d0-477b-9ff3-f82e879b44e3","Tests - Redundancy","Only evaluate if the unit tests are present -- otherwise skip this selection. Rate the Redundancy of the Tests dimension.","Evaluates the structural efficiency of the task’s grading logic. It identifies overlaps where a rubric is redundant because a Unit Test (Pytest) is already covering the same ground. High-quality tasks use Pytests for deterministic, binary checks (file existence, exact string matches, file formats) and reserve Rubrics for nuanced, qualitative analysis (reasoning quality, visual interpretation).
+
+Redundancy could be:
+Two unit tests check the same thing
+One unit test and one criterion check the same thing. See the spec doc for examples.","false","true","","false","[All] [All] [Fail - Highly redundant tests]; [All] [All] [Non-Fail - Some redundant tests]","","More than 1 pair of tests or rubric criteria check exactly the same behavior with no difference (e.g., three tests all asserting total_cost == 500).
+
+NOTE: Tests with identical structure but different inputs/expected values are not considered to have ""no difference"". (These types of “test consolidation” issues can be penalized with a non-failing category.)","2","true"
+"","","","","","","","","","","1 pair of tests or rubric criteria check exactly the same behavior with no difference (e.g., three tests all asserting total_cost == 500).
+
+Tests or rubric criteria have some overlap, but no direct 1:1 overlap","3","true"
+"","","","","","","","","","","Tests and criteria are consolidated and non-redundant. Efficient coverage of requirements.","5","false"
+"58614e82-2415-4da3-b7c6-3eb39a40dbb9","Failed Rubric/Unit Test - Justification","Rate the Justification of the Failed Rubric/Unit Test dimension.","For each rubric or unit test that the Claude model failed on, the CB must answer 3 justification questions:
+1. Why is your test/rubric correct?
+e.g., ""Prompt asks for file.json, rubric checks it's present""
+
+""Prompt asks for a calculation -- explain the calculator logic and how the answer was reached.""
+
+2. Why is it necessary for a correct answer from the model?
+e.g., ""Prompt asks for file.json, rubric makes sure it's present"";
+
+""Prompt asks for average spend, rubric makes sure it's present.""
+
+3. Where did the model make a mistake?
+e.g., ""Model missed transaction B and didn't include it in the calculations"";
+
+""In turn 23, the model did XYZ which was incorrect because XYZ."". See the spec doc for examples. For all options except the last, apply an error category.","true","true","","false","[All] [All] [Non-Fail - Weak Justification]; [All] [All] [Non-Fail - Incorrect Justification]","","1 or more justifications set defends an overly specific or unrequested rubric/test that model A (Claude Opus) failed
+
+Ex: a rubric penalizes the model for something the prompt never asked for, justification incorrectly argues that it’s a valid rubric","3","true"
+"","","","","","","","","","","All justification sets defend valid, prompt-requested rubrics (none are overly prescriptive or unrequested), but justification sets lack sufficient detail -- e.g., answers are too brief, don't fully explain the logic, or don't pinpoint the exact model error with specifics (turn number, missing data, etc.).","3","true"
+"","","","","","","","","","","All justification sets defend valid, prompt-requested rubrics and each set provides thorough, specific answers to all 3 questions","5","false"

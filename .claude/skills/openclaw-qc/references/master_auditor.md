@@ -10,7 +10,7 @@ You do **not** re-audit. New findings the auditors missed do not belong in your 
   - `sot/agent_prompt.md` — the REAL agent-facing prompt. The ONLY grounding source for "required by the prompt."
   - `sot/active_rubric.md` — the Rule-12 active rubric (the criteria under audit).
   - `sot/inputs/` — downloaded input artifacts (images you can VIEW; policy sheets / PDFs / text). The sole grounding source for factual / visual / policy golds.
-  - `sot/spec_catalog.md` — the fresh V6 spec failure-category catalog. The authority for what constitutes a failure and how it is named.
+  - `sot/spec_catalog.md` — the fresh V9 spec failure-category catalog (digest in `references/spec_v9.md`). The authority for what constitutes a failure and how it is named.
   - `sot/facts.json` — **FACTS** (authoritative, ~zero-FP: active step, trajectory, weight-set validity, leaks, phantom filenames, platform score).
   - `sot/routes.json` — **ROUTES** (work-orders: vision queue, safety/category candidates; no verdict).
   - `sot/hints.json` — **HINTS** (old recall-tuned heuristics; ignorable, never a verdict).

@@ -16,7 +16,8 @@ For EACH task the source-of-truth bundle is <WORKSPACE>/sot/<TID>/:
                      it is ground truth for any value the prompt calls "actual records / connected service". A gold
                      that contradicts a tool-RESULT here is penalize-correct Major — NOT "unverifiable". Only treat a
                      value as UNVERIFIABLE (Rule 19c) if it is absent from BOTH inputs AND trajectory.md.
-- spec_catalog.md  — the V6/V7 spec. facts.json — authoritative facts. routes.json — vision_queue (images that matter).
+- spec_catalog.md  — the V9 spec (per-task, fresh from Redash; full dimension digest in references/spec_v9.md).
+                     facts.json — authoritative facts. routes.json — vision_queue (images that matter).
 
 METHOD — ground every finding ONLY in: agent prompt + viewed images + criterion text + spec.
 NEVER use story.desired_outcome or Pass@K.
@@ -28,17 +29,28 @@ NEVER use story.desired_outcome or Pass@K.
      item's own fields, or instances of the SAME concern, is the endorsed spot-check → EXEMPT (calibration ruling #1).
    - Invalid weight: value outside {-5,-3,-1,+1,+3,+5}. Sign-inversion (negative weight on a good behavior) = Major.
    - §9h: internal contradiction / complement-pair / exact duplicate. §9d: wrong filename (check vs inputs/).
-   - Tests dims 8a-d are OUT OF SCOPE — reject.
+   - Tests dims (V9 16-19) are OUT OF SCOPE — reject. Justification (20), Category (8), Cross-Modal Synthesis (9),
+     Architectural Depth (10), and process-targeting are advisory/Non-Fail-capped — never our Fail line.
 3. UNVERIFIABLE golds (need an input you don't have — e.g. a connected-service value) never anchor a Fail (Rule 19c).
+4. NON-CRITERIA FAIL DRIVERS (V9) — a VERIFIED one = **Fail** even if the bands are clean (set verdict=Fail, name the
+   driver in fail_drivers, bands may stay 0/0/0). Apply each only when clearly verified vs prompt + viewed inputs + trajectory:
+   - MM-dependence (1): the prompt's explicit requests are fully answerable without referencing any non-text input.
+   - Output filename (2): the prompt asks for a file output but never specifies its filename.
+   - Feasibility (3): the PRIMARY request is impractical/impossible with the available tools (secondary-only = Non-Fail).
+   - Realism (4): >20% of the MM inputs (or any 1+ xlsx/docx/pdf) are highly contrived/over-curated, no reasonable explanation.
+   - Artifact Verification (5): NO rubric criterion (nor test) depends on the CONTENT of a non-text input (existence/filename-only doesn't count).
+   - Leak Prevention (6): the solution is explicitly stated in a non-media field (filename / contributor note).
+   - Safety (7): an input artifact contains real PII identifying a real, existing person (not synthetic/mocked).
 
 BAND (count DISTINCT defective CB-authored criteria; never double-count one criterion): denom = #criteria.
 6a Fail if Major >10%; 6b Fail if Major+Moderate >15%; 6c Fail if any-severity >20%.
-Below all three with >=1 confirmed defect = Non-Fail; zero = Pass.
+Below all three with >=1 confirmed defect = Non-Fail; zero = Pass. (A verified non-criteria Fail driver from step 4
+also = Fail, regardless of the bands.)
 
 WRITE <WORKSPACE>/validated/<TID>.json:
 {task_id, denominator, verdict, bands:{6a:{count,pct},6b:{count,pct},6c:{count,pct}},
  confirmed_findings:[{criterion, severity(major|moderate|minor), rule, spec_dimension, evidence, note}],
- unverifiable:[{criterion, reason}], images_viewed:[...], summary}
+ fail_drivers:[{dimension, evidence}], unverifiable:[{criterion, reason}], images_viewed:[...], summary}
 Return ONE line per task: "<last4>: verdict=X | Major a/n, Maj+Mod b/n, any c/n | imgs=K".
 If a bundle has no agent_prompt.md / criteria (CDS-pointer), write verdict "audit_incomplete".
 ```
