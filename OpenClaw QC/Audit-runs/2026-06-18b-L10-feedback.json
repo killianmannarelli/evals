@@ -1,0 +1,80 @@
+[
+ {
+  "task": "6a076b30fb7ee59da499fd2a",
+  "scenario": "Triage a forearm rash from four dated photos and draft a message to the user's doctor.",
+  "did": "Read the photos in order, match the timeline to the user's activities, rank differentials, and call urgency.",
+  "why": "The photo-by-photo read and the activity-timeline matching are well-grounded, but the rubric pins down a lot of detail the task never asked for and anchors several checks in things that aren't in the conversation. The most serious: C2 keys off a follow-up 'mostly there' message that never appears in the conversation; C22 requires a specific home-care regimen (hydrocortisone, cetirizine, cool compresses, with exact start dates) the user never mentions; and C26 and C29 invent an exact 'word count: NNN (cap: 250)' line and a 250-word limit the prompt never sets (it only says 'keep it tight'). On top of that, a cluster of checks (C17-C25) dictate exact wording, formats, and labels for parts of the message the prompt left open, and C13 ranks poison oak as the top differential with no supporting evidence.",
+  "fix": "Remove C2's phantom follow-up, drop C22's invented regimen, delete the 250-word cap in C26/C29, loosen C17-C25 so they don't dictate exact wording the prompt didn't ask for, and re-evidence or re-rank C13's poison-oak call.",
+  "verdict": "FAIL",
+  "confidence": 5,
+  "platform": "0%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a3350ab11e9c0a7b4589663/index.html",
+  "agree": "Yes — both flag it as failing."
+ },
+ {
+  "task": "6a210a723e6e63649d93d617",
+  "scenario": "Review a small study-abroad website and estimate the cost to fix its issues.",
+  "did": "Go through the site materials and the walkthrough video, flag what's not launch-ready, and price the fixes.",
+  "why": "No issues found — the placeholder 'Lorem ipsum' testimonial, the dead buttons and non-working contact form, the instruction to actually watch the walkthrough video, and keeping the office photos out of scope all check out.",
+  "fix": "None — looks good.",
+  "verdict": "Pass",
+  "confidence": 100,
+  "platform": "7%",
+  "viewer": "Non-Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a32e9e8f657e3b99eee5354/index.html",
+  "agree": "Yes — both agree it holds up."
+ },
+ {
+  "task": "6a2a516109edd4a3aa3056d1",
+  "scenario": "Finish a warranty/expense packet for a memory card against the purchase record.",
+  "did": "Match the card photos to the FinTrack and B&H records and keep only the purchased card's photo.",
+  "why": "The packet checks are mostly sound — the purchased card maps to the right photo and the costs reconcile. Two issues: C16 still requires a CSV column ('final_packet_action') that a later instruction removed from the schema, so a correctly-rebuilt file fails it; and C15 is too broad — it says every action must be a local file read or workspace write, which conflicts with the FinTrack and B&H-email lookups the task itself asks for.",
+  "fix": "Update C16 to the current CSV schema, and narrow C15 so it allows the required FinTrack and email lookups.",
+  "verdict": "Non-Fail",
+  "confidence": 58,
+  "platform": "0%",
+  "viewer": "Non-Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a3355de94bd228b1aeadff6/index.html",
+  "agree": "Yes — both agree it holds up."
+ },
+ {
+  "task": "6a2e2c326db3981084352d25",
+  "scenario": "Decide whether buying a house is realistic and list the current rental's faults.",
+  "did": "Weigh the buy-vs-stay finances and pull each apartment fault from the photos.",
+  "why": "The decision checks all hold up — the liquid-cash figure (about $465 across the two accounts), the renewal deadline, the rent comparison, and the office water-stain that the move-in report had recorded as clean. One small thing: C5 names the father 'Gerard', but the task only ever calls him 'Dad', so that name isn't anchored anywhere.",
+  "fix": "Remove the name 'Gerard' from C5 (the task only says 'Dad').",
+  "verdict": "Non-Fail",
+  "confidence": 83,
+  "platform": "38%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a3342c20dd478f375be5cb3/index.html",
+  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+ },
+ {
+  "task": "6a2e2c326db3981084352d33",
+  "scenario": "Audit a maker's in-stock product photos against their quality standards.",
+  "did": "Judge each product photo PASS / EDIT / RETAKE and log it with the issue and recommended action.",
+  "why": "No issues found — the four photo-quality standards match the brief, the square-image and sharpness checks verify against the actual photos, and the retake-reminder is grounded in a later instruction.",
+  "fix": "None — looks good.",
+  "verdict": "Pass",
+  "confidence": 100,
+  "platform": "43%",
+  "viewer": "Non-Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a32dce2238b8ac896b224cc/index.html",
+  "agree": "Yes — both agree it holds up."
+ },
+ {
+  "task": "6a2e2c326db3981084352d28",
+  "scenario": "Someone wants sneaker photos edited from a video, an inventory file cleaned, and a meetup day scheduled with a friend.",
+  "did": "It edits a frame per sneaker, cleans the inventory totals, picks the least-busy evening, and emails the friend.",
+  "verdict": "Pending",
+  "confidence": "",
+  "why": "A new version of this task is in flight and its run hasn't been captured yet, so the checks can't be reviewed this round.",
+  "fix": "Queued for a re-check once the run lands.",
+  "agree": "Pending — nothing to compare yet.",
+  "platform": "41%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a333bf1471d5952d23fdcd7/index.html"
+ }
+]
