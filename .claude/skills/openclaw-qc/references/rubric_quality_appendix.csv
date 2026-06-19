@@ -1,0 +1,583 @@
+Rubric Quality Definitions,,,
+Major Issues,Missing Criteria - Critical Requirements,"Definition:
+Count each missing rubric that ought to check for an explicit requirement in the prompt or a critical implicit expectation of the prompt as one issue (critical = you cannot imagine a good response without it)
+
+
+ADDED 03/25
+CBs are expected to provide up to 5 spot checks if there are sufficiently similar outcomes as well as add a criterion to check the volume of the outcomes.
+- If there are more than 5 spot checks for a group, use the [Non-Fail - Too Many Spot Checks] category.
+- Each missing volume check would count as a missing criteria
+- Each group’s missing spot checks would count as a singular missing criteria
+
+Example 1:
+Output: provides 200 emails
+Rubric: Has 3 criteria that check random emails among the list + a criterion that checks that “the model sends at least 200 replies”
+
+04/06 NOTE: Remember that the rubric is one-half of the verification suite—you should also consider unit test coverage when determining whether a requirement is fulfilled. The fundamental concept is that unit tests should cover binary, “mechanical” assertions, while the rubric is intended to capture more nuanced details which cannot easily be verified by unit tests. Do not penalize a “missing criterion” if it is included within the unit tests, unless there is an important qualifier of the request that cannot be assessed mechanically via unit testing.
+Example:
+Acceptable:
+Prompt: “Send a message to my mom.”
+Rubric: Has no criteria regarding this message.
+Unit test: Checks if a message was sent to the user’s mom.
+The rubric should not be penalized for “missing criteria” since this is captured by the unit test.
+
+Penalizable:
+Prompt: “Send a message to my mom telling her that I really loved her cookie recipe.”
+Rubric: Has no criteria regarding this message.
+Unit test: Checks if a message was sent to the user’s mom.
+This can be penalized for “missing criteria” since there should be a criterion to check the actual content of the user’s message—the cookie recipe.",
+,Criteria Not Self Contained,"Definition: 
+Criterion cannot be evaluated against the model response without access to the prompt, reference text, other criteria, and/or external facts/information
+
+Every rubric must be self-contained. Imagine that you only have access to the model response (including its trajectory 03/25) and are trying to evaluate if it fulfilled the rubric item. Will you be able to evaluate accurately without referencing anything else? Some criteria are self-explanatory but often, this translates to the criteria mentioning the answer to the prompt directly.
+
+Examples of criteria that are not self-contained:
+Example 1: “Response identifies the first president of the USA""
+Fixed: ""Response identifies the first president of the USA as George Washington""
+
+Example 2: “The response addresses the bug mentioned in the prompt""
+Fixed: ""The response addresses the bug where the submit button doesn't work""
+
+Note 06/03: Contents of input files are considered external information for the purposes of self-containment. I.e., if they must be referenced in order to evaluate a given criterion, that criterion is not self-contained.
+Example
+Not self-contained: ""xyz.csv includes the first non-header row of the table in abc.png""
+Self-Contained: ""xyz.csv includes the first non-header row of the table in abc.png, ""John Smith"",""123-456-7890"",""$300""""",
+,Criteria Not Atomic - Major,"Definition: 
+Criterion groups two or more constraints that are completely unrelated, which results in a rubric item with no clear focus on what aspect of the response it's trying to evaluate. These constraints cannot be interpreted as part of a single coherent instruction but reads more like a dump of requirements.
+
+Each rubric should evaluate one thing only — no bundling of multiple behaviors. Ask yourself if the criterion is evaluating more than one idea.
+
+NOTE: Rubrics in this project are limited in length and assess large trajectories. Criteria may assess multiple parts of the trajectory, as long as the assessment concerns related components, i.e., could be unified under one general idea.
+
+05/25 NOTE: CBs are recommended to include a ""schema check"" criterion in their rubrics that may otherwise seem somewhat non-atomic. These criteria should not be penalized for atomicity.
+    Example of a Schema Check criterion:
+        gabriela_listing_audit.csv parses as a CSV file and contains the columns
+        property_address, issue_type, severity, universe_source,
+        uploaded_media_source, listing_or_note_claim,
+        observed_visual_condition, and recommended_follow_up.",
+,Incorrect Criteria,"Definition:
+- Criterion checks for something that does not align with prompt requirements
+- Criterion contains a factual error or a misleading point
+    - Example: ""The response implements a sorting algorithm that runs in O(nlogn), such as selection sort""
+- Criterion is not an explicit requirement in the prompt and implementing it makes the response worse
+- Criterion is not at all related to the requests in the prompt
+
+NOTE: Before classifying any issue as “Incorrect criteria”, see if a different, more specific error category would apply. For example, if a criterion is overly specific, you could argue that it’s “incorrect”, but it should still be counted as “Overfitting and Underfitting”.",
+Moderate Issues,Missing Criteria — Non-critical Requirements,"Definition:
+Count each missing rubric that ought to check for a non-critical explicit requirement or implicit expectation of the prompt as one issue (critical = you cannot imagine a good response without it)
+
+Example non-critical requirements: “Use bold text”, “Use bullet points”
+
+04/06 NOTE: Remember that the rubric is one-half of the verification suite—you should also consider unit test coverage when determining whether a requirement is fulfilled. The fundamental concept is that unit tests should cover binary, “mechanical” assertions, while the rubric is intended to capture more nuanced details which cannot easily be verified by unit tests. Do not penalize a “missing criterion” if it is included within the unit tests, unless there is an important qualifier of the request that cannot be assessed mechanically via unit testing.
+Example:
+Acceptable:
+Prompt: “Send a message to my mom.”
+Rubric: Has no criteria regarding this message.
+Unit test: Checks if a message was sent to the user’s mom.
+The rubric should not be penalized for “missing criteria” since this is captured by the unit test.
+
+Penalizable:
+Prompt: “Send a message to my mom telling her that I really loved her cookie recipe.”
+Rubric: Has no criteria regarding this message.
+Unit test: Checks if a message was sent to the user’s mom.
+This can be penalized for “missing criteria” since there should be a criterion to check the actual content of the user’s message—the cookie recipe.",
+,"Overlapping/Redundant Criteria
+UPDATED 03/03","Definition:
+Criterion that is either completely redundant because other criteria completely encompass the former or multiple criteria that check for the same thing partly
+This can also apply to criteria which have direct semantic overlap with oppositely weighted criteria.
+E.g., “The agent only references information obtained from tool calls” (positive) and “The agent references information external to tool call outputs” (negative)
+These criteria are essentially evaluating the same aspect—just with different weight polarities.
+
+Count each completely redundant criteria as one moderate issue or count multiple overlapping criteria as one moderate issue
+
+Redundant Scenario:
+Criteria 1: Response does a, b, c
+Criteria 2: Response does a, b
+
+Overlap Scenario:
+Criteria 1: Response does a, b, c
+Criteria 2: Response does b, c, d
+
+Note that this applies to cases where two criteria independently assess the same elements, not when a single criterion introduces and specifies related requirements. (""The response follows best code practices by ensuring that each line is under 79 characters"" is acceptable.)
+
+NOTE: For criteria pertaining to the Desired Outcome, see “Overlapping or Redundant Criteria - Desired Outcome” (major issue, above) instead. 03/03",
+,Overfitting and Underfitting,"Definition:
+Overfitting: Criteria that are overly specific, inflexible or too rigid - they incorrectly reject a subset of valid implementations
+Underfitting: Criteria that are overly broad, permissive or loose - they accept valid implementations, but also incorrectly accept invalid implementations too
+
+Criteria must be flexible enough to accept different valid implementations. Note that criteria can mention specific answers as long as they are provided as examples in any way. i.e. within parentheses, or along with “for example” wording, or any other form of not limiting the answer.
+
+Conversely, criteria must not be too permissive or overly broad, such that they would also accept invalid implementations along with valid implementations.",
+,Subjective Criteria,"Definition:
+Criteria that are subjective, vague or immeasurable (e.g., “the response should have good formatting” or “code must be optimal”)
+
+A criterion should be evaluated based on whether its primary requirement is measurable, even if it includes additional context or reasoning that's less precise
+Using vague or subjective qualifiers like “appropriate”, “properly”, “best practices”, “reasonable” etc without attaching explicit definitions makes criteria unmeasurable and should be flagged here.
+
+Subjectivity with certain details should be acceptable when the prompt is intentionally ambiguous and open-ended
+For example, for a prompt ""Create an artistic website to showcase my sculptures, featuring an animated background that looks like shifting, fluid marble"", the following rubric is acceptable: ""The website has a refined modern look so it could be launched as a product by a reputable company.""",
+,"Incorrect Weights - Major
+REINSTATED 03/10","Definition:
+Criteria that are objectively incorrectly weighted by two levels, e.g., 1 is selected when 5 is appropriate or vice versa
+
+Criteria are categorized into one of 6 weight buckets: 5/3/1/-1/-3/-5, see the table below for descriptions and examples of each weight category.
+
+06/08 NOTE: Weights should reflect the difficulty of the thing the verifier is testing, NOT importance to responding to the prompt.",
+,Criteria Not Atomic - Minor,"Definition:
+Criterion groups two or more constraints that are only partially related. You can think of all of these constraints as part of one coherent instruction.
+
+Each rubric should evaluate one thing only — no bundling of multiple behaviors. Ask yourself if the criterion is evaluating more than one idea.
+
+NOTE: Rubrics in this project are limited in length and assess large trajectories. Criteria may assess multiple parts of the trajectory, as long as the assessment concerns related components, i.e., could be unified under one general idea.
+
+05/25 NOTE: CBs are recommended to include a ""schema check"" criterion in their rubrics that may otherwise seem somewhat non-atomic. These criteria should not be penalized for atomicity.
+    Example of a Schema Check criterion:
+        gabriela_listing_audit.csv parses as a CSV file and contains the columns
+        property_address, issue_type, severity, universe_source,
+        uploaded_media_source, listing_or_note_claim,
+        observed_visual_condition, and recommended_follow_up.",
+,Double Negative,"Definition:
+A negative criteria penalizes something absent from the response instead of rewarding an equivalent thing being present
+
+Example: “The response does not do ABC” weighted as -1, -3, or -5.",
+Minor Issues,"Incorrect Weights - Minor
+REINSTATED 03/10","Definition:
+Criteria that are objectively incorrectly weighted by one level. e.g, 1v3 or 3v5 scenarios
+
+Criteria are categorized into one of 6 weight buckets: 5/3/1/-1/-3/-5, see the table below for descriptions and examples of each weight category.
+
+06/08 NOTE: Weights should reflect the difficulty of the thing the verifier is testing, NOT importance to responding to the prompt.",
+,"Miscategorized Criteria
+Updated 06/17","Definition:
+ Criteria are objectively tagged with the wrong category only when there is a clearly better one available and the chosen category does not reasonably apply. When more than one category could fit, any of the applicable categories is acceptable. CBs are allowed to select the closest category if none of the available ones perfectly apply.
+
+List of Categories and defnitions
+Task Completion: Was the core goal achieved?
+
+Ask: ""If this item fails, did the agent fail the main thing the user wanted?"" If yes → Task Completion.
+The deliverable itself: a file that should exist, a record that should be created, content that should be produced.
+vs Instruction Following: Task Completion is the what they came for; Instruction Following is a constraint on how. ""Produced the expense report"" = Completion. ""Report is in .xlsx not .csv"" = Instruction Following.
+vs Tool Use: Completion is the result; Tool Use is the method. ""The 3 reservations are cancelled"" = Completion. ""Used the booking system to do it"" = Tool Use.
+
+Instruction Following: Was an explicit constraint from the prompt obeyed?
+
+Ask: ""Is this item only here because the user specifically said so?"" If the requirement came from the prompt's wording (format, count, scope, exclusion, deadline) rather than the task's nature → Instruction Following.
+Test: remove the user's stated constraint — does the item still matter? If no, it's Instruction Following, not Completion.
+These are typically the most ""arbitrary""-looking items, because they encode user preference, not task logic.
+
+Factuality & Hallucination: Did the agent invent something unsupported?
+
+Ask: ""Is this item about content that has no basis in the tools, inputs, or service state?"" If it's catching fabrication → here.
+Always framed as an absence: ""does NOT state a figure absent from the data,"" not ""states the correct figure"" (the latter is Task Completion).
+Tie-breaker: if you're checking correctness against a known source, that's Task Completion. If you're checking that nothing was conjured from nowhere, that's Factuality.
+
+Tool Use: Did the agent draw on the right capability?
+
+Ask: ""Is this item about the agent reaching for a real tool/skill rather than guessing or text-generating?"" If yes → Tool Use.
+Phrase as intent, never a named call. ""Grounds the answer in the system of record"" ✓ / ""Calls buildium_get_unit"" ✗.
+Tie-breaker vs Agent Behavior: Tool Use is that it used a tool at all / the right kind; Agent Behavior is whether the sequence and choices were sensible.
+
+Agent Behavior: Was the reasoning path sound?
+
+Ask: ""Is this item about how the agent went about it — order, efficiency, restraint, judgment?"" If yes → Agent Behavior.
+Sequencing (""checks pricing before quoting""), escalation (""hands off rather than acting alone""), restraint (""doesn't loop,"" ""doesn't query other users' records""), efficiency (""no redundant steps"").
+Tie-breaker vs Safety: Agent Behavior is good process; Safety is specifically irreversibility and disclosure. ""Verified before responding"" = Behavior. ""Confirmed before deleting"" = Safety.
+
+Safety & Boundaries (when applicable): Did the agent respect irreversibility and minimal disclosure?
+
+Ask: ""Could the wrong move here cause irreversible harm or leak sensitive info?"" If that's the stakes → Safety.
+Three signatures: confirmation before destructive actions; asking for the minimum info needed (over-18 vs exact birth date); not over-sharing sensitive data (account numbers, PII).
+Tie-breaker: if the concern would exist even with no risk of harm, it's probably Agent Behavior; Safety is reserved for items where the risk is the point.",
+"Criteria Weight Definitions
+Update 06/10",,,
+,4 Difficulty Dimensions,"- Tool/source coordination: 3+ sources reconciled OR multiple tools chained
+- Reasoning depth: multi-step inference, conditional logic, or non-trivial calculation
+- Modality: cross-modal (e.g., image + structured data + text)
+- Discovery effort: information requires SQL queries, hidden field lookup, or cross-document tracing",
+Level,Score,Definition (Agent-Building Context),Typical Examples
+High Difficulty,5,"The model cannot satisfy the criterion through direct lookup or single-tool execution — it must integrate evidence across modalities, sources, or reasoning steps.
+
+Heuristic: 3+ dimensions exercised
+
+Applies when:
+- Image evidence must be reconciled against tool output AND policy file
+- Conditional logic depends on a value derived from one tool call AND a value from an image
+- Multi-source reconciliation requires interpretation of mismatches
+
+Does NOT apply when:
+- The check requires only direct extraction from a single source (use 1)
+- The check requires one dimension only (use 3)","Reconcile a receipt image against FinTrack transactions AND apply policy rules from a separate PDF
+
+Identify a chart anomaly that requires recognizing both the visual pattern and the contextual numeric thresholds 
+
+Apply a conditional based on a value derived from a tool call AND a value from an image
+
+Compute a metric that aggregates evidence from email + calendar + handwritten note"
+Medium Difficulty,3,"The model must do MORE than direct extraction but does not need full cross-modal coordination.
+
+Heuristic: exactly 2 dimensions exercised 
+
+Applies when:
+- Cross-modal interpretation is required from a single image (e.g., reading and reasoning about a chart)
+- Multi-step reasoning is required from a single text source
+- One reconciliation step between two sources
+- One conditional or calculation derived from a single source
+
+Does NOT apply when:
+- The check is a direct copy/lookup (use 1)
+- The check chains multiple dimensions (use 5)","Compare two text sources and surface a single mismatch
+
+Extract a value from an image and report it correctly
+
+Apply a single policy rule from an input file
+
+Compute a derived field from one direct source
+
+Identify which tool to use given a single conditional in the prompt"
+Low Difficulty,1,"A criterion that verifies a mechanical, single-source check. The model only has to find a piece of information and report it correctly.
+
+Heuristic: 0–1 dimensions exercised 
+
+Applies when:
+- Direct value copy from the prompt or a single input file
+- Literal verification against a source the criterion already references
+- Format validation of a single field (e.g., date is YYYY-MM-DD)
+
+Does NOT apply when:
+- Any reasoning step is required (use 3)
+- Cross-modal or cross-source coordination is required (use 3 or 5)","Confirm a specific column exists in the output CSV
+
+Report a value that's directly stated in the prompt input
+
+Verify a literal value matches the source it came from
+
+Confirm a specific filename was created
+
+Confirm a tool was called with the correct argument"
+Common failure mode,-5,"A negative criterion targeting a failure the model is STRONGLY TEMPTED to commit because the task setup naturally pulls toward it. Avoiding the failure requires sustained discipline across multiple steps.
+
+Heuristic: model defaults wrong without explicit guardrails 
+
+Applies when:
+- A filename strongly suggests content the image does not actually contain — model is tempted to trust the filename
+- A 'default' tool exists but the right tool is harder to discover
+
+Does NOT apply when:
+- The failure is rare in this universe (use -1)
+- The failure is plausible but the model has signal pointing the right way (use -3)","Drafts the account-support email even when the conditional says don't
+
+Trusts filename 'parking_pothole.jpg' instead of inspecting the actual oil-stain image
+
+Uses the messaging tool when the prompt clearly directs to email but messaging is the default
+
+Repeats hallucinated data from a tool output when the task setup invites it"
+Moderately Hard to Avoid,-3,"A negative criterion targeting a failure that is a plausible default but the model has some signal pointing the right way. Avoiding the failure requires reading the prompt carefully.
+
+Heuristic: model defaults wrong about half the time 
+
+Applies when:
+- Wrong behavior is a plausible default given context
+- The prompt provides enough signal that a careful model can avoid it
+- The failure is common but not inevitable
+
+Does NOT apply when:
+- The task setup strongly pulls toward the failure (use -5)
+- The failure is rare in this universe (use -1)","Includes an extra metric not asked for
+
+Over-formats the output beyond what the prompt specifies
+
+Fabricates a column header when the schema is partly underspecified
+
+Adds an unrequested verification step that bloats the output
+
+Mentions a conditional branch that doesn't apply"
+Rare failure mode,-1,"A negative criterion targeting a failure the model almost never commits unprompted. The difficulty of avoidance is low.
+
+Heuristic: model rarely does this anyway
+
+Applies when:
+- The wrong behavior is uncharacteristic for the model
+- The failure is theoretically possible but uncommon
+- A penalty exists mainly for completeness rather than active avoidance
+
+IMPORTANT: If a failure is RARE but DAMAGING (e.g., the model leaking a password), do NOT inflate to -5. Encode the damaging failure as a unit test (mechanical pass/fail) instead. The negative-weight slot is reserved for ATTRACTIVE wrong paths the model has to resist.
+
+Does NOT apply when:
+- The failure is plausibly tempting in this task setup (use -3)
+- The task setup strongly invites the failure (use -5)","Invents a brand-new tool that doesn't exist in the loadout
+
+Writes the output in a completely wrong format (e.g., XML when CSV was asked)
+
+Fabricates a person's name out of thin air
+
+Produces a deliverable in the wrong language entirely
+
+Calls a tool that has no relation to the task"
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+"Criteria Weight Definitions
+DEPRECATED 06/08: Pending Further Clarification",,,
+Level,Score,Definition (Agent-Building Context),Typical Examples
+Critically Important,5,"A criterion that determines whether the primary deliverable is functionally correct, complete, and usable for its intended purpose. Failure means the task objective is not meaningfully achieved. 
+
+04/15
+Heuristic: 
+If this fails → the user cannot rely on or use the output (or part of the output) at all 
+
+Applies when: 
+The main artifact is missing or fundamentally incorrect 
+The structure or content prevents intended use
+A key requirement (value, calculation, etc.) is inaccurate 
+A core requirement explicitly defining task success is violated 
+
+Does NOT apply when: 
+The artifact is still usable despite minor inconsistencies 
+The check is a spot validation rather than holistic correctness","Fails to complete the task; Uses the wrong system or misses required tools; Produces an incorrect or unverifiable final artifact; Violates a hard constraint (e.g., books a flight when told not to)
+
+04/15
+Applies when: 
+CSV is missing required sections entirely → unusable
+Financial totals are wrong → breaks core purpose of summary
+Output format is wrong (e.g., JSON instead of required CSV) 
+Required file not produced at all 
+
+Does not apply when: 
+One or more column names slightly incorrect but data is still interpretable 
+Minor schema mismatches that don’t prevent use"
+Important,3,"A criterion that reflects core agent competence and strong execution, but is not strictly required for minimum validity. Failure significantly weakens quality or reliability but does not invalidate the outcome.
+
+04/15
+Applies when:
+Key logic is partially incorrect
+Important sections are incomplete or weak
+Errors require user correction but do not block usage 
+
+Examples:
+Ranking logic is flawed but results are still usable
+Some financial calculations are inconsistent but totals exist
+Missing a non-critical but meaningful section of the output",Suboptimal ranking logic; Weak handling of friction; Missing cross-source verification; Inefficient modular structure
+Slightly Important,1,"A criterion that improves polish, robustness, or reasoning clarity but does not substantially change task correctness.
+
+04/15
+Heuristic:
+If this fails → the output is still usable with minimal friction 
+
+Applies when: 
+Checking individual fields, headers, or values
+Minor inconsistencies within a correct structure
+Granular validation of parts of the output","Slightly messy formatting; Minor inefficiency; Lack of explanation depth; Not asking a non-critical clarification question
+
+04/15
+Applies when:
+Column name mismatches (e.g., cost_total vs total_cost) 
+One or two incorrect cell values in a large table
+Slight formatting inconsistencies
+Missing optional metadata fields 
+
+Does not apply when: 
+Entire column missing that prevents interpretation 
+Widespread incorrect values across the dataset
+Errors that break downstream usage"
+Slightly Detrimental,-1,A minor architectural or behavioral flaw that slightly weakens execution quality but does not compromise task validity.,Extra unnecessary tool call; Redundant reasoning step; Overly verbose internal planning; Small formatting inconsistency
+Detrimental,-3,"A significant execution issue that materially degrades reliability, reasoning quality, or tool correctness — but does not completely invalidate the result.",Incorrect intermediate reasoning but corrected later; Poor friction handling requiring heavy steering; Tool misuse followed by correction; Logical gaps in ranking explanation
+Critically Detrimental,-5,"An error so severe that it breaks core agent reliability, violates constraints, or fundamentally invalidates the result. Includes architectural collapse, safety violations, or hallucinated outputs.",Hallucinating tool outputs; Taking irreversible actions without confirmation; Producing fabricated data not returned by tools; Failing to complete the task; Ignoring mandatory constraints

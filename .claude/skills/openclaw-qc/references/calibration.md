@@ -4,6 +4,13 @@ The condensed rules. Full detail in `project_overrides.md` + `auditor.md` + `mas
 **Authoritative spec = V9 ("Add missing notes").** Full dimension map + thresholds + our scope of each dimension:
 `references/spec_v9.md` (raw form: `references/spec_v9_rubric.csv`). The per-run `sot/<tid>/spec_catalog.md` is the
 same V9 spec pulled fresh from Redash 304995. The bands below ARE V9 dims 11/12/13 verbatim.
+**Rubric-quality issue taxonomy = `references/rubric_quality_appendix.csv` (Appendix 1).** Classify every finding
+by it, then bucket: **MAJOR** = Missing-Criteria-Critical · Criteria-Not-Self-Contained · Not-Atomic-Major (fuses
+*unrelated* constraints) · Incorrect-Criteria. **MODERATE** = Missing-Criteria-Non-critical · Overlapping/Redundant ·
+Overfitting/Underfitting · Subjective · Incorrect-Weights-Major (off by 2 levels) · Not-Atomic-Minor (partially-related) ·
+Double-Negative (a negative criterion penalizing an *absence* instead of rewarding the equivalent presence). **MINOR**
+= Incorrect-Weights-Minor (off by 1 level) · Miscategorized-Criteria. Weights encode **difficulty** (tool/source
+coordination, reasoning depth, modality, discovery effort) — NOT importance; a schema-check criterion is atomicity-exempt.
 
 ## Verdict bands (the only thing that sets Pass/Non-Fail/Fail)
 Denominator = CB-authored criteria. Count **distinct defective criteria** (never double-count one criterion
@@ -31,9 +38,16 @@ that has two issues — take its max severity).
   outcomes (e.g. 4 caption stages, 4 corrected fields) where the rubric checks only *some*; it should check all up
   to 5 → **Major** Missing-Criteria. (b) **An explicit prompt requirement or planted error with ZERO coverage** —
   no criterion AND no unit test verifies it (e.g. a required reshoot-list deliverable; a planted date error the
-  prompt asks to correct) → **Major** if the requirement is core, else **Moderate**. Count these as defective
-  criteria against the denominator. (Do NOT count purely "nice-to-have" coverage you invent — only requirements the
-  prompt or a same-set spot-check actually establishes.)
+  prompt asks to correct) → **Major** if the requirement is core, else **Moderate**. (c) **Asymmetric per-entity
+  coverage (THE f207 miss — check this every run):** when the prompt requires the SAME set of outputs for multiple
+  named entities (2+ patients / products / listings / people / files / accounts), the rubric must cover EACH
+  entity's required metrics. If it checks entity A's values but is silent on entity B's, **each uncovered
+  required metric for B is its own Missing-Critical criterion** — mirror the count of what's checked for A. (f207:
+  prompt asked for Functional/Limited counts at both times + recovery % for BOTH Emily and Paul; rubric had C4/C5/C6
+  for Emily but nothing for Paul's Map-C/Map-D counts or recovery → **3 Major missing** → 3/11 = 27.3% → Fail. It is
+  NOT enough that the rubric merely names both entities, e.g. a shared dx/assignment criterion.) Count these as
+  defective criteria against the denominator; confirm each is also uncovered by any unit test. (Do NOT count purely
+  "nice-to-have" coverage you invent — only requirements the prompt or a same-set spot-check actually establishes.)
 - **Miscategorized criterion** — a sound check tagged with the wrong category (e.g. a process/Task-Completion step
   tagged Factuality) → **Minor**.
 

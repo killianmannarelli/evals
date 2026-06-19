@@ -16,14 +16,14 @@
   "task": "6a1fbaebeae04350ba1af207",
   "scenario": "Build a hand-mobility progress report for two patients from their chart photos.",
   "did": "Read each chart, count functional vs limited areas at both time points, and compute recovery %.",
-  "why": "No issues found — the patient details, the functional-vs-limited counts at the start and at one year, and the recovery percentage (the change in functional areas over all tracked areas, 37%) all check out against the charts.",
-  "fix": "None — looks good.",
-  "verdict": "Pass",
-  "confidence": 100,
+  "why": "The checks that are present all verify, but the rubric only covers one of the two patients. The prompt asks for the Functional/Limited counts at both times and the recovery % for both Emily and Paul — there are checks for Emily (C4 starting counts, C5 one-year counts, C6 recovery %), but nothing checks Paul's Map C and Map D counts or his recovery %, and no test covers them either.",
+  "fix": "Add three checks for Paul mirroring C4/C5/C6 — his Map C (starting) Functional/Limited counts, his Map D (one-year) counts, and his recovery %.",
+  "verdict": "FAIL",
+  "confidence": 5,
   "platform": "35%",
   "viewer": "Fail",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a330e12ec71cac59b23d218/index.html",
-  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+  "agree": "Yes — both flag it as failing."
  },
  {
   "task": "6a1fbaebeae04350ba1af20a",

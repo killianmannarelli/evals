@@ -29,6 +29,14 @@ NEVER use story.desired_outcome or Pass@K.
      item's own fields, or instances of the SAME concern, is the endorsed spot-check → EXEMPT (calibration ruling #1).
    - Invalid weight: value outside {-5,-3,-1,+1,+3,+5}. Sign-inversion (negative weight on a good behavior) = Major.
    - §9h: internal contradiction / complement-pair / exact duplicate. §9d: wrong filename (check vs inputs/).
+   - MISSING-CRITERIA SWEEP (bandable, count toward the denominator; confirm each is ALSO uncovered by any unit test):
+     (a) a ≤5 set of similar outcomes where only some are checked → Major; (b) an explicit prompt requirement / planted
+     error with ZERO coverage → Major if core else Moderate; (c) **ASYMMETRIC PER-ENTITY COVERAGE** — when the prompt
+     requires the SAME outputs for multiple named entities (2+ patients/products/listings/people/files), the rubric must
+     cover EACH entity's required metrics. If entity A's values are checked but entity B's are not, EACH uncovered
+     required metric for B is its own Major Missing-Critical (mirror what's checked for A). Merely naming both entities
+     (a shared assignment/label criterion) does NOT count as covering B's metrics. (Real miss — f207: C4/C5/C6 checked
+     Emily's start/1yr counts + recovery %, nothing checked Paul's → 3 Major missing → Fail.)
    - Tests dims (V9 16-19) are OUT OF SCOPE — reject. Justification (20), Category (8), Cross-Modal Synthesis (9),
      Architectural Depth (10), and process-targeting are advisory/Non-Fail-capped — never our Fail line.
 3. UNVERIFIABLE golds (need an input you don't have — e.g. a connected-service value) never anchor a Fail (Rule 19c).
