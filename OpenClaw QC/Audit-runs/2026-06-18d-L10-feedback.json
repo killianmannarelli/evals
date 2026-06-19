@@ -1,0 +1,54 @@
+[
+ {
+  "task": "6a1fbaebeae04350ba1af21a",
+  "scenario": "Plan a home purchase from photos, listings, and finances, and pick a garden shed.",
+  "did": "Sum the cash pool, find listings that clear a 20% down-payment, size the shed budget, and audit the budget.",
+  "why": "No issues found — the cash pool recomputes correctly ($42,727.34), the 20%-down qualification for each listing and the leftover shed budget ($3,727.34) check out, the can-cut vs cannot-cut split is grounded (Adobe hobby vs LinkedIn for work), and the emails are correctly required as drafts rather than sent.",
+  "fix": "None — looks good.",
+  "verdict": "Pass",
+  "confidence": 100,
+  "platform": "44%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a3326feb5d9a9ff1529d12e/index.html",
+  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+ },
+ {
+  "task": "6a17cc59ea9a7319a6ca06e1",
+  "scenario": "Audit a queue of Instagram photos and decide what to do with each.",
+  "did": "Give each pending photo a READY/EDIT/HOLD/SKIP call and cross-check the kayaking ones against Strava.",
+  "why": "The decisions and the Strava cross-checks all hold up — including catching the kayaking photo whose Strava session is actually a land trail, and the check that penalizes a made-up resolution threshold. One small thing: C6 overlaps C2, covering nearly the same point twice.",
+  "fix": "Merge C6 into C2.",
+  "verdict": "Non-Fail",
+  "confidence": 81,
+  "platform": "29%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a339d705bff70b672a3eace/index.html",
+  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+ },
+ {
+  "task": "6a31a2f7424da28b8ccb4451",
+  "scenario": "Write a retirement explainer, checking the user's handwritten math and pulling their real 401k data.",
+  "did": "Verify the legal-pad math and pull the real balance, yearly growth, holdings, and employer match.",
+  "why": "No issues found — the handwritten math is checked correctly (the flat-contribution error, the corrected $835K-$903K range, the employer-match fix), every real account figure verifies against the records (start/end balance, the ~$9,466 growth, the allocation, the $3,000 match), and the check that penalizes the draft's fabricated growth figure points the right way.",
+  "fix": "None — looks good.",
+  "verdict": "Pass",
+  "confidence": 100,
+  "platform": "23%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a341d782120ce08eef79045/index.html",
+  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+ },
+ {
+  "task": "6a076b30fb7ee59da499fd2c",
+  "scenario": "Audit a week of meal logs against the plan and connected accounts.",
+  "did": "Cross-check each logged meal against the rules, accounts, and photos.",
+  "verdict": "Pending",
+  "confidence": "",
+  "why": "A new version of this task is in flight and its run hasn't been captured yet, so the checks can't be reviewed this round.",
+  "fix": "Queued for a re-check once the run lands.",
+  "agree": "Pending — nothing to compare yet.",
+  "platform": "",
+  "viewer": "",
+  "link": ""
+ }
+]
