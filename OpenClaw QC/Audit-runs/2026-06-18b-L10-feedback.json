@@ -16,14 +16,14 @@
   "task": "6a210a723e6e63649d93d617",
   "scenario": "Review a small study-abroad website and estimate the cost to fix its issues.",
   "did": "Go through the site materials and the walkthrough video, flag what's not launch-ready, and price the fixes.",
-  "why": "No issues found — the placeholder 'Lorem ipsum' testimonial, the dead buttons and non-working contact form, the instruction to actually watch the walkthrough video, and keeping the office photos out of scope all check out.",
-  "fix": "None — looks good.",
-  "verdict": "Pass",
-  "confidence": 100,
+  "why": "The launch-readiness checks are sound (placeholder testimonial, dead buttons and contact form, watching the walkthrough video), but the rubric never checks the fee estimate — the prompt explicitly asks for an estimate of what to charge to fix the issues, and nothing verifies it. The site's wrong founding year (2018 vs 2016) also isn't checked.",
+  "fix": "Add a check for the fix-cost estimate at the stated rate, and one for catching the wrong founding year.",
+  "verdict": "FAIL",
+  "confidence": 5,
   "platform": "7%",
   "viewer": "Non-Fail",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a32e9e8f657e3b99eee5354/index.html",
-  "agree": "Yes — both agree it holds up."
+  "agree": "No — I'm stricter here; the second opinion lets it pass."
  },
  {
   "task": "6a2a516109edd4a3aa3056d1",
@@ -55,14 +55,14 @@
   "task": "6a2e2c326db3981084352d33",
   "scenario": "Audit a maker's in-stock product photos against their quality standards.",
   "did": "Judge each product photo PASS / EDIT / RETAKE and log it with the issue and recommended action.",
-  "why": "No issues found — the four photo-quality standards match the brief, the square-image and sharpness checks verify against the actual photos, and the retake-reminder is grounded in a later instruction.",
-  "fix": "None — looks good.",
-  "verdict": "Pass",
-  "confidence": 100,
+  "why": "A later instruction says to match photos by the handwritten video labels, not by visual appearance, and corrects two verdicts — but C3 still rewards the visual-appearance match (Baby Beanie -> IMG_0489 -> PASS) that was overruled, and C1 rewards that same superseded mapping. There's also no check that every in-stock product got a verdict (only one product's photo is checked).",
+  "fix": "Re-point C1/C3 to the label-based mapping and corrected verdicts, and add a completeness check that every in-stock product has a verdict.",
+  "verdict": "FAIL",
+  "confidence": 5,
   "platform": "43%",
   "viewer": "Non-Fail",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a32dce2238b8ac896b224cc/index.html",
-  "agree": "Yes — both agree it holds up."
+  "agree": "No — I'm stricter here; the second opinion lets it pass."
  },
  {
   "task": "6a2e2c326db3981084352d28",

@@ -16,14 +16,14 @@
   "task": "6a17cc59ea9a7319a6ca06e1",
   "scenario": "Audit a queue of Instagram photos and decide what to do with each.",
   "did": "Give each pending photo a READY/EDIT/HOLD/SKIP call and cross-check the kayaking ones against Strava.",
-  "why": "The decisions and the Strava cross-checks all hold up — including catching the kayaking photo whose Strava session is actually a land trail, and the check that penalizes a made-up resolution threshold. One small thing: C6 overlaps C2, covering nearly the same point twice.",
-  "fix": "Merge C6 into C2.",
-  "verdict": "Non-Fail",
-  "confidence": 81,
+  "why": "Most of the audit is sound, but C8 and C9 reward citing Strava kayaking sessions dated 2026-03-22 and 2026-03-29 — and no such sessions exist in the log (the real Willamette/Sellwood and Sauvie Island paddles are in April). A correct response can't cite those March sessions, so both checks penalize the right answer. C6 also repeats C2.",
+  "fix": "Correct C8/C9 to the real April session dates (or to 'no verified match -> HOLD'), and merge C6 into C2.",
+  "verdict": "FAIL",
+  "confidence": 25,
   "platform": "29%",
   "viewer": "Fail",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a339d705bff70b672a3eace/index.html",
-  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+  "agree": "Yes — both flag it as failing."
  },
  {
   "task": "6a31a2f7424da28b8ccb4451",
