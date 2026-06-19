@@ -52,6 +52,32 @@
   "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
  },
  {
+  "task": "6a20b7ac31ff797fdf7c301c",
+  "scenario": "Compile a factory throughput field-study report under the protocol's filtering rules.",
+  "did": "Apply the date-filtering and conflict rules, reconcile the numbers, and chart the qualifying trend.",
+  "why": "No issues found — the qualifying dates (Jan 9, Feb 18, Mar 9), the recomputed throughput (142 from 127 x 1.12), the confidence ranking when the two protocol rules conflict, and the excluded entries all check out, including the tricky 1/22-vs-1/27 reading on the balcony log.",
+  "fix": "None — looks good.",
+  "verdict": "Pass",
+  "confidence": 100,
+  "platform": "44%",
+  "viewer": "Non-Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a33af7bb44c3eab1fd63b3c/index.html",
+  "agree": "Yes — both agree it holds up."
+ },
+ {
+  "task": "6a2e2c326db3981084352d3e",
+  "scenario": "Check the hand-filled stewardship worksheet math and write up the corrections.",
+  "did": "Apply the readme's correction rules, fix each figure, and evaluate against the panel benchmarks.",
+  "why": "Every figure on the worksheet recomputes exactly — the Q3 growth ($9,465.55), the giving total ($2,450), the $59,300 pledge projection, and the runway/ratio benchmarks (2.38 months -> Yellow, 23.2 -> Red). One gap: nothing checks the requested MEMORY.md (that it's created and appended), though its financial content is covered by the other checks.",
+  "fix": "Add a check that MEMORY.md is created/appended with the key financial details.",
+  "verdict": "Non-Fail",
+  "confidence": 88,
+  "platform": "25%",
+  "viewer": "Non-Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a3471a058280be668137b78/index.html",
+  "agree": "Yes — both agree it holds up."
+ },
+ {
   "task": "6a076b30fb7ee59da499fd2c",
   "scenario": "Build a three-day food-adherence review from a binge log, photos, and delivery screenshots.",
   "did": "Reconcile each day's meals against the targets and the receipts, and log the sources.",
@@ -120,19 +146,6 @@
   "task": "6a1fbaebeae04350ba1af21c",
   "scenario": "Reconcile a Chase spending summary against the user's own FinTrack records",
   "did": "Compare the two sources, explain each gap, settle a dry-cleaning receipt, and write a reconciliation report.",
-  "verdict": "Pending",
-  "confidence": "",
-  "why": "A new version of this task is in flight and its run hasn't been captured yet, so the checks can't be reviewed this round.",
-  "fix": "Queued for a re-check once the run lands.",
-  "agree": "Pending — nothing to compare yet.",
-  "platform": "",
-  "viewer": "",
-  "link": ""
- },
- {
-  "task": "6a20b7ac31ff797fdf7c301c",
-  "scenario": "Analyze a hand X-ray for an injury",
-  "did": "Review the X-rays and write up the finding.",
   "verdict": "Pending",
   "confidence": "",
   "why": "A new version of this task is in flight and its run hasn't been captured yet, so the checks can't be reviewed this round.",
@@ -222,19 +235,6 @@
  },
  {
   "task": "6a2e2c326db3981084352d35",
-  "scenario": "(run not captured yet)",
-  "did": "—",
-  "verdict": "Pending",
-  "confidence": "",
-  "why": "A new version of this task is in flight and its run hasn't been captured yet, so the checks can't be reviewed this round.",
-  "fix": "Queued for a re-check once the run lands.",
-  "agree": "Pending — nothing to compare yet.",
-  "platform": "",
-  "viewer": "",
-  "link": ""
- },
- {
-  "task": "6a2e2c326db3981084352d3e",
   "scenario": "(run not captured yet)",
   "did": "—",
   "verdict": "Pending",
