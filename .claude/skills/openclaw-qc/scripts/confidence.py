@@ -12,10 +12,21 @@ flip-risk: if the unseen connected-service value differs, the task could fail).
   ~5   = a catastrophic fail (e.g. whole-rubric prompt drift)
 """
 
+def _pct(band, denominator):
+    """Defect rate in PERCENTAGE POINTS (e.g. 10.5), robust to agents that stored
+    `pct` as a fraction (0.105). Prefer count/denominator when available — counts
+    are unambiguous; only fall back to the stored pct (fraction-guarded) otherwise."""
+    c = float(band.get("count", 0) or 0)
+    if denominator:
+        return 100.0 * c / float(denominator)
+    p = float(band.get("pct", 0) or 0)
+    return p * 100.0 if (0 < p <= 1.0 and c > 0) else p   # 0.105 -> 10.5
+
+
 def compute_confidence(bands, denominator=None, n_unverifiable=0, is_fail=False):
-    M  = float(bands["6a"]["pct"])   # Major %
-    MM = float(bands["6b"]["pct"])   # Major+Moderate %
-    A  = float(bands["6c"]["pct"])   # any-severity %
+    M  = _pct(bands["6a"], denominator)   # Major %
+    MM = _pct(bands["6b"], denominator)   # Major+Moderate %
+    A  = _pct(bands["6c"], denominator)   # any-severity %
     # ratio to each Fail line; >=1 means it fails on that constraint
     worst = max(M / 10.0, MM / 15.0, A / 20.0)
     # A task can FAIL on a verified non-criteria dimension (Input-Realism / Leak /
