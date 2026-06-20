@@ -23,6 +23,13 @@ VERIFIED UNION:
    REJECT if: spot-check-exempt atomicity (ruling #1), desired_outcome-grounded, Tests dims 8a-d, process-targeting
    /advisory, ratings-validity or justification (other dimensions, outside the 6a/6b/6c rubric-criteria band), or
    unverifiable (Rule 19c — never anchors a Fail).
+2b. **DRAWER-FAIL TRIGGER (mandatory).** If the drawer's embedded_verdict is **Fail** but my grounded verdict is
+   Pass/Non-Fail, do NOT simply reject the drawer's named findings. The drawer is high-recall: its Fail is a strong
+   signal a real defect exists even when it mislabels the reason (e.g. calls a coverage gap "atomicity"). Before you
+   may keep Pass/Non-Fail, run a dedicated MISSING-CRITERIA re-sweep: decompose EACH output file the prompt describes
+   into its required components (esp. MEMORY.md / "log X, Y, Z" files) and check each is covered; apply the per-entity
+   and ≤5-spot-check sweeps. Only conclude below-Fail if that re-sweep also comes up clean. (Twice the drawer was right
+   and we overrode it: f207 — uncovered second patient; 5dff — uncovered MEMORY.md components.)
 3. Final = union(my verified, drawer adopted); MAX severity per criterion; count DISTINCT defective criteria.
 4. Band: denom=#criteria; 6a Major>10%, 6b Maj+Mod>15%, 6c any>20%; below all w/ >=1 = Non-Fail; 0 = Pass.
    (A task may also Fail on an in-scope NON-criteria V9 dimension — if you VERIFY it; record verdict=Fail with the

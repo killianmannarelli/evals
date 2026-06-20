@@ -48,6 +48,13 @@ that has two issues — take its max severity).
   NOT enough that the rubric merely names both entities, e.g. a shared dx/assignment criterion.) Count these as
   defective criteria against the denominator; confirm each is also uncovered by any unit test. (Do NOT count purely
   "nice-to-have" coverage you invent — only requirements the prompt or a same-set spot-check actually establishes.)
+  (d) **Deliverable-component coverage (THE 5dff miss — check this every run):** when the prompt enumerates several
+  required *contents* for ONE output file, decompose that file into its listed components and check that EACH is
+  covered by a criterion or test. A criterion that merely *names* the file, or covers only *one* of its components,
+  does NOT cover the rest. This bites hardest on **MEMORY.md** and other "log/keep track of X, Y, Z" deliverables.
+  (5dff: prompt said MEMORY.md must log the reviewed SKUs **and** the path to listing_qa.md; C5 only checked the one
+  flagged item's reason → 2 uncovered components → 2 Moderate Missing-Criteria → 2/5 = 40% > 15% → 6b Fail. Each
+  uncovered component is Non-critical→Moderate unless it's the primary deliverable→Major.)
 - **Miscategorized criterion** — a sound check tagged with the wrong category (e.g. a process/Task-Completion step
   tagged Factuality) → **Minor**.
 

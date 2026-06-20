@@ -37,6 +37,12 @@ NEVER use story.desired_outcome or Pass@K.
      required metric for B is its own Major Missing-Critical (mirror what's checked for A). Merely naming both entities
      (a shared assignment/label criterion) does NOT count as covering B's metrics. (Real miss — f207: C4/C5/C6 checked
      Emily's start/1yr counts + recovery %, nothing checked Paul's → 3 Major missing → Fail.)
+     (d) **DELIVERABLE-COMPONENT COVERAGE** — when the prompt lists several required CONTENTS for ONE output file,
+     decompose that file into its components and check EACH is covered; a criterion that only names the file or covers
+     ONE component does NOT cover the rest. Watch MEMORY.md and "log/keep-track-of X, Y, Z" files especially. Each
+     uncovered component = Non-critical Moderate (Major if it's the primary deliverable). (Real miss — 5dff: prompt
+     required MEMORY.md to log reviewed SKUs AND the listing_qa.md path; C5 only checked the one flag reason → 2
+     Moderate missing → 2/5 = 40% > 15% → 6b Fail.)
    - Tests dims (V9 16-19) are OUT OF SCOPE — reject. Justification (20), Category (8), Cross-Modal Synthesis (9),
      Architectural Depth (10), and process-targeting are advisory/Non-Fail-capped — never our Fail line.
 3. UNVERIFIABLE golds (need an input you don't have — e.g. a connected-service value) never anchor a Fail (Rule 19c).
