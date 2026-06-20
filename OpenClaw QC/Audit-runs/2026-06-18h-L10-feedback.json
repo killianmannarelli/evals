@@ -3,14 +3,14 @@
   "task": "6a04c2de0b4f42487f8e5dff",
   "scenario": "Cross-check shoe listing photos against their catalog SKU and price.",
   "did": "Check each photo against the catalog, confirm the right product and price, and flag mismatches.",
-  "why": "No issues found — every photo identification and catalog price check holds up, and the wrong-photo / price-error flags point the right way (the listing shows the Bondi 8 priced as the Clifton 9).",
-  "fix": "None — looks good.",
-  "verdict": "Pass",
-  "confidence": 100,
+  "why": "The listing_qa.md checks and the catalog cross-check are sound, but the rubric doesn't cover everything the prompt asks MEMORY.md to contain. The prompt says MEMORY.md must log the SKUs reviewed and the path to listing_qa.md, and nothing checks either of those (C5 only checks the flag reason for the one wrong item).",
+  "fix": "Add checks that MEMORY.md lists the reviewed SKUs and includes the path to listing_qa.md.",
+  "verdict": "FAIL",
+  "confidence": 5,
   "platform": "27%",
   "viewer": "Fail",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a330c4c97a709b2fdfbec5a/index.html",
-  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+  "agree": "Yes — both flag it as failing."
  },
  {
   "task": "6a04c2de0b4f42487f8e5e00",
