@@ -49,15 +49,16 @@
  },
  {
   "task": "6a0ffe25088789f616666871",
-  "verdict": "Non-Fail",
+  "verdict": "FAIL",
   "platform": "45%",
   "viewer": "Fail",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a25e3ffe3722189963707c9/index.html",
   "scenario": "A YouTuber doing a pre-upload check on thumbnails.",
   "did": "Audit the thumbnails against the brand guide and write an audit file, a weekly plan, and a memory file.",
-  "why": "C14 demands a final summary message that names both output files and reports the publish/revise/hold counts, but the prompt only asks for the three files to be written and never requests that wrap-up message — so a reasonable answer can lose points for skipping it. The miss is small, so the task stays Non-Fail.",
-  "fix": "Relax C14 so it does not require a final summary message the prompt never asks for.",
-  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+  "why": "Many per-thumbnail calls are sound, but a large block of checks lock in one reading of genuinely ambiguous rules — the flag semantics in C4/C5 vs C6 and the Film Room scoring in C8/C14/C20/C21 — so a response that reads the rules the other, equally-valid way is marked wrong. There's also no check for the Notion request the prompt makes.",
+  "fix": "Loosen C4/C5/C6 and C8/C14/C20/C21 to accept either valid reading (or pin the rule unambiguously in the prompt), and add a check for the Notion request.",
+  "agree": "Yes — both flag it as failing.",
+  "confidence": 5
  },
  {
   "task": "6a17cc59ea9a7319a6ca06d4",

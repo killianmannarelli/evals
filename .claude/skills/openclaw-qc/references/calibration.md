@@ -22,19 +22,38 @@ that has two issues — take its max severity).
 
 ## What is gradeable (in-scope defect types)
 - **Penalize-correct / factually-wrong gold** — the criterion rewards a wrong value or penalizes a correct one
-  (verify against the prompt + pixels). Major.
-- **Over-specification** — demands content / method / exact values / filenames / schemas / sections the **live
-  prompt** never asks for. Major if material, else Moderate (Overfitting).
+  (verify against the prompt + pixels). Major. **Includes: a criterion that rewards/requires a value the prompt
+  explicitly says to LEAVE UNCHANGED / not recompute / keep as-is, or that otherwise contradicts an explicit prompt
+  constraint ("don't X", "only Y", "keep Z").** (d43 miss: 6/23 criteria reward *recalculated* unmatched-purchase
+  totals although the prompt says unmatched purchases stay "unchanged" → 6/23 = 26% → 6a Fail. A correct, rule-
+  following response is marked wrong, and it contradicts the task's own desired-outcome.) Major Incorrect-Criteria.
+- **Over-specification / Overfitting** — demands content / method / exact values / filenames / schemas / sections the
+  **live prompt** never asks for (Major if material, else Moderate). **Also Overfitting (Moderate): a criterion that
+  hard-codes ONE side of a genuinely AMBIGUOUS call** — where the prompt or the supplied rules admit two-or-more
+  defensible readings — and so rejects the rule-faithful answer the model can legitimately ship. (6871 miss: 8/21
+  criteria pin one reading of ambiguous flag semantics / Film-Room scoring → 8/21 = 38% → 6b Fail. Don't confuse with
+  atomicity — the defect is forcing one interpretation, not bundling.)
 - **§9a Not-Atomic** — ONE criterion fuses **distinct** concerns/columns. Moderate (Major if it fuses many
   unrelated assertions).
 - **Sign-inversion / invalid weight** — a weight outside {−5,−3,−1,+1,+3,+5}; or a negative weight on a *good*
   behavior (a correct response eats the penalty). Major.
+- **Weight miscalibration (run this actively, not just the in-set check)** — each weight must reflect the
+  **difficulty** of what it tests (tool/source coordination · reasoning depth · modality · discovery effort), NOT
+  importance. Score the intended difficulty (1/3/5 or −1/−3/−5) and compare: off by **1 level → Minor**, off by
+  **2 levels → Major** (Appendix "Incorrect Weights"). (5dff: a +5-difficulty cross-modal check weighted +1, and a
+  +1-difficulty literal-lookup weighted +3.)
 - **§9h** — internal contradiction, exact duplicate, or a complement-pair that double-scores one concern. **Also
   flag internal IRRECONCILABILITY**: when one criterion *requires* a value that another criterion *penalizes*
   (e.g. C22/C23 demand a recalculated total of 2894.50 while C14–C19 each −3 the very per-purchase numbers that sum
   to it) — no response can satisfy both sets, so the rubric is self-defeating. Major. Detectable with NO external data.
 - **§9d** — wrong filename, but only if internally inconsistent or contradicted by inputs.
-- **Missing criteria — IS bandable (not merely advisory):** (a) **Missing spot-checks** — a set of ≤5 similar
+- **Missing criteria — IS bandable (not merely advisory). FIRST build a REQUIREMENT COVERAGE MATRIX (mandatory):**
+  enumerate every explicitly-named **deliverable file**, every named **section/field within a file**, every
+  **per-entity output** (each patient/product/listing/account), and every **free-form-artifact content requirement**
+  the prompt states; mark each ✓ only if a criterion OR a unit test actually verifies it. Every unmarked row is a
+  Missing-Criteria defect (Major if core, else Moderate). This single sweep subsumes (a)–(d) below and is the
+  recurring miss class (Reshoot List, MEMORY.md fields, Paul's metrics, AD-SAMBA — all "explicit requirement,
+  unverified by rubric AND tests"). (a) **Missing spot-checks** — a set of ≤5 similar
   outcomes (e.g. 4 caption stages, 4 corrected fields) where the rubric checks only *some*; it should check all up
   to 5 → **Major** Missing-Criteria. (b) **An explicit prompt requirement or planted error with ZERO coverage** —
   no criterion AND no unit test verifies it (e.g. a required reshoot-list deliverable; a planted date error the

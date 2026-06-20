@@ -24,12 +24,24 @@ NEVER use story.desired_outcome or Pass@K.
 1. Read agent_prompt.md + active_rubric.md; VIEW all images in inputs/.
 2. Classify each criterion CORRECT / WRONG / OVER-SPEC / NOT-ATOMIC:
    - Penalize-correct / factually-wrong gold (Major): rewards a wrong value or penalizes a correct one — verify vs pixels/prompt.
+     INCLUDES a criterion that rewards/requires a value the prompt explicitly says to LEAVE UNCHANGED / not recompute /
+     keep as-is, or that contradicts any explicit prompt constraint ("don't X", "only Y") = Incorrect-Criteria Major
+     (d43 miss: 6/23 criteria reward recalculated unmatched-purchase totals the prompt said stay "unchanged").
    - Over-spec (Major if material): demands content / method / exact values / filenames / schemas the live prompt never asks for.
+     Also OVERFITTING (Moderate): a criterion that hard-codes ONE side of a genuinely AMBIGUOUS call (prompt/rules admit
+     ≥2 defensible readings), rejecting the rule-faithful answer (6871 miss: 8/21 pinned one reading of ambiguous flag
+     semantics / Film-Room scoring → 38% → Fail). This is forcing one interpretation, NOT atomicity.
    - §9a Not-Atomic: ONLY when ONE criterion fuses DISTINCT concerns. A per-item / named-instance listing of one
      item's own fields, or instances of the SAME concern, is the endorsed spot-check → EXEMPT (calibration ruling #1).
    - Invalid weight: value outside {-5,-3,-1,+1,+3,+5}. Sign-inversion (negative weight on a good behavior) = Major.
+     WEIGHT MISCALIBRATION (run actively): score each weight's intended DIFFICULTY (tool/source coordination, reasoning
+     depth, modality, discovery) — off by 1 level = Minor, off by 2 = Major (5dff: a +5-difficulty cross-modal check weighted +1).
    - §9h: internal contradiction / complement-pair / exact duplicate. §9d: wrong filename (check vs inputs/).
-   - MISSING-CRITERIA SWEEP (bandable, count toward the denominator; confirm each is ALSO uncovered by any unit test):
+   - MISSING-CRITERIA SWEEP (bandable; count toward denominator; confirm each is ALSO uncovered by any unit test).
+     FIRST build a REQUIREMENT COVERAGE MATRIX (mandatory): list every explicitly-named deliverable file, every named
+     section/field within a file, every per-entity output, and every free-form-artifact content requirement the prompt
+     states; mark ✓ only if a criterion OR test verifies it; every unmarked row is a Missing-Criteria (Major if core
+     else Moderate). This subsumes (a)-(d) and is the #1 recurring miss (Reshoot List, MEMORY.md fields, Paul, AD-SAMBA).
      (a) a ≤5 set of similar outcomes where only some are checked → Major; (b) an explicit prompt requirement / planted
      error with ZERO coverage → Major if core else Moderate; (c) **ASYMMETRIC PER-ENTITY COVERAGE** — when the prompt
      requires the SAME outputs for multiple named entities (2+ patients/products/listings/people/files), the rubric must

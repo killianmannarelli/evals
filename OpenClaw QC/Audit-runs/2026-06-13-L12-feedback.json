@@ -55,14 +55,14 @@
   "task": "6a0ffe25088789f616666871",
   "scenario": "A YouTube creator wants their thumbnails audited and scored against a playbook, saved to CSV reports and a style guide.",
   "did": "Audit each thumbnail candidate, score and flag each series, and save the two CSVs plus a style guide.",
-  "why": "C6 demands one exact verbose sentence for the verdict reason even though the prompt leaves the wording open, so an answer that states the same logic differently is marked wrong. C18 also has a stray '| Instruction Following' label left dangling in the criterion text.",
-  "fix": "Let C6 accept any clear statement of the same logic, and delete the stray label from C18.",
-  "verdict": "Non-Fail",
-  "confidence": 76,
+  "why": "Many per-thumbnail calls are sound, but a large block of checks lock in one reading of genuinely ambiguous rules — the flag semantics in C4/C5 vs C6 and the Film Room scoring in C8/C14/C20/C21 — so a response that reads the rules the other, equally-valid way is marked wrong. There's also no check for the Notion request the prompt makes.",
+  "fix": "Loosen C4/C5/C6 and C8/C14/C20/C21 to accept either valid reading (or pin the rule unambiguously in the prompt), and add a check for the Notion request.",
+  "verdict": "FAIL",
+  "confidence": 5,
   "platform": "49%",
   "viewer": "Fail",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a29705e40f9479e97db0540/index.html",
-  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+  "agree": "Yes — both flag it as failing."
  },
  {
   "task": "6a17cc59ea9a7319a6ca06d4",

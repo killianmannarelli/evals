@@ -75,13 +75,14 @@
   "task": "6a2252a7226df6fc69476d43",
   "scenario": "Check ticket-purchase spending against the actual records.",
   "did": "Reconcile the summary sheet against the real ticket records and correct it.",
-  "why": "No issues found — the checks are sound, and the corrected values rely on the ticket records the task draws from its connected source.",
-  "fix": "None — looks good.",
-  "verdict": "Pass",
+  "why": "The prompt says unmatched purchases must stay unchanged, but 6 of the 23 checks reward a recalculated total for those purchases — so a response that correctly leaves them as-is is marked wrong (and it goes against the task's own intended answer).",
+  "fix": "Change those 6 checks to accept the unchanged unmatched-purchase values (don't reward recalculating them).",
+  "verdict": "FAIL",
   "platform": "39%",
   "viewer": "Fail",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a2ad44cc89688a9d1f23bc9/index.html",
-  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+  "agree": "Yes — both flag it as failing.",
+  "confidence": 5
  },
  {
   "task": "6a210a723e6e63649d93d621",

@@ -211,14 +211,14 @@
   "task": "6a0ffe25088789f616666871",
   "scenario": "Audit a YouTube channel's thumbnails against its playbook and score the series.",
   "did": "Check each thumbnail against the layout/text rules and tally the series scores.",
-  "why": "The checks are accurate against the thumbnails; two fold separate things together — C8 bundles a series score with its derived pass/fail flag, and C11 bundles a color value with its effective date and source — so each part can't be scored cleanly.",
-  "fix": "Split C8 (score vs flag) and C11 (value vs date vs source) into separate checks.",
-  "verdict": "Non-Fail",
-  "confidence": 68,
+  "why": "Many per-thumbnail calls are sound, but a large block of checks lock in one reading of genuinely ambiguous rules — the flag semantics in C4/C5 vs C6 and the Film Room scoring in C8/C14/C20/C21 — so a response that reads the rules the other, equally-valid way is marked wrong. There's also no check for the Notion request the prompt makes.",
+  "fix": "Loosen C4/C5/C6 and C8/C14/C20/C21 to accept either valid reading (or pin the rule unambiguously in the prompt), and add a check for the Notion request.",
+  "verdict": "FAIL",
+  "confidence": 5,
   "platform": "49%",
   "viewer": "Fail",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a2fc86ee0acb0d808a25957/index.html",
-  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+  "agree": "Yes — both flag it as failing."
  },
  {
   "task": "6a1fbaebeae04350ba1af221",
