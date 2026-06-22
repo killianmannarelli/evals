@@ -58,10 +58,12 @@ NEVER use story.desired_outcome or Pass@K.
      uncovered component = Non-critical Moderate (Major if it's the primary deliverable). (Real miss — 5dff: prompt
      required MEMORY.md to log reviewed SKUs AND the listing_qa.md path; C5 only checked the one flag reason → 2
      Moderate missing → 2/5 = 40% > 15% → 6b Fail.)
-   - Tests-Correctness (V9 16) — IF unit_tests.py is present, evaluate each test vs the prompt + inputs: a test whose
-     logic is misaligned / contradicts the inputs / is overly specific so it wrongly FAILS a faithful correct response
-     is an incorrect test. ≥10% incorrect → Fail driver (step 4, record driver "Tests-Correctness", bands may be 0/0/0).
-     Tests Underfitted/Coverage/Redundancy (17-19) stay OUT OF SCOPE. Justification (20), Category (8), Cross-Modal Synthesis (9),
+   - Tests (V9 16-19) — IF unit_tests.py is present, evaluate the tests (each is a Fail driver, step 4; bands may be 0/0/0):
+     Correctness(16) ≥10% tests misaligned/contradict inputs/over-specific → wrongly fail a correct response;
+     Underfitted(17) >30% too loose → accept INVALID responses (GUARD: not underfitted if the rubric covers the wiggle room);
+     Coverage(18) >20% of expected mechanical checks covered by NEITHER test NOR rubric (GUARD: rubric-covered = covered);
+     Redundancy(19) >1 pair of tests/criteria checking identical behavior. Verify against prompt+inputs+rubric (drawer over-flags tests).
+     Justification (20), Category (8), Cross-Modal Synthesis (9),
      Architectural Depth (10), and process-targeting are advisory/Non-Fail-capped — never our Fail line.
 3. UNVERIFIABLE golds (need an input you don't have — e.g. a connected-service value) never anchor a Fail (Rule 19c).
 4. NON-CRITERIA FAIL DRIVERS (V9) — a VERIFIED one = **Fail** even if the bands are clean (set verdict=Fail, name the
@@ -73,8 +75,9 @@ NEVER use story.desired_outcome or Pass@K.
    - Artifact Verification (5): NO rubric criterion (nor test) depends on the CONTENT of a non-text input (existence/filename-only doesn't count).
    - Leak Prevention (6): the solution is explicitly stated in a non-media field (filename / contributor note).
    - Safety (7): an input artifact contains real PII identifying a real, existing person (not synthetic/mocked).
-   - Tests-Correctness (16, ONLY if unit_tests.py present): ≥10% of the unit tests are incorrect/misaligned (contradict
-     the prompt or inputs, or are overly specific) so they wrongly fail a faithful correct response.
+   - Tests (16-19, ONLY if unit_tests.py present): Correctness ≥10% incorrect/misaligned (wrongly fail a correct response);
+     Underfitted >30% too loose (accept invalid; unless rubric covers it); Coverage >20% expected checks in neither test nor
+     rubric; Redundancy >1 identical test/criterion pair. Name the specific dimension in fail_drivers.
 
 BAND (count DISTINCT defective CB-authored criteria; never double-count one criterion): denom = #criteria.
 6a Fail if Major >10%; 6b Fail if Major+Moderate >15%; 6c Fail if any-severity >20%.

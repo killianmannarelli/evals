@@ -114,16 +114,23 @@ clearly verified against the prompt + viewed inputs + trajectory:
 - **Feasibility (3)** — the **PRIMARY** request is impractical/impossible with the available tools. (Secondary-only
   infeasibility = Non-Fail, not our Fail line.)
 - **Output filename (2)** — the prompt requests a file as output but never specifies its filename.
-- **Tests — Correctness (16), IN SCOPE WHEN UNIT TESTS ARE PRESENT** — read the task's unit tests
-  (`sot/<tid>/unit_tests.py`, surfaced by `dump_tests.py`). A test whose logic is **misaligned with the prompt /
-  contradicts the inputs**, or is **overly specific**, so that it **wrongly fails a faithful/correct response**, is an
-  incorrect test. If **≥10%** of the unit tests are incorrect → **Fail** driver (record `verdict=Fail`, driver
-  "Tests-Correctness", bands may stay 0/0/0). (2d3f: 2 tests assert a CSV column `all_in_monthly` the prompt never
-  defines and that contradicts `Book1.xlsx`'s `all_in` → a header-preserving correct answer fails → Tests-Correctness Fail.)
+- **Tests (V9 dims 16–19), ALL IN SCOPE WHEN UNIT TESTS ARE PRESENT** — read the task's tests (`sot/<tid>/unit_tests.py`,
+  surfaced by `dump_tests.py`). Any one of these, verified, is a **Fail driver** (record `verdict=Fail`, name the driver;
+  bands may stay 0/0/0). Apply each with its V9 threshold **and the spec's own guard** (don't over-flag; verify against
+  the prompt+inputs+rubric, since the drawer over-flags tests):
+  - **Correctness (16)** — a test whose logic contradicts the prompt/inputs or is overly specific so it **wrongly fails a
+    correct response**. **≥10%** of tests incorrect → Fail. (2d3f: 2 tests demand a `all_in_monthly` column the prompt
+    never defines, contradicting `Book1.xlsx`'s `all_in` → a header-preserving correct answer fails.)
+  - **Underfitted (17)** — a test too loose/lenient that **accepts invalid** responses (not just valid ones). **>30%**
+    underfitted → Fail. GUARD: if the matching rubric criterion legitimately covers the wiggle room (e.g. an unspecified
+    column name the rubric checks instead), it is NOT underfitted.
+  - **Coverage (18)** — an expected mechanical check (file existence, schema, exact stated value) covered by **neither a
+    test nor the rubric**. **>20%** missing → Fail. GUARD: a check covered by the rubric counts as covered (Non-Fail),
+    and PDF-type/non-extractable artifacts need only existence checks.
+  - **Redundancy (19)** — **>1 pair** of tests/criteria checking the identical behavior with no difference → Fail
+    (same structure, different inputs ≠ redundant).
 
-**Out of scope (advisory / conditional / capped at Non-Fail — never our Fail line):** **Tests — Underfitted /
-Coverage / Redundancy** (V9 dims 17–19; advisory unless they make a test outright incorrect, which is dim 16 above).
-**Justification**
+**Out of scope (advisory / conditional / capped at Non-Fail — never our Fail line):** **Justification**
 (dim 20, Non-Fail max). **Silver-Trajectory Category** (dim 8, Non-Fail max, optional). **Cross-Modal Synthesis**
 (dim 9) & **Architectural Depth** (dim 10) — trajectory/task quality, advisory. Process-targeting
 (`evaluation_target=trajectory`) is advisory, never banded. (V9 has **no** Ratings-Validity dimension — dropped.)

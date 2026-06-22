@@ -66,8 +66,9 @@ This fixes the most common miss — a Pass built on golds the trajectory actuall
 admissible grounding; `desired_outcome` / Pass@K are not (dump_trajectory excludes them).
 
 **2c. Surface the unit tests (every run).** Pull the task's `verifier.py` out of the rehydrated JSON so auditors can
-grade **Tests-Correctness** (a test whose logic contradicts the prompt/inputs or is overly specific, wrongly failing a
-correct response, is incorrect; ≥10% incorrect → Fail). No-op when the task has no tests.
+grade the **Tests dimensions** (V9 16–19, in scope when tests are present): Correctness (≥10% misaligned), Underfitted
+(>30% too loose), Coverage (>20% expected checks in neither test nor rubric), Redundancy (>1 identical pair) — each a
+Fail driver. No-op when the task has no tests.
 ```
 python3 scripts/dump_tests.py --task "$WS/tasks/<tid>.json" --out "$WS/sot/<tid>/unit_tests.py"
 ```
