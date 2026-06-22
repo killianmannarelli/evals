@@ -105,6 +105,7 @@ WITH latest AS (
         ta.attempted_by,
         ta.attempted_at,
         t.metadata AS task_metadata,
+        t.SPECIALIZATIONS AS specializations,
         hn.review_level,
         hn.status AS hn_status,
         ROW_NUMBER() OVER (PARTITION BY ta.task ORDER BY ta.attempted_at DESC) AS rn
@@ -117,7 +118,7 @@ WITH latest AS (
       AND ta.attempted_by != '{EXCLUDE_ATTEMPTER_ID}'
 )
 SELECT latest.task, latest.response, latest.attempted_by, latest.attempted_at,
-       latest.task_metadata, u.email AS attempter_email
+       latest.task_metadata, latest.specializations, u.email AS attempter_email
 FROM latest
 LEFT JOIN PUBLIC.USERS u ON u._ID = latest.attempted_by
 WHERE latest.rn = 1
@@ -381,6 +382,14 @@ def main() -> int:
         task_metadata = html_unescape_deep(parse_response(row.get("task_metadata") or row.get("TASK_METADATA")))
         response = html_unescape_deep(parse_response(row.get("response") or row.get("RESPONSE")))
         inline_form_data = extract_inline_form_data(response)
+        # PUBLIC.TASKS.SPECIALIZATIONS — a JSON-array column (often empty []); store
+        # a flat display string for the QC sheet's Specialization column.
+        _spec_raw = row.get("specializations") or row.get("SPECIALIZATIONS")
+        try:
+            _spec = json.loads(_spec_raw) if isinstance(_spec_raw, str) and _spec_raw.strip().startswith("[") else _spec_raw
+        except Exception:
+            _spec = _spec_raw
+        specializations = ", ".join(str(x) for x in _spec) if isinstance(_spec, list) else (_spec or "")
         record = {
             "task_id": task_id,
             "project": args.project,
@@ -392,6 +401,7 @@ def main() -> int:
             "response_shape": inline_form_data.get("shape"),
             "inline_form_data": inline_form_data if inline_form_data.get("shape") == "inline" else None,
             "task_metadata": task_metadata,
+            "specializations": specializations,
         }
         # Count URL-shaped values inside task_metadata so the orchestrator can
         # decide whether artifact-fetching is worth enabling without re-parsing.

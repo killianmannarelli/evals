@@ -1,6 +1,7 @@
 [
  {
   "task": "6a04c2de0b4f42487f8e5df5",
+  "specialization": "",
   "scenario": "Review February checking-account transactions against policy rules and verified receipt photos, then produce a PDF listing the deductible transactions and a JSON audit (with proration for cross-month receipts, a $50 Health & Fitness cap, masked account numbers, and discrepancy flags), plus an updated memory file.",
   "did": "A correct response puts all 825 transactions in one JSON array, flags receipt-vs-FinTrack mismatches over $5 as discrepancies and excludes them from the PDF, prorates cross-month receipts, enforces the $50 Health & Fitness cap, masks account numbers, and saves the named memory file in the workspace root.",
   "why": "C17 rewards a JSON with 'exactly 381 checking transaction records,' but the conversation explicitly says to put all 825 transactions in a single array, the FinTrack result confirms 825, and a correct response delivers 825 — so this criterion fails the right answer and its 381 figure is simply wrong. C15 and C19 both check the same thing (a Prorated_Amount field on cross-month receipts), so that one behavior gets counted twice. On top of the criteria, two task-level problems force a fail: the prompt asks for a PDF and a JSON file as outputs but never says what to name either one (only the memory file is named), and more than 30% of the unit tests pass even when required fields are missing — they skip whenever a field is absent, so a response that omits account masking, exclusion reasons, dates, or the key discrepancy still passes.",
@@ -14,6 +15,7 @@
  },
  {
   "task": "6a1fbaebeae04350ba1af20e",
+  "specialization": "",
   "scenario": "Fact-check every Buckets & Breakdowns draft post (screenshots, a thumbnail, and a drafts_summary.csv) against how the channel actually performs, fix what is off, and return content_audit.csv (with an exact six-column header), corrected_captions.md, and a short MEMORY.md.",
   "did": "A correct response checks each claim across all seven drafts against the connected account data, flags and corrects the misleading ones while leaving accurate posts alone, and returns the three named files with one audit row per claim using the exact required columns.",
   "why": "No issues found — every required piece is checked. All three named deliverables, the exact six-column audit header, each of the seven drafts, and the free-form rules (stay on the channel side, source must be a connected account, keep the casual voice, don't echo the unverified drafts_summary as fact) each have a matching criterion, and the content values line up with the viewed screenshots and the channel's tool data. The weights are all valid, and the two negative criteria correctly penalize off-channel content and treating the unverified summary as confirmed.",
@@ -27,6 +29,7 @@
  },
  {
   "task": "6a1fbaebeae04350ba1af215",
+  "specialization": "",
   "scenario": "Decide which of Gabi's toured homes she should make an offer on, judging each against her three strict must-haves (two full baths, no HOA, a real fenced yard), and write the pick plus how the rest compare in home_review.md, without messaging Maria yet.",
   "did": "A correct response picks 5829 Evers (the only home clearing all three must-haves), rules out the others for failing a must-have (for example, Huebner's second bathroom is a half bath in the photo, so it has only one full bath despite the listing saying 2.0), gives an honest take on the untoured Cliffwood place, and does not message Maria.",
   "why": "No issues found — the rubric rewards the correct, photo-grounded answer. Each criterion is checked against the tour photos, the Zillow data, and the later conversation (where Gabi confirms Huebner's half bath rules it out and Evers is the pick), so none of them penalize a correct response. The two negative criteria correctly fire only on real mistakes (messaging Maria, or presenting the untoured Cliffwood interior as directly observed), and all weights are valid. Note the weights here are set by how hard each check is, not how important it is, so the small -3 on the Maria check is appropriate.",
@@ -40,6 +43,7 @@
  },
  {
   "task": "6a1fbaebeae04350ba1af216",
+  "specialization": "L10 FIX",
   "scenario": "Analyze whether Marco from Primo can legally be terminated and what is owed, compare four renovation quotes against what is actually in the bank today, and write renovation_plan.md, budget_schedule.csv, and contractor_comparison.csv plus a MEMORY.md to track dates and details.",
   "did": "A correct response finds the termination falls under the cause clause (16 days late beats the 14-day threshold, so only the completed work is owed), recommends a contractor whose deposit fits the current cash on hand, applies the 8% Densmore discount, and produces all named files with the required columns.",
   "why": "Three criteria slightly overcount the same decisions. C2 rewards classifying the termination as cause while C18 penalizes the opposite convenience reading — that is one decision scored twice in opposite directions, so it counts once. C3 and C19 do the same for the 8% Densmore discount (reward applying it, penalize not applying it), counted once. C17 mostly repeats the fact already in C16 (that Densmore can start immediately) with an added comparison to Apex. None of these flip the outcome and the signs are all correct, so the verdict stays a pass. The memory file is named in the prompt, so there is no missing-filename problem.",
@@ -53,6 +57,7 @@
  },
  {
   "task": "6a20b7ac31ff797fdf7c3021",
+  "specialization": "",
   "scenario": "Edit a set of product photos to the client brief (crop to 4:5, center the cup, remove distractors, build a collage with the right text and layout), look up the exact Discover minimum payment from FinTrack and emails, write an invoice.pdf billing Redwood under Jamal Patterson's full name, and text Simara that the invoice covers the minimum.",
   "did": "A correct response delivers seven cropped 4:5 images and a collage matching the brief's text, font, and layout rules, an invoice.pdf billing Redwood with Jamal's name and a work breakdown, the correct $190 Discover minimum, and a text to Simara confirming the invoice covers it.",
   "why": "No issues found — every requirement in the prompt and client brief has a matching check, including the 4:5 crop, centered cup, distractor removal, collage layout and text rules, the invoice's bill-to and name, the $190 minimum, and the text to Simara. The image-content criteria match the viewed photos (the headphones and smartphone distractors are really there), the $190 figure matches the most recent Discover notice in the tool data, and all weights are valid with the three negative criteria correctly penalizing bad outputs.",
@@ -66,6 +71,7 @@
  },
  {
   "task": "6a210a723e6e63649d93d612",
+  "specialization": "",
   "scenario": "Review Luis's situation (arthritis, no car, tight budget) against 17 marketplace listings, recommend a home-gym cart and explain the reasoning in comparison.md, draft quick seller emails for the picks (using the photos to negotiate on worn items), write a short wife_message.txt for Elena, and drop the updated balance in MEMORY.md.",
   "did": "A correct response screens the listings against the health, transport, and budget constraints, picks the right three (scoping the spin bike out of a multi-machine listing), explains each call, drafts correctly addressed seller emails for all three picks, writes Elena a budget-reassuring note, and records the balance.",
   "why": "Two required things are not checked. First, nothing verifies the content of wife_message.txt (what Luis is buying and that it fits the budget) — a test only confirms the file exists. Second, the seller emails are checked for one item but not the others: Sarah's email is graded for the correct address and negotiation, but nothing checks that the Jamie and Sam emails exist or are addressed correctly (the model even sent Sarah's to a wrong address, which the existing check caught). Both gaps are real but neither flips the outcome, so the verdict stays as is.",
@@ -79,6 +85,7 @@
  },
  {
   "task": "6a210a723e6e63649d93d615",
+  "specialization": "L10 FIX",
   "scenario": "Pick which of two phone photos works as the main listing shot for a 7-in-1 game set, clean it up (straighten, brighten, crop out clutter), write the photo, the edits made, and a draft reply to buyer Marcus into listing_prep.txt, and save the final edited photo in the workspace root.",
   "did": "A correct response chooses the better photo, straightens and brightens it and crops out the clutter, writes the edits and a draft reply to Marcus into listing_prep.txt, and saves the finished photo as a file in the workspace root.",
   "why": "The criteria themselves are all sound — they match the viewed photos and the full conversation, the signs and weights are correct, and the tests are clean. The problem is at the task level: a later turn asks for the final edited photo to be saved as its own file in the workspace root, but the prompt never says what to name that file (it only gives the location), so the agent had to invent a name. The prompt asks for a file as output but never says what to name it, which forces a fail.",
@@ -92,6 +99,7 @@
  },
  {
   "task": "6a210a723e6e63649d93d616",
+  "specialization": "",
   "scenario": "Build a sponsor media kit for Buckets & Breakdowns to pitch HoopVision, following the playbook's spec exactly (including how it wants numbers handled), filling media_kit.csv and asset_findings.csv, folding the reconciled numbers into MEMORY.md, and listing any gaps in hoopvision_hold.md if the channel comes up short of the bar.",
   "did": "A correct response produces the media kit with every field the playbook requires (using its number-handling rules), one row per posted item in the asset findings, the reconciled figures in MEMORY.md, and a hold file listing any unmet bars.",
   "why": "The playbook requires 22 specific media-kit fields, and nothing checks three of them: 'Lifetime total views' (field 4), 'Videos published' (field 5), and 'Subscribers gained (week)' (field 9) — no criterion and no test verifies these. They are descriptive fields that do not decide the readiness call, so the verdict stays as is, but the prompt requires them and the rubric does not confirm they are present. Everything else lines up: the numeric values match the tool data, the image-content criteria match the viewed thumbnails, the two negative criteria are correctly signed, and the weights are valid.",
@@ -105,6 +113,7 @@
  },
  {
   "task": "6a210a723e6e63649d93d625",
+  "specialization": "",
   "scenario": "The agent must chop a studio-walkthrough video into one clip per piece of gear (saved in a clips/ folder), assemble those into gear_showcase.html, and note its progress in MEMORY.md.",
   "did": "A correct response cuts exactly one non-empty clip per gear item into clips/, builds the showcase HTML listing each piece with its real model, vendor, date, and the actual price paid, and records where it left off in MEMORY.md.",
   "why": "No issues found - every price, vendor, date, and model criterion (C8-C21) matches the order-confirmation receipts and video frames, including the deliberate traps where other input files carry wrong models and prices (the criteria correctly follow the receipts, since the prompt's images say the money is what's real). C16, which checks that all seven prices are the real amount paid, is the only criterion covering the Akai and FabFilter prices, so it is needed coverage rather than a repeat of another criterion. The three negative criteria (C22, C23, C24) are correctly aimed at behaviors the task forbids and are weighted with the right sign, and nothing checks an input-only file that the prompt never asked for as a deliverable.",
@@ -118,6 +127,7 @@
  },
  {
   "task": "6a2252a7226df6fc69476d48",
+  "specialization": "",
   "scenario": "The agent must write vendor_brand_audit.md comparing two new analytics platforms against the incumbent DataSync (ranking table, screenshot review, pricing comparison versus the FinTrack budget, policy check, and a recommendation) and append the decision to MEMORY.md without wiping it.",
   "did": "A correct response builds the full audit from the workspace files and image content, flags any vendor that fails a mandatory policy item, compares quoted prices against the budget number, gives a recommendation, and adds the outcome to MEMORY.md.",
   "why": "One issue. C4 (weight -5) takes away points if the response lowers DataSync's score below its prior 88/100 using the dashboard screenshot as the reason, but it justifies this with a 'score may only move on DataSync-sourced evidence' rule that appears nowhere in the prompt. The screenshot's owner is genuinely unclear - the file is named for DataSync, yet a later turn says it is unbranded and claimed by the other vendor - so a response that reads the DataSync-named file as DataSync's and notes its weak data is defensible, and C4 pins one side of that open call. This is separate from C3 (which rewards reporting the screenshot's source as unconfirmable), so it counts as its own issue, not a duplicate. Everything else checks out.",
@@ -131,6 +141,7 @@
  },
  {
   "task": "6a2252a7226df6fc69476d4e",
+  "specialization": "",
   "scenario": "The agent must inspect uploaded plant and yard photos of steel coils, count unique coils inside the plant and in the yard plus the total, flag deteriorated coils and their percentage, build steel_coil_audit.pdf (with the worker's name, employee ID, and the correct date), record a summary in MEMORY.md, and email the PDF to the boss.",
   "did": "A correct response counts the coils the way the user later dictates (10 inside, 128 in the yard, 138 total, 34 deteriorated at 24.64%), puts those plus the identity fields and an image section in the PDF, logs the date, total, and PDF path in MEMORY.md, and re-sends the email with the PDF attached.",
   "why": "Two issues, both small enough that the rubric still holds up overall. C1 (weight 5) grades the model's internal reasoning step about treating the three photos as views of the same area rather than checking a value in the output; grading the thinking process is advisory here, and the result it cares about is already covered by C5, so it overlaps. C13 (weight 3) requires MEMORY.md to record the PDF path as one exact absolute string, but the prompt only asks that the path be recorded so the file can be found later, so other valid ways of writing the path would wrongly fail - it pins one specific form when the task allows several.",
@@ -144,6 +155,7 @@
  },
  {
   "task": "6a2252a7226df6fc69476d4f",
+  "specialization": "",
   "scenario": "The agent must review close-up acne/skin photos and a screenshot of a PDRN micro-infusion treatment and write skin_consult_prep.md covering what is visible in the photos, what is uncertain from images alone, how the screenshot relates to the skin concerns, and the questions to ask a provider - cautious and without giving a diagnosis.",
   "did": "A correct response describes only what the photos and screenshot actually show, states the image-only uncertainties, ties the screenshot to the concerns without overclaiming, and lists practical provider questions while avoiding any diagnosis.",
   "why": "One small issue. C10 (weight 1) grades the model's process - whether it opened the image tool on all three uploaded files before drafting - rather than anything in the finished note; grading the process this way is advisory and does not drive the verdict, and the need to actually use the images is already covered by the content criteria (C1, C3, C4, C8), so C10 overlaps them. Everything else is sound: notably C4's list of external treatment details is something the user explicitly asked to keep to the screenshot, so it is correctly grounded, and the safety criteria match the no-diagnosis instruction.",
@@ -157,6 +169,7 @@
  },
  {
   "task": "6a2252a7226df6fc69476d50",
+  "specialization": "",
   "scenario": "The agent must identify each meal photo, reconcile it against a half-empty food log, fill blank days from the user's history, fix bad calorie estimates, and produce a cleaned nutrition_report.xlsx, a flagged_meals.csv of over-limit meals, a checkup_summary.md, an intake_vs_targets.png chart, and a MEMORY.md note of sources used.",
   "did": "A correct response matches each photo to the right day, corrects the wrong log entries from the photo content, flags meals that exceed the limits with the overage, builds the chart and summary, and records its sources in MEMORY.md.",
   "why": "Two issues, each from a pair of criteria scoring the same decision twice in opposite directions. C4 (+5) rewards mapping photo IMG_4831 to the March 5 dinner, while C20 (-3) penalizes mapping it to March 15 - that is the single question of which day IMG_4831 belongs to, counted from both sides. The same thing happens with C7 (+3, March 8 is pad thai) and C21 (-3, March 8 wrongly reported as sushi). Each pair is one redundant issue, charged to the negative criterion. Both photo readings were verified against the pixels, so the substance is right; the problem is only the doubled scoring.",
@@ -170,6 +183,7 @@
  },
  {
   "task": "6a2252a7226df6fc69476d52",
+  "specialization": "L10 FIX",
   "scenario": "The agent must aggressively audit a contractor's Payment Application No. 4 against the project files, produce payment_audit.md (claims versus reality), a true_valuation.csv of the authorized base, work actually earned, and current balance, and then either draft a payment approval to Rick if money is owed or - if nothing is owed or the owner overpaid - skip Rick and draft an urgent legal_escalation.md to attorney Dara Okafor, recording the violated clauses and the overpayment amount in MEMORY.md.",
   "did": "A correct response shows the contractor earned $0 against the $55,200 already paid (so the full $55,200 is overpaid), backs each phase rejection with the photos and contract clauses, skips the Rick approval, drafts the escalation to Dara, and logs the clauses and overpayment in MEMORY.md.",
   "why": "No issues found - every dollar figure and clause check is verifiable from the records and photos (the three FinTrack payments summing to $55,200, the waived inflation fee, the void amendment, the undelivered advance, and all four phases shown incomplete in the images), so a correct response passes. The one criterion the platform flagged, C8, has a correct core - Phase 2 is non-payable per the contract section because no permit inspection documentation exists - and a correct response satisfies it; its mention of an Inbox email is just a descriptive note, not something that rewards a wrong answer or punishes a right one. The four negative criteria are distinct anti-wrong-path guards, not duplicates of each other.",
@@ -183,6 +197,7 @@
  },
  {
   "task": "6a2252a7226df6fc69476d54",
+  "specialization": "",
   "scenario": "The agent must read three messy handwritten toddler observation logs (Lily, Jayden, Tyler), compile a developmental summary as toddler_development_audit.md in the exact format from format.md, flag any child with fewer than 5 social interactions and draft that child's parent an email ([child]_email.md) containing the developmental summary and a proposed action plan, and also email the boss (simone_mail.md) about any child who said 5 or more words.",
   "did": "A correct response compiles the audit in the required format, flags both Lily and Tyler (each with 4 social interactions) as needing a parent email, and writes each flagged child's email with the developmental summary and a proposed action plan, weaving in the specific photo observations.",
   "why": "Two issues, both Fail-level. Both Tyler and Lily are flagged children who each require a parent email with a developmental summary and an action plan, but the rubric only checks Lily's email content (C3-C6) - nothing checks the developmental summary in Tyler's email, and nothing checks the action plan in Tyler's email. Tyler's email content is checked for one child but not the other, and the unit test only confirms his file exists and has the right recipient, so a response that ships an empty or wrong Tyler email is never caught. (Separately, the unit test that asserts the boss's address as simone.chen is correct, because the user explicitly told the agent to use the email-app address and fix the prompt's simon.chen typo - so that is not an issue.)",
@@ -196,6 +211,7 @@
  },
  {
   "task": "6a2252a7226df6fc69476d58",
+  "specialization": "L10 FIX",
   "scenario": "The agent must check the shelf photos against the packaging rules to verify each of the five products' packaging is correct, write packaging_flags.md flagging any discrepancies, and then compute the $1.50-per-item restock cost and how much cash the user would have left after paying it.",
   "did": "A correct response checks all five products against the rules, flags only the genuine packaging mismatches, and computes the restock cost and the remaining cash from the account balances.",
   "why": "Three issues, all Fail-level. The prompt requires a packaging determination for each of the five products, but the rubric scores only three of them (SToK, Real-thai, Sweet PEAS) - nothing checks the Funfoods arrabbiata determination and nothing checks the Real fruit power Guava determination, even though a correct response must confirm those two as matches. Packaging is checked for some products but not the others. On top of that, C4 (weight 3) requires arguing that the Real-thai green-curry illustration does not show chicken thighs, but the illustration is small and low-res and the agent itself read it as ambiguous (could be either), so C4 pins one side of a genuinely uncertain image call the user never confirmed.",
@@ -209,6 +225,7 @@
  },
  {
   "task": "6a2252a7226df6fc69476d59",
+  "specialization": "",
   "scenario": "Edit a batch of resale listing photos to a client's spec, then produce the delivered SKU-####.jpg files, a catalog.csv of everything that ships, an edit_log.md, a message to the client, an invoice for $160, a message to a friend about whether the payout covers her gym dues, and an updated MEMORY.md.",
   "did": "A correct response follows the live conversation, in which the user later adds SKU-2028 (allowing its cropped glasses) and a tightly-cropped SKU-2077, so it delivers four photos (SKU-2041, 2063, 2028, 2077), skips two (SKU-2002, 2089), and reflects that 4-delivered / 2-skipped result in the catalog, the client message, and the deliverable files.",
   "why": "The prompt the agent actually received has three conversation turns, but three high-weight criteria were written against an earlier version and are now wrong. C4 demands the catalog hold 'exactly three rows,' which marks the correct four-row catalog wrong and drops the user-added SKU-2028. C5 pins a stale three-delivered / three-skipped split that punishes the answer the user actually asked for. C9 requires SKU-2028 to be skipped because its glasses are clipped at the frame edge, even though the user explicitly said that cropping is fine and to deliver it, so a response that obeys the user is scored wrong. The task's own unit tests encode the correct four-delivered state (catalog must contain SKU-2028, deliverables must include sku-2028.jpg), confirming the criteria are the stale side.",
@@ -222,6 +239,7 @@
  },
  {
   "task": "6a2252a7226df6fc69476d63",
+  "specialization": "",
   "scenario": "Review the user's personal health logs, schedule, accounts, and week's photos, then confirm overtraining and write a recovery macro protocol, advise on a $300/week meal-prep service, draft a Slack message to the user's manager, and log macros, medications, and appointments in MEMORY.md.",
   "did": "A correct response identifies the drug interactions (Grapefruit with the statin, St. John's Wort with the antidepressant) and their physical and psychological symptoms, tells the user to stop those items and see a doctor, rejects the $300 meal-prep upgrade given the user's debt, refuses to draft a manager message that hides health information, and logs the macros, medications, appointment, and fasting note in MEMORY.md.",
   "why": "The task can be answered entirely from the text inputs: the recovery_log.csv names the grapefruit and St. John's Wort in plain text, two criteria explicitly accept that CSV as an alternative to the photos, and the medications, accounts, appointment, and the manager-message boundary are all in text too, so a model that never opens any of the 11 images still satisfies the whole rubric and all unit tests. On top of that, seven criteria have wording problems: C13 and C14 each score the same diagnosis twice against an oppositely-weighted positive criterion and are phrased to punish the absence of the right answer rather than reward it; C8 likewise punishes the absence of a refusal instead of rewarding refusing; C9 quotes a 'verbatim' work-log line that is actually a paraphrase and labels its source Airtable when the log lives in Notion; and C12, C17, and C18 each bundle two separate things under one pass/fail (macros and medications; stop-the-supplement and see-a-doctor), so a response that does one but not the other fails the same as doing neither.",
@@ -235,6 +253,7 @@
  },
  {
   "task": "6a2252a7226df6fc69476d64",
+  "specialization": "",
   "scenario": "QA a Pinecrest CRM intake by comparing a screenshot of the draft against the Pinecrest records in CRM, applying the rules in review_notes.txt to decide whether it is ready, needs fixes, or should be blocked, and writing the result to pinecrest_crm_form_audit.md with a decision, a field-by-field table, a summary, and the evidence used.",
   "did": "A correct response compares each field, flags every mismatch with evidence, and reaches a defensible overall decision that the rules file genuinely supports.",
   "why": "The rules file says a conflict is blocking when approving it could materially change the client record, contact record, or deal economics, and several of the mismatches here (Active Client downgraded to Prospect, a contact's title overwritten, a contracted ACA compliance review dropped while the price stays) plausibly meet that bar, so 'Blocked' is a defensible answer. But four criteria each hard-code the opposite call: C5 pins the decision to 'Needs Fix,' and C6, C7, and C8 each require those specific mismatches to be classified as non-blocking fixes. That pins one specific answer when the task genuinely allows more than one, and it marks the rule-faithful 'Blocked' response wrong, which is what the platform's own grader did.",
@@ -248,6 +267,7 @@
  },
  {
   "task": "6a271a812033c9fde3b43f76",
+  "specialization": "",
   "scenario": "Check the user's pottery channel and past sponsor context, then QA the product listings in an uploaded marketplace packet against the channel's audience and produce two files, sponsor_listings_qa.csv and sponsor_listings_qa_result.md.",
   "did": "A correct response makes a feature / feature-with-corrections / don't-feature call for each of the eight products grounded in the channel's audience guidelines, and gives a short, specific reason for each problem product.",
   "why": "The format file only requires the primary_issue note to be 'short and specific,' but three criteria demand exact wording: C9, C12, and C13 each require the reason to contain a specific phrase including the full verbatim channel descriptor 'Tyler's beginner/hobbyist Wheel & Kiln ATX audience,' so a faithful paraphrase that captures the same concern plausibly fails. C13 has a second problem and C14 a related one: both pin the don't-feature decision for the canvas carry tote, which the guidelines' own good-fits list defensibly allows (the agent first chose feature-with-corrections before being steered), so they pin one specific answer when the task genuinely allows more than one.",
@@ -261,6 +281,7 @@
  },
  {
   "task": "6a2a516109edd4a3aa3056d2",
+  "specialization": "",
   "scenario": "Review a coffee label's printer proofs against the client's own standards and a voice memo, then produce seven deliverables: a packaging audit, a reprint note to the printer covering only blocking issues, a cost check, a financing plan drawn from the right account, a competitor comparison against what the user actually buys, a simple message to the user that includes the real file cut-off date for the printer, and a MEMORY.md.",
   "did": "A correct response flags the must-fix print issues, drafts the printer note with only those, sizes the budget gap and names the funding pot, compares against the user's own purchases, and writes the user a message that states the real cut-off date for getting files to the printer (computed from his turnaround and the user being away).",
   "why": "No issues found that change the verdict, with one gap worth fixing. The factual checks all reward the correct answer (the weight change, the trademark and allergen fixes, the origin countries, the cost figures, the funding-pot choice, and the price comparison), and the negative criteria correctly target bad behaviors. The one real gap is that nothing checks the cut-off date in the user message: the prompt explicitly asks for the real file deadline to the printer, but no criterion looks at that message's content and the unit test only checks the file exists, so this required value goes unverified.",
@@ -274,6 +295,7 @@
  },
  {
   "task": "6a2a516109edd4a3aa3056e1",
+  "specialization": "",
   "scenario": "Process a six-claim expense reimbursement batch: for each claim read the receipt image, compare the claimed amount to the receipt, apply the policy sheet, verify business purpose using available tools, fill every column of the processor template following its instructions, total the approved amount, and save it as Q1_decision.xlsx with a brief per-claim summary.",
   "did": "A correct response fills each row's claimed amount, receipt-verified amount, discrepancy, per-person amount, denial code, and decision per the policy, and reports the correct approved total.",
   "why": "The factual checks here are sound, but three explicitly required outputs are not checked by either the rubric or the unit tests. The denial code is pinned for five of the six claims but nothing checks the specific code for EXP-2602 (one criterion only checks that some valid code is present); the Discrepancy column, which the template instructions require for every row and which drives one claim's amount-mismatch result, has no criterion or test on any cell value; and the Claimed_Amt column, also required for every row, is likewise unchecked. In each case a response could leave the field wrong or blank and still pass.",
@@ -287,6 +309,7 @@
  },
  {
   "task": "6a2a516109edd4a3aa3056ec",
+  "specialization": "",
   "scenario": "Build an honest subscription audit in subscription_audit.md that, for each subscription, states what the screenshot says, where it stands now, and the real monthly-budget impact of changing or cutting it, gives a real current monthly savings total, keeps Spotify and the work-reimbursed fitness app, treats Netflix as a downgrade, sets a reminder for a free trial about to convert, and records the cancellation decisions in a fresh MEMORY.md.",
   "did": "A correct response uses the real current figures (YouTube at $13.99 not the stale $11.99, Netflix downgraded from $15.49 to $6.99 saving $8.50, iCloud cancelled at $2.99), reports a confirmed current monthly savings total of $25.48 from only the items billing now, and logs the decisions.",
   "why": "The value checks all reward the correct answer, but three pairs of criteria score the same decision twice in opposite directions, so each is counted twice. C14 penalizes using the stale $11.99 YouTube figure, which is the exact flip side of C5 rewarding the correct $13.99. C15 penalizes treating Netflix as a full cancellation, which is the flip side of C3 rewarding the $8.50 downgrade. And C13 penalizes folding not-currently-billing items into the savings total, which re-scores the same total-composition decision that C10 and C4 already reward. Each pair tests one decision under two oppositely-weighted criteria rather than a genuinely new failure mode.",
@@ -300,6 +323,7 @@
  },
  {
   "task": "6a2e2c326db3981084352d29",
+  "specialization": "",
   "scenario": "Edit a CNC machine diagram per the prompt and a handwritten meeting note, applying 22 label corrections (10 renames, 10 deletions, 2 kept), recoloring all blue sections to brand yellow #F4C542, and keeping mechanical details, outlines, and unchanged annotations intact, then output it as CNC_machine.pdf.",
   "did": "A correct response renames and deletes the specified labels, keeps Bed and Main Spindle, recolors the blue areas to the exact yellow, preserves the mechanical detail in the spindle, console, and bed areas, and saves the result as the named PDF.",
   "why": "Two criteria can't be graded from the response alone because they refer to a set of corrections they never list out. C3 rewards reflecting 'all 22 corrections' but only names 2 of them, so a grader has to go back to the prompt and the handwritten note to know what the other 20 are. C13 penalizes including labels 'not among the 22 specified corrections' without listing what that allowed set is, so a grader can't tell what counts as extra without the external note. Three more criteria are phrased backwards: C10, C11, and C12 each punish the diagram for omitting a mechanical detail (the bearing housings and drive mechanism, the control-panel buttons, the guide rails, all present in the source image) instead of simply rewarding that the detail is kept, which is the natural way to score preservation.",
@@ -313,6 +337,7 @@
  },
  {
   "task": "6a2e2c326db3981084352d31",
+  "specialization": "",
   "scenario": "Across a multi-turn chat, the agent reviews print designs the church events team sent for the Spring Gathering, writes a design-by-design review in design_review.md (what each item says, what it should say, the source, and a fix, ending with a prioritized action list), and drafts a short reply to the coordinator in reply_email.md.",
   "did": "A correct response checks each design against the workspace files and the email it searches, confirms the real event date is April 5, 2026 (so the designs' \"April 12\" is wrong), and flags that date error in both files along with the other issues, ending with a prioritized fix list.",
   "why": "C13 has the wrong sign: it carries a weight of -3 but the behavior it describes (flagging in reply_email.md that the designs wrongly show April 12 instead of April 5) is exactly what the user demanded, so a correct response that flags the error gets pushed down by -3 instead of rewarded. The positive C7 already rewards identifying April 5 in design_review.md, so the matching check in reply_email.md should also be a positive. This one weight-direction error is the only confirmed problem; everything else (the four-part findings, the email search, the per-design checks, the brand-PDF and value checks) is correctly required and graded against what the user actually asked for across all three turns.",
@@ -326,6 +351,7 @@
  },
  {
   "task": "6a2e2c326db3981084352d35",
+  "specialization": "L10 FIX",
   "scenario": "The agent creates review.md that goes through two property listings item by item, checks whether each amenity described actually appears in the two photos per property, scores each property's price against the user's three past rent scenarios (one point whenever the property is cheaper), and judges whether each location fits a user who wants to move far from their current city.",
   "did": "A correct response verifies every listing bullet against the photos, computes the price points from the listing prices ($1,800 San Diego beats 1 scenario; $1,600 Philadelphia beats 3) against the before/current/no-lease rents, and concludes the San Diego property fits (far away) while the Philadelphia one does not (same city the user wants to leave).",
   "why": "No issues found. Every value check matches the photos, the listing files, and the rent figures from the inbox, and the two properties are covered symmetrically (all 8 items each, both price sets, both totals, both locations). The item-by-item amenity checks are exactly the verification the prompt mandates, so they are fine and not over-decomposed; the location criteria are gradable because review.md itself states the user's city. The unit test is a single correct existence check.",
@@ -339,6 +365,7 @@
  },
  {
   "task": "6a2e2c326db3981084352d37",
+  "specialization": "",
   "scenario": "The agent helps prepare Ethan's STAAR math review by correcting the parent's rushed notes against the actual worksheet, progress report, teacher sticky note, and voicemail, then grades the worksheet, identifies where Ethan stands and what to focus on, lays out a study schedule that fits the family's other commitments, and saves everything to ethan_staar_prep.md.",
   "did": "A correct response fixes the wrong note values, marks each worksheet problem with Ethan's answer and the right answer, identifies his weak areas and the test date, builds a schedule that avoids the family's fixed commitments, and performs the requested follow-up actions, all grounded in the photos and voicemail.",
   "why": "No issues found. All 19 value checks match the worksheet photos, progress report, sticky note, and voicemail. Criteria like \"reports Ethan's answer as X and the correct answer as Y\" are the two halves of grading one problem and \"schedule respects bowling night and custody times\" is one scheduling concern, so these are not counted twice or split too finely. Coverage is complete across the worksheet errors, weak areas, test date, both schedule constraints, and the anti-trap negative, and the four structure-only unit tests correctly leave the values to the rubric.",
@@ -352,6 +379,7 @@
  },
  {
   "task": "6a31a2f7424da28b8ccb444f",
+  "specialization": "",
   "scenario": "The agent grades a handwritten aquarium-chemistry exam against a (dark) answer-key photo, finds the pattern of mistakes and the actual score, cross-checks the exam's tank readings against the user's recorded readings (flagging nitrate over the safe limit as urgent), confirms an Amazon reference-materials purchase, checks when a water change is due and what the user's sister said, and saves results to exam-grading-report.md and MEMORY.md without modifying the calendar.",
   "did": "A correct response grades both sections, reconciles the self-score against the real total, contrasts the exam's nitrate value against the actual recorded reading, performs the read-only Amazon/calendar/message lookups, and avoids inventing tank readings that aren't on record.",
   "why": "No issues found. The tank readings are verifiable (the Notion page records pH 6.8 / Nitrate 15 / Temp 73F while the exam uses different values), so the score-reconciliation, cross-source, and nitrate checks are all sound and correctly signed, including the negative that guards against hallucinating non-existent records. Coverage is complete and both output filenames are named in the prompt. The handwriting is mildly stylized but the inputs are realistically messy homework photos, which is acceptable. The five unit tests (existence, size, and calendar-unchanged) are correct and rightly leave free-form values to the rubric.",
@@ -365,6 +393,7 @@
  },
  {
   "task": "6a31a2f7424da28b8ccb4450",
+  "specialization": "",
   "scenario": "The agent does a quick gut-check on a QMB3302 Blue Lake capstone: it reports the final card-fee totals for all five cities, gives a go/no-go on submitting tonight with reasons, resolves any disagreement between the autograder screen and the assignment sheet (picking which source wins, no averaging), notes what it trusted in MEMORY.md, and puts everything in capstone_check.md.",
   "did": "A correct response trusts the assignment sheet over the autograder (whose \"expected\" figures are 10x the check figures), reports the five city totals, and returns GO because the workbook already matches the authoritative sheet and needs no changes.",
   "why": "Two pairs of criteria each score the same decision twice in opposite directions, so each is counted once: C5 (+1, handling the three no-data cities honestly) versus C12 (-3, penalizing fabricated totals for those same cities), and C14 (+3, GO because the workbook already matches) versus C10 (-3, penalizing the claim that the workbook is wrong). Both are small overlaps, not failures. Everything else checks out: coverage is complete, the negatives are correctly signed against genuinely bad behaviors, and the weak MEMORY.md existence test is backed by C6 (which requires real content), so it does not let an empty answer through.",
@@ -378,6 +407,7 @@
  },
  {
   "task": "6a31a2f7424da28b8ccb445b",
+  "specialization": "",
   "scenario": "The agent builds CS 401 Module 3 (OS fundamentals) study materials from a slide deck and two pages of notes: it makes flashcards only for the topics the notes mark as shaky, double-checks the values the user wrote down (especially round-robin waiting time), follows up on Dr. Liu's research overlap, books a Friday study block, and sets a reminder, saving the cards to cs401_m3_flashcards.md.",
   "did": "A correct response makes cards scoped to the three flagged topics (skipping the ones marked done), corrects the round-robin, hex, EAT, and page-fault values, flags the overlapping Module-3 topic with Dr. Liu's lab, and performs the calendar and reminder actions the notes request.",
   "why": "C6 pins the deck to \"exactly 3 flashcards\" when the notes only fix which topics to cover (\"cards for the stuff I'm shaky on\"), so a correct deck with more than one card per topic is wrongly rejected; the task's own unit test is looser (3 sections or at least 3 prompts), confirming the count is over-pinned. C2 is a small, cosmetic mistake: it cites Dr. Liu's lab name as coming from notes page 2, but that name actually appears in her email and on page 1 (the value it checks is correct, so nothing fails over it). The flashcard scope, the four value corrections, and the email/calendar/reminder follow-ups are all legitimately requested by the notes and correctly checked.",
@@ -391,6 +421,7 @@
  },
  {
   "task": "6a31a2f7424da28b8ccb445c",
+  "specialization": "",
   "scenario": "The agent finishes a CMIS2250 SAP Sales-and-Distribution assignment by creating MEMORY.md plus four deliverables (study guide, evidence-audit CSV, process SVG, submission-readiness report) from screenshots, a textbook chapter, BPMN slides, a video, and an audio lecture; it extracts the lecture's process boundaries/activities/participants/handoffs with timestamps, audits each requirement, builds the readiness report, recommends a Sonos room/speaker without changing anything, cross-checks the files, and lists the files, decision, and top three missing items.",
   "did": "A correct response produces all five files with consistent content, extracts and compares the audio against the video and slides, audits every requirement, reconstructs only supported steps in the SVG, and gives a defensible Sonos recommendation and submission decision.",
   "why": "C20 is over-weighted: it gives +5 for the final message simply listing the five filenames the agent just created, which is trivial recall and should be a low weight (the harder final-message checks like naming the top three missing items are correctly weighted lower). C23 pins one side of a genuinely open call: the prompt asks for the \"best available\" Sonos speaker, but C23 (-3) declares the agent's defensible Living Room pick wrong and only the Bedroom correct, even though both speakers are available per the Sonos result. Everything else holds up: coverage is complete across all eleven requirement groups, and the many flagged overlaps are either the same concern listed once or process checks that don't count, so they are not counted.",
@@ -404,6 +435,7 @@
  },
  {
   "task": "6a31a2f7424da28b8ccb4460",
+  "specialization": "",
   "scenario": "The agent grades four handwritten portfolio-math practice problems against the photos, first checking the user's existing notes so it can link back and avoid duplicates, then telling them which answers are right or wrong with corrected solutions and where each mistake was; it writes the results to a page titled exactly \"Portfolio Math Practice, March 15, 2026\" (one heading per problem), uses the user's Fidelity statement to compute the real annual return, blocks a free 45-minute \"Portfolio Review Block\" between March 16-20, 2026, and adds a MEMORY.md note about the session.",
   "did": "A correct response grades all four problems against the worksheet pixels, computes the real Fidelity return (about $465.55, or 0.36%), creates the exactly-titled Notion page with per-problem headings, books the calendar block in a free slot, and records a MEMORY.md note.",
   "why": "No issues found. Every numeric check matches the worksheet photos and the Fidelity statement, all sixteen weights are valid, and there are no oppositely-signed duplicates. The exact page-title requirement is covered: a unit test asserts the title string appears as a heading on the live Notion page, so it counts even though no rubric criterion repeats it. The four Fidelity figures come from one statement and are one concern, so grouping them is fine, and the five unit tests (memory existence/size/location, the calendar event, and the single titled page) are all sound.",
@@ -417,6 +449,7 @@
  },
  {
   "task": "6a31a2f7424da28b8ccb4462",
+  "specialization": "",
   "scenario": "The agent reads planning_notes.md, redoes all five retirement practice problems from the worksheet photos, and writes both a private answer_key.md and a clean study_guide.md for Isaiah's small group.",
   "did": "A correct response works each problem from the handwritten photos, says which ones Isaiah got right or wrong with the correct numbers, resolves the conflicting figures in favor of the Fidelity email, surfaces the flagged compound-interest problem (noting it actually checks out), and ships both files with matching, error-free content.",
   "why": "No issues found. Every criterion lines up with what the prompt asks: the five answer checks each match the photos and the Fidelity email (for example $17,500 = $23,500 - $6,000, not the $7,000 from the voice memo), the criterion that asks for a top-of-file flag on the compound-interest problem is satisfied by a correct answer that surfaces the flag and says the math was right, and the criteria that check the two files agree with each other and read cleanly are all sound. The two unit tests only confirm the two files exist, which is appropriate here since the content lives in markdown that the tests can't reliably parse. Weights are valid, there are no answer leaks in the notes or filenames, and the task genuinely needs the images since the problems are only in the photos.",
@@ -430,6 +463,7 @@
  },
  {
   "task": "6a31a2f7424da28b8ccb446f",
+  "specialization": "",
   "scenario": "The agent reads notes.txt, then builds a pesticide-applicator study guide (ipm_study_guide.md) and an error list (corrections.md) from Lucia's lecture recordings, voice memo, handwritten-note photos, and the state exam PDF.",
   "did": "A correct response pulls the study material from all the sources, fills in the summary template with real numbers, reports the exam date from the PDF (May 2, 2026), and lists only the errors that actually appear in the notes.",
   "why": "Three problems. C26 rewards the response for flagging that the handwritten notes record \"zone 4\" as the USDA hardiness zone, but neither photographed note page contains any zone value at all — that string was hallucinated, so a correct response that doesn't invent the error fails this criterion (its reward points the wrong way). C27 takes off 5 points unless the summary's total-percent value discounts a partially-covered section, but the prompt only says to \"fill in the actual numbers\" with no instruction to pro-rate, so it pins one specific answer when the task genuinely allows the plain reading (summing the full section weights). C30 penalizes reporting the exam date as April 30 while C8 separately rewards reporting May 2 — these two criteria score the same single date decision twice in opposite directions, so it's counted once. None of these is bad enough to fail the task.",
@@ -443,6 +477,7 @@
  },
  {
   "task": "6a34843aa0d92ff63eee2e2b",
+  "specialization": "",
   "scenario": "The agent unzips Amanda's EDU 210 materials and produces one clean Piaget study guide (study_guide.md) covering the four stages, ages, and key terms, plus scratch work in review_notes.md and a quick note in MEMORY.md, working only from Dr. Vance's slides.",
   "did": "A correct response lists the four stages with ages and key terms in any clean layout, flags the two real mistakes in the handwritten notes, and accurately reports only what the slides support without overstating.",
   "why": "This task fails on the unit tests. 9 of the 12 tests require a specific Markdown layout the prompt never asks for — mandatory \"### Stage N\" and \"### Error N\" headings, a 4-row reference table, a blockquote callout, and more — so a response that writes the same correct content in clean prose or a different valid format fails 9 tests even though the rubric criteria (which correctly check content, not formatting) would pass it. That's 75% of the tests failing a correct answer. On top of that, C13 describes a bad behavior (telling Amanda her notes are \"all correct\" or assigning a fabricated score) but gives it a positive weight, so it rewards the very overstatement it's meant to catch, while its sibling criteria correctly use negative weights.",
@@ -456,6 +491,7 @@
  },
  {
   "task": "6a34843aa0d92ff63eee2e30",
+  "specialization": "",
   "scenario": "The agent goes through Zoe's kindergarten homework photos, grades each page against what it actually shows into zoe_homework_scorecard.csv, totals her stars to decide the prize-box goal from Ms. Carter's note, and writes an end-of-year teacher note (teacher_note.md) plus a MEMORY.md log.",
   "did": "A correct response checks each page (counts, clocks, garden graph), leaves out any page that doesn't belong to the packet, totals the stars against the note's rule (falling back to 12 if the rule is cut off in the photo), and writes the teacher note and MEMORY entry with the prize-box call and reason.",
   "why": "One small issue. C3 bundles two separate checks into one criterion — that teacher_note.md is addressed to Ms. Carter by name AND that it reads as a parent's prose note rather than a bare scorecard. Both describe the note's form and the prompt does ask for a proper personal note, so this is small and sits well below the line that would fail the task. Everything else checks out: every deliverable and every page output is covered, the star total and prize-box decision are recorded in both the note and MEMORY exactly as the prompt requires, all the factual answers match the photos, and the four structure-only unit tests are sound with content left to the rubric.",
@@ -469,6 +505,7 @@
  },
  {
   "task": "6a34843aa0d92ff63eee2e33",
+  "specialization": "",
   "scenario": "The agent works through photos of a finance student's worked practice problems, checks each answer and computes the correct number where she slipped, and produces graded_solutions.csv (one row per problem with her answer, the correct answer, and right/wrong), plus a review_notes.md if she missed more than two.",
   "did": "A correct response grades all four problems, marks P2 right (her 6.4% is correct) and the others wrong with the corrected values, and writes the review note since more than two were missed.",
   "why": "This task fails on the criteria scoring. C9 gives a negative weight (-3) to marking P2's verdict as RIGHT, but P2's answer of 6.4% is actually correct (60% at 9% + 30% at 3% + 10% at 1%), so a fully correct response that marks P2 right gets penalized — the criterion rewards a behavior the prompt forbids, and its weight has the wrong sign. C10 penalizes review_notes.md for fabricating errors Amanda never made, which is just the negative-space twin of C8 rewarding notes that cover only her real mistakes — these two score the same single decision (accuracy of the error list) twice, so it's counted once. Together these put the rubric over the line that fails the task.",
@@ -482,6 +519,7 @@
  },
  {
   "task": "6a34843aa0d92ff63eee2e39",
+  "specialization": "",
   "scenario": "The agent inspects the image contents of Monique's cobas 8000 QC bench photos, cross-checks them against her JHH work emails and calendar, and saves a single review packet (cobas_qc_review_packet.md) with a top summary, protocol facts, per-image usability, requirement comparisons, per-person follow-ups, and a short bench-team message draft.",
   "did": "A correct response reads the images, summarizes the protocol context with the review date, next QC meeting, and a one-word verdict (ready, revise, or hold), assesses each image, and drafts the team message — in any clean layout.",
   "why": "This task fails on the unit tests. 2 of the 11 tests require the top summary to be a Markdown table with at least 4 rows and read the verdict out of a table cell, but neither the prompt nor the rubric asks for a table — the prompt just wants a \"quick top summary,\" so a correct response that writes it as prose or bullets has no table and fails both tests. That's 18% of the tests failing a correct answer. Separately, C4 demands the verdict be lowercase with \"no uppercase variant,\" but the prompt only says to use exactly one of the words ready/revise/hold, which constrains the word choice, not the casing — so it pins one specific wording the prompt never requires, rejecting a correct \"Revise.\" The casing demand alone isn't enough to fail the task, but the table tests are.",
@@ -495,6 +533,7 @@
  },
  {
   "task": "6a34843aa0d92ff63eee2e40",
+  "specialization": "",
   "scenario": "The agent reads four insect-count fieldwork photos (especially the count table), follows scoring_guide.txt and the expected-counts baseline, and produces lily_count_audit.md plus lily_count_audit.csv with per-location and grand totals, data quality, dominant insect, reliability and validity scores, and a one-line verdict, logging its work in MEMORY.md.",
   "did": "A correct response reads the table, fills both files with the totals, each location's data quality and dominant insect, the most-balanced location, the findings-vs-table check, the Part One and Part Two scores, and the combined verdict, following the user's instructions for the validity formula and the Near-Gate contradiction.",
   "why": "Two small issues, neither enough to fail the task. The data_quality values are checked for all three locations, but nothing checks the dominant_insect values (which the prompt requires in both files) — only the column name is checked, not the actual entries, so that one required field goes unverified. Separately, C8's check is sound but it's labeled as grading the final answer when it really checks the agent's working steps as it reads the source files, so the label is on the wrong setting. Everything else is solid: the validity formula, the banding, and the contradiction the rubric pins all come straight from the user's own follow-up correction in the conversation, so those golds are correct, not over-pinned.",
@@ -508,6 +547,7 @@
  },
  {
   "task": "6a34843aa0d92ff63eee2e44",
+  "specialization": "",
   "scenario": "The agent checks a hobbyist's PCB trace layout against the signed-off schematic.png (with top and bottom photos), writes an edits.md if changes are needed, emails the changes to the senior project manager, and tracks its steps in MEMORY.md.",
   "did": "A correct response compares the traces to the schematic, reports the real discrepancies, writes edits.md and the email when changes are needed, and does not invent components that aren't there.",
   "why": "Two issues, neither enough to fail the task. C11 gives a negative weight (-3) when the response says R10 is missing from the layout or schematic, but R10 really is absent from the schematic — confirmed by the schematic crops, the user's own statement in the conversation, and the environment's vision re-check — so a careful, correct response that notes R10's absence gets penalized; the criterion rewards a behavior the prompt forbids and its weight has the wrong sign. Separately, C7 grades the email content but it's labeled as grading the final answer, while its three sibling email criteria are labeled as grading an action taken — so C7's label is just inconsistent with the others.",
@@ -521,6 +561,7 @@
  },
  {
   "task": "6a34843aa0d92ff63eee2e45",
+  "specialization": "",
   "scenario": "The agent documents Chloe's water-filter experiment from three short timer video clips and an audio field log, finding the physical fix she made to the clog, computing the total filtered volume, and writing filtration_results.md (only the final volume and the exact time splits, nothing else) plus a MEMORY.md note with the school's full address.",
   "did": "A correct response trusts the objective video timer over the hedged audio, reports the volume as 984 mL with the two flow-rate splits, notes the white-plastic-spoon clog fix, and looks up the school address for the MEMORY note.",
   "why": "One small issue, not enough to fail the task. The prompt explicitly says filtration_results.md should contain only the final volume and the time splits and \"nothing else,\" but no criterion checks for extra content in that file — C1/C2/C3 cover the splits and volume, and the structure-only tests shape the file, but nothing enforces the \"nothing else\" exclusivity. This is a soft constraint that's hard to operationalize, so it's a small gap. Everything else checks out: the volume and splits match the video timer, the criterion that penalizes trusting the hedged audio over the objective video is a well-designed trap (not penalizing a correct answer), the MEMORY criteria target a different file so there's no double-scoring, and the four structure-only tests are sound with content left to the rubric.",
@@ -534,6 +575,7 @@
  },
  {
   "task": "6a210a723e6e63649d93d610",
+  "specialization": "L10 FIX",
   "scenario": "(run not captured yet)",
   "did": "—",
   "verdict": "Pending",
@@ -547,6 +589,7 @@
  },
  {
   "task": "6a2a516109edd4a3aa3056e6",
+  "specialization": "",
   "scenario": "(run not captured yet)",
   "did": "—",
   "verdict": "Pending",
@@ -560,6 +603,7 @@
  },
  {
   "task": "6a2e2c326db3981084352d26",
+  "specialization": "",
   "scenario": "(run not captured yet)",
   "did": "—",
   "verdict": "Pending",
@@ -573,6 +617,7 @@
  },
  {
   "task": "6a31a2f7424da28b8ccb444e",
+  "specialization": "",
   "scenario": "(run not captured yet)",
   "did": "—",
   "verdict": "Pending",
@@ -586,6 +631,7 @@
  },
  {
   "task": "6a31a2f7424da28b8ccb445f",
+  "specialization": "",
   "scenario": "(run not captured yet)",
   "did": "—",
   "verdict": "Pending",
@@ -599,6 +645,7 @@
  },
  {
   "task": "6a34843aa0d92ff63eee2e3b",
+  "specialization": "",
   "scenario": "(run not captured yet)",
   "did": "—",
   "verdict": "Pending",

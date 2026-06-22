@@ -82,6 +82,27 @@ def nunver(ws, t):
         return 0
 
 
+def specialization(ws, t):
+    # The task's specialization, from PUBLIC.TASKS.SPECIALIZATIONS (surfaced by
+    # fetch_tasks.py as the top-level "specializations" string; JSON-array column,
+    # often empty for this project). Falls back to "" when absent/empty.
+    try:
+        v = J(f"{ws}/tasks/{t}.json").get("specializations")
+    except Exception:
+        return ""
+    if v in (None, "", "[]"):
+        return ""
+    if isinstance(v, list):
+        return ", ".join(str(x) for x in v)
+    if isinstance(v, str) and v.strip().startswith("["):
+        try:
+            a = json.loads(v)
+            return ", ".join(str(x) for x in a) if isinstance(a, list) else str(a)
+        except Exception:
+            return v
+    return str(v)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--workspace", required=True)
@@ -104,7 +125,8 @@ def main():
             continue
         rec, pr = J(rp), J(pp)
         mine = norm(rec["verdict"])
-        row = {"task": t, **{k: pr.get(k, "") for k in ("scenario", "did", "why", "fix")}, "verdict": mine}
+        row = {"task": t, "specialization": specialization(ws, t),
+               **{k: pr.get(k, "") for k in ("scenario", "did", "why", "fix")}, "verdict": mine}
         row["confidence"] = confidence_for(rec, nunver(ws, t))
         row.update(live(ws, t))
         for k in ("platform", "viewer", "link"):
@@ -117,7 +139,8 @@ def main():
     for t in incomplete:
         if t in done:
             continue
-        row = {"task": t, "scenario": "(run not captured yet)", "did": "—", "verdict": "Pending", "confidence": "",
+        row = {"task": t, "specialization": specialization(ws, t),
+               "scenario": "(run not captured yet)", "did": "—", "verdict": "Pending", "confidence": "",
                "why": "A new version of this task is in flight and its run hasn't been captured yet, so the checks "
                       "can't be reviewed this round.",
                "fix": "Queued for a re-check once the run lands.", "agree": "Pending — nothing to compare yet."}
