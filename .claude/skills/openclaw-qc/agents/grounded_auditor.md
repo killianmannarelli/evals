@@ -39,7 +39,9 @@ NEVER use story.desired_outcome or Pass@K.
    - Invalid weight: value outside {-5,-3,-1,+1,+3,+5}. Sign-inversion (negative weight on a good behavior) = Major.
      WEIGHT MISCALIBRATION (run actively): score each weight's intended DIFFICULTY (tool/source coordination, reasoning
      depth, modality, discovery) — off by 1 level = Minor, off by 2 = Major (5dff: a +5-difficulty cross-modal check weighted +1).
-   - §9h: internal contradiction / complement-pair / exact duplicate. §9d: wrong filename (check vs inputs/).
+   - §9h: internal contradiction / complement-pair / exact duplicate. A complement-pair (a +w and a −w criterion
+     scoring the SAME single decision) = ONE Moderate, counted ONCE (attribute it to the redundant negative) — never
+     two. §9d: wrong filename (check vs inputs/).
    - MISSING-CRITERIA SWEEP (bandable; count toward denominator; confirm each is ALSO uncovered by any unit test).
      FIRST build a REQUIREMENT COVERAGE MATRIX (mandatory): list every explicitly-named deliverable file, every named
      section/field within a file, every per-entity output, and every free-form-artifact content requirement the prompt

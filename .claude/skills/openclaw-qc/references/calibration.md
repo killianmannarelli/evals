@@ -139,3 +139,18 @@ clearly verified against the prompt + viewed inputs + trajectory:
 High-recall, lower-precision cross-check — **not an oracle**. Reconcile by **verified union**: adopt every drawer
 finding that survives a check against the real criterion + prompt + pixels; keep your own verified findings; never
 defer blindly, never ignore it. Its hit-rate on divergent findings is ~⅓.
+- **The drawer's test claims are unreliable — never trust them.** It frequently reports a task as "test-less / 0
+  unit tests" when the task DOES ship unit tests (it never opened `verifier.py`), and it over-flags Tests-Correctness.
+  Always grade the Tests dimensions (16–19) from `sot/<tid>/unit_tests.py` (surfaced by `dump_tests.py`) — not from
+  the drawer's test count. (Seen this run on 56ec + 56e1: drawer said "0 tests"; 4 and 7 tests were actually present.)
+- **A complement pair is ONE defect, counted once.** When the drawer reaches a Fail by counting an oppositely-weighted
+  complement pair (a `+w` and a `−w` criterion that score the same single decision) as TWO defective criteria,
+  recount: §9h treats the pair as one redundancy finding (attributed to the redundant negative). Do not let the drawer
+  inflate the band by double-counting the pair. (06de: drawer counted C3/C14 as 2 → 21.4%; true count is 1 → 14.3%.)
+
+## No reuse — always redo the whole queue
+Every run re-audits **every** pending task from scratch (rehydrate → grounded audit → drawer reconcile → prose).
+**NEVER** carry a verdict, confidence, prose, or finding over from a prior run's feedback record, and never build a
+"reuse" path in assembly. A prior record is historical reference only — rubrics and specs are revised continuously, so
+a reused verdict is silently stale. The canonical `scripts/assemble.py` builds `feedback.json` from THIS run's
+`reconciled/` + `prose/` only (no pool, no prior-record read).

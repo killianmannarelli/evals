@@ -23,6 +23,12 @@ VERIFIED UNION:
    REJECT if: spot-check-exempt atomicity (ruling #1), desired_outcome-grounded, Tests dims 8a-d, process-targeting
    /advisory, ratings-validity or justification (other dimensions, outside the 6a/6b/6c rubric-criteria band), or
    unverifiable (Rule 19c — never anchors a Fail).
+   - The drawer's TEST claims are unreliable: it often says "0 tests / test-less" when the task HAS unit tests, and
+     over-flags Tests-Correctness. Grade Tests (16-19) from sot/<TID>/unit_tests.py (dump_tests.py), NOT the drawer.
+   - A COMPLEMENT PAIR is ONE defect: if the drawer reaches Fail by counting an oppositely-weighted +w/-w pair (both
+     scoring the SAME single decision) as TWO criteria, recount as ONE (§9h, attributed to the redundant negative).
+     Don't let the drawer inflate the band by double-counting the pair.
+   - This is a FRESH audit — never reuse a prior run's verdict/findings; reconcile only THIS run's validated + drawer.
 2b. **DRAWER-FAIL TRIGGER (mandatory).** If the drawer's embedded_verdict is **Fail** but my grounded verdict is
    Pass/Non-Fail, do NOT simply reject the drawer's named findings. The drawer is high-recall: its Fail is a strong
    signal a real defect exists even when it mislabels the reason (e.g. calls a coverage gap "atomicity"). Before you
