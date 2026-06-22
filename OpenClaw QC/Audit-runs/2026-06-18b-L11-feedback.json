@@ -172,14 +172,14 @@
   "task": "6a2e2c326db3981084352d3f",
   "scenario": "Check the rent-comparison sheet and tell whether the landlord's 'comps cost more' claim holds.",
   "did": "Re-verify each comparable's rent and fees, fix the errors, and judge the landlord's claim.",
-  "why": "No issues found — the eligible comparable set, the recomputed rents-plus-fees (1765/1770/1765), and the planted parking-fee error ($80 in the note vs $105 in the video) all check out.",
-  "fix": "None — looks good.",
-  "verdict": "Pass",
-  "confidence": 100,
+  "why": "The rubric checks are sound, but two of the unit tests are wrong: they require a CSV column literally named 'all_in_monthly', which the prompt never specifies and which contradicts the provided Book1.xlsx (it uses 'all_in'). An agent that faithfully keeps the original column header fails those tests even with correct data.",
+  "fix": "Fix the two tests to use the actual column name from the inputs ('all_in'), not the undefined 'all_in_monthly'.",
+  "verdict": "FAIL",
+  "confidence": 30,
   "platform": "42%",
   "viewer": "Fail",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a35c874ebd9a19fbe04b1f1/index.html",
-  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+  "agree": "Yes — both flag it as failing."
  },
  {
   "task": "6a31a2f7424da28b8ccb4454",
@@ -221,6 +221,45 @@
   "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
  },
  {
+  "task": "6a2252a7226df6fc69476d4e",
+  "scenario": "Count and classify hot-rolled steel coils from plant and yard photos.",
+  "did": "Visually count the coils, dedupe repeat-angle shots, and total plant vs yard.",
+  "why": "No issues found — the coil counts recompute (plant 10, yard 128, total 138), the deteriorated count and percentage check out, and the de-duplication of repeat-angle photos is handled correctly.",
+  "fix": "None — looks good.",
+  "verdict": "Pass",
+  "confidence": 100,
+  "platform": "24%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a35fdde9b62382201b933b7/index.html",
+  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+ },
+ {
+  "task": "6a2a516109edd4a3aa3056ec",
+  "scenario": "Audit subscriptions and total the real monthly savings from cutting them.",
+  "did": "Check each subscription's current state and compute the savings.",
+  "why": "Every figure is correct (the YouTube $13.99, the Netflix downgrade to $8.50, the $25.48 total), but three checks each penalize the opposite of what another rewards — C14 vs C5 ($11.99 vs $13.99), C15 vs C3 (cancel vs downgrade), and C13 vs C10 (non-billing items in the total) — double-scoring the same points.",
+  "fix": "Merge each of the three pairs (C14/C5, C15/C3, C13/C10) into one check.",
+  "verdict": "FAIL",
+  "confidence": 31,
+  "platform": "3%",
+  "viewer": "Non-Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a362d37a79b270c933d04bf/index.html",
+  "agree": "No — I'm stricter here; the second opinion lets it pass."
+ },
+ {
+  "task": "6a17cc59ea9a7319a6ca06de",
+  "scenario": "Edit a basketball graphic to add labeled shooting-angle measurements.",
+  "did": "Remove the existing text and draw the four labeled angle markers on the specified players.",
+  "why": "The four angle labels and the edit instructions all check out. One thing: C12 carries a positive weight for adding extra coaching text or callouts, which the prompt explicitly forbids — so it rewards the wrong behavior (it should penalize, like C13/C14 do).",
+  "fix": "Flip C12 to a negative weight so it penalizes extra text, matching C13/C14.",
+  "verdict": "Non-Fail",
+  "confidence": 52,
+  "platform": "33%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a362de71cb9eb8dd3d8a4cc/index.html",
+  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+ },
+ {
   "task": "6a210a723e6e63649d93d610",
   "scenario": "Document a Line 4 panel defect inspection from hand-drawn zone-map photos",
   "did": "Tally defects by zone and type, apply the accept/reject rule, and write up the inspection report.",
@@ -229,9 +268,9 @@
   "why": "A new version of this task is in flight and its run hasn't been captured yet, so the checks can't be reviewed this round.",
   "fix": "Queued for a re-check once the run lands.",
   "agree": "Pending — nothing to compare yet.",
-  "platform": "",
-  "viewer": "",
-  "link": ""
+  "platform": "36%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a3450cbdec221c75c6ec1cd/index.html"
  },
  {
   "task": "6a2a516109edd4a3aa3056e6",
@@ -242,9 +281,9 @@
   "why": "A new version of this task is in flight and its run hasn't been captured yet, so the checks can't be reviewed this round.",
   "fix": "Queued for a re-check once the run lands.",
   "agree": "Pending — nothing to compare yet.",
-  "platform": "",
-  "viewer": "",
-  "link": ""
+  "platform": "20%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a35d2726e5dedcc0624202e/index.html"
  },
  {
   "task": "6a2e2c326db3981084352d26",
@@ -255,8 +294,8 @@
   "why": "A new version of this task is in flight and its run hasn't been captured yet, so the checks can't be reviewed this round.",
   "fix": "Queued for a re-check once the run lands.",
   "agree": "Pending — nothing to compare yet.",
-  "platform": "",
-  "viewer": "",
-  "link": ""
+  "platform": "34%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a35d1ee7a58a2f30da22cce/index.html"
  }
 ]

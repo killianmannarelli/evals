@@ -114,9 +114,16 @@ clearly verified against the prompt + viewed inputs + trajectory:
 - **Feasibility (3)** — the **PRIMARY** request is impractical/impossible with the available tools. (Secondary-only
   infeasibility = Non-Fail, not our Fail line.)
 - **Output filename (2)** — the prompt requests a file as output but never specifies its filename.
+- **Tests — Correctness (16), IN SCOPE WHEN UNIT TESTS ARE PRESENT** — read the task's unit tests
+  (`sot/<tid>/unit_tests.py`, surfaced by `dump_tests.py`). A test whose logic is **misaligned with the prompt /
+  contradicts the inputs**, or is **overly specific**, so that it **wrongly fails a faithful/correct response**, is an
+  incorrect test. If **≥10%** of the unit tests are incorrect → **Fail** driver (record `verdict=Fail`, driver
+  "Tests-Correctness", bands may stay 0/0/0). (2d3f: 2 tests assert a CSV column `all_in_monthly` the prompt never
+  defines and that contradicts `Book1.xlsx`'s `all_in` → a header-preserving correct answer fails → Tests-Correctness Fail.)
 
-**Out of scope (advisory / conditional / capped at Non-Fail — never our Fail line):** **Tests** (V9 dims 16–19;
-"only if unit tests present" — no contributor verifier on this pipeline + benchmark decision). **Justification**
+**Out of scope (advisory / conditional / capped at Non-Fail — never our Fail line):** **Tests — Underfitted /
+Coverage / Redundancy** (V9 dims 17–19; advisory unless they make a test outright incorrect, which is dim 16 above).
+**Justification**
 (dim 20, Non-Fail max). **Silver-Trajectory Category** (dim 8, Non-Fail max, optional). **Cross-Modal Synthesis**
 (dim 9) & **Architectural Depth** (dim 10) — trajectory/task quality, advisory. Process-targeting
 (`evaluation_target=trajectory`) is advisory, never banded. (V9 has **no** Ratings-Validity dimension — dropped.)

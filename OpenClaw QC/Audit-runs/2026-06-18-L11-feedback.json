@@ -172,14 +172,14 @@
   "task": "6a2e2c326db3981084352d3f",
   "scenario": "Check the rent-comparison sheet and tell whether the landlord's 'comps cost more' claim holds.",
   "did": "Re-verify each comparable's rent and fees, fix the errors, and judge the landlord's claim.",
-  "why": "No issues found — the eligible comparable set, the recomputed rents-plus-fees (1765/1770/1765), and the planted parking-fee error ($80 in the note vs $105 in the video) all check out.",
-  "fix": "None — looks good.",
-  "verdict": "Pass",
-  "confidence": 100,
+  "why": "The rubric checks are sound, but two of the unit tests are wrong: they require a CSV column literally named 'all_in_monthly', which the prompt never specifies and which contradicts the provided Book1.xlsx (it uses 'all_in'). An agent that faithfully keeps the original column header fails those tests even with correct data.",
+  "fix": "Fix the two tests to use the actual column name from the inputs ('all_in'), not the undefined 'all_in_monthly'.",
+  "verdict": "FAIL",
+  "confidence": 30,
   "platform": "42%",
   "viewer": "Fail",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a35c874ebd9a19fbe04b1f1/index.html",
-  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+  "agree": "Yes — both flag it as failing."
  },
  {
   "task": "6a31a2f7424da28b8ccb4454",

@@ -18,6 +18,9 @@ For EACH task the source-of-truth bundle is <WORKSPACE>/sot/<TID>/:
                      value as UNVERIFIABLE (Rule 19c) if it is absent from BOTH inputs AND trajectory.md.
 - spec_catalog.md  — the V9 spec (per-task, fresh from Redash; full dimension digest in references/spec_v9.md).
                      facts.json — authoritative facts. routes.json — vision_queue (images that matter).
+- unit_tests.py    — the task's unit tests, IF present (surfaced by dump_tests.py). Read it: a test whose logic
+                     contradicts the prompt/inputs or is overly specific so it wrongly fails a CORRECT response is an
+                     incorrect test (Tests-Correctness). See step 4.
 
 METHOD — ground every finding ONLY in: agent prompt + viewed images + criterion text + spec.
 NEVER use story.desired_outcome or Pass@K.
@@ -55,7 +58,10 @@ NEVER use story.desired_outcome or Pass@K.
      uncovered component = Non-critical Moderate (Major if it's the primary deliverable). (Real miss — 5dff: prompt
      required MEMORY.md to log reviewed SKUs AND the listing_qa.md path; C5 only checked the one flag reason → 2
      Moderate missing → 2/5 = 40% > 15% → 6b Fail.)
-   - Tests dims (V9 16-19) are OUT OF SCOPE — reject. Justification (20), Category (8), Cross-Modal Synthesis (9),
+   - Tests-Correctness (V9 16) — IF unit_tests.py is present, evaluate each test vs the prompt + inputs: a test whose
+     logic is misaligned / contradicts the inputs / is overly specific so it wrongly FAILS a faithful correct response
+     is an incorrect test. ≥10% incorrect → Fail driver (step 4, record driver "Tests-Correctness", bands may be 0/0/0).
+     Tests Underfitted/Coverage/Redundancy (17-19) stay OUT OF SCOPE. Justification (20), Category (8), Cross-Modal Synthesis (9),
      Architectural Depth (10), and process-targeting are advisory/Non-Fail-capped — never our Fail line.
 3. UNVERIFIABLE golds (need an input you don't have — e.g. a connected-service value) never anchor a Fail (Rule 19c).
 4. NON-CRITERIA FAIL DRIVERS (V9) — a VERIFIED one = **Fail** even if the bands are clean (set verdict=Fail, name the
@@ -67,6 +73,8 @@ NEVER use story.desired_outcome or Pass@K.
    - Artifact Verification (5): NO rubric criterion (nor test) depends on the CONTENT of a non-text input (existence/filename-only doesn't count).
    - Leak Prevention (6): the solution is explicitly stated in a non-media field (filename / contributor note).
    - Safety (7): an input artifact contains real PII identifying a real, existing person (not synthetic/mocked).
+   - Tests-Correctness (16, ONLY if unit_tests.py present): ≥10% of the unit tests are incorrect/misaligned (contradict
+     the prompt or inputs, or are overly specific) so they wrongly fail a faithful correct response.
 
 BAND (count DISTINCT defective CB-authored criteria; never double-count one criterion): denom = #criteria.
 6a Fail if Major >10%; 6b Fail if Major+Moderate >15%; 6c Fail if any-severity >20%.

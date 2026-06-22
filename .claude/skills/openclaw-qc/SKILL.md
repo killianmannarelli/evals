@@ -65,6 +65,13 @@ python3 scripts/dump_trajectory.py --task "$WS/tasks/<tid>.json" --out "$WS/sot/
 This fixes the most common miss — a Pass built on golds the trajectory actually disproves. Tool-RESULTS are
 admissible grounding; `desired_outcome` / Pass@K are not (dump_trajectory excludes them).
 
+**2c. Surface the unit tests (every run).** Pull the task's `verifier.py` out of the rehydrated JSON so auditors can
+grade **Tests-Correctness** (a test whose logic contradicts the prompt/inputs or is overly specific, wrongly failing a
+correct response, is incorrect; ≥10% incorrect → Fail). No-op when the task has no tests.
+```
+python3 scripts/dump_tests.py --task "$WS/tasks/<tid>.json" --out "$WS/sot/<tid>/unit_tests.py"
+```
+
 **3. AUDIT YOURSELF (grounded).** Spawn one auditor per task (batch ~3/agent), prompt = `agents/grounded_auditor.md`
 (fill `<WORKSPACE>` and `<TID>`). Each reads `sot/<tid>/` and **views the input images** to verify golds → writes
 `$WS/validated/<tid>.json`.
