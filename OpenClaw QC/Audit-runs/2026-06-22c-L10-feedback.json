@@ -70,6 +70,20 @@
   "agree": "Yes — both flag it as failing."
  },
  {
+  "task": "6a2a516109edd4a3aa3056e6",
+  "specialization": "",
+  "scenario": "The user asks the agent to do a full review of two properties (a Shoreline place they offered on and a Greenwood listing) before paying for an inspection: judge whether the prices make sense, check that the paperwork and the BECU financing hold together, flag how reliable the pre-inspection is, say whether past work on the house was done properly, and save the results across listing_review_15821.md, cost_comparison.csv, timeline_risks.md, an inspection_priorities.png, and an updated MEMORY.md.",
+  "did": "A correct response works only from the documents and photos actually provided (five PDFs and three open-house photos), notes which photo each observation came from, compares the real numbers side by side, checks the one BECU document on hand (the Shoreline Loan Estimate, rate 6.375%), lays out the genuine dates and timeline risks, ranks inspection priorities, and records in MEMORY.md the files it reviewed and the topics it left alone.",
+  "why": "Seven of the sixteen criteria are built around BECU details that do not appear anywhere in the task's documents or connected data, so a response that stays faithful to the real paperwork is marked wrong. C4, C5, and C8 reward stating a $725,000 BECU purchase-price cap, a 6.25% promotional rate requiring 20% down, and a July 7, 2026 pre-approval expiration date, but none of these exist in the files (there is no BECU pre-approval at all, the only rate is 6.375% locked, and the $725,000 figure is just a comparable sale price, not a cap). C7 rewards reporting a $12,487.63 savings balance that never appears in any document, C10 rewards naming two BECU email addresses that are not present, and C11 rewards naming four specific people and businesses as deliberately excluded sources when none of those names appear anywhere in the task. C16 does the opposite kind of damage: it takes points away for correctly stating there is no BECU pre-approval for the Greenwood property, which is a true statement the agent's own answer agrees with, so the criterion marks a correct answer wrong (its weight has the wrong sign). At seven of sixteen, these defective criteria are well over the failing line.",
+  "fix": "Rewrite C4, C5, C7, C8, C10, and C11 so they only check facts that actually appear in the provided documents (for example the real 6.375% locked rate and the genuine Loan Estimate dates), and flip C16 to a positive weight so correctly noting the absence of a Greenwood pre-approval is rewarded rather than punished.",
+  "verdict": "FAIL",
+  "confidence": 5,
+  "platform": "20%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a35d2726e5dedcc0624202e/index.html",
+  "agree": "Yes — both flag it as failing."
+ },
+ {
   "task": "6a2e2c326db3981084352d21",
   "specialization": "",
   "scenario": "The user has narrowed an apartment search to three saved listings plus a toured Rittenhouse unit and asks the agent to review everything against their must-haves and say which one to apply to, writing the recommendation in listing_review.md and the decision in MEMORY.md.",
@@ -82,6 +96,20 @@
   "viewer": "Fail",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a394beac7a2121aacfa6b95/index.html",
   "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+ },
+ {
+  "task": "6a2e2c326db3981084352d26",
+  "specialization": "",
+  "scenario": "The user (Nia) asks the agent to match the flooring she bought from her photos and screenshots and save it with its cost in flooring_recommendation.md, build a monthly budget both in her Airtable and in a budget.md table (with what to cancel and the flooring cost at the bottom), recommend which listing she should consider with the affordability math in listing_recommendation.md, email her boss for a raise if there is literally no way she can afford it, and log everything in MEMORY.md.",
+  "did": "A correct response identifies the matching flooring and its price, builds the budget in Airtable and in budget.md from her real numbers, names the one listing worth considering and shows the affordability math, and because the math shows she genuinely cannot afford any of the listings right now, sends the raise email to her boss exactly as the prompt authorizes, then logs the work in MEMORY.md.",
+  "why": "C16 rewards a behavior the prompt's own logic treats as bad advice: it gives points for recommending a raw lot or vacant land (such as 900 Bayshore Blvd) as a viable investment, even though that land has no rental income and is plainly out of reach for a cash-strapped renter, and it directly contradicts C10, which rewards recommending the single affordable condo as the only viable option, so an answer can't satisfy both. C15 marks a correct answer wrong: it takes five points away for sending the raise email, but the prompt explicitly says to email the boss 'if there is literally no way I can afford it,' a condition the agent reasonably concluded was met, and the rubric's own C14 confirms she is about $1,986 short, so the criterion punishes following an explicit instruction (its weight has the wrong sign); C15 and C11 score that same single email decision in opposite directions, so it is counted once. C13 and C14 both demand one specific down-payment convention the prompt never states (a 10-to-30 percent range, and treating 10 percent as the minimum), which rejects an equally valid answer built on a different down-payment percentage such as 5 percent. Together these defective criteria push the task over the failing line.",
+  "fix": "Flip C16 so recommending raw land as 'viable' is not rewarded (and align it with C10's single-affordable-listing answer); flip C15's weight so sending the raise email when the affordability condition is met is rewarded rather than penalized, and merge it with C11 so the one email decision is scored only once; and loosen C13 and C14 so they accept any reasonable down-payment percentage instead of pinning one convention.",
+  "verdict": "FAIL",
+  "confidence": 17,
+  "platform": "34%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a35d1ee7a58a2f30da22cce/index.html",
+  "agree": "Yes — both flag it as failing."
  },
  {
   "task": "6a2e2c326db3981084352d31",
@@ -109,6 +137,20 @@
   "platform": "43%",
   "viewer": "Fail",
   "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a397b5b338d572eb56c5cbd/index.html",
+  "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
+ },
+ {
+  "task": "6a34843aa0d92ff63eee2e24",
+  "specialization": "",
+  "scenario": "The user uploads photos of their daughter Mira's end-of-year school packet (worksheets, a teacher note, a skills checklist) plus a voicemail from Ms. Chen, and asks the agent to work through the checklist in notes.txt, save everything to mira_progress_review.md, text Theo a short summary before Sunday, and write to MEMORY.md.",
+  "did": "A correct response independently grades the worksheets, works through each item in notes.txt, reads the voicemail accurately as a single July 9-to-11 summer-math window, saves the review to mira_progress_review.md, texts Theo a short summary, and logs the work in MEMORY.md.",
+  "why": "This task does not fail, but three criteria have problems worth fixing. C7 and C11 both reward a workshop schedule that does not appear in any source: the only source is Ms. Chen's voicemail, which mentions a single 'July 9 to 11' window, yet C7 rewards a recurring 'Tuesdays and Thursdays in July, 9 to 11am' program and C11 rewards splitting nine specific July sessions between two parents on the custody calendar, so a response that faithfully reports the single July 9-11 window is marked wrong on both (the '9 to 11' in the voicemail is the date range, not a class time). C5 has a smaller issue: it says reading is 8/10, which is the teacher's handwritten header score, but the prompt asks for independent grading and the worksheet actually grades to 9/10, so the figure is wrong and is inconsistent with C8's own Part A score; this one is a smaller problem because the pass/fail threshold decision is the same either way. With only three affected criteria, the task stays below every failing line.",
+  "fix": "Rewrite C7 and C11 so they reward the single July 9-to-11 workshop window the voicemail actually states instead of a fabricated recurring schedule or a nine-session custody split, and correct C5's reading score to the independently graded 9/10 so it matches C8.",
+  "verdict": "Non-Fail",
+  "confidence": 64,
+  "platform": "21%",
+  "viewer": "Fail",
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a395312c7a2121aacfcb14e/index.html",
   "agree": "No — the second opinion flags it, but on a closer look the concern doesn't hold up."
  },
  {
@@ -140,59 +182,17 @@
   "agree": "Yes — both flag it as failing."
  },
  {
-  "task": "6a2a516109edd4a3aa3056e6",
-  "specialization": "",
-  "scenario": "(run not captured yet)",
-  "did": "—",
-  "verdict": "Pending",
-  "confidence": "",
-  "why": "A new version of this task is in flight and its run hasn't been captured yet, so the checks can't be reviewed this round.",
-  "fix": "Queued for a re-check once the run lands.",
-  "agree": "Pending — nothing to compare yet.",
-  "platform": "20%",
-  "viewer": "Fail",
-  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a35d2726e5dedcc0624202e/index.html"
- },
- {
-  "task": "6a2e2c326db3981084352d26",
-  "specialization": "",
-  "scenario": "(run not captured yet)",
-  "did": "—",
-  "verdict": "Pending",
-  "confidence": "",
-  "why": "A new version of this task is in flight and its run hasn't been captured yet, so the checks can't be reviewed this round.",
-  "fix": "Queued for a re-check once the run lands.",
-  "agree": "Pending — nothing to compare yet.",
-  "platform": "34%",
-  "viewer": "Fail",
-  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a35d1ee7a58a2f30da22cce/index.html"
- },
- {
-  "task": "6a34843aa0d92ff63eee2e24",
-  "specialization": "",
-  "scenario": "(run not captured yet)",
-  "did": "—",
-  "verdict": "Pending",
-  "confidence": "",
-  "why": "A new version of this task is in flight and its run hasn't been captured yet, so the checks can't be reviewed this round.",
-  "fix": "Queued for a re-check once the run lands.",
-  "agree": "Pending — nothing to compare yet.",
-  "platform": "21%",
-  "viewer": "Fail",
-  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a395312c7a2121aacfcb14e/index.html"
- },
- {
   "task": "6a34843aa0d92ff63eee2e3b",
   "specialization": "",
-  "scenario": "(run not captured yet)",
-  "did": "—",
-  "verdict": "Pending",
-  "confidence": "",
-  "why": "A new version of this task is in flight and its run hasn't been captured yet, so the checks can't be reviewed this round.",
-  "fix": "Queued for a re-check once the run lands.",
-  "agree": "Pending — nothing to compare yet.",
+  "scenario": "The user (Monique) asks the agent to find the abnormal values in attached lab panels and return them with name, value, and normal range in Identified_Abnormalities.md, then use photos of textbook pages to build a study guide for a lab tech, a fitting study guide for her wife's middle-school class, and a test for the lab tech (Study_Guide_Lab_Tech.md, Study_Guide_Middle_School.md, Test_Lab_Tech.md, with the wife's emailed to her), and finally email the lab staff about chipping in $10 each for the boss's birthday whiteboard.",
+  "did": "A correct response lists the abnormal lab values with their names, values, and normal ranges, builds the three study materials from the actual textbook-page photos (which cover the eye and the ear, plus chemistry topics), emails the wife's guide to her, and emails the lab staff about the birthday gift.",
+  "why": "The biggest problem is in the unit tests: about half of them (9 of 17, roughly 53%) require a document layout the prompt never asks for, so a correct, faithful response fails them. For example, the prompt just says to return the abnormalities with 'name, value and normal range,' but the tests demand exactly six numbered '###' entries with specific '- Result:' and '- Normal Range:' bullet labels, three numbered 'Part' and 'Section' headings, a mandatory answer key and review checklist, at least 20 questions, at least five sections, and at least three tables — none of which the prompt requests, so a valid answer that uses a table or different headings is wrongly failed. This alone fails the task. On top of that, C15 rewards content that does not exist in any of the provided photos: it requires a study-guide section about the 'inner nose' and the senses around it, but the photos only cover the eye and the ear (plus chemistry), so it rewards made-up content and marks the faithful eye-and-ear guide wrong. Three more criteria each score the same thing twice in opposite directions: for each of the three study artifacts, one criterion rewards the file being present in the final message while a paired negative criterion penalizes referencing that same file by name only (C3 with C17, C4 with C16, C5 with C18), so each delivery decision is counted twice. These criteria-side issues by themselves also clear the failing line.",
+  "fix": "Loosen the nine overly rigid tests so they check the required content (the abnormal values and their ranges, the study topics) without demanding a specific heading, bullet, table, or question-count format the prompt never asks for; remove or re-aim C15 so it stops rewarding a nose section that no photo supports; and merge each present-versus-named-only pair (C3/C17, C4/C16, C5/C18) so each file's delivery is scored only once.",
+  "verdict": "FAIL",
+  "confidence": 23,
   "platform": "10%",
   "viewer": "Fail",
-  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a37c0e384985ef92cd9d2d5/index.html"
+  "link": "https://openclaw-viewer-mm.vercel.app/attempt/6a37c0e384985ef92cd9d2d5/index.html",
+  "agree": "Yes — both flag it as failing."
  }
 ]
