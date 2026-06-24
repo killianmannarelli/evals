@@ -213,6 +213,16 @@ def fetch_task(task_id: str, api_key: str, out_dir: Path, attempt_id: Optional[s
     }
 
     out_path = out_dir / f"{task_id}.json"
+    # Preserve fields set by fetch_tasks that this attempt-level fetch doesn't query
+    # (e.g. `specializations` from PUBLIC.TASKS) so rehydration never drops them.
+    if out_path.exists():
+        try:
+            prev = json.loads(out_path.read_text())
+            for k in ("specializations",):
+                if prev.get(k) and not record.get(k):
+                    record[k] = prev[k]
+        except Exception:
+            pass
     out_path.write_text(json.dumps(record, indent=2, default=str))
     return record
 
