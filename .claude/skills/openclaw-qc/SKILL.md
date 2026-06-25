@@ -105,8 +105,18 @@ python3 scripts/push_audit_to_sheet.py --feedback "$WS/feedback.json" --tab "<La
 The Sheet writer never overwrites — if re-publishing a date that already has a tab, delete the old tab first (the
 redo replaces it). Save the run as `OpenClaw QC/Audit-runs/<date>-<Layer>-feedback.json` for history (reference only,
 never re-read as input).
-The tab uses `Sheet1`'s exact format (blank row 1, frozen bold header, 11 columns incl. Confidence, WRAP on every
-cell, full 24-char IDs, FAIL/Non-Fail/Pass casing, hyperlinked "Open the task").
+The tab uses `Sheet1`'s exact format (blank row 1, frozen bold header, 12 columns incl. Specialization + Confidence,
+WRAP on every cell, full 24-char IDs, FAIL/Non-Fail/Pass casing, hyperlinked "Open the task").
+
+**6. REFRESH THE MASTER SHEET (every run, after saving the record).** Rebuild the single living master tab that
+compiles EVERY committed audit, deduped to ONE row per task (latest real verdict wins; Pending only if never
+materialised). Run it AFTER copying this run's feedback.json into `OpenClaw QC/Audit-runs/` so the new verdicts are
+included:
+```
+python3 scripts/build_master_sheet.py        # rewrites "ALL AUDITS (latest per task)" from all Audit-runs/*.json
+```
+Idempotent — reads the full history each time and replaces the tab, so it always reflects current state across all
+layers/dates. Columns add Layer + "Last audited" for provenance.
 
 ## Calibration
 `references/calibration.md` is the condensed ruleset (bands, ruling #1 spot-check exemption, Rule 19c unverifiable,
@@ -118,6 +128,8 @@ project_overrides}.md` are the full methodology the agents read.
   `fact_extractor_v3.py`, `fetch_platform_eval.py` (drawer scrape), `refetch_inputs.py` (poll the CDS view),
   `dump_trajectory.py` (tool-RESULTS), `dump_tests.py` (surface `verifier.py`), `confidence.py` (verdict→confidence),
   `assemble.py` (NO-reuse feedback.json builder — this run's `reconciled/`+`prose/` only),
-  `push_audit_to_sheet.py` (Sheet1-format writer), `events.py` (helper).
+  `push_audit_to_sheet.py` (Sheet1-format dated-tab writer),
+  `build_master_sheet.py` (rebuilds the "ALL AUDITS (latest per task)" master tab — dedupes every committed
+  Audit-run to one row per task, latest real verdict wins), `events.py` (helper).
 - `agents/grounded_auditor.md`, `agents/master_reconcile.md` — the two spawn prompts.
 - `references/` — calibration + sheet format + the full auditor/master/overrides methodology.
