@@ -19,12 +19,12 @@ SHEET_ID = "1Ld547RXFeh91dd4c5eO1XKla2xlHkz0eMVphg1CNwx0"
 SA = ".creds/sa.json"
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
 # Exact Sheet1 header (row 2).
-HEADER = ["Task ID", "Specialization", "Scenario", "What the agent had to do", "Verdict",
+HEADER = ["Task ID", "Attempt ID", "Specialization", "Scenario", "What the agent had to do", "Verdict",
           "Confidence /100 (ship as-is)",
           "Why this verdict (plain English)", "What to fix",
           "Platform score (model's auto-grade)", "Viewer 2nd opinion",
           "Do they agree?", "Open the task"]
-FIELDS = ["task", "specialization", "scenario", "did", "verdict", "confidence", "why", "fix", "platform", "viewer", "agree", "link"]
+FIELDS = ["task", "attempt", "specialization", "scenario", "did", "verdict", "confidence", "why", "fix", "platform", "viewer", "agree", "link"]
 
 
 def rank(v):

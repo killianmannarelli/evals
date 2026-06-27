@@ -21,12 +21,12 @@ SA = ".creds/sa.json"
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
 RUNS_DIR = "OpenClaw QC/Audit-runs"
 
-HEADER = ["Task ID", "Specialization", "Layer", "Last audited", "Verdict",
+HEADER = ["Task ID", "Attempt ID", "Specialization", "Layer", "Last audited", "Verdict",
           "Confidence /100", "Scenario", "What the agent had to do",
           "Why this verdict (plain English)", "What to fix",
           "Platform score (model's auto-grade)", "Viewer 2nd opinion",
           "Do they agree?", "Open the task"]
-FIELDS = ["task", "specialization", "layer", "last_audited", "verdict", "confidence",
+FIELDS = ["task", "attempt", "specialization", "layer", "last_audited", "verdict", "confidence",
           "scenario", "did", "why", "fix", "platform", "viewer", "agree", "link"]
 
 SUFFIX_RANK = {"": 0, "REAUDIT": 1, "a": 1, "b": 2, "c": 3, "d": 4, "e": 5,
@@ -97,7 +97,8 @@ def main():
             sk = (is_real, date, rank, mtime)
             if t not in best or sk > best[t][0]:
                 row = {
-                    "task": t, "specialization": r.get("specialization", "") or "",
+                    "task": t, "attempt": r.get("attempt", "") or "",
+                    "specialization": r.get("specialization", "") or "",
                     "layer": layer, "last_audited": label, "verdict": v,
                     "confidence": r.get("confidence", ""),
                     "scenario": r.get("scenario", ""), "did": r.get("did", ""),

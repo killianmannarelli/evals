@@ -77,6 +77,8 @@ LAYER_TO_REVIEW_LEVEL = {
     "L-1": "-1",
     "L0": "0",
     "L1": "1",
+    "L4": "4",
+    "L8": "8",
     "L10": "10",
     "L11": "11",
     "L12": "12",
@@ -101,6 +103,7 @@ def build_query(project_id: str, review_level: str, status: str) -> str:
 WITH latest AS (
     SELECT
         ta.task,
+        ta._ID AS attempt_id,
         ta.response,
         ta.attempted_by,
         ta.attempted_at,
@@ -117,7 +120,7 @@ WITH latest AS (
       AND hn.status = '{status}'
       AND ta.attempted_by != '{EXCLUDE_ATTEMPTER_ID}'
 )
-SELECT latest.task, latest.response, latest.attempted_by, latest.attempted_at,
+SELECT latest.task, latest.attempt_id, latest.response, latest.attempted_by, latest.attempted_at,
        latest.task_metadata, latest.specializations, u.email AS attempter_email
 FROM latest
 LEFT JOIN PUBLIC.USERS u ON u._ID = latest.attempted_by
@@ -392,6 +395,7 @@ def main() -> int:
         specializations = ", ".join(str(x) for x in _spec) if isinstance(_spec, list) else (_spec or "")
         record = {
             "task_id": task_id,
+            "attempt_id": row.get("attempt_id") or row.get("ATTEMPT_ID"),
             "project": args.project,
             "layer": args.layer,
             "attempted_by": row.get("attempted_by") or row.get("ATTEMPTED_BY"),

@@ -82,6 +82,15 @@ def nunver(ws, t):
         return 0
 
 
+def attempt_id(ws, t):
+    # The latest attempt's _ID from PUBLIC.TASKATTEMPTS (surfaced by fetch_tasks.py
+    # and fetch_openclaw_single.py as the top-level "attempt_id"). "" when absent.
+    try:
+        return J(f"{ws}/tasks/{t}.json").get("attempt_id") or ""
+    except Exception:
+        return ""
+
+
 def specialization(ws, t):
     # The task's specialization, from PUBLIC.TASKS.SPECIALIZATIONS (surfaced by
     # fetch_tasks.py as the top-level "specializations" string; JSON-array column,
@@ -125,7 +134,7 @@ def main():
             continue
         rec, pr = J(rp), J(pp)
         mine = norm(rec["verdict"])
-        row = {"task": t, "specialization": specialization(ws, t),
+        row = {"task": t, "attempt": attempt_id(ws, t), "specialization": specialization(ws, t),
                **{k: pr.get(k, "") for k in ("scenario", "did", "why", "fix")}, "verdict": mine}
         row["confidence"] = confidence_for(rec, nunver(ws, t))
         row.update(live(ws, t))
@@ -139,7 +148,7 @@ def main():
     for t in incomplete:
         if t in done:
             continue
-        row = {"task": t, "specialization": specialization(ws, t),
+        row = {"task": t, "attempt": attempt_id(ws, t), "specialization": specialization(ws, t),
                "scenario": "(run not captured yet)", "did": "—", "verdict": "Pending", "confidence": "",
                "why": "A new version of this task is in flight and its run hasn't been captured yet, so the checks "
                       "can't be reviewed this round.",

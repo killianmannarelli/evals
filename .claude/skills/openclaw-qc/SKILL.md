@@ -105,8 +105,8 @@ python3 scripts/push_audit_to_sheet.py --feedback "$WS/feedback.json" --tab "<La
 The Sheet writer never overwrites — if re-publishing a date that already has a tab, delete the old tab first (the
 redo replaces it). Save the run as `OpenClaw QC/Audit-runs/<date>-<Layer>-feedback.json` for history (reference only,
 never re-read as input).
-The tab uses `Sheet1`'s exact format (blank row 1, frozen bold header, 12 columns incl. Specialization + Confidence,
-WRAP on every cell, full 24-char IDs, FAIL/Non-Fail/Pass casing, hyperlinked "Open the task").
+The tab uses `Sheet1`'s exact format (blank row 1, frozen bold header, 13 columns incl. Attempt ID + Specialization +
+Confidence, WRAP on every cell, full 24-char IDs, FAIL/Non-Fail/Pass casing, hyperlinked "Open the task").
 
 **6. REFRESH THE MASTER SHEET (every run, after saving the record).** Rebuild the single living master tab that
 compiles EVERY committed audit, deduped to ONE row per task (latest real verdict wins; Pending only if never
