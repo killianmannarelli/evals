@@ -18,7 +18,9 @@ Score legend: **2 = Fail**, **3 = Non-Fail**, **5 = Pass**. "Max Non-Fail" = the
 ## INPUT ARTIFACTS
 4. **Realism** — *Fail* if >20% of the multimodal inputs (**or** any 1+ xlsx/docx/pdf) are highly unrealistic /
    over-curated / "too perfect" with no reasonable explanation; *Non-Fail* if slightly unrealistic but plausible
-   (or a stated reason exists); *Pass* if plausible & realistic.
+   (or a stated reason exists); *Pass* if plausible & realistic. **Contrived tells (view the image): input–prompt
+   mismatch** (an image the prompt calls "the stopwatch photo" that is actually a handwritten note — 400a8) and
+   **illegible-as-literal-text** (a "smudge" typed as the word `(smudge)` rather than a real visual smudge — 400a8).
 5. **Artifact Verification** — *Fail* if, across **both** verifier types (tests **and** rubric criteria), **no**
    test/criterion depends on the **content** of a non-text file (existence-only checks do **not** count); *Pass*
    if ≥1 content-dependent verifier exists.

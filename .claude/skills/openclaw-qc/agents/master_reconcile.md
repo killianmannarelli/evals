@@ -25,6 +25,17 @@ VERIFIED UNION:
    unverifiable (Rule 19c — never anchors a Fail).
    - The drawer's TEST claims are unreliable: it often says "0 tests / test-less" when the task HAS unit tests, and
      over-flags Tests-Correctness. Grade Tests (16-19) from sot/<TID>/unit_tests.py (dump_tests.py), NOT the drawer.
+     A drawer "Test Coverage" / "Test-*" Fail category NEVER anchors the verdict on its own: tests count ONLY when a real
+     executable unit_tests.py is present; if it's absent or only a scratch-literal reference=r"""...""" block, Tests is
+     N/A — REJECT the drawer's test Fail (400a8: the drawer's "Fail - Test Coverage" is out of scope, must not drive it).
+   - REJECT a drawer flag that "the rubric shouldn't test the misspelling / raw wording" when the prompt EXPLICITLY mandates
+     verbatim preservation ("keep my scribbles word-for-word, don't fix spelling") — the criterion is prompt-grounded and
+     correct (400a8: the "preserve 'defct'" criterion is valid; the gold just has to match what's legible).
+   - CONTRIVED-INPUT ADOPT: if the drawer charges that an INPUT is staged/contrived — a photo that isn't what the prompt
+     calls it, or smudges typed as the literal word "(smudge)" — VIEW the image; if confirmed, ADOPT it as a Realism Fail
+     driver (fail_drivers, verdict=Fail), NOT as a band criterion, and do NOT re-file it as a penalize-correct criteria
+     defect when the prompt itself instructed that handling (400a8: "stopwatch photo" is a note + literal "(smudge)" →
+     Realism Fail; C31/C46 grade prompt-faithful behaviour, so the 6a/6b/6c bands stay clean).
    - A COMPLEMENT PAIR is ONE defect: if the drawer reaches Fail by counting an oppositely-weighted +w/-w pair (both
      scoring the SAME single decision) as TWO criteria, recount as ONE (§9h, attributed to the redundant negative).
      Don't let the drawer inflate the band by double-counting the pair.

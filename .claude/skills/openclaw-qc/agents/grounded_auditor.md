@@ -30,6 +30,19 @@ NEVER use story.desired_outcome or Pass@K.
      INCLUDES a criterion that rewards/requires a value the prompt explicitly says to LEAVE UNCHANGED / not recompute /
      keep as-is, or that contradicts any explicit prompt constraint ("don't X", "only Y") = Incorrect-Criteria Major
      (d43 miss: 6/23 criteria reward recalculated unmatched-purchase totals the prompt said stay "unchanged").
+     ATTRIBUTION GUARD — do NOT double-charge a contrived INPUT as a rubric defect: when the PROMPT ITSELF instructs the
+     agent to treat an artifact a certain way ("this is the stopwatch photo — use it to recover the reading"), a criterion
+     that grades that instructed behaviour is PROMPT-FAITHFUL, NOT penalize-correct (a prompt-following model does exactly
+     what it was told and is rewarded correctly). If the artifact is contrived — its pixels don't match the prompt's label —
+     the defect is the INPUT → Realism driver #4 (step 4), recorded in fail_drivers; do NOT also count the rubric as
+     penalize-correct/Incorrect-Criteria for honouring the prompt's own instruction (400a8: C31/C46 grade "recover 56s from
+     IMG_1032" exactly as the prompt directs and 56s IS legibly readable, so the band stays clean and the task Fails on
+     Realism — the "stopwatch photo" is really a handwritten note).
+     PROMPT-MANDATED-VERBATIM GUARD: a criterion enforcing a constraint the prompt EXPLICITLY states ("keep my scribbles
+     word-for-word, don't tidy up spelling/shorthand") is PROMPT-GROUNDED and CORRECT — checking the output preserves the
+     original (even misspelled / shorthand) string is NOT over-spec and NOT penalize-correct (400a8: a criterion that the
+     appendix preserves the misspelled "defct" is valid). Caveat: the gold string must match what's actually legible in the
+     image — an over-precise gold on genuinely ambiguous handwriting is a separate, smaller issue, not grounds to void it.
    - Over-spec (Major if material): demands content / method / exact values / filenames / schemas the live prompt never asks for.
      Also OVERFITTING (Moderate): a criterion that hard-codes ONE side of a genuinely AMBIGUOUS call (prompt/rules admit
      ≥2 defensible readings), rejecting the rule-faithful answer (6871 miss: 8/21 pinned one reading of ambiguous flag
@@ -74,6 +87,14 @@ NEVER use story.desired_outcome or Pass@K.
    - Output filename (2): the prompt asks for a file output but never specifies its filename.
    - Feasibility (3): the PRIMARY request is impractical/impossible with the available tools (secondary-only = Non-Fail).
    - Realism (4): >20% of the MM inputs (or any 1+ xlsx/docx/pdf) are highly contrived/over-curated, no reasonable explanation.
+     CONTRIVED-ARTIFACT TELLS (each = a Realism Fail on its own — VIEW the image and compare to how the prompt/rubric LABELS
+     it): (i) INPUT-PROMPT MISMATCH — an image the prompt/criteria call one thing but whose pixels show something else
+     (400a8: prompt + C31/C46 call IMG_1032 "the stopwatch photo … use it to recover that one reading," but the photo is a
+     handwritten note "Pack Sample 4 = 56s" on a desk — no stopwatch anywhere). (ii) ILLEGIBLE-AS-LITERAL-TEXT — a value the
+     artifact should render as a real visual smudge/torn/blurred region is instead TYPED as the literal word
+     "(smudge)"/"[illegible]"/"[smudge]" (400a8: IMG_1031's three "smudged" Gemba readings are the typed word "(smudge)", not
+     actual illegible ink — a staged/templated tell). Confirm by eye, then attribute the Fail to the INPUT (Realism), not the
+     rubric (see the penalize-correct ATTRIBUTION GUARD in step 2).
    - Artifact Verification (5): NO rubric criterion (nor test) depends on the CONTENT of a non-text input (existence/filename-only doesn't count).
    - Leak Prevention (6): the solution is explicitly stated in a non-media field (filename / contributor note).
    - Safety (7): an input artifact contains real PII identifying a real, existing person (not synthetic/mocked).

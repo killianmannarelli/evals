@@ -27,6 +27,14 @@ that has two issues — take its max severity).
   constraint ("don't X", "only Y", "keep Z").** (d43 miss: 6/23 criteria reward *recalculated* unmatched-purchase
   totals although the prompt says unmatched purchases stay "unchanged" → 6/23 = 26% → 6a Fail. A correct, rule-
   following response is marked wrong, and it contradicts the task's own desired-outcome.) Major Incorrect-Criteria.
+  **Attribution guard — don't double-charge a contrived input as a rubric defect:** when the PROMPT ITSELF instructs the
+  agent to treat an artifact a certain way ("this is the stopwatch photo — recover the reading"), a criterion grading
+  that instructed behaviour is **prompt-faithful, NOT penalize-correct**; if the artifact is contrived, the defect is the
+  **INPUT** (Realism #4), not the rubric (400a8: C31/C46 grade "recover 56s from IMG_1032" exactly as the prompt directs →
+  Realism Fail, band stays clean). **Prompt-mandated-verbatim guard:** a criterion enforcing a constraint the prompt
+  explicitly states ("keep scribbles word-for-word, don't fix spelling") is **prompt-grounded and correct** — not
+  over-spec, not penalize-correct (400a8: preserving the misspelled "defct" is valid; caveat — the gold must match what's
+  actually legible).
 - **Over-specification / Overfitting** — demands content / method / exact values / filenames / schemas / sections the
   **live prompt** never asks for (Major if material, else Moderate). **Also Overfitting (Moderate): a criterion that
   hard-codes ONE side of a genuinely AMBIGUOUS call** — where the prompt or the supplied rules admit two-or-more
@@ -106,7 +114,13 @@ spot-checks = Non-Fail; an under-filled ≤5 set → Major Missing-Criteria).
 clearly verified against the prompt + viewed inputs + trajectory:
 - **MM-dependence (1)** — the prompt's explicit requests can be fully met **without** referencing any non-text input.
 - **Realism (4)** — >20% of the MM inputs (**or** any 1+ xlsx/docx/pdf) are highly unrealistic/over-curated with no
-  reasonable explanation.
+  reasonable explanation. **Contrived-artifact tells (each = a Realism Fail; VIEW the image, compare to how the
+  prompt/rubric labels it):** (i) **input–prompt mismatch** — an image the prompt/criteria call one thing but whose
+  pixels show another (400a8: prompt + C31/C46 call IMG_1032 "the stopwatch photo," but it's a handwritten note "Pack
+  Sample 4 = 56s," no stopwatch); (ii) **illegible-as-literal-text** — a "smudged"/"torn"/"blurred" value typed as the
+  literal word `(smudge)`/`[illegible]` instead of a real visual artifact (400a8: IMG_1031's three "smudges" are the
+  typed word, not actual ink). Attribute the Fail to the **INPUT** (Realism), not the rubric — see the penalize-correct
+  attribution guard above.
 - **Leak Prevention (6)** — the solution is explicitly stated in a non-media field (filename / contributor note).
 - **Artifact Verification (5)** — **no** rubric criterion (nor test) depends on the **content** of a non-text input;
   existence-only / filename-only checks do not count. (A whole rubric that never verifies any media content.)
@@ -143,6 +157,9 @@ defer blindly, never ignore it. Its hit-rate on divergent findings is ~⅓.
   unit tests" when the task DOES ship unit tests (it never opened `verifier.py`), and it over-flags Tests-Correctness.
   Always grade the Tests dimensions (16–19) from `sot/<tid>/unit_tests.py` (surfaced by `dump_tests.py`) — not from
   the drawer's test count. (Seen this run on 56ec + 56e1: drawer said "0 tests"; 4 and 7 tests were actually present.)
+  **A drawer "Test Coverage" / "Test-*" Fail category never anchors our verdict on its own:** tests count ONLY when a
+  real executable `unit_tests.py` is present; if the file is absent or only a scratch-literal `reference=r"""..."""`
+  block, Tests is **N/A** — reject the drawer's test Fail (400a8: the drawer's "Fail – Test Coverage" is out of scope).
 - **A complement pair is ONE defect, counted once.** When the drawer reaches a Fail by counting an oppositely-weighted
   complement pair (a `+w` and a `−w` criterion that score the same single decision) as TWO defective criteria,
   recount: §9h treats the pair as one redundancy finding (attributed to the redundant negative). Do not let the drawer
