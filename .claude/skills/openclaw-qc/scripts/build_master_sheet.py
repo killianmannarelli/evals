@@ -94,12 +94,21 @@ def main():
                 continue
             v = norm(r.get("verdict"))
             is_real = 0 if v == "Pending" else 1
-            sk = (is_real, date, rank, mtime)
+            # run_date (the ACTUAL day the audit ran) overrides the filename's anchor
+            # date for recency. The tab/record date is a cosmetic series anchor and can
+            # be older than another layer's anchor even when this run is more recent
+            # (e.g. an L10 run anchored 06-22 that actually ran 06-29 must still win over
+            # an L8 record anchored 06-26 for tasks queued at both layers).
+            eff_date = r.get("run_date") or date
+            eff_label = label
+            if r.get("run_date") and r["run_date"] != date:
+                eff_label = f'{label} · run {r["run_date"]}'
+            sk = (is_real, eff_date, rank, mtime)
             if t not in best or sk > best[t][0]:
                 row = {
                     "task": t, "attempt": r.get("attempt", "") or "",
                     "specialization": r.get("specialization", "") or "",
-                    "layer": layer, "last_audited": label, "verdict": v,
+                    "layer": layer, "last_audited": eff_label, "verdict": v,
                     "confidence": r.get("confidence", ""),
                     "scenario": r.get("scenario", ""), "did": r.get("did", ""),
                     "why": r.get("why", ""), "fix": r.get("fix", ""),
