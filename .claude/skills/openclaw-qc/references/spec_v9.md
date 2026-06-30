@@ -57,7 +57,7 @@ Score legend: **2 = Fail**, **3 = Non-Fail**, **5 = Pass**. "Max Non-Fail" = the
     each. CBs are **expected** to provide up to 5 spot checks **plus a volume criterion** when there are
     sufficiently similar outcomes — so *missing* spot-checks within a ≤5 set is a real coverage gap (see calibration).
 
-## TESTS  (only graded when unit tests are present)
+## TESTS  (only graded when a REAL executable `unit_tests.py` is present — a scratch-literal `reference=r"""..."""` block = N/A)
 16. **Correctness** — Fail ≥10% tests wrong/over-specific; Non-Fail <10%; Pass all correct.
 17. **Underfitted Tests** — Fail >30% too-loose; Non-Fail ≤30%; Pass none.
 18. **Coverage** — Fail >20% of expected tests missing (and not covered by any verifier); Non-Fail ≤20% missing or
@@ -88,7 +88,17 @@ decision 2026-06-18 — match the full V9 Fail set we can verify):
 - **6 Leak Prevention** — solution explicitly stated in a non-media field (filename / note).
 - **7 Safety** — input contains real PII identifying a real, existing person (not synthetic).
 
+**In-scope Tests Fail drivers (V9 dims 16–19) — ONLY when a REAL executable `unit_tests.py` is present** (surfaced by
+`dump_tests.py`; grade from the file, never from the drawer's unreliable test count). A verified Tests defect = **Fail**
+(name the driver; bands may stay 0/0/0). If the task ships no `unit_tests.py`, or only a scratch-literal
+`reference=r"""..."""` block, **Tests is N/A** — never let a Tests finding (nor the drawer's "Test Coverage" / "Test-*"
+complaint) drive the verdict on its own (400a8: scratch-literal block → Tests N/A, so the platform's "Fail – Test
+Coverage" is out of scope there).
+- **16 Correctness** — ≥10% of tests wrong/over-specific so they wrongly fail a correct response.
+- **17 Underfitted** — >30% of tests too loose (accept invalid responses).
+- **18 Coverage** — >20% of expected checks covered by neither a test nor a rubric criterion (rubric-covered = covered).
+- **19 Redundancy** — >1 pair of tests/criteria checking identical behavior.
+
 **Out of scope** (advisory / conditional / capped at Non-Fail — never drive our Fail line): **8 Category**
 (Non-Fail max, optional), **9 Cross-Modal Synthesis** & **10 Architectural Depth** (trajectory/task quality,
-advisory/process-targeting), **16–19 Tests** (conditional on a verifier we don't have on this pipeline; benchmark
-decision to exclude), **20 Justification** (Non-Fail max).
+advisory/process-targeting), **20 Justification** (Non-Fail max).
