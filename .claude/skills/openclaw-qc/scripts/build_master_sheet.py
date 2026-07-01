@@ -103,7 +103,12 @@ def main():
             eff_label = label
             if r.get("run_date") and r["run_date"] != date:
                 eff_label = f'{label} · run {r["run_date"]}'
-            sk = (is_real, eff_date, rank, mtime)
+            # Tie-break equal run_dates by WRITE TIME, not the suffix rank: the a/b/c
+            # suffix only orders re-runs within ONE layer's series, so comparing it across
+            # layers is meaningless (an L8 record's "d" must not beat a fresher L10 "b" that
+            # ran the same day). mtime is the true recency signal for a task queued at two
+            # layers; rank stays only as the final tiebreak when write times are equal.
+            sk = (is_real, eff_date, mtime, rank)
             if t not in best or sk > best[t][0]:
                 row = {
                     "task": t, "attempt": r.get("attempt", "") or "",
