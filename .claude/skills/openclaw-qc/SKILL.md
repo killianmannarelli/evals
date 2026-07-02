@@ -61,11 +61,22 @@ criteria + drawer even for tasks the Redash CDS view hasn't materialised yet.
 
 **2. Rehydrate inline + extract bundles** (for the chosen task ids):
 ```
-python3 scripts/fetch_openclaw_single.py --task-id <id,id,...> --api-key "$REDASH_KEY" --out "$WS/tasks/"
+# whole-queue: bulk-materialise first (one IN-list per chunk — never per-task-parallel, which collapses the rate)
+python3 scripts/materialize_cds_bulk.py --workspace "$WS" --chunk 10
+# RECOVER STRAGGLERS (do NOT skip): the bulk IN-list query silently misses some resolvable attempts. The
+# single-task path resolves them where the bulk query did not (Rule 14a CDS view + Rule 14 signed-URL fallback
+# that the bulk path lacks). Feed it EVERY task still response_shape != "inline" after the bulk pass.
+python3 scripts/fetch_openclaw_single.py --task-id <remaining cds_pointer ids> --api-key "$REDASH_KEY" --out "$WS/tasks/"
 python3 scripts/fact_extractor_v3.py --task-dir "$WS/tasks/" --out-dir "$WS/sot/" --spec "$WS/spec.md"
 ```
-`response_shape: inline` → fully auditable (prompt + rubric + downloaded images). `cds_pointer` → the CDS view
-hasn't caught up; mark `audit_incomplete` and re-try later with `scripts/refetch_inputs.py` (it polls the view).
+For a small hand-picked slice you can call `fetch_openclaw_single.py --task-id <id,id,...>` directly and skip the
+bulk pass. `response_shape: inline` → fully auditable (prompt + rubric + downloaded images). A task still
+`cds_pointer` **after BOTH the bulk pass and the single-task retry** → the CDS view genuinely hasn't caught up;
+mark `audit_incomplete`, list it Pending, and re-try later with `scripts/refetch_inputs.py` (it polls the view).
+Do NOT settle for Pending on the strength of the bulk pass alone — always run the single-task retry first (on the
+2026-07-01 L10 run it flipped 16 "Pending" tasks to inline, taking the queue from 40/56 to 56/56 auditable).
+**Rebuild the SoT bundle for any task the retry flips to inline** — re-run `fact_extractor_v3.py` (+ the 2b/2c
+dumps) on it, because a bundle built while the task was still `cds_pointer` carries no RESPONSE content.
 NEVER substitute `task_metadata` for the missing inline RESPONSE (Rule 10).
 
 **2b. Surface the trajectory (every run).** Dump the agent's tool-RESULTS so auditors ground "connected-service"
@@ -124,7 +135,9 @@ sign-inversion, over-spec, out-of-scope dims, drawer reconciliation). `reference
 project_overrides}.md` are the full methodology the agents read.
 
 ## Files
-- `scripts/` — `fetch_spec.py`, `fetch_tasks.py`, `fetch_openclaw_single.py` (CDS-view rehydration),
+- `scripts/` — `fetch_spec.py`, `fetch_tasks.py`, `materialize_cds_bulk.py` (whole-queue bulk rehydration —
+  chunked IN-list; pair it with a `fetch_openclaw_single.py` retry to recover the stragglers it misses),
+  `fetch_openclaw_single.py` (per-task CDS-view rehydration + signed-URL fallback; the straggler-recovery path),
   `fact_extractor_v3.py`, `fetch_platform_eval.py` (drawer scrape), `refetch_inputs.py` (poll the CDS view),
   `dump_trajectory.py` (tool-RESULTS), `dump_tests.py` (surface `verifier.py`), `confidence.py` (verdict→confidence),
   `assemble.py` (NO-reuse feedback.json builder — this run's `reconciled/`+`prose/` only),
