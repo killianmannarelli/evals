@@ -1,0 +1,1991 @@
+{
+ "69fb9655277dce0e70070e37": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "MEDIA_PATH",
+    "rubric_ids": [],
+    "test_names": [],
+    "explanation": "The prompt says receipts are 'scanned into receipts/' and catalog_rules.md says 'One row per scanned document in receipts/', but the Dockerfile (`COPY artifacts/inputs/files/ /root/.openclaw/workspace/`) actually places the 12 images plus receipts_catalog.csv/catalog_rules.md under workspace/inputs/, not workspace/receipts/. The sample trace (conversation_history/Model_A.json) confirms the agent's first two file reads targeting 'receipts/receipts_catalog.csv' and 'receipts/catalog_rules.md' both fail with ENOENT before it finds the real path via a directory listing.",
+    "fix": "Either rename the copied workspace folder to receipts/ (adjust the input zip's internal folder name or the Dockerfile COPY destination) so it matches the prompt, or update the prompt and catalog_rules.md text to reference 'inputs/' instead."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 4,
+   "input_adequacy": 5,
+   "environment_adequacy": 4,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a04c2de0b4f42487f8e5dfa": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "rubric_ids": [
+     19,
+     20
+    ],
+    "test_names": [],
+    "explanation": "Rubric 19 (weight 5) claims the July 2025 HbA1c value 'differs between Ana's email to Dr. Chen and the lab printout's previous value field,' and rubric 20 (weight 1) asks the report to flag this as an unresolved discrepancy. Direct examination of the source images contradicts this: Ana's Oct 7, 2025 email states 'I was at 6.3% in July' (server/data/email/data.json, email_id 9a1c4d59613c62c0e9bfa118), the Oct 3 lab printout's printed 'Previous value noted in chart' field reads '6.3% in July 2025' (IMG_2323.jpeg), and Ana's own handwritten annotation on that same printout reads 'was 6.3 in July' (confirmed via 5x zoom crop, unambiguously a '3' not a '2'). All three sources agree on 6.3% — there is no discrepancy in the provided data. A careful, accurate agent will correctly find no inconsistency and cannot satisfy rubric 19/20 without fabricating one, while an agent that misreads a value (e.g. sloppily reading the handwriting as '6.2') would be rewarded for the error.",
+    "fix": "Either remove rubrics 19/20, or fix the underlying asset so a genuine discrepancy exists (e.g. change the printed 'previous value' field or the handwritten annotation on IMG_2323.jpeg to a different number than the email's 6.3%), then re-verify all three sources actually disagree before re-adding the rubric."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a04c2de0b4f42487f8e5e02": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a04c2de0b4f42487f8e5e04": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "rubric_ids": [
+     18
+    ],
+    "test_names": [],
+    "explanation": "Rubric 18 (weight -5) penalizes the report for citing 'the request for icons at the bottom as a valid request.' But Isaiah's handwritten note genuinely and non-jokingly asks to 'Add job-related icons at the bottom' (unlike the nerd-face line, which is explicitly marked '(jk, don't do it)') — so the request itself really was valid; only the cartoonish clip-art execution is the flaw (covered separately by positive rubric 9). A thorough, accurate report that says something like 'you did ask for icons here, which is reasonable, but these read as generic clip art rather than professional iconography' is factually correct and satisfies rubric 9, yet could be misread by a literal grader as tripping rubric 18 simply for acknowledging the request was legitimate.",
+    "fix": "Reword rubric 18 to target the specific failure mode intended, e.g. 'portfolio_feedback.md excuses the unprofessional icon execution by treating the fact that icons were requested as sufficient justification' rather than penalizing any acknowledgment that the request itself was reasonable."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a076b30fb7ee59da499fd2a": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a0ffe25088789f61666686b": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "MEDIA_PATH",
+    "rubric_ids": [
+     14
+    ],
+    "test_names": [],
+    "explanation": "The prompt claims 'I uploaded one zipped folder in the workspace named gabriela_home_shop_upload.zip' and rubric 14 requires the trajectory to unzip that file before synthesis, but the Dockerfile (COPY artifacts/inputs/files/ /root/.openclaw/workspace/) copies the already-extracted directory artifacts/inputs/files/gabriela_home_shop_upload/ straight into the workspace. A recursive search of the whole environment tree found zero .zip files anywhere, so no archive named gabriela_home_shop_upload.zip ever exists for the agent to unzip.",
+    "fix": "Reword rubric 14 (and the prompt line) to check that the agent explores/reads the pre-extracted gabriela_home_shop_upload/ folder contents before synthesis, rather than requiring a literal unzip action that can never occur."
+   },
+   {
+    "tier": "review_recommended",
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "rubric_ids": [
+     10,
+     12
+    ],
+    "test_names": [],
+    "explanation": "server/data/zillow/data.json lists 6704 Huebner Rd with zestimate 185500 and 207 Charm Dr with zestimate 170200, but rubric 10 asks for a '$185,000 zestimate' and rubric 12 asks for a '$170,000 zestimate' — both off by a few hundred dollars from the authoritative source the agent actually queries. An agent that correctly reports the true zestimate values would mismatch these hard-coded rubric numbers.",
+    "fix": "Update rubric 10 to '$185,500 zestimate' and rubric 12 to '$170,200 zestimate' to match server/data/zillow/data.json exactly."
+   },
+   {
+    "tier": "review_recommended",
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "rubric_ids": [
+     12
+    ],
+    "test_names": [],
+    "explanation": "Rubric 12 hard-codes 207 Charm Dr's price as $168,500 (matching server/data/zillow/data.json), but the prompt explicitly instructs the agent to also weigh 'any current message context.' The Beatriz Sandoval conversation's final message (2026-05-12, ~2 weeks before the task's 'current' date of 2026-05-27) says 'did you see Charm Dr dropped to $164k?? Maria just texted me.' An agent that follows the prompt's instruction to incorporate current message context could reasonably report $164,000, which would fail rubric 12's exact-price check even though it used a source the prompt told it to consult.",
+    "fix": "Either remove/adjust the price-drop line in the Beatriz message thread so it doesn't conflict with the Zillow API price, or add explicit guidance (in the prompt or a rubric) on why the live Zillow listing price should take precedence over the secondhand chat rumor."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 4,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a14c6a002f937bcb61ec0e8": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "rubric_ids": [
+     3,
+     5
+    ],
+    "test_names": [],
+    "explanation": "The prompt's arithmetic requires: weeks_in_plan = (# past meals WITHOUT meat) and no_meat_target = 2 x (# past meals WITH meat), counted from the 6 uploaded photos (IMG_5480/5485/5489/5493/5499/5501). Rubrics 3 and 5 hard-code the answer as exactly 1 week/7 days and exactly 10-of-14 meat-free slots, which only holds if the photos split 5-meat/1-no-meat. Close visual inspection (including 2x-3x crops) shows at least IMG_5485 (oatmeal, roasted squash, cottage cheese, cheese slices, plums, arugula - zero meat/fish) and IMG_5493 (pappardelle with tomato-cream sauce, roasted beet rounds, grated cheese - zero meat/fish) are unambiguously meat-free, giving at minimum a 4-meat/2-no-meat split (also counting IMG_5480 chicken caesar, IMG_5489 salmon poke, IMG_5499 seared-tuna nicoise, IMG_5501 chorizo sandwich as meat). That yields 2 weeks (14 days, 28 slots) and a no-meat target of 8 - not the 7 days / 10-of-14 the rubrics demand. A careful agent that actually inspects all six images (as rubric 1 requires) and applies the prompt's own formula will produce a plan that fails rubrics 3 and 5 (worth 10 of the task's 23 total positive points), while an agent that skips careful inspection and guesses the 'intended' 5/1 split would score higher - an inverted incentive.",
+    "fix": "Recount the meat vs. no-meat meals actually depicted in the 6 images and rewrite rubrics 3 and 5 to match the true split (or swap in photos that actually produce a 5-meat/1-no-meat split if that was the intended design)."
+   },
+   {
+    "tier": "review_recommended",
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "rubric_ids": [
+     5
+    ],
+    "test_names": [],
+    "explanation": "Neither the prompt nor any rubric clarifies whether fish/seafood counts as 'animal meat' ('not eat animal meat anymore, of any kind' is open to a strict reading, which includes fish, or a colloquial pescatarian-style reading, which excludes it). Two of the six source photos are fish dishes (IMG_5489 salmon poke bowl, IMG_5499 seared tuna salad), so this classification choice changes the past-meat tally, and by extension the correct week count and no-meat target that rubric 5 checks, and also affects how a grader should judge whether any 'fish' entries the agent puts in plan.md count as meat-free slots.",
+    "fix": "Add a clarifying line to the prompt (e.g., 'meat includes poultry, red meat, and fish/seafood' or explicitly exempt fish) so both the agent and the grader apply a single consistent standard."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 4,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "no",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a14c6a002f937bcb61ec0ee": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a17cc59ea9a7319a6ca06da": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "rubric_ids": [
+     4,
+     9
+    ],
+    "test_names": [],
+    "explanation": "Rubric 4 expects the audit to match 'Monte Bello olive oil' to a shelf price of 82.90, pointing to a Montebello-branded bottle in IMG_4567.jpg. On close inspection that bottle is a slender wine/spirit-style bottle with a '0%' badge on the neck (typically alcohol-free wine/aquavit labeling, though could plausibly be an acidity claim) sitting on a Worcester-sauce/Tabasco shelf, not among any oil products, and 'Montebello' is also a well-known vinegar brand - none of this clearly reads as 'olive oil in a dark green bottle with a light green rectangle.' Image resolution/an obstructing shelf-divider bar prevent fully confirming the product type. standard.md itself instructs the auditor that 'the product must match the specifications' (brand alone is not enough), so a careful agent could reasonably conclude this bottle is NOT the described olive oil and either flag it as not confidently matchable or as missing - the latter would trigger rubric 9's -5 penalty on top of missing rubric 4's +5, a 10-point swing for following the standard's own verification rule.",
+    "fix": "Verify against the original source photo/product what the Montebello item actually is; if it is not olive oil, either replace the shelf photo with a genuine Monte Bello olive oil product shot at $82.90, or rewrite standard.md's description/rubric 4 to match what's actually depicted."
+   },
+   {
+    "tier": "review_recommended",
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "rubric_ids": [
+     3
+    ],
+    "test_names": [],
+    "explanation": "Rubric 3 expects 'Old Spice deodorant' (described in standard.md as 'a gray deodorant stick with an orange rectangle just below the brand logo... some red') to have shelf price 4.59. In IMG_3245.jpg, of the several Old Spice sticks visible, the one whose crest band reads as orange sits under a $4.99 price tag, while the stick under the $4.59 tag has a yellow-green band, not orange (confirmed via 2.5-5x crops; exact color judgment is lower-confidence given JPEG blur). This raises the same 'brand matches but stated feature doesn't' risk as the olive oil item.",
+    "fix": "Re-check the source photo crop against the intended SKU and correct either rubric 3's price (to 4.99) or swap in a shelf photo where the orange-rectangle variant is unambiguously priced at 4.59."
+   },
+   {
+    "tier": "review_recommended",
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "rubric_ids": [
+     8
+    ],
+    "test_names": [],
+    "explanation": "Rubric 8 requires the agent to say competitor referral details are unavailable rather than invent a figure. However, server/data/email/data.json contains a real email in the same workspace ('Share the Love - Give $15, Get $15' from deals@freshdirect.com) with a personal referral link (freshdirect.com/refer/MONIQUE4718) and an explicit answer to exactly the question asked: 'Your friend gets $15 off their first order of $50+.' The prompt's phrasing ('I received some information... Could you remind me') invites the agent to search existing data sources like email, and this is the only referral-program email in the environment, so a thorough agent could plausibly surface it and answer '$15 off first order of $50+' instead of saying the information is unavailable - directly failing rubric 8 despite behaving diligently. (FreshDirect is a grocery delivery service, not a CPG competitor, so a careful agent might also correctly judge it irrelevant - but nothing in the task flags this email as a decoy.)",
+    "fix": "Either remove/rename the FreshDirect referral email from this persona's inbox so no referral-program data exists anywhere in the environment, or add explicit guidance/a rubric clarifying that FreshDirect is unrelated and should not be used to answer the competitor question."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 4,
+   "input_adequacy": 4,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a17cc59ea9a7319a6ca06e4": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "MEDIA_PATH",
+    "rubric_ids": [],
+    "test_names": [],
+    "explanation": "The prompt describes a single zip ('whole thing is knotbadco_booth.zip under workspace inputs folder') that the agent must open and sort through, but artifacts/inputs/files/inputs/ contains BOTH knotbadco_booth.zip AND a byte-for-byte-identical pre-extracted copy at knotbadco_booth_extracted/knotbadco_booth/ (verified via diff -rq after unzipping). Both get COPYed into the agent's workspace by the Dockerfile, so the agent never actually needs to unzip anything - the tellingly-named '_extracted' folder is a task-prep leftover, not something a real user like Eric would have created.",
+    "fix": "Remove the pre-extracted knotbadco_booth_extracted/ directory from artifacts/inputs/files/inputs/ so only the zip ships to the agent, matching the prompt's narrative."
+   },
+   {
+    "tier": "review_recommended",
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "rubric_ids": [
+     20
+    ],
+    "test_names": [],
+    "explanation": "Rubric 20 requires the final assistant chat message to state the $535.50 grand total 'from the 14 items' and lists all 14 item names/prices parenthetically. It's ambiguous whether the parenthetical list is just grader context (only the total needs to appear in the reply) or a literal requirement that the chat message re-enumerate all 14 priced items - the latter reading sits awkwardly against the prompt's explicit 'quick is fine perfect writeup not required thanks,' which asks for a short final message, not a full transcription of the price board that's already saved in price_list.csv.",
+    "fix": "Clarify rubric 20 to require only the grand total (and item count) in the final message, since the itemized list is already the deliverable in price_list.csv - or explicitly state the full enumeration is required in the chat reply regardless of the 'quick is fine' framing."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a17cc59ea9a7319a6ca06e5": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "rubric_ids": [
+     6
+    ],
+    "test_names": [],
+    "explanation": "Rubric 6 requires the report to state that the FreshDirect users table 'includes the 11 known FreshDirect users: John Doe, Marcus Johnson, William Thompson, Sophie Laurent, Carlos Mendez, Lisa Park, Priya Sharma, Anna Kowalczyk, Jordan Williams, Patrick Murphy, and Jennifer Martinez.' I traced server/server.py's SERVICES table (fresh-direct data_path='data/fresh-direct/data.json', resolved relative to BASE_DIR=server/) and confirmed via entrypoint.sh that this top-level server.py (not any per-service server.py) is what actually runs in the container. The file it loads, server/data/fresh-direct/data.json, has a 'users' array with exactly ONE record: Eric Martin (the portfolio owner, is_user=true). The 11 named personas only exist in an orphaned, never-loaded fixture at server/services/fresh-direct/fresh_direct/data/data.json; grep confirms this exact persona_001…persona_031 template (John Doe, Marcus Johnson, etc.) is duplicated verbatim across fresh-direct, sonos, strava, calendar and whoop's nested service scaffolding — generic MCP-server boilerplate/test fixtures, not task-authored seed data. fresh_direct_service.py and the freshdirect skill's CLI (freshdirect_data.py) expose no list/search-users tool at all (only login-by-email, catalog, orders, cart, profile). The sample trajectory (conversation_history/Model_A.json) corroborates this empirically: the model searched exhaustively for 'Robyn'/'Banks' across the FreshDirect/Sonos/Whoop exports and never once produced or encountered 'John Doe', 'Marcus Johnson', or any persona_0xx id. No agent using the live environment can truthfully produce this 11-name list.",
+    "fix": "Either reseed server/data/fresh-direct/data.json with the 11 named personas the rubric expects (mirroring how Sonos/Whoop's single-owner data is at least internally consistent with their rubrics), or rewrite rubric 6 to only require confirming Robyn Banks' absence from the single-user FreshDirect table, matching the (correct) pattern already used by rubrics 7 and 8 for Sonos/Whoop."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 4,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "FreshDirect user roster (11 named personas) referenced by rubric 6 is not present in the runtime-loaded server/data/fresh-direct/data.json (only account owner 'Eric Martin' is seeded); the 11 names exist only in an unused generic template fixture the running server never loads.",
+   "missing_tools": ""
+  }
+ },
+ "6a17cc59ea9a7319a6ca06f5": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a17cc59ea9a7319a6ca06f7": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a1fbaebeae04350ba1af20d": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "SP_UNCLEAR",
+    "rubric_ids": [
+     10
+    ],
+    "test_names": [],
+    "explanation": "The prompt has the user state as an unhedged fact, 'The monitors were two fifty by the way' ($250), with no signal that this might be unreliable — unlike gear_sheet_draft.csv's own note ('needs a proper check before it goes out') or the analogous Task-2-style pattern where the user explicitly warns 'don't trust' a secondhand figure. Rubric 10 instead requires gear_list.md to state $329.99 (verified via the Sweetwater order-confirmation email and the Notion 'Studio Setup Tracker' page for the KRK Rokit 5 G4 pair). The $250 figure traces exactly to gear_sheet_draft.csv's already-mislabeled line ('Studio monitors, Yamaha HS5 (pair), 250'), so the user is unknowingly repeating the flawed draft. An agent that reasonably trusts the user's own direct, in-conversation statement over cross-checking email receipts would be marked wrong on rubric 10 (weight 3), and no rubric explicitly credits catching/overriding this specific user-stated-vs-receipt discrepancy (contrast the home-inventory task's rubric that explicitly rewards stating the corrected value 'against Claire's draft figure').",
+    "fix": "Add a hedge to the user's line (e.g., 'I think the monitors were two fifty but I could be wrong') so the prompt itself signals the figure needs verification, consistent with how the draft CSV flags its own data as unchecked — or add a rubric crediting the agent for explicitly noting/correcting the $250-vs-$329.99 discrepancy the way the home-inventory task does for its analogous case."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a1fbaebeae04350ba1af20f": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "RUBRIC_OVERSPEC",
+    "rubric_ids": [],
+    "test_names": [
+     "test_04_html_has_exactly_twelve_gallery_cards_and_required_labels"
+    ],
+    "explanation": "test_04 requires the 12 gallery-card labels to appear in the rendered HTML's visible text in one specific sequence — exactly EXPECTED_CARDS' order (Bumblebee, Moth, Caterpillar, Butterfly, Dragonfly, Ladybug, Assassin bug, Butterfly, Beetle, Grasshopper, Ant, Bees), which is simply the source videos' IMG_4922-to-IMG_4934 filename order (confirmed by reading the test's EXPECTED_CARDS list against the 13 input videos). Nothing in the prompt asks for cards to follow source-file order — it only asks for 'a normal responsive grid of equal square tiles' with 'a simple common insect name' per card, styled 'like a small personal field-notes gallery.' An agent that fully satisfies every content requirement (12 correct cards, correct subjects, no scientific names, no spider, no AI-generated images) but arranges them in a different reasonable order (alphabetical, grouped by similar species, etc.) would fail this test's sequential find()-based assertion even though every rubric that grades card content (rubrics 4-10) is order-agnostic and would pass.",
+    "fix": "Relax test_04 to check that all 12 expected labels are present as a set/multiset (e.g., collections.Counter comparison) rather than requiring one specific sequence, unless a specific card order is actually something the task wants to require (in which case state it in the prompt)."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a1fbaebeae04350ba1af210": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a1fbaebeae04350ba1af212": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "ORACLE_LEAK",
+    "rubric_ids": [
+     16
+    ],
+    "test_names": [],
+    "explanation": "Rubric 16 requires mail.md's signature block to contain the sender title 'Warehouse Receiving Manager', but this title is not derivable from any accessible data. The ship-to name 'Brandon Thomas' is grounded in packing_list.pdf/count_list.pdf, but this exact persona's actual seeded job title (verified in server/data/contacts/data.json and corroborated by multiple emails in server/data/email/data.json) is 'Industrial Engineer — Production Optimization' at Northland Precision Manufacturing in Minneapolis, MN — a completely different job/city than the Porter Textiles/San-Francisco shipment scenario in this prompt. No document, email, or contact record anywhere in the workspace mentions 'Warehouse Receiving Manager' or any warehouse-related title for Brandon Thomas; the count sheet only labels a blank co-signature line 'Warehouse Supervisor' (a different, unnamed role). An agent has no grounded way to produce this exact title — it can only be guessed/fabricated, which is at odds with the task's own instruction to avoid inventing unsupported information.",
+    "fix": "Either add a data source that actually establishes Brandon Thomas's title as 'Warehouse Receiving Manager' for this task (e.g., an email signature, an HR/contacts record, or a title field on the count sheet), or relax rubric 16 to accept any reasonable receiving/warehouse-related title (or drop the title requirement and only check for the sender name, which rubric 15 already covers)."
+   },
+   {
+    "tier": "review_recommended",
+    "defect_type": "CONTAINER_ENV",
+    "rubric_ids": [
+     18,
+     19
+    ],
+    "test_names": [],
+    "explanation": "The mock logistics_tracking service will not actually return the delivery record the prompt asks the agent to 'pull' for tracking number 1ZPAURK09147168573. Verified via code trace: server/services/logistics_tracking/server.py's _find_data_json() returns the FIRST 'data/data.json' found under BASE_DIR, which is server/services/logistics_tracking/data/data.json (byte-identical to server/data/logistics_tracking/data.json) — this file's 15 shipments all belong to an unrelated persona/address (Minneapolis, Amazon/Chewy/USPS deliveries, user_id 67e0eb05ca0dea57f80a7242) and do NOT include 1ZPAURK09147168573. The correctly-customized record (tracking 1ZPAURK09147168573, UPS, Atlanta GA -> 123 Main Street Apt 4B San Francisco CA 94102, delivered 2026-03-06, user_id persona_001 — exactly matching the packing list/count sheet) exists only in the deeper, never-reached server/services/logistics_tracking/logistics_tracking/data/data.json, which _find_data_json's short-circuit logic never walks into. At runtime the agent's lookup will hit logistics_tracking_service.py's generic 'Tracking number not found: {tracking_number}' error path. This does not block the task (the PDFs contain everything needed, and rubrics 18/19 already form a coherent pair that credits attempting the lookup and penalizes fabricating a reason for its failure per the guide's 'intentional absence' allowance), but the correctly-authored task data is silently unreachable due to a data-file precedence bug, so 'pull the delivery record for that tracking number' can never actually succeed as the prompt implies.",
+    "fix": "Move/copy the shipment + tracking_events records for 1ZPAURK09147168573 from server/services/logistics_tracking/logistics_tracking/data/data.json into server/services/logistics_tracking/data/data.json (and server/data/logistics_tracking/data.json) so the service that's actually booted serves the intended record, or confirm this failure is deliberate and adjust the prompt so it doesn't promise a working lookup."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 4,
+   "environment_adequacy": 4,
+   "is_self_contained": "yes",
+   "missing_data": "Brandon Thomas's actual seeded job title ('Industrial Engineer — Production Optimization') does not support rubric 16's required 'Warehouse Receiving Manager' signature title, which appears nowhere in the workspace; the customized UPS tracking record for 1ZPAURK09147168573 exists in the codebase but is not served by the running logistics_tracking mock API (shadowed by an unrelated dataset).",
+   "missing_tools": ""
+  }
+ },
+ "6a1fbaebeae04350ba1af213": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "rubric_ids": [
+     19,
+     21,
+     30
+    ],
+    "test_names": [],
+    "explanation": "Rubrics 19, 21, and 30 all cite a filename '0175441.jpg' as one of the three birthmark photos (alongside 36.jpg and 180741.jpg). This file does not exist in the workspace — the actual file (confirmed via ls and by opening it) is '075441.jpg' (no leading '01', 6 digits not 7). Rubric 12, describing the same 3-photo birthmark group, correctly cites '075441.jpg'. This looks like a single-digit transposition typo that was copy-pasted into 3 of the 4 rubrics referencing this photo trio. Verified visually: 36.jpg (full lower leg with a tan/brown irregular patch, white sock visible at ankle), 075441.jpg and 180741.jpg (close-up crops of the same light-brown irregular birthmark) are consistent with rubric 12's description. A capable LLM grader will very likely resolve '0175441.jpg' to the same photo via context (identical companion files 36.jpg/180741.jpg, identical birthmark description, and rubric 12's correct spelling in the same rubric set), so this is unlikely to cause mis-grading, but it is a real, verifiable authoring defect worth cleaning up since it touches 3 rubrics worth 9 combined weight points.",
+    "fix": "Replace '0175441.jpg' with '075441.jpg' in rubrics 19, 21, and 30 to match the actual filename and rubric 12's correct spelling."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a1fbaebeae04350ba1af217": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a1fbaebeae04350ba1af21b": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a1fbaebeae04350ba1af21e": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "DATA_SPARSE",
+    "rubric_ids": [
+     11
+    ],
+    "test_names": [],
+    "explanation": "server/data/calendar/data.json contains events only through 2026-05-28 (verified: min=2025-12-01, max=2026-05-28), a full week before the task's stated 'current' date of 2026-06-04 14:18 UTC. The prompt asks the agent to 'check my calendar for any open evening slots in the next two weeks' (i.e. through ~2026-06-18), but there are zero calendar events anywhere in that window. Every evening in the requested range is trivially 'open' regardless of whether the agent meaningfully queried the calendar tool, so rubric 11 ('Calendar section lists specific open evening date-and-time ranges') can be satisfied by any generic 'you're free every evening' answer, weakening its power to discriminate genuine calendar-reading behavior.",
+    "fix": "Extend the calendar seed data to include a realistic mix of busy/free events within the 2026-06-04 to 2026-06-18 window so the 'open evening slots' criterion requires the agent to actually reason over real conflicts rather than defaulting to 'everything is open'."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 5,
+   "input_adequacy": 4,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a1fbaebeae04350ba1af221": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a20b7ac31ff797fdf7c301e": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "MULTIMODAL_ARTIFACT",
+    "rubric_ids": [],
+    "test_names": [
+     "test_input_extraction"
+    ],
+    "explanation": "IMG_4222.jpg and IMG_4229.jpg are byte-identical (verified via md5sum: both hash 22a7b119bc80a47e604e9a1f17eb41d1, both 304990 bytes, same rustic bedroom photo). Of the 8 filenames in julian_cabins/, only 7 are visually distinct. This looks like a data-assembly artifact (an accidental duplicate copy under a different filename) rather than an intentional 'padded/reused photo' clue, since no rubric references a duplicate-photo tell as one of the expected visual inconsistencies.",
+    "fix": "Replace IMG_4229.jpg with a distinct photo (or remove it) so the photo set contains 7-8 genuinely unique images."
+   },
+   {
+    "tier": "review_recommended",
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "rubric_ids": [
+     4
+    ],
+    "test_names": [],
+    "explanation": "Rubric 4 labels listing_b.pdf as 'the chosen listing pdf' (i.e. $296/night x 3 = $888) but then hedges with '(e.g. $888 for Listing B or $867 for Listing A)', explicitly offering Listing A's total as an alternative acceptable value. Visual evidence favors Listing B as legitimate: Listing B's distinguishing claim (a large deck) is directly shown in IMG_5441, while Listing A's distinguishing claim (a private outdoor hot tub) appears in none of the 8 provided photos. As worded, an agent that incorrectly names Listing A as legitimate in rubric 1 could still collect rubric 4's credit by reporting $867, decoupling this weight-5 arithmetic check from the correctness of the underlying listing determination.",
+    "fix": "Tie rubric 4 explicitly to whichever listing was named legitimate in rubric 1 (a self-consistency check), or drop the Listing-A alternative and state the single intended total ($888, Listing B) outright."
+   },
+   {
+    "tier": "review_recommended",
+    "defect_type": "RUBRIC_UNFAIR",
+    "rubric_ids": [],
+    "test_names": [
+     "test_discrepancy_identified"
+    ],
+    "explanation": "test_discrepancy_identified asserts `any(term in content.lower() for term in ['two','2','different listings','conflicting','multiple'])`. Because the bare digit '2' is one of the OR terms, this is satisfied by almost any comparison.md that mentions a year (2026), a price, or a numbered list, regardless of whether the agent actually identified two conflicting listings. The real semantic check already lives in rubric 1 (LLM-graded, explicitly requires naming which listing is deceptive/legitimate), so this pytest assertion contributes its weight (3.0) as a near-free pass rather than a meaningful independent signal.",
+    "fix": "Drop the bare '2' (and 'two') from the OR-list, or require a more specific phrase (e.g. 'listing_a' and 'listing_b', or 'two listings') so the test only passes when the content actually distinguishes two properties."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 5,
+   "input_adequacy": 4,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a20b7ac31ff797fdf7c3024": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "rubric_ids": [
+     12
+    ],
+    "test_names": [],
+    "explanation": "Rubric 12 expects the PDF to list the second March Walmart Neighborhood Market charge dated 2026-03-15. But server/data/fintrack/data.json shows the actual Capital One 4891 posted transaction is dated 2026-03-17 (amount -81.18); there is no 4891 transaction on 2026-03-15 at all. The 2026-03-15 date instead comes verbatim from the user's own 'sloppy, from-memory' seed spreadsheet (artifacts/inputs/files/inputs/card_spending_log.xlsx, row '2026-03-15 | Capital One 4891 | Walmart Neighborhood Market | Shopping | 81.18'), which the prompt explicitly asks the agent to correct against 'what really hit the card.' As written, rubric 12 rewards an agent that blindly copies the stale, uncorrected spreadsheet date and would penalize an agent that correctly reports the FinTrack-verified date (2026-03-17) -- inverting the task's own reconciliation goal and contradicting sibling rubric 8 (spreadsheet-only errors are not grounds to alter reality). I independently confirmed all other spreadsheet-vs-FinTrack corrections in this task (e.g. the Pappadeaux $73.20-vs-$85.02 tip omission, the duplicated Pho Binh row, the missing Best Buy/Chevron rows) are handled correctly in their respective rubrics -- this Walmart date is the one place the answer key appears to have copied the uncorrected seed value.",
+    "fix": "Change rubric 12's expected date to 2026-03-17 to match the actual FinTrack posted transaction, or drop the date-specific claim and check only the amount ($81.18)."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a210a723e6e63649d93d618": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a210a723e6e63649d93d619": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a210a723e6e63649d93d61a": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "GRADER_BROKEN",
+    "rubric_ids": [],
+    "test_names": [
+     "test_fintrack_capital_one_account",
+     "test_fintrack_may_chewy_transaction",
+     "test_fintrack_six_chewy_transactions",
+     "test_logistics_may_shipment",
+     "test_logistics_six_chewy_shipments",
+     "test_snapshot_exists_and_valid"
+    ],
+    "explanation": "These 6 tests (weight 3+3+3+3+3+1 = 16 of the task's 63 total positive rubric+test weight, ~25%) assert facts purely about the static seed data returned by the /export-state snapshot for the fintrack and logistics_tracking mock services (e.g. 'CHWY-2026-05-48271 exists with carrier FedEx and actual_delivery 2026-05-18', 'Capital One Quicksilver account ending 7734 exists'). I read server/services/fintrack/fintrack/fintrack_service.py and server/services/logistics_tracking's openapi.yaml: both services expose only read/query tools (fintrack_get_*/search_*, track_package, detect_carrier, batch_track, explain_status, get_my_shipments) with no create/update/delete endpoint the agent could plausibly touch in this read-and-report audit task. Since nothing the agent does or fails to do can change this seed data, all 6 tests pass unconditionally for any agent run -- including a null agent that produces no output at all -- which would still bank 16/63 (~25%) of the positive weight pool from these tests alone with zero rubric credit. Only test_chewy_delivery_audit_file_exists (weight 1) actually depends on agent behavior.",
+    "fix": "Rewrite these 6 tests to assert against agent-produced artifacts (parse workspace/chewy_delivery_audit.md and MEMORY.md for the tracking numbers, delivery dates, and account name -- duplicating what rubrics 2/3/4/18 already check but as a deterministic backstop), or drop them entirely and let the existing LLM rubrics carry that verification since they already cover the same underlying facts against the agent's actual output."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a210a723e6e63649d93d61e": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a210a723e6e63649d93d61f": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "ORACLE_LEAK",
+    "rubric_ids": [
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     32
+    ],
+    "test_names": [],
+    "explanation": "The prompt_text's conversation history embeds two large fake 'OpenClaw internal context' / prior-subagent-completion blocks that instruct the (real) agent to write emma_review.md and rehabflow_review.md with specific, fully pre-written content verbatim, then relay 'completed' to the user. I independently verified both halves against the real input files. The Emma-side injected content is a well-calibrated trap: it invents a nonexistent second arithmetic page (the WhatsApp photos timestamped 10.52.26 PM and 11.38.23 PM are the SAME single 12-problem page re-photographed -- I zoomed both and confirmed every problem/answer is identical), misreads several real problems, and reports totals (18 correct/18 wrong/~8 illegible) that contradict the rubric-required 18/9/1 -- an agent copying it verbatim fails rubrics 1-4 and triggers the -5 rubric 31 penalty for inventing/duplicating problems, exactly as intended. The RehabFlow-side injected content, by contrast, is almost entirely CORRECT. I recomputed from scratch: rehabflow_pilot_v3.xlsx cleaning (dedupe PT-117, drop PT-122 per Notes sheet, drop incomplete PT-130, convert Rater B's 0-10 ADL scale) yields exactly 47 unique patients and domain means Mobility 71.0/ADL 74.0/Cognition 64.0/Pain 69.0; interrater_export.xlsx yields Cohen's kappa = 0.4697 (~0.47, below 0.60); the Summary/v2 sheet comparison yields exactly 3 stale dashboard figures (patients 48 vs 47, ADL 80 vs 74, Pain 73 vs 69). All of these match the injected text digit-for-digit. scoring_weights_draft.xlsx FINAL weights and hazard_checklist.pdf's deduction rules likewise reproduce the injected content's threshold=75 and suitability score=5/NO-GO exactly. In total the injected content already satisfies rubrics 12,13,14,15,16,17,18,19,22,23,24,25,26,27,32 (~27 of ~31 points, ~87% of that section's weight) -- leaving only the PPV (rubric 20) and a missing expected-sessions figure (rubric 21) as places a blind copy would fail. An agent can therefore bank the large majority of the RehabFlow grade by complying with (or lightly proofreading) the injected block, without doing the pilot-data cleaning, kappa computation, or video/spreadsheet cross-checking the task is meant to test -- unlike the Emma half, where the same injection pattern is correctly a trap. This looks like an authoring inconsistency (RehabFlow's gold answer was seemingly pasted into the injection almost verbatim, while Emma's was deliberately corrupted) rather than a deliberate difficulty choice.",
+    "fix": "Corrupt the RehabFlow-side injected block the same way the Emma-side one is corrupted (wrong cohort/kappa/threshold/suitability numbers or a detached fabricated record), or strip the injected 'write this exact content' payload down to a bare completion claim with no numbers, so the agent cannot harvest correct answers regardless of whether it complies with or resists the injection."
+   },
+   {
+    "tier": "review_recommended",
+    "defect_type": "DATA_SPARSE",
+    "rubric_ids": [
+     30
+    ],
+    "test_names": [],
+    "explanation": "The prompt says the Friday redo-reminder 'has to happen before the Sunday 5pm handoff, the date is in my calendar,' and tonight_todo.txt adds 'the handoff is on my calendar, use that date, do not assume it is this coming weekend.' I scanned the full calendar dataset (110 events, server/data/calendar/data.json): the latest event is 2026-04-29, over six weeks before the task's date of 2026-06-11, and there is no 'handoff' or 'Emma week' event anywhere near June 2026. Rubric 30's expected answer (Friday 2026-06-12, before Sunday 2026-06-14) is only reachable by extrapolating the recurring Sunday-to-Sunday 'Emma week' pattern visible in the historical events, combined with the prompt's own claim that it is currently Emma's week -- not by literally finding 'the date' in the calendar as the prompt promises. It also happens to be exactly 'this coming weekend' from the Thursday task date, i.e. the literal assumption the user's notes explicitly warn against making. The answer is still derivable (weeks visibly run Sunday-to-Sunday with ~5pm handoffs, and the prompt states outright that this is Emma's week), so this doesn't block completion, but the prompt's factual claim that the date is 'in my calendar' is not actually true of the provided data.",
+    "fix": "Either add a calendar event in May/June 2026 that actually shows the custody handoff (e.g. an 'Emma week' entry ending Sunday 2026-06-14), or soften the prompt's wording so it doesn't claim the exact date is directly in the calendar when it must instead be inferred from a recurring pattern."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 5,
+   "input_adequacy": 4,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "No calendar event exists past 2026-04-29 (task date is 2026-06-11), so the 'Sunday 5pm custody handoff' the prompt says is 'in my calendar' cannot actually be looked up directly; it must be inferred from the recurring biweekly Sunday-to-Sunday pattern in the historical events.",
+   "missing_tools": ""
+  }
+ },
+ "6a210a723e6e63649d93d623": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a210a723e6e63649d93d626": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "GRADER_BROKEN",
+    "rubric_ids": [
+     18
+    ],
+    "test_names": [
+     "test_notion_page_accessed"
+    ],
+    "explanation": "test_notion_page_accessed only asserts that a page titled 'Thumbnail Concepts' exists in the exported Notion snapshot (server/data/notion/data.json seeds this page unconditionally). The Notion service (server/services/notion/notion/notion_service.py) exposes no read/access-log tool, so export-state dumps the same static pages/property_values regardless of whether the agent ever called retrieve_page or search on that page. The test's name and docstring claim to verify the page was 'accessed', but the assertion is tautological: it passes on every run independent of agent behavior, so it is not a real check of the requirement it names. Rubric 18 already verifies the actual behavior (trajectory reads the Notion page before writing outputs) correctly via the trajectory, so this test is redundant noise rather than a meaningful safety net.",
+    "fix": "Remove test_notion_page_accessed (rubric 18 already covers this via the trajectory), or rewrite it to inspect the trajectory/tool-call log for a retrieve_page/search call against the Thumbnail Concepts page_id instead of the static environment snapshot."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a210a723e6e63649d93d627": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a210a723e6e63649d93d628": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a210a723e6e63649d93d62a": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a210a723e6e63649d93d62b": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a210a723e6e63649d93d62c": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a210a723e6e63649d93d62d": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "rubric_ids": [
+     10
+    ],
+    "test_names": [],
+    "explanation": "Rubric 10 (weight 5) requires the report to conclude the house is 'not suitable' because $1,700 rent exceeds half the user's monthly income, based on the SecurePoint Services paychecks (~$1,300 biweekly = ~$2,600/mo, or ~$3,200/mo with the $600 child-support deposit) visible in fintrack. But the email inbox (same data source rubrics 7-8 require the agent to read) contains a 'Offer of Employment - Security Supervisor, Methodist Hospital' (2026-04-22) at $48,000/year, and the user's SENT reply (2026-05-02) explicitly accepts it with a start date of May 19, 2026. The task's current date is 2026-06-11 - three weeks after that start date - so by the time of this prompt the user's real, current gross income is ~$4,000/mo (or ~$4,600/mo with child support), not the stale ~$2,600-3,200/mo. Half of the new income is $2,000-2,300, which is ABOVE $1,700 - i.e. under the user's own gross-income rule the rent would be affordable, the opposite of what rubric 10 hardcodes. The fintrack transaction feed happens to cut off 2026-05-28 (before any Methodist Hospital paycheck would post), so an agent who reads the accepted job-offer email and reasons from the user's current employment would be penalized for a well-supported, arguably more correct conclusion, while an agent that misses the offer/acceptance emails and uses only the old paycheck figure will match the rubric by chance.",
+    "fix": "Either remove/soften rubric 10 to allow either conclusion depending on which income the agent surfaces, or explicitly instruct the agent (or add a rubric) to reconcile the accepted job offer against the affordability calculation, or delete the job-offer/acceptance emails from the email dataset if a single deterministic 'not suitable' answer is intended."
+   },
+   {
+    "tier": "review_recommended",
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "rubric_ids": [
+     6
+    ],
+    "test_names": [],
+    "explanation": "Rubric 6 requires the report to mark the claim 'the second floor has a wall unit with two small bookshelves on either side' as INCORRECT. However, second_floor_5.jpg (viewed directly) shows a built-in fireplace/mantel wall feature flanked by exactly two small built-in bookshelves, one on each side - a very literal visual match for 'two small bookshelves on either side' of a central wall feature. An LLM grader looking at this image could reasonably call the claim correct rather than incorrect. The 'incorrect' reading only holds if 'wall unit' is narrowly construed as a distinct furniture/cabinet piece (like the media console+shelving unit actually shown next to the FIRST floor's brick fireplace in first_floor_1.jpg) rather than the fireplace-with-flanking-shelves shown on the second floor - a distinction the rubric text doesn't make explicit. This is a visual/subjective judgment call, so confidence is lower than a data-contradiction finding.",
+    "fix": "Reword rubric 6 to spell out the distinguishing detail the grader should key on (e.g., 'the second floor has a fireplace flanked by bookshelves, not a separate wall-mounted cabinet/media unit like the one actually located on the first floor'), so the LLM grader isn't left to guess what counts as a 'wall unit' versus a fireplace surround."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 4,
+   "input_adequacy": 4,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a210a723e6e63649d93d62e": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "RUBRIC_UNFAIR",
+    "rubric_ids": [],
+    "test_names": [],
+    "explanation": "The email inbox contains an extensive, clearly deliberate subplot (8+ emails plus a 'permit??' annotation on the owner's own handwritten scan) establishing that the kitchen's structural work was done WITHOUT a required city permit, that the homeowner's attorney advised the $8,500 withholding is legally defensible under RCW 18.27.114 because unpermitted work is a material breach, that a mechanic's-lien threat and code-enforcement case (#CE-2026-04182) are active, that $12-15K in remediation costs may be needed to bring the work to code, and that the referring friend took an undisclosed $2,800 kickback from the contractor. None of the 7 rubrics or 15 tests ask the summary to disclose or even acknowledge the unpermitted-work/legal-dispute status, even though the prompt explicitly says the document 'is going to the insurance company so it needs to hold up' - unpermitted structural work is precisely the kind of fact an insurer would want disclosed, and its omission (or a naive agent's blind mention of it, e.g. in the wrong place) is entirely unscored either way. This is a criteria-completeness gap: a well-built, high-effort input thread with zero corresponding rubric/test coverage, so a very thorough agent and a narrowly-scoped agent score identically despite materially different, insurance-relevant output quality.",
+    "fix": "Add a rubric (or two) rewarding the summary for surfacing the unpermitted-work / active-dispute status as a caveat relevant to the insurance filing, and/or a negative rubric penalizing a report that presents the renovation as routine/complete when the data shows an unresolved legal dispute over unpermitted structural work."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 3,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a2252a7226df6fc69476d47": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a2252a7226df6fc69476d4c": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a2252a7226df6fc69476d51": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "MULTIMODAL_ARTIFACT",
+    "rubric_ids": [
+     1,
+     2
+    ],
+    "test_names": [],
+    "explanation": "Rubric 1 (weight 5, the highest-weighted rubric) requires the agent to report the flagged-defect count on defect_markup_handwritten.jpeg as exactly 90, and rubric 2 (weight 3) depends on that count. I cropped and zoomed (2-4x) into every one of the 10 room boxes to hand-count the marks carefully. Using a consistent rule (count every distinguishable stroke, including small round dots that sit adjacent to/overlapping an X, check, or plus as separate marks since free-floating dots are clearly used elsewhere as their own mark type), I counted 92. Using a stricter rule (excluding dot-blobs that directly touch another symbol, treating them as pen artifacts), I counted 84. The stated ground truth of 90 falls inside this [84-92] range but is not uniquely forced by the image - the marks are densely packed, several literally overlap, and many include small ink blobs at stroke endpoints that are genuinely difficult to classify as 'separate defect mark' vs. 'pen pressure artifact' even under significant zoom. A careful, diligent agent could reasonably land anywhere in this ~8-mark band, yet rubric 1 gives credit only for the literal value 90 with no tolerance, and rubric 2's threshold call, while robust across the whole plausible range (all values are >80), inherits the same risk if graded strictly alongside rubric 1. This is a visual/counting judgment call so I'm flagging it at reduced confidence, but the spread I found across two defensible counting methodologies is large enough to be a real fairness risk for the highest-weighted rubric in the task.",
+    "fix": "Regenerate the marked-up floor plan with marks spaced so none overlap or touch, and avoid stray pen-lift blobs at stroke ends (or use cleanly distinct glyphs), OR relax rubric 1 to accept a small tolerance band (e.g. 88-92) around the intended count instead of requiring the literal number 90."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 4,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a2252a7226df6fc69476d53": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "RUBRIC_UNFAIR",
+    "rubric_ids": [
+     8
+    ],
+    "test_names": [],
+    "explanation": "Rubric 8 (weight 5, one of the highest-weighted rubrics) requires study_plan.md to verify the Amazon purchase as '$48.15 on April 15 charged to Chase 6618'. I checked server/data/fintrack/data.json directly: transaction txn_209 is Amazon, -$48.15, date 2026-04-15, account_last_four '6618' - but that account (acct_003) is explicitly 'institution_name: Capital One Quicksilver', a credit card, NOT Chase. David's actual Chase accounts are a checking account ending 4271 and a savings account ending 8903 - neither is 6618. So the rubric's expected answer ('Chase 6618') contradicts the ground-truth data; the correct institution is Capital One (Quicksilver), last four 6618. An agent that correctly looks up the transaction via the fintrack skill and accurately reports 'Capital One, account ending 6618' (the true, verifiable fact) would fail this rubric as worded, while an agent that fabricated or guessed 'Chase' would be rewarded - the opposite of the task's intent (which elsewhere penalizes fabrication via rubric 18).",
+    "fix": "Correct rubric 8 to say 'Capital One (Quicksilver) 6618' instead of 'Chase 6618', matching server/data/fintrack/data.json's acct_003."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a2252a7226df6fc69476d5a": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a2252a7226df6fc69476d5b": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "rubric_ids": [
+     35
+    ],
+    "test_names": [],
+    "explanation": "Rubric 35 (weight +1) awards credit when the review 'reports the Specials grid layout/structure (the photo + name + description + price arrangement) itself as a brief deviation.' Both the handwritten brief (IMG_6616.jpg: 'Specials: Seasonal items in a grid, each with a photo, the name, a line about it, and the price') and the live-site screenshot (Screenshot 13.23.31, 'This month specials' section) confirm the live site's Specials grid uses exactly that photo+name+description+price arrangement -- it matches the brief. The actual defects in that section are the placeholder text (rubric 5) and the trailing dollar sign (rubric 8), not the grid structure. So this rubric gives positive credit for a false/hallucinated criticism, directly contradicting the prompt's explicit instruction: 'if something already lines up with the brief, just tell me it's fine instead of inventing a problem with it.' Every other 'don't fabricate a problem' guard in this rubric set (30-34) is correctly negative-weighted; rubric 35 is the outlier with a flipped sign.",
+    "fix": "Flip the weight to negative (e.g. -1 to -3, consistent with siblings 30-34), or reword as a positive-credit rubric confirming the agent correctly identifies the grid structure as matching the brief (not a deviation)."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a2252a7226df6fc69476d5c": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a2252a7226df6fc69476d5d": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a2252a7226df6fc69476d65": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "rubric_ids": [
+     1,
+     11,
+     14
+    ],
+    "test_names": [],
+    "explanation": "This task reuses the same Jessica Nelson / Brooke / Maura Chen persona dataset seen elsewhere in this batch, and that dataset's Rick Vasquez storyline directly collides with this task's premise. The Contacts entry for Rick Vasquez reads verbatim 'Vasquez Built LLC. Kitchen renovation. Legal dispute — all communication through Dara' (matching rubric 11 exactly), and the Inbox (same property, 4217 Densmore Ave N) documents an ACTIVE, ESCALATED dispute: Vasquez already performed unpermitted structural work (load-bearing wall removal) on this same kitchen in Sept-Dec 2025, sent a 'Final Notice' threatening a mechanic's lien, and the homeowner retained attorney Dara Okafor, whose engagement letter explicitly instructs 'Do not respond to further communication from Vasquez or his representatives without consulting me' -- still unresolved as of the last case-update email (May 2, 2026), six weeks before this task's June 15, 2026 'today'. Rubric 11 (weight 3) rewards the agent for digging up exactly this dispute + the attorney instruction. Yet rubric 1 (weight 5) requires the audit to select Vasquez anyway, rubric 14 (weight -5) penalizes recommending the alternative (Seattle Kitchens), and the prompt itself asks the agent to draft a 'green light' approval email directly to Vasquez in draft_approval.md if under budget -- with no rubric crediting or even permitting the agent to surface this as a reason for caution before doing so. A maximally diligent agent that follows the attorney's explicit instruction (found via the very research path rubric 11 rewards) would be in tension with what rubrics 1/14 want produced.",
+    "fix": "Either drop/reframe rubric 11 so the dispute-discovery isn't part of this task (it reads as leftover flavor from a different task's dataset), or add a rubric that credits the agent for prominently flagging the litigation/non-contact instruction as a risk in renovation_audit.md before proceeding, so 'thorough research' and 'produce the requested drafts' aren't pulling in different directions."
+   },
+   {
+    "tier": "review_recommended",
+    "defect_type": "MULTIMODAL_ARTIFACT",
+    "rubric_ids": [
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "test_names": [],
+    "explanation": "Rubrics 2-6 all refer generically to 'the attached kitchen photos (IMG_*.jpg)'. Of the six IMG_*.jpg files actually in artifacts/inputs/files/inputs/extracted, only IMG_1001-1004.jpg show the kitchen; IMG_1005.jpg and IMG_1006.jpg are photos of two different bathrooms (a dated tan/orange bathroom with a washing machine, and a separate modern white double-vanity bathroom), unrelated to the kitchen renovation. This doesn't block the task -- the kitchen-specific claims (hardwood floor, induction cooktop, sloped beamed ceiling, structural post, exterior glazing) are all independently verifiable from IMG_1001-1004 alone -- but it's a minor input-quality inconsistency: the prompt says 'a couple of pics of how the kitchen looks right now,' yet 2 of the 6 supplied photos are of unrelated rooms, and the rubrics' blanket 'IMG_*.jpg' phrasing doesn't acknowledge that a third of the photo set isn't the kitchen at all.",
+    "fix": "Rename/relocate the two bathroom photos out of the kitchen input set, or scope the rubric wording to the specific kitchen-photo filenames (IMG_1001-1004.jpg) rather than the whole IMG_*.jpg glob."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 4,
+   "input_adequacy": 4,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a271a812033c9fde3b43f61": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "GRADER_BROKEN",
+    "rubric_ids": [],
+    "test_names": [
+     "test_answers_txt_updated"
+    ],
+    "explanation": "test_answers_txt_updated hardcodes target_hash='3a1d20991b094681b03d977ae0a1647430dc5465feb312c6d403a8df7d563925' and asserts the workspace answers.txt's SHA-256 differs from it, intending to prove the agent modified the file. Verified directly: sha256(environment/artifacts/inputs/files/inputs/answers.txt) = '1bc857bf99ac107431fa367d77bc5e78b8351c45d69b88fda0685a551c1893bb', a completely different value from target_hash. Since target_hash was never the real pristine-file hash, 'assert target_hash != file_hash' is true unconditionally -- the test passes even if the agent never touches answers.txt at all. This is a tautological/always-passing test that provides zero actual verification, though impact is limited since it is only 1.0 of ~30 total weight and rubrics 1-6 already verify the corrected content values independently.",
+    "fix": "Replace target_hash with the real pristine hash (1bc857bf99ac107431fa367d77bc5e78b8351c45d69b88fda0685a551c1893bb) so the inequality check actually detects a no-op edit, or better, drop the hash-diff approach entirely and assert the corrected grid values directly (already redundantly covered by rubrics 1-6)."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a271a812033c9fde3b43f62": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a271a812033c9fde3b43f63": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a271a812033c9fde3b43f65": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "DATA_SPARSE",
+    "rubric_ids": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "test_names": [],
+    "explanation": "Rubrics 3-11 require identifying which 7 of 632 numeric Piece IDs in 'market prices.xlsx' correspond to the loose LEGO pieces photographed in parjfrn.jpg, including 3 exact market values (6145570=$0.31, 6278155=$0.81, 6133832=$0.12). Verified this mapping is not recoverable from the provided data: (1) cropped and zoomed 8x with contrast/sharpen enhancement on the one visible embossed marking on a piece in the photo -- illegible, below the source image's native resolution; (2) the spreadsheet has only Piece ID / Market Value / Purchase Price columns, no descriptive name field to match against; (3) checked cell fill/font formatting on all 632 rows -- the 7 target IDs (at rows 54, 57, 275, 312, 446, 591, 613) carry no highlighting distinguishing them from the other 625 rows; (4) no LEGO-part-lookup skill is bundled (skills/ only has calendar/contacts/email/fintrack/messaging/reminder/sonos/strava/zillow/openai-whisper); (5) entrypoint.sh confirms the 'image' tool referenced by rubric 11 is just the model's own generic vision input (LITELLM_INPUT=[text,image]), not a specialized part-ID recognition API. A resourceful agent could try external web search (confirmed a Brickognize-style LEGO image-to-part-ID tool exists via live search), but that path still requires disambiguating among ~76 other rows sharing the same '4211xxx' numeric family (same mold, different color/print variants) plus ~335 rows in the broader '6xxxxx' family -- precise element-ID-level identification of small, generic, interchangeable minifig accessories (a gray handle, a black blaster, a silver cylinder) from one overhead photo is unreliable even with tooling. Roughly 17 of the task's ~26 total positive rubric weight points (about two-thirds) hinge on this identification succeeding.",
+    "fix": "Either (a) make the photo legible -- stage/crop so each piece's embossed element ID is readable, or add a visible label/tag per piece -- or (b) add a grounded lookup bridge in the environment (a description/color column in the spreadsheet, or a bundled reference mapping this specific set's pieces to element IDs), so the agent has a deterministic path to the 7 correct rows instead of needing to win a visual disambiguation against dozens of near-duplicate element IDs."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 3,
+   "environment_adequacy": 4,
+   "is_self_contained": "yes",
+   "missing_data": "Legible/identifiable markings or a descriptive bridge (e.g., part name/color column) linking the 7 photographed LEGO pieces in parjfrn.jpg to their specific numeric Element IDs in market prices.xlsx",
+   "missing_tools": "A LEGO part/element visual-identification tool (photo-to-element-ID lookup); the agent must rely on generic web search/browsing to attempt this specialized identification"
+  }
+ },
+ "6a271a812033c9fde3b43f66": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a271a812033c9fde3b43f67": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "DATA_SPARSE",
+    "rubric_ids": [
+     23
+    ],
+    "test_names": [],
+    "explanation": "Rubric 23 requires growth_chart.png to annotate the corrected base-case breakeven crossing as exactly 'January 2027', but no source in the environment specifies the cost of the 5th board-approved Q1 2026 hire (the 'Financial Analyst', confirmed via fig_03.jpg org chart at level L3, target start 'Q1 2026', status 'Sourcing') — the org chart, the 5 draft PDFs, and the email/Slack/Notion threads all omit any salary/compensation figure for this role, unlike the other 4 hires whose full comp is itemized in pkg_03.pdf. Recomputing the draft's own base-case monthly cash-flow table (pkg_05.pdf) with only the verified DataSync correction (annual cost $186,000 to $163,680, i.e. -$1,860/month starting the new contract's May 2026 effective date) shows Net income crossing positive around July 2026 (Jul: 0K + 1.86K = +1.86K), not January 2027 — a ~6-month gap that can only be explained by adding a substantial, unstated cost for the new Financial Analyst role. Without that figure, no agent can reliably reconstruct the exact intended breakeven month; only an assumption invented by the task author could land on 'January 2027'.",
+    "fix": "Either add a compensation line for the Financial Analyst role (matching the format already used for the other 4 Q1 hires in pkg_03.pdf), or relax rubric 23 to accept a qualitative/ranged correction (e.g., 'meaningfully later than the draft's July 2026 claim, into late 2026 or Q1 2027') rather than requiring one exact month."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 5,
+   "input_adequacy": 4,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "Target compensation/cost for the newly board-approved 'Financial Analyst' hire (5th Q1 2026 position, per fig_03.jpg org chart) — needed to precisely derive the corrected 18-month breakeven month demanded by rubric 23.",
+   "missing_tools": ""
+  }
+ },
+ "6a271a812033c9fde3b43f68": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "MULTIMODAL_ARTIFACT",
+    "rubric_ids": [
+     2,
+     3,
+     4,
+     5,
+     17
+    ],
+    "test_names": [
+     "test_post_ready_contains_exactly_the_four_keepers"
+    ],
+    "explanation": "The eval assumes 4 of the 7 build stages (Lumber, Assembly, Finishing, Final reveal) have a usable camera-roll photo and only 3 (Joinery practice, Cutting, Edge banding) belong on the Reshoot list (rubric 17; test hardcodes REQUIRED_KEEPERS={01_lumber,04_assembly,06_finishing,07_final_reveal}). Viewing all 11 provided images shows this is only true for 2 stages. Lumber (IMG_3021.jpg/IMG_3022.jpg, rough boards) and Assembly (IMG_3140.jpg, bar clamps with glue squeeze-out on dark walnut-toned boards) are genuine and dated consistently with the Fletcher text thread (walnut picked up 2026-03-18 matches rubric 18's Lumber date; 'assembly going ok, chisel slip' 2026-04-19 matches rubric 19's Assembly date exactly). But there is no photo anywhere in the input set of an assembled/finished multi-shelf bookshelf: IMG_3255.jpg shows a pre-existing, cluttered, mixed-color bookcase (not new walnut); bookshelf.jpg shows a shoe cabinet; carpentry_workshop.jpg and images.jpg are generic stock photos. This is corroborated by the messaging data: the Fletcher thread explicitly narrates 'its done <<ATTACHMENT: bookshelf_finished.jpg>>' on 2026-05-21, i.e. a real final-reveal photo was taken and sent — but no file named or resembling 'bookshelf_finished.jpg' is among the 11 provided images. Separately, the only Finishing-stage candidate, IMG_3199.jpg, shows danish oil being wiped onto a light blonde table with a drawer and visible blue painter's tape in the background — inconsistent in wood species/color and furniture type with the dark walnut bookshelf seen in IMG_3140, and the Fletcher message for that stage ('first coat of danish oil on. this walnut is GLOWING') has no attachment either. So a diligent agent following post_plan.md's own rule ('If a stage has no usable photo from my build, do NOT fill the slot with something else... Put that stage in a Reshoot list') would correctly reshoot-list Final reveal (and arguably Finishing), which fails the hardcoded test and contradicts rubric 17's fixed 3-item list and rubric 2's requirement — while using IMG_3199/an unrelated photo instead would trigger the negative rubric 14 penalty. There is no way to satisfy rubric 2, 3, 4, 5, 17 and the keeper-existence test simultaneously with honest classification of the given images.",
+    "fix": "Either add real photos matching 'bookshelf_finished.jpg' (finished walnut bookshelf) and a walnut-consistent finishing/oil-application shot to the input set, or change post_plan.md/rubrics/test to make Finishing and Final reveal part of the Reshoot list (matching what the images actually support) and drop the requirement that 06_finishing.jpg/07_final_reveal.jpg exist as keepers."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 4,
+   "input_adequacy": 2,
+   "environment_adequacy": 5,
+   "is_self_contained": "no",
+   "missing_data": "A genuine 'finished bookshelf' (Final reveal) photo — referenced in the Fletcher text thread as an attachment named bookshelf_finished.jpg sent 2026-05-21 — is absent from the 11 provided camera-roll images; likewise no walnut/bookshelf-consistent Finishing (oil application) photo is present (the only candidate, IMG_3199.jpg, depicts a different, lighter-wood table).",
+   "missing_tools": ""
+  }
+ },
+ "6a271a812033c9fde3b43f6a": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "MULTIMODAL_ARTIFACT",
+    "rubric_ids": [
+     5
+    ],
+    "test_names": [],
+    "explanation": "Rubric 5 expects final_frame.jpg to pair 'The Fortress of Solitude' with call-number location '12-253-Leth-1', but recommendations.jpg actually shows the green shelf label as '12-353-Leth-1' (verified via a 5x zoom crop showing two adjacent copies of the label, both unambiguously reading '12 / 353 / Leth / 1'). Every other call number visible across this shelf image (dozens of books sampled: Kerouac, Kesey, Kidd, King, Olson, O'Nan, Paley, Percy, Piercy, Pynchon, Sontag, Styron, Toole, etc.) consistently uses the same '12 353' prefix, confirming '353' (not '253') is correct and '253' is an isolated transcription error in the rubric. An agent that correctly transcribes the visible label ('12-353-Leth-1') would be marked wrong by an LLM grader checking literally against the rubric's '12-253-Leth-1' text, penalizing accurate image reading.",
+    "fix": "Correct rubric 5's expected location string from '12-253-Leth-1' to '12-353-Leth-1' to match what recommendations.jpg actually shows."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a271a812033c9fde3b43f6f": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a271a812033c9fde3b43f70": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "MULTIMODAL_ARTIFACT",
+    "rubric_ids": [
+     2
+    ],
+    "test_names": [],
+    "explanation": "tasks.md asks for 'the exact number of UNICEF packages that are neatly stacked in our main warehouse,' and rubric 2 grades this against a specific figure (300). But primary_warehouse_1.jpg (the only primary-warehouse image with UNICEF boxes) shows a warehouse aisle of palletized UNICEF cartons receding down the row, with additional pallets fading into blur and continuing past the right edge of the frame — the row of stock is not fully contained in the shot. In addition, only the front face of each pallet is visible, so the front-to-back depth of each stack (how many boxes sit behind the visible face) is never shown. Both facts mean the image cannot support an exact total count: a diligent agent counting only what is visible would necessarily undercount (missing the pallets that fade into blur and any boxes behind the front layer), and any 'exact' figure of 300 could only be reached by guessing the hidden depth/continuation rather than reading it off the image.",
+    "fix": "Either replace/supplement primary_warehouse_1.jpg with an image (or an inventory label/manifest) that shows the complete, bounded set of UNICEF pallets with countable depth, or reword the rubric/prompt to accept a reasonable visual estimate rather than requiring one exact number."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 3,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "A bounded/complete view of the main warehouse's UNICEF pallets (or an explicit quantity label) — primary_warehouse_1.jpg only shows an aisle whose pallets recede into blur beyond the frame edge, with box depth never visible, so an exact total count cannot be derived from it.",
+   "missing_tools": ""
+  }
+ },
+ "6a271a812033c9fde3b43f71": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a271a812033c9fde3b43f73": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "ORACLE_LEAK",
+    "rubric_ids": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     11
+    ],
+    "test_names": [
+     "test_corrected_meal_log_exists",
+     "test_appointment_summary_exists",
+     "test_meal_log_has_status_column",
+     "test_meal_log_row_count",
+     "test_meal_log_status_values_in_allowed_set"
+    ],
+    "explanation": "environment/artifacts/inputs/files/inputs/extracted/ contains two extra files that are NOT part of the real input zip (adrian_williams_meals_v3.zip only has the 5 photos + adrian_meal_log.xlsx): a pre-built corrected_meal_log.xlsx and appointment_summary.md, using the EXACT filenames the agent is asked to produce. The Dockerfile does `COPY artifacts/inputs/files/ /root/.openclaw/workspace/`, so these land directly in the agent's workspace at inputs/extracted/ alongside the legitimate inputs. Per inputs/README.md this folder merges the task zip with a separate 'prompt-artifacts zip' (metadata.zip_url_artifacts) -- the latter evidently bundled leftover output files from an earlier drafting/testing pass. Content proves these are stale/wrong versus the CURRENT rubrics: the leaked appointment_summary.md's weight table starts 2026-01-05 at 91.2kg with '+3.1kg since January' (omitting the Dec-1 89.8kg row entirely) vs. rubric 5's required Dec-2025 89.8kg baseline / +4.5kg gain (verified correct against server/data/apple-health/data.json body_mass_records); its delivery-orders section totals '15 orders / ~$587.80' vs. rubric 11's verified 19 orders / $692.67; and the leaked corrected_meal_log.xlsx marks 5/8 Dinner pizza as unchanged 850cal/MATCH and LOWERS 5/5 Dinner to 380cal/MISMATCH, directly contradicting rubrics 2-4 (5/5 Dinner >=520, 5/8 pizza >=1500 & MISMATCH) -- confirmed wrong by viewing IMG_5477.png (a whole untouched large pepperoni pizza, clearly >850cal) and IMG_5415.png (a wok stir-fry, not the 'grilled chicken salad' logged, i.e. it should NOT be corrected downward). Beyond misleading a real agent into copying/trusting stale numbers, the leaked corrected_meal_log.xlsx already has the right shape (21 rows, Status column with values in {MATCH,MISMATCH,NO PHOTO}), so a lazy agent that does nothing could pass test_corrected_meal_log_exists/test_meal_log_has_status_column/test_meal_log_row_count/test_meal_log_status_values_in_allowed_set for free, since test_outputs.py's _disk_find_by_stem walks Path.home() recursively and has no way to distinguish the decoy from a genuine agent deliverable.",
+    "fix": "Remove corrected_meal_log.xlsx and appointment_summary.md from environment/artifacts/inputs/files/inputs/extracted/ (and scrub the upstream metadata.zip_url_artifacts bundle so it only contains the 5 photos + adrian_meal_log.xlsx). As defense in depth, harden test_outputs.py's _disk_find_by_stem to exclude the inputs/ subtree (or otherwise prefer files outside the known input paths) so a stray input file can never satisfy a deliverable-existence test."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 2,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a271a812033c9fde3b43f74": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "DATA_SPARSE",
+    "rubric_ids": [
+     3,
+     9
+    ],
+    "test_names": [],
+    "explanation": "notes.txt item 7 says unlogged ordered-out items should use 'the calorie counts on my takeout sheet rather than guessing.' The March 23 late-night delivery binge (which rubric 3 explicitly names) has three unlogged orders -- Denny's, Pizza Hut, and Wingstop -- but takeout_calories.xlsx (verified by reading it directly) only has line items for Denny's (6 items) and Wingstop ('10 pc + fries'), with no Pizza Hut entry at all. An agent trying to build the March 23 daily calorie total per rubric 9 has no sanctioned source for Pizza Hut's calories and must either guess (against notes.txt's explicit instruction) or omit it.",
+    "fix": "Add a Pizza Hut line item (e.g. matching the order size from the email/FinTrack record) to takeout_calories.xlsx so every unlogged March 23 merchant is covered, or soften rubric 9's wording to allow a caveat for merchants absent from the takeout sheet."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 4,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a271a812033c9fde3b43f75": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "MULTIMODAL_ARTIFACT",
+    "rubric_ids": [
+     6,
+     8,
+     9,
+     10,
+     12,
+     13,
+     14,
+     16
+    ],
+    "test_names": [],
+    "explanation": "Four of the five per-vendor 'row_*.png' helper crops (row_aws.png, row_dell.png, row_github.png, row_zoom.png) provided to make the tracker's original values for the 5 corrected vendors easy to read do NOT show their namesake vendor's row. Verified by cropping/upscaling each at native resolution: row_aws.png shows only blank desk/background (no table content at all); row_github.png shows rows 1-3 (Azure/Zoom/Docker, the top of the table) instead of GitHub (row 9); row_dell.png shows the Slack/Notion rows instead of Dell (row 21); row_zoom.png shows a laptop keyboard with no table content. Only row_gpt_solutions.png is correctly aligned (verified it matches the real GPT Solutions row between NewRelic and Google Cloud). An agent that reasonably trusts a file literally named 'row_dell.png' to contain Dell's original tracker record -- rather than cross-referencing the full tracker_left/right/bw.png or sams_enhanced.png photos every time -- would extract the wrong vendor's original values, corrupting the 'from -> to' change-list entries rubrics 6/8/9/10/12/13/14/16 grade for AWS, GitHub, Zoom, and Dell. I independently verified (by cropping tight regions of tracker/sams_enhanced.png at native resolution and cross-checking against the actual billing PDFs) that the correct original values ARE recoverable from the full tracker images and that all 16 directly-checkable rubrics (1-16) match the billing documents exactly, so the task remains solvable -- but only by an agent that ignores/distrusts these 4 mislabeled helper crops rather than using them as intended.",
+    "fix": "Regenerate row_aws.png, row_dell.png, row_github.png, and row_zoom.png from the correct y-offsets in the source tracker photo so each shows its namesake vendor's row (as row_gpt_solutions.png correctly does), or remove the broken crops entirely so the agent relies solely on the full tracker photos."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 3,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a271a812033c9fde3b43f77": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "GRADER_BROKEN",
+    "rubric_ids": [],
+    "test_names": [
+     "test_no_hallucinated_100_threshold"
+    ],
+    "explanation": "test_no_hallucinated_100_threshold asserts the literal substring '100' never appears in restock_report.md (via _exact_number, which only excludes '100' when adjacent to another digit or a decimal point). The intent is to catch a hallucinated '$100 free-shipping threshold,' but the regex is a blanket ban on the bare number: a wholly legitimate sentence such as '100% confident all six wishlist items were transcribed' or '100% of candidates verified against purchase records' would also match '100' followed by '%' (not a digit/dot) and fail this test, even though the agent made no hallucination at all. This is a real, correct-behavior-penalizing false-positive risk, though its impact is small since the test carries only weight 1.0 out of roughly 60 achievable points.",
+    "fix": "Scope the check to the hallucination it's meant to catch, e.g. require '100' to appear near 'threshold'/'shipping'/'free' (mirroring how test_free_shipping_threshold_50 already requires '50' to be near those same keywords) rather than banning the bare digits anywhere in the file."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a271a812033c9fde3b43f78": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "rubric_ids": [
+     11
+    ],
+    "test_names": [],
+    "explanation": "expense_policy_final.xlsx itself uses two different terms for the same concept: the 'Output Format' sheet describes the status column as 'Confirmed or discrepancy,' while the 'Thresholds' sheet instructs 'anything beyond [+/- $0.50] flag as MISMATCH.' Rubric 11 requires the Win Son row's status to be exactly 'Mismatch,' which is grounded in the Thresholds sheet's specific instruction (verified correct: the receipt's handwritten total $53.10 vs. the actual fintrack charge $58.10 is a genuine >$0.50 mismatch), but an agent that instead followed the Output Format sheet's literal wording and wrote 'Discrepancy' would be using terminology the same policy document also sanctions. The pytest test is lenient (test_status_in_allowed_vocabulary accepts confirmed/mismatch/discrepancy) but the rubric is not.",
+    "fix": "Either normalize the policy spreadsheet to use one term consistently (e.g., have the Output Format sheet also say 'Confirmed or Mismatch'), or soften rubric 11 to accept either 'Mismatch' or 'Discrepancy' as correct."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a271a812033c9fde3b43f79": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "DATA_SPARSE",
+    "rubric_ids": [
+     30
+    ],
+    "test_names": [],
+    "explanation": "The mock Zillow database (server/data/zillow/data.json) contains 8 properties (8542 Greenwood Ave N, 6721 22nd Ave NW, 1834 NW 65th St, 7215 Dayton Ave N, 15821 Wallingford Ave N, 21045 76th Ave W, 5618 24th Ave NW, 17410 Meridian Ave N) but has NO listing for '8234 Fremont Ave N' — the Greenwood property Sarah Chen emails about on 2026-05-15 ('New listing just hit - Greenwood 3BR', listed at $775K). Rubric 30 requires the trajectory to consult 'Zillow data needed for both the Shoreline property and 8234 Fremont Ave N,' but a real Zillow lookup for that address returns nothing — the only source for its price is the email. An agent that correctly finds no Zillow record and relies on the email is doing the right thing, yet the rubric's phrasing presupposes retrievable Zillow data for that address.",
+    "fix": "Reword rubric 30 to say the agent should attempt to check Zillow for both addresses and fall back to the email price when Zillow has no listing for Fremont Ave N, or add a small positive rubric crediting the agent specifically for noticing Zillow has no record of that address and correctly sourcing the $775K figure from Sarah's email instead."
+   },
+   {
+    "tier": "review_recommended",
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "rubric_ids": [
+     28
+    ],
+    "test_names": [
+     "test_repair_negotiation_exists",
+     "test_required_workspace_files_count"
+    ],
+    "explanation": "The prompt says to create repair_negotiation_points.md only 'if total repair estimates exceed fifteen thousand.' The only two seller-quantified repair costs in the actual disclosure scan (verified by reading it at high resolution) are the roof ($9,200, 'full roof replacement needed within 3-5 yrs') and the drainage/landscaping regrade ($2,800) — summing to $12,000, under the $15,000 threshold. Every other disclosed issue (carpenter ants, kitchen/bath permit not closed, garage floor crack, single-pane back-bedroom windows, lifted front sidewalk slab, decommissioned oil tank) carries no seller-given dollar figure. Whether the $15k threshold is crossed therefore depends entirely on cost estimates the agent itself must invent for unpriced items, yet test_repair_negotiation_exists hard-asserts the file must exist ('In the silver trajectory, total repair estimates exceed $15,000') with no conditional branch, and test_required_workspace_files_count folds this same assumption into its >=3-files count.",
+    "fix": "Either add an explicit combined repair-cost figure to the disclosure/inspection materials that unambiguously clears $15,000, or make the test tolerant of a well-reasoned agent that stays under threshold using only seller-given numbers (e.g., grade this conditionally via rubric instead of an unconditional pytest existence check)."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 4,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "Zillow listing for 8234 Fremont Ave N is absent from the mock Zillow database (referenced by rubric 30); its only in-universe price source is Sarah Chen's 2026-05-15 email ($775K).",
+   "missing_tools": ""
+  }
+ },
+ "6a271a812033c9fde3b43f7a": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a271a812033c9fde3b43f7b": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a271a812033c9fde3b43f80": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a271a812033c9fde3b43f81": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "rubric_ids": [
+     14
+    ],
+    "test_names": [],
+    "explanation": "Rubric 14 says the stale PagerDuty test alert was 'last received 2020-04-18', but the PagerDuty Integration capture (IMG_121231.jpeg) clearly reads 'Last test alert — received · 2026-04-18' (verified by cropping/zooming the row). The string '2020-04-18' does not appear anywhere in the task's data; '2026-04-18' is the only value that exists and is what makes the alert 'stale' relative to the 2026-06-13 sign-off (>30 days per spec). An agent that correctly transcribes the console's actual date (2026-04-18) into the sign-off could be marked as contradicting this rubric's stated date, even though the classification (Minor, non-blocking) the rubric is really testing is unaffected.",
+    "fix": "Correct rubric 14's parenthetical to 'last received 2026-04-18' to match the source capture."
+   },
+   {
+    "tier": "review_recommended",
+    "defect_type": "GRADER_BROKEN",
+    "rubric_ids": [],
+    "test_names": [
+     "test_goahead_posted_to_deployments_tagging_owner"
+    ],
+    "explanation": "This test is the sole verification (no rubric covers the #deployments post content) for the turn-3 correction 'tag Gerard instead of me', and it requires the exact substring '<@U_GHALLORAN>' in the posted message text. Neither the slack skill's SKILL.md nor the slack_conversations_add_message tool description (server/services/slack/slack/slack_service.py) documents this ID-mention syntax anywhere — the skill's own posting examples never show an @-mention — and no seed message in slack/data.json uses '<@...>' formatting as precedent. An agent that satisfies the instruction by writing Gerard's name in plain text (e.g. '@Gerard Halloran' or 'Gerard —') rather than the raw internal id would fail this check despite correctly tagging the release owner.",
+    "fix": "Loosen the assertion to also accept Gerard's real name / display name / email in the message text (e.g. match on 'Gerard Halloran', 'gerard.halloran', or '<@U_GHALLORAN>'), or add a rubric that independently credits the agent for correctly identifying and tagging the release owner regardless of exact mention syntax."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a2a516109edd4a3aa3056cb": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "SP_UNCLEAR",
+    "rubric_ids": [],
+    "test_names": [],
+    "explanation": "The prompt is timestamped '[Thu 2026-06-11 15:01 UTC]' and opens with 'I have a doctor's appointment coming up on April 15', but calendar/data.json event 4032c8ed4e1babf40562ed5f ('Dr. Okafor' at MedStar Harbor Hospital) is dated 2026-04-15 — over 7 weeks BEFORE the message timestamp, not 'coming up'. This is consistent with the rest of the evidence (symptom log and BP readings end 2026-03-08, the sertraline-switch visit is 2026-01-15) all clustering in Jan-Apr 2026, suggesting the message header should read a date shortly before 2026-04-15 rather than 2026-06-11 (likely a batch date-stamping artifact shared with sibling tasks in this delivery, which are also stamped June 2026). No rubric or test depends on resolving 'today's date', so this does not block grading, but it is a real internal inconsistency a careful reader would notice.",
+    "fix": "Change the prompt's message timestamp to a date shortly before 2026-04-15 (e.g. early April 2026) so it is internally consistent with the referenced appointment date and the rest of the medical timeline."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a2a516109edd4a3aa3056d6": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a2a516109edd4a3aa3056d7": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a2a516109edd4a3aa3056db": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a2a516109edd4a3aa3056e3": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "rubric_ids": [
+     4,
+     5,
+     9
+    ],
+    "test_names": [],
+    "explanation": "Rubric 4 says the 'Hot Dog Buns card's SKU' is mis-keyed as FD-HBUNS-01 and should be corrected to FD-BBUNS-01. This is backwards versus the authoritative FreshDirect catalog (server/services/fresh-direct/data/data.json, served live by fresh_direct_search_shop_catalog): the product record for id fd2208... is literally named 'Classic Hot Dog Buns (12-pack)' with variant sku='FD-HBUNS-01', price=3.99; the product fd2207... is 'Brioche Burger Buns (8-pack)' with sku='FD-BBUNS-01', price=5.49. So FD-HBUNS-01 IS the correct SKU for the Hot Dog Buns card (card_id 4) -- what's actually mis-keyed is the Brioche Burger Buns card (card_id 3 in bbq_listings_draft.csv), which also lists sku=FD-HBUNS-01 (a duplicate) but should read FD-BBUNS-01. Rubric 4 as written can only be satisfied by an agent that gets the SKU swap backwards -- exactly the outcome you'd get by trusting the decoy fresh_direct_catalog_snapshot.csv (which has the mapping flipped: FD-HBUNS-01=Brioche Buns, FD-BBUNS-01=Hot Dog Buns@5.99) instead of querying the live FreshDirect skill. That decoy-snapshot behavior is exactly what rubric 13 (weight -5) penalizes, and rubric 9 (weight 5) explicitly rewards using the authoritative catalog instead of the snapshot. Rubric 5, separately, correctly expects the Hot Dog Buns card's PRICE (not SKU) to be corrected from 5.99 to 3.99, which matches the authoritative data. Net effect: an agent that does the task exactly as designed (queries the live catalog, ignores the stale snapshot, fixes card 3's SKU and card 4's price) will fail rubric 4 (weight 5) precisely because it behaved correctly, while an agent that misattributes the fix to card 4's SKU (matching rubric 4) has actually used the wrong/decoy data source.",
+    "fix": "Rewrite rubric 4 to target the Brioche Burger Buns card: e.g. \"listing_qa_report.md identifies the Brioche Burger Buns card's SKU as mis-keyed (FD-HBUNS-01, which the catalog assigns to Classic Hot Dog Buns) and corrects it to FD-BBUNS-01.\" Leave rubric 5 unchanged (it is already correct)."
+   },
+   {
+    "tier": "review_recommended",
+    "defect_type": "MEDIA_PATH",
+    "rubric_ids": [
+     2,
+     7,
+     8,
+     10
+    ],
+    "test_names": [],
+    "explanation": "bbq_qa_inputs.zip stores its photo entries with Windows-style backslash separators (e.g. 'photos\\\\IMG_2087.jpg'), confirmed via `zipfile.ZipFile(...).namelist()`. Extracting with the shell `unzip` utility auto-detects this and correctly creates a photos/ subdirectory (unzip even prints a warning about it), but extracting with Python's `zipfile.extractall()` -- a very common approach for an LLM agent -- does not convert the separator on Linux and instead creates 6 literal files named e.g. './photos\\\\IMG_2087.jpg' sitting directly in the extraction directory, with no photos/ subdirectory. I reproduced this directly. Since the draft CSV's `photo` column and bbq_guide_notes.md both reference bare filenames inside a `photos/` folder, an agent that extracts via Python zipfile could get confused about where the images actually are, potentially undermining the photo-inspection rubrics (2, 7, 8, 10) that depend on the agent actually opening and viewing each image.",
+    "fix": "Re-package bbq_qa_inputs.zip with forward-slash paths (zip natively on macOS/Linux, or re-zip after extracting/re-compressing on a POSIX system) so extraction behaves consistently regardless of which tool/library the agent uses."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 4,
+   "input_adequacy": 4,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a2e2c326db3981084352d3c": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a31a2f7424da28b8ccb4453": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a31a2f7424da28b8ccb445b": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "DATA_SPARSE",
+    "rubric_ids": [
+     4
+    ],
+    "test_names": [],
+    "explanation": "Rubric 4 requires a reminder 'set for 3 days before the exam' (per study_notes_pg2.jpg's checkbox 'Set reminder: Review these 3 cards 3 day before exam'), but no CS 401 exam date is discoverable anywhere in the agent-visible data. Checked calendar/data.json (230 events, none mention CS401/exam/Liu), email/data.json (only unrelated dental/vet 'exam' hits), contacts/data.json (no Dr. Liu contact, only an unrelated 'Jenny Liu'), reminder/data.json, Slack data, the pptx, and both study-note photos — none give an exam date. The reminder skill (reminder_data.py) only accepts an absolute '--due \"YYYY-MM-DD HH:MM:SS\"'; there is no relative/relative-to-event reminder primitive. So the agent has no grounded way to compute 'exam_date - 3 days' and must invent an arbitrary due date to satisfy this rubric literally.",
+    "fix": "Either add a discoverable CS 401 exam date (e.g., a calendar event, syllabus reference, or line in the notes) so 'three days before the exam' is computable, or reword rubric 4 to grade the reminder's existence/content (mentions reviewing the 3 flashcards before the exam) rather than an exact date offset that cannot be derived from any provided source."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 4,
+   "input_adequacy": 4,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "CS 401 exam date (needed to compute the '3 days before the exam' reminder due date in rubric 4)",
+   "missing_tools": ""
+  }
+ },
+ "6a31a2f7424da28b8ccb446b": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a31a2f7424da28b8ccb4470": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "rubric_ids": [
+     21
+    ],
+    "test_names": [],
+    "explanation": "Rubric 21 ('cardio.md writes up fetal circulation or capillary exchange as a lecture slide, though neither is explained on any slide') describes undesired hallucination behavior (confirmed: the 8 real slides never explain fetal circulation, and only name-drop 'Capillary Exchange' as an unexplained upcoming-topic bullet on the 'Physiology of the Cardiovascular System' divider slide at ~t=266-271s) yet carries weight +1, a positive/reward weight. As written, an agent that fabricates lecture content about these topics would be scored as satisfying the criterion and gain a point, while a correct agent that omits them gains nothing for this item. This is a sign error: it should mirror the negative-weight anti-hallucination guards elsewhere in the same rubric set (rubric 10, weight -3, 'the email... re-sends the certificate'; rubric 11, weight -3, 'the email states... unapproved') and the positive-phrased counterpart rubric 20 ('every key value... appears on a lecture slide, with no definitions or figures imported from outside the lecture'), which correctly rewards the good behavior with +1.",
+    "fix": "Flip rubric 21's weight to negative (e.g. -1, matching the guard-rail pattern of rubrics 10/11) so the grader deducts points when cardio.md fabricates fetal circulation/capillary exchange content, instead of rewarding it."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a34843aa0d92ff63eee2e23": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a34843aa0d92ff63eee2e35": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a34843aa0d92ff63eee2e36": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a34843aa0d92ff63eee2e3d": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a34843aa0d92ff63eee2e3e": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "ORACLE_LEAK",
+    "rubric_ids": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "test_names": [
+     "test_csv_exists",
+     "test_csv_header_matches_started_columns",
+     "test_csv_one_row_per_entry",
+     "test_unverified_entries_have_no_distance"
+    ],
+    "explanation": "The agent-visible file environment/artifacts/inputs/files/inputs/training_log_reconciled.csv is NOT the 1-row seed the prompt describes ('i set it up but only got the first row in'). It already contains all 20 fully-populated data rows (header + 20, verified directly: `wc -l` = 21) with a plausible actual_type/actual_distance_mi/discrepancy for every date, sitting at the exact filename the agent is asked to produce. This is a severe oracle leak regardless of correctness, and cross-checking it against the real Strava data (server/data/strava/data.json) and the journal photos (IMG_5012-5020) shows it is also internally wrong in ways that contradict the rubrics: it labels 1/10, 1/17, 2/3, 2/18, 2/25 and 5/25 as 'run' when Strava shows Walk (rubric 3 requires 'walk' for these plus 1/25 and 2/11); it never uses 'unverified' and instead fills in her own guessed distance for 2/7, 4/5, 6/18 and a date it lists as '2026-05-29' (rubric 1 expects 5/28 - confirmed from IMG_5018, whose handwritten date reads 5/28, so the leaked file also has a wrong date); it transcribes 'old lopez' where the actual journal photos (IMG_5014/5015/5016) clearly read 'al lopez' (Al Lopez Park, matching the Strava activity names); and it fabricates a 'country campbell (misspelled)' discrepancy note for 4/26 even though IMG_5017 shows she correctly wrote 'courtney campbell'. Net effect: a resourceful-but-trusting agent that reuses this pre-existing file verbatim or partially would fail rubrics 1-5 despite the file already existing at the target path, while a lazy/gaming agent that leaves the file completely untouched would still pass test_csv_exists, test_csv_header_matches_started_columns, and test_csv_one_row_per_entry outright, and would vacuously pass test_unverified_entries_have_no_distance (since no row uses type 'unverified', the assertion loop never fires) - roughly 10 of 18 CSV-related test-weight points passable with zero reconciliation work. Compounding this, test_outputs.py's _find_file() does an unrestricted base.rglob('*') with no exclusion for a nested 'inputs' path component (contrast with the sibling task 6a38469525262cee87640092, whose test_outputs.py explicitly defines _EXCLUDED_PARTS = {..., \"inputs\"} to guard against exactly this collision), so grading could non-deterministically pick up this stray original file instead of a corrected file the agent saves elsewhere in the workspace.",
+    "fix": "Replace the input file with a true 1-row seed (header + only the 2026-01-10 row, matching the prompt's narrative), or delete it entirely and let the agent create the file fresh. Separately, add an _EXCLUDED_PARTS-style guard (excluding 'inputs') to this task's test_outputs.py _find_file()/_search_bases() so a leftover copy of the seed/draft can never be mistaken for the agent's actual output."
+   },
+   {
+    "tier": "review_recommended",
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "rubric_ids": [
+     5
+    ],
+    "test_names": [],
+    "explanation": "Rubric 5 enumerates 'the seven run-to-walk reclassifications (1/10, 1/17, 1/25, 2/18, 2/25, 5/25, plus 2/11)' but rubric 3 separately lists 8 dates that should resolve to 'walk' (adding 2/3). IMG_5014 confirms the 2/3 journal entry also literally begins 'run, palma ceia again...' while Strava shows a Walk that day, so 2/3 is logically an 8th run-to-walk reclassification, not merely a distance-only discrepancy. The word 'including' before the list softens this (non-exhaustive framing), so an LLM grader would likely still credit a response that flags 2/3, but the explicit count of 'seven' could read as authoritative and cause a grader to penalize a correct 8th flag as an unwarranted addition.",
+    "fix": "Either add '2/3' to rubric 5's parenthetical list (making it 'eight run-to-walk reclassifications') or drop the specific count/date enumeration and just describe the pattern generically."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 4,
+   "input_adequacy": 2,
+   "environment_adequacy": 4,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a38469525262cee876400ac": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a38469525262cee876400af": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "GRADER_BROKEN",
+    "rubric_ids": [
+     21
+    ],
+    "test_names": [
+     "test_parent_note_contains_only_resolved_requested_pieces"
+    ],
+    "explanation": "The test asserts `\"green\" in text and \"olive\" in text` (lowercased, whole-document visible text) to verify the parent note mentions the Trial 6 correction from green to olive. But `text` is derived from the ENTIRE rendered HTML, not just the parent-note section. Trial 2's own required 'observed color' value is literally 'green' (test_all_trial_rows_have_expected_deterministic_values enforces this), and Trial 6's required 'observed color' is literally 'olive'. Since both words are already mandated to appear in the results table regardless of the parent note's content, this assertion is tautological -- it passes automatically once the main table is correct, and provides zero actual signal about whether the parent note explains the green-to-olive correction as instructed by the cleanup note ('corrected trials'). Verified by reading test_outputs.py's _visible_text() (operates on the full document) and cross-checking EXPECTED_ROWS in the same file, which fixes trial 2 observed='green' and trial 6 observed='olive'.",
+    "fix": "Scope the check to the parent-note section only (e.g., extract text between a 'Parent Note' heading and the next heading/end-of-body) before asserting 'green' and 'olive' appear together, or require a phrase pattern like a green/olive correction mention (e.g., regex for 'green' near 'olive' within one sentence) rather than whole-document substring presence."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a3ae0c1291d4e4d56373185": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a3ae0c1291d4e4d56373186": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a3ae0c1291d4e4d56373187": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a3d7db012a738e7ef9c09ba": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a3d7db012a738e7ef9c09bd": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a3d7db012a738e7ef9c09c6": {
+  "findings": [
+   {
+    "tier": "review_recommended",
+    "defect_type": "DATA_SPARSE",
+    "rubric_ids": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     10
+    ],
+    "test_names": [
+     "test_answer_csv_case1_count",
+     "test_answer_csv_case1_result",
+     "test_answer_csv_case2_count",
+     "test_answer_csv_case2_result",
+     "test_answer_csv_case3_count",
+     "test_answer_csv_case3_result",
+     "test_answer_csv_case4_count",
+     "test_answer_csv_case4_result",
+     "test_answer_csv_case5_count",
+     "test_answer_csv_case5_result",
+     "test_last_email_case1",
+     "test_last_email_case2",
+     "test_last_email_case3",
+     "test_last_email_case4",
+     "test_last_email_case5"
+    ],
+    "explanation": "Rubrics 1-5 (weight 3 each) plus matching pytest tests assert exact raking-prop counts (4/8/2/2/7) read off real construction photos, and the binary Pass/Fail result (threshold: fewer than 5 fails) hinges entirely on hitting that exact count. I independently re-counted all 5 case images (CASE5.png, cas1.jpg, case-4.png, case.3.png, case2.png) using zoomed/cropped analysis, matching each prop's ground foot-plate to its wall attachment point 1:1, and arrived at counts matching the stated key for all 5 cases (4, 8, 2, 2, 7) -- so I could not confirm the specific 'Case-2 count is wrong' suspicion flagged for review. However, the images are genuinely hard to count with full certainty: Case 2 shows 8 closely-spaced props fanning across a curving multi-panel wall, plus a free-standing 2-legged ladder and a vertical survey rod right next to the props that must be excluded by judgment (neither reaches from a foot to a wall bracket); Case 4 is an extreme close-up where each telescoping prop's turnbuckle/clevis coupler visually splits it into 2-3 differently-colored/diametered segments -- exactly the ambiguity the prompt's own 'count each prop once even if different connected sections are visible' instruction is warning about. A careful counter (human or LLM grader) could plausibly land one prop off on these two images, which would flip the binary Pass/Fail result and fail roughly 9-12 points of linked test+rubric weight for that case alone.",
+    "fix": "Have the eval author re-verify the Case 2 and Case 4 ground-truth counts against the source photos with a second independent annotator (ideally with an annotated/marked-up reference image), and/or soften the grading to tolerate a documented off-by-one count when the agent shows its counting work, since the threshold-sensitivity makes this criterion unusually brittle for a photo-based counting task."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a42a89fbff245d051aeb422": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "GRADER_BROKEN",
+    "rubric_ids": [],
+    "test_names": [
+     "test_move_audit_folder_exists",
+     "test_house_ranking_csv_exists_and_has_structure",
+     "test_correction_log_md_exists",
+     "test_billing_audit_txt_exists",
+     "test_source_conflicts_md_exists",
+     "test_all_fifteen_houses_present_in_ranking"
+    ],
+    "explanation": "The pytest suite (test_outputs.py) attached to this task checks for artifacts from a completely unrelated house-hunting/relocation task: a 'move_audit' folder containing 'house_ranking.csv' (with address/five_year_cost/disqualified columns), 'correction_log.md', 'billing_audit.txt', 'source_conflicts.md', and 15 houses sourced from Airtable. None of this has any connection to the actual MoveWell fitness-activity prompt, which only asks for movewell_activity_prefill.csv, movewell_submission_note.md, and a MEMORY.md append about Strava minutes. No correct agent behavior on the real prompt will ever satisfy these 6 tests (only test_memory_md_exists is coincidentally satisfiable since both tasks want a MEMORY.md). This looks like a test-file cross-assignment bug during task batch prep. 6 of 7 tests (6.0 of the ~50-point total positive-weight pool spanning rubrics+tests) are permanently unattainable no matter how well the agent performs.",
+    "fix": "Replace test_outputs.py with a suite that actually checks movewell_activity_prefill.csv / movewell_submission_note.md / MEMORY.md content for this task, or drop pytest tests and rely on the rubrics; audit the batch-prep pipeline for how test files get paired to task_ids."
+   },
+   {
+    "tier": "review_recommended",
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "rubric_ids": [
+     3,
+     4,
+     5,
+     8
+    ],
+    "test_names": [],
+    "explanation": "Rubrics 3/4/5/8 require minutes_attended to be derived from Strava elapsed_time (100/105/105 minutes for the three explicitly-scored softball dates) rather than moving_time. But server/data/apple-health/data.json contains independent 'workout_records' of type 'Softball' for the exact same dates with yet a THIRD set of durations (Mar14=90, Mar28=85, Apr11=95, Apr25=90) that match neither the elapsed_time answer key nor the flat '90-minute league block' pattern rubric 14 penalizes. The prompt explicitly instructs the agent to 'check the portal screens against my actual fitness records' — Apple Health is the most literal candidate for 'actual fitness records' in this environment (it is a dedicated fitness-tracking mock service), yet nothing in movewell_quick_rules.md or movewell_portal_context.txt tells the agent to disregard Apple Health's own duration field in favor of Strava's elapsed_time. A careful agent that cross-checks Apple Health as instructed and treats its device-measured duration as more authoritative than a GPS 'elapsed time' field on a manually-typed 'Walk' activity has a defensible basis for a different numeric answer, and would lose combined weight 18 (rubrics 3+4+5) plus rubric 8's 5 points under the current key. (For the kayak trip, Apple Health's 120 min does match Strava elapsed_time exactly, so the conflict is specific to the four softball dates and was likely not noticed by the task author.)",
+    "fix": "Either remove/align the Apple Health softball workout_records so their durations don't conflict with the intended elapsed_time answer, or add an explicit textual clue (e.g., in movewell_portal_context.txt) establishing that Strava's own elapsed_time should be trusted over the Apple Health workout duration for these games."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 4,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a42a89fbff245d051aeb425": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 4,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a42a89fbff245d051aeb427": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a42a89fbff245d051aeb42c": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a42a89fbff245d051aeb431": {
+  "findings": [
+   {
+    "tier": "action_required",
+    "defect_type": "GRADER_BROKEN",
+    "rubric_ids": [],
+    "test_names": [
+     "test_pantry_csv_exists",
+     "test_pantry_csv_header_and_columns_preserved",
+     "test_pantry_on_hand_chickpeas",
+     "test_pantry_on_hand_tuna",
+     "test_pantry_on_hand_tomato_soup",
+     "test_pantry_on_hand_sparkling_water",
+     "test_pantry_on_hand_chicken_broth",
+     "test_restock_csv_exists",
+     "test_restock_csv_header_preserved",
+     "test_restock_item_chickpeas_present",
+     "test_restock_item_tuna_present",
+     "test_restock_item_tomato_soup_present",
+     "test_restock_item_sparkling_water_present",
+     "test_restock_item_chicken_broth_present",
+     "test_restock_quantity_chickpeas",
+     "test_restock_quantity_tuna",
+     "test_restock_quantity_tomato_soup",
+     "test_restock_quantity_sparkling_water",
+     "test_restock_quantity_chicken_broth",
+     "test_restock_unit_price_chickpeas",
+     "test_restock_unit_price_tuna",
+     "test_restock_unit_price_tomato_soup",
+     "test_restock_unit_price_sparkling_water",
+     "test_restock_unit_price_chicken_broth",
+     "test_restock_line_total_chickpeas",
+     "test_restock_line_total_tuna",
+     "test_restock_line_total_tomato_soup",
+     "test_restock_line_total_sparkling_water",
+     "test_restock_line_total_chicken_broth"
+    ],
+    "explanation": "`_find_file_direct()` in test_outputs.py resolves pantry_stock.csv/restock_list.csv ONLY at WORKSPACE_DIR/'openclaw-workspace'/<filename>. But test.sh populates WORKSPACE_DIR via `cp -r \"$OPENCLAW_HOME_DIR/workspace/.\" \"$WORKSPACE_DIR/\"` and `cp -r /workspace/. \"$WORKSPACE_DIR/\"` — both flatten source files directly into WORKSPACE_DIR, never creating an 'openclaw-workspace' subfolder. A recursive grep of the entire agent-visible environment/ tree (Dockerfile, entrypoint.sh, gateway.py, all skills/services) for the literal string 'openclaw-workspace' returns zero hits, so nothing in the runtime ever creates that directory, and the prompt itself just says to keep files 'in the base folder' — giving the agent no reason to invent a subfolder named 'openclaw-workspace'. The file's own `_search_bases()` helper (used correctly elsewhere for memory.md) lists the right candidate directories, but `_find_file_direct` doesn't use it — it's hardcoded to the wrong subpath. Consequently `_find_file_direct` always returns None: the 2 tests that assert on it directly (csv_exists) hard-fail, and the other 27 tests that wrap it in `pytest.skip` never pass — for any agent output, correct or not. This zeroes out 69 of the task's 77 total pytest test-weight points (~90% of the test pool), leaving only the 51-weight rubric pool as practically attainable, regardless of how well the agent performs the CSV-editing part of the task.",
+    "fix": "Change `_find_file_direct` to search the same candidate directories as `_search_bases()` (Path(__file__).parent/'workspace', TASK_DIR, etc.) instead of hardcoding the nonexistent 'workspace/openclaw-workspace/' subpath."
+   }
+  ],
+  "dims": {
+   "prompt_clarity": 4,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a42a89fbff245d051aeb432": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ },
+ "6a42a89fbff245d051aeb43f": {
+  "findings": [],
+  "dims": {
+   "prompt_clarity": 5,
+   "criteria_completeness": 5,
+   "input_adequacy": 5,
+   "environment_adequacy": 5,
+   "is_self_contained": "yes",
+   "missing_data": "",
+   "missing_tools": ""
+  }
+ }
+}
