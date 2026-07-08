@@ -12,6 +12,19 @@ from src import common
 LEAK_TERMS = ["/private/tmp", "claude-502", "/Users/killian", "REDASH_KEY", "serene-column",
               "deltaeval", "why_rubric_is_correct"]
 
+# Answer-key field names to redact from sheet-bound text (they name where the gold answer lives).
+# The graders reference these fields in their reasoning/fixes; neutralize the field name so no
+# answer-key handle reaches the shared sheet, while keeping the finding readable.
+REDACT = {"why_rubric_is_correct": "the rubric-justification field",
+          "why_rubric_is_incorrect": "the rubric-justification field"}
+
+
+def _redact(s):
+    s = str(s or "")
+    for k, v in REDACT.items():
+        s = s.replace(k, v)
+    return s
+
 
 def _verdict(findings, rule):
     tiers = {f.get("tier") for f in findings}
@@ -45,6 +58,9 @@ def main(cfg, run_dir):
     tasks = []
     for tid, d in digest.items():
         findings = _dedupe((lint.get(tid) or []) + (llm.get(tid) or []))
+        for f in findings:                       # redact answer-key field names from sheet-bound text
+            f["explanation"] = _redact(f.get("explanation"))
+            f["fix"] = _redact(f.get("fix"))
         ar = [f for f in findings if f.get("tier") == "action_required"]
         rr = [f for f in findings if f.get("tier") == "review_recommended"]
         verdict = _verdict(findings, rule)

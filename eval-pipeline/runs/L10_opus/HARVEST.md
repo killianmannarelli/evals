@@ -23,3 +23,5 @@ Interrupted workflow -> relaunch Workflow({scriptPath: workflows/<name>.js, resu
 First audit run (wf_bdf0484f-058) hit StructuredOutput retry wall (all-21-grades schema too big for Opus MAX); stopped. Grader now returns flags-only. New run: wd9by988a / wf_c39eb3c9-4ab. CDQ already harvested into findings_llm.json.
 
 ## NOTE 2: audit reduced to 2 graders (gen1+rubric) + master for time (~3-4h vs 7-11h). Run: wd9by988a / wf_c39eb3c9-4ab.
+
+## DONE 2026-07-09: audit complete (wd9by988a, 81/83; 2 retry-cap fails: 6a271a812033c9fde3b43f63, 6a31a2f7424da28b8ccb4459). Combined tab 'eval L10_opus COMBINED' gid=387981138 written. 60 fail / 23 non-fail / 761 findings.
