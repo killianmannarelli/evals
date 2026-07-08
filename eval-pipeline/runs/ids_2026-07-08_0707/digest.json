@@ -1,0 +1,98 @@
+{
+ "6a42a89fbff245d051aeb42a": {
+  "attempt_id": "6a483602537421f4cd37422d",
+  "layer": "12",
+  "category": "Operations & QA",
+  "subcategory": "Inventory Visual Audit",
+  "task_type": "Single-turn",
+  "mm_input": "upload image, PDF",
+  "reward": {
+   "mean_reward": 0.3021,
+   "weighted_score": 0.2491,
+   "n_runs": 16,
+   "crit_pass_rate": {
+    "budget_calculations.md uses Home Depot - Plano $163.20 amount.": 0.0,
+    "budget_calculations.md contains $1,935.15 remaining plot cost.": 0.0,
+    "budget_calculations.md includes Baker Creek $7.35 shipping in the budget basis.": 1.0,
+    "budget_calculations.md uses Baker Creek Heirloom Seeds $34.85 amount.": 0.125,
+    "budget_calculations.md contains $564.85 remaining grant budget.": 0.0,
+    "budget_calculations.md uses North Haven Gardens $6.47 tax in the plot cost.": 0.25,
+    "fundraising_plan.md uses $105.90 as verified budget context.": 0.438,
+    "budget_calculations.md contains $276.45 first-plot benchmark.": 0.0,
+    "inventory_review.md marks carrot as visually observed only.": 0.875,
+    "inventory_review.md marks tomato variety uncertain.": 0.062,
+    "budget_calculations.md cites FinTrack for Home Depot - Plano.": 0.0,
+    "budget_calculations.md asks Jennifer to retrieve the Home Depot total.": 0.875
+   }
+  },
+  "env_docker": "https://scale-cds-public-us-west-2.s3.amazonaws.com/68a7f8dc133a30ee7f7494de/8mwK0r84iqtDvio"
+ },
+ "6a480daf5c67581f0c3ae62f": {
+  "attempt_id": "6a4b0b975b59ffba715caa4b",
+  "layer": "12",
+  "category": "Creative & Media",
+  "subcategory": "Social Media Content Audit",
+  "task_type": "Single-turn",
+  "mm_input": "upload image, api image",
+  "reward": {
+   "mean_reward": 0.4245,
+   "weighted_score": 0.4355,
+   "n_runs": 16,
+   "crit_pass_rate": {
+    "The output actively validates the ~$72 January figure as correct (for example by matching it to the Jan 15 $71.85 deposit and calling the difference rounding).": 0.625,
+    "The \"Film Room: Wembanyama weak-side block\" row has status publish and is used to backfill a slot freed by a cut re-do, per the planning-page rule on `IMG_4471.jpg` to pull the next Film Room backlog clip when a slot opens.": 1.0,
+    "The audit identifies \"White corner 3\" as a duplicated clip in `top10_roughcut.mp4`, playing at cards 3 and 11.": 0.0,
+    " The \"Jokic by the numbers\" stat-graphic row has status publish with a note acknowledging both facts about its `IMG_3502.jpg` tile: the missing face deviates from the \"face in thumbnail always outperforms no face\" note, but a clean stat graphic is a listed best performer (and Montserrat is the correct stats font), so it can run as-is with no forced changes.": 0.0,
+    "The community post's \"best month\" claim is corrected to February ($112.60 per the Mar 15 email covering Feb 1-28), which exceeds January's $87.43.": 0.0,
+    "The tracker or week plan schedules an already-published re-do (\"Celtics switch-everything\" or \"Luka or Tatum\") for upload by giving it status publish or an assigned Mon/Wed/Fri slot. ": 0.5,
+    "The grounding_source values on the appended rows cite specific, named sources (a particular email, Notion page, calendar entry, input file, or message consistent with the row's claim) rather than generic placeholders like \"various sources\" or \"the files\", including on the last rows of the tracker.": 0.875,
+    "The plan to lay the Kendrick track under the reel intro is flagged as a copyright/monetization risk on the AdSense-monetized channel, with licensed or royalty-free audio recommended instead.": 0.062,
+    "The final user-facing reply briefly confirms that content_review_tracker.csv and audit_summary.md were saved.": 1.0,
+    "The tracker row for \"Luka or Tatum - who actually carries\" has status cut, identifying it as a duplicate of the already-published 'Tatum vs Luka - Who's the Better #1 Option? Film Study' (comment email Feb 22; ~12k views per the Mar 1 Garrett message). ": 0.0,
+    "The \"Draft prospects to watch\" row has status hold on the grounds that no asset for it has been produced \u2014 there is no draft-prospects thumbnail or footage anywhere in the provided inputs, only a Notion idea \u2014 rather than for scheduling or bandwidth reasons. ": 0.625,
+    "The HoopVision pitch's \"top video hit 12k\" figure is not \"corrected\" down to 3,104, because 3,104 is only the weekly top from the Feb 9-15 analytics while ~12k is the all-time top per the Mar 1 Garrett message.": 0.938,
+    "audit_summary.md states a ready/hold/cut breakdown, and those sets match the status values in content_review_tracker.csv with no contradictions.": 0.562,
+    "The tracker row for the \"Celtics switch-everything breakdown\" batch item has status cut, identifying it as a duplicate of the already-published 'Why the Celtics Switch Everything \u2014 Film Breakdown' (live Feb 11 2026, \\~3,104 views, top video of the Feb 9-15 week). ": 1.0,
+    "At least 5 of these 6 accurate or compliant items are left unflagged and uncorrected: (a) the \"crossed 2,000 subscribers\" claim (accurate per the Feb 12 milestone email), (b) the \"Tatum/Luka in 60s\" Short kept at status publish and not called a duplicate (Shorts repurpose is approved on Brandon's Notion video-ideas page), (c) no 16:9 thumbnail rule applied to the community post or the outreach pitch, (d) the yellow-on-dark Wembanyama tile on `IMG_3502.jpg` not flagged as a color violation (listed best performer), (e) the \"Jrue or JB\" poll not cut or flagged as a repeat for plugging the published Jaylen Brown breakdown, (f) the \"Halliburton\" spelling on `IMG_4471.jpg` not flagged as a defect.": 0.688,
+    "The \"Top 10 Plays\" reel is given status publish or an upload slot with none of the duplicated clips in `top10_roughcut.mp4` noted.": 1.0,
+    "The summary's Mon/Wed/Fri plan for the week of Mar 9-13 accounts for the custody week (kids all week, so no weekend batch-editing, plus the Thursday appointment) and does not schedule any newly-produced long-form that would require that lost editing time.": 0.312,
+    "The audit identifies \"Tatum dagger 3\" as a duplicated clip in `top10_roughcut.mp4`, playing at cards 7 and 17.": 0.0,
+    "The audit identifies card 9 of `top10_roughcut.mp4` (\"JB chasedown rejection\") as the same clip as card 4 (\"Brown chase-down block\") retitled (identical frame art; the play-log `IMG_4472.jpg` has no separate chasedown-rejection keeper), so the reel's 17 cards reduce to 14 distinct plays matching the play-log's 14 keepers (16 written minus 2 struck).": 0.0,
+    "The cursive/script \"Top 10 Plays\" thumbnail on `IMG_3502.jpg` is flagged as violating the Notion rule \"Impact for main text\" (its red-on-dark color and 3-word text are compliant, so the font is its only defect).": 0.0,
+    "The \"Top 10 Plays\" reel row has status hold (rather than publish or cut).": 1.0,
+    "The \"Underrated passers\" row has status publish (not hold or cut) with a note that its thumbnail text on `IMG_3502.jpg` must be trimmed/cleaned up before upload (the title \"THE PASSERS EVERYONE IS SLEEPING ON\" is 6 words against the 4-word max).": 0.0,
+    "The HoopVision pitch's \"clearing ~$85/mo\" claim is flagged as revenue rather than profit: after the $54.99/mo Adobe Creative Cloud subscription the recurring net is roughly $32-58/mo, and January was net negative once the one-time $399.99 Jan 14 camera lens is counted. ": 0.0,
+    "The community post's January AdSense figure is corrected to $87.43 (per the Feb 15 email covering earnings period Jan 1-31 2026, matching the Feb 15 FinTrack deposit; the ~$72 is Brandon's lagged Notion figure).": 0.0
+   }
+  },
+  "env_docker": "https://scale-cds-public-us-west-2.s3.amazonaws.com/68a7f8dc133a30ee7f7494de/h86d5bjhly2Ft6K"
+ },
+ "6a2a516109edd4a3aa3056e4": {
+  "attempt_id": "6a46c74b6dcb61ad89c8d2b0",
+  "layer": "12",
+  "category": "Operations & QA",
+  "subcategory": "Document/Receipt Processing",
+  "task_type": "Single-turn",
+  "mm_input": "upload image, Excel",
+  "reward": {
+   "mean_reward": 0.5833,
+   "weighted_score": 0.4898,
+   "n_runs": 16,
+   "crit_pass_rate": {
+    "The `updated_fintrack_monthly_summary.md` file reports the Net for `2026-05` as `9521.93`.": 1.0,
+    "Every monetary value in the `Net` column, including the `Average`, is written with exactly two decimal places.": 1.0,
+    "The `updated_fintrack_monthly_summary.md` file reports the Net for `2026-01` as `3149.55`.": 0.0,
+    "The `updated_fintrack_monthly_summary.md` file contains only a Markdown table.": 1.0,
+    "The `updated_fintrack_monthly_summary.md` file reports the Net for `2026-02` as `2495.27`.": 0.0,
+    "The `updated_fintrack_monthly_summary.md` file reports the Net for `2026-04` as `796.22`.": 1.0,
+    "The `updated_fintrack_monthly_summary.md` file reports a Net value for a month earlier than `2025-12` (e.g., 2025-01, 2025-04).": 1.0,
+    "The `updated_fintrack_monthly_summary.md` file reports a Net value for a month later than `2026-05`(e.g., 2026-06, 2026-07)": 1.0,
+    "The `updated_fintrack_monthly_summary.md` file contains exactly one Net entry for each reconciled month from `2025-12` through `2026-05`.": 1.0,
+    "The `updated_fintrack_monthly_summary.md` file reports the Net for `2026-03` as `-1273.86`.": 0.0,
+    "The `updated_fintrack_monthly_summary.md` file reports the `Average Net` as `2748.77`.": 0.0,
+    "The `updated_fintrack_monthly_summary.md` file reports the Net for `2025-12` as `1803.51`.": 0.0
+   }
+  },
+  "env_docker": "https://scale-cds-public-us-west-2.s3.amazonaws.com/68a7f8dc133a30ee7f7494de/vU9jdSVv4XSCN9V"
+ }
+}

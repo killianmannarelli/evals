@@ -1,0 +1,4 @@
+task_id,environment_docker_file,attempt_id,layer
+6a42a89fbff245d051aeb42a,https://scale-cds-public-us-west-2.s3.amazonaws.com/68a7f8dc133a30ee7f7494de/8mwK0r84iqtDvio,6a483602537421f4cd37422d,12
+6a480daf5c67581f0c3ae62f,https://scale-cds-public-us-west-2.s3.amazonaws.com/68a7f8dc133a30ee7f7494de/h86d5bjhly2Ft6K,6a4b0b975b59ffba715caa4b,12
+6a2a516109edd4a3aa3056e4,https://scale-cds-public-us-west-2.s3.amazonaws.com/68a7f8dc133a30ee7f7494de/vU9jdSVv4XSCN9V,6a46c74b6dcb61ad89c8d2b0,12

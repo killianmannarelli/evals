@@ -42,10 +42,14 @@ overspec_exact:
   tier: review_recommended
 
 answer_key_data:
-  # Rubric answer-key numbers (currency/quantities) not found in any mock-API data.json.
-  # Extract $-amounts and standalone numbers from criterion text; grep the service data files.
-  min_number_len: 2                # ignore trivially-short numbers
-  tier: action_required            # a value absent from data that the rubric grades against
+  # Rubric answer-key CURRENCY values not found in any mock-API data.json.
+  # This is a HINT (a value absent from data *may* be a wrong answer key) — but aggregates
+  # (totals/sums/averages) are legitimately computed and won't appear literally, so we SKIP
+  # criteria with aggregate markers and emit review_recommended for the LLM audit to confirm.
+  min_number_len: 2
+  tier: review_recommended         # heuristic hint; LLM audit escalates to action_required if real
+  require_cents: true              # only adjudicate amounts with cents (likely direct lookups)
+  aggregate_markers: ["total", "sum", "average", "avg", "combined", "subtotal", "net ", "overall", "grand"]
 
 reward:
   # Reward-aware prioritization in stage4. Reward = weighted rubric+test pass rate over rollouts.

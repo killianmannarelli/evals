@@ -26,17 +26,23 @@ def run(ctx, cfg):
     if not blob:
         return []          # no data files surfaced — skip (don't false-positive)
     t = cfg["thresholds"]["answer_key_data"]
-    minlen = t.get("min_number_len", 2)
-    tier = t.get("tier", "action_required")
+    tier = t.get("tier", "review_recommended")
+    aggregate = [m.lower() for m in t.get("aggregate_markers", [])]
+    require_cents = t.get("require_cents", True)
     blob_norm = blob.replace(",", "")
     out = []
     for i, c in enumerate(ctx.get("rubric") or []):
         if not isinstance(c, dict):
             continue
         text = c.get("criteria") or c.get("title") or ""
+        low = text.lower()
+        if any(m in low for m in aggregate):
+            continue                      # aggregates are computed, not looked up — skip
         moneys = _MONEY.findall(text)
+        if require_cents:
+            moneys = [m for m in moneys if "." in m]   # only cents-precision (likely direct lookups)
         if not moneys:
-            continue                      # only adjudicate criteria that assert a currency amount
+            continue                      # only adjudicate criteria that assert a direct currency amount
         present = []
         for m in moneys:
             num = m.replace("$", "").replace(",", "").strip()
