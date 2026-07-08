@@ -1,0 +1,54 @@
+# Tunable thresholds for the deterministic linters and reward-aware prioritization.
+# Every number a check compares against lives HERE — change behavior without touching code.
+
+weight_mix:
+  # Karan Sikka (2026-07-04): accuracy >60% of total rubric weight; vision >50% of the
+  # accuracy mix (=> >25-30% of total). Tune the type->accuracy mapping as the customer clarifies.
+  accuracy_types: ["factuality and hallucination"]   # rubric `type` values counted as "accuracy"
+  # optionally also count these toward accuracy (customer may include task completion):
+  accuracy_types_optional: ["task completion"]
+  count_optional_as_accuracy: false
+  accuracy_min_frac_of_total: 0.60
+  vision_min_frac_of_accuracy: 0.50
+  vision_min_frac_of_total: 0.25
+  text_only_modality_value: "TEXT_ONLY"              # anything else = vision-dependent
+  tier: review_recommended                            # tier when a bar is missed
+
+pytest_hardcount:
+  # Flag exact-count assertions that make a correct-but-different output fail.
+  # Regexes over tests/test_outputs.py source (see linter for the compiled patterns).
+  count_assert_tier: review_recommended
+  # An exact-count assert is action_required when the task's mean_reward is below this
+  # (low reward + brittle count => likely the cause).
+  action_if_reward_below: 0.40
+
+visual_sign:
+  # is_positive vs score sign mismatch, or a positive-weight criterion whose text describes
+  # undesired behavior ("fails to", "should not", "incorrectly", "hallucinat").
+  tier: action_required
+  undesired_markers: ["should not", "fails to", "incorrectly", "hallucinat", "must not", "penaliz", "without "]
+
+visual_vs_text:
+  # Same criterion appearing in both visual_rubrics.json and tests/rubric.json with a
+  # diverging target/weight/sign. Match by normalized title similarity >= this.
+  title_match_min: 0.85
+  tier: action_required
+
+overspec_exact:
+  # Heuristic: criterion demands an exact timestamp / long decimal / precise count where a
+  # range is defensible AND the reference models struggled (low pass_rate) — likely overspec.
+  exact_value_markers: ["exactly", "exact ", ":", "must equal", "must be "]
+  pass_rate_ceiling: 0.30          # only flag when both-model pass_rate <= this (hard/brittle)
+  tier: review_recommended
+
+answer_key_data:
+  # Rubric answer-key numbers (currency/quantities) not found in any mock-API data.json.
+  # Extract $-amounts and standalone numbers from criterion text; grep the service data files.
+  min_number_len: 2                # ignore trivially-short numbers
+  tier: action_required            # a value absent from data that the rubric grades against
+
+reward:
+  # Reward-aware prioritization in stage4. Reward = weighted rubric+test pass rate over rollouts.
+  low_reward: 0.30                 # tasks below this are "hard/at-risk" — sort first, escalate tier hints
+  # A finding on a low-reward task gets a priority bump in the sheet ordering.
+  priority_bump_below: 0.30

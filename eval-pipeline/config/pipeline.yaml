@@ -1,0 +1,61 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# eval-pipeline — master config.  TUNE HERE. Nothing below is hardcoded in code.
+# ─────────────────────────────────────────────────────────────────────────────
+
+project:
+  id: "69f95a0f0992772af7907a03"        # OpenClaw MM Rubrics (mj_blue_shell)
+  name: "OpenClaw MM Rubrics"
+
+redash:
+  base: "https://redash.scale.com"
+  data_source_id: 30                     # _Snowflake (GenAI Ops)
+  # API key is read from env REDASH_KEY (never commit it)
+
+sheets:
+  # Target spreadsheet for combined output tabs. Service-account creds path in env
+  # GOOGLE_SA_JSON (default: <repo>/../creds/sa.json).
+  spreadsheet_id: "1Ld547RXFeh91dd4c5eO1XKla2xlHkz0eMVphg1CNwx0"
+  tab_prefix: "eval"                     # tabs named "<prefix> <selection> <utc-date>"
+  viewer_base: "https://openclaw-viewer-mm.vercel.app/attempt/"
+
+# How tasks are selected for a run. Override on the CLI: --queue L10  OR  --ids file.txt
+selection:
+  mode: "queue"                          # "queue" | "ids"
+  queue:
+    review_level: 10                     # -1 attempt · 0 L0 · 10 L10 · 12 L12
+    status: "pending"
+  ids_file: null                         # path to newline-separated task_ids when mode=ids
+
+models:
+  reviewer: "sonnet"                     # required for CDQ + audit reviewers (skill requirement)
+  orchestrator_note: "master/orchestrator inherits the session model"
+
+waves:
+  # Workflow concurrency is auto-capped; these bound fan-out sizing only.
+  cdq_static_batch: 15
+  audit_pipeline_batch: 15
+
+# Which checks run. Toggle any off to tune scope. Names map to checks/registry.py.
+enabled_checks:
+  # deterministic linters (instant, high precision)
+  - weight_mix
+  - pytest_hardcount
+  - visual_sign
+  - visual_vs_text
+  - overspec_exact
+  - answer_key_data
+  # LLM checks (Sonnet workflows; the judgment-heavy net)
+  - cdq_static          # customer static eval-design QA + blind verify
+  - audit_hybrid31      # our Hybrid 3+1 rubric-quality audit vs V10 spec
+
+spec:
+  # V10 rubric spec, fetched fresh every run via qc-auditor fetch_spec.py (query 304995)
+  query_id: 304995
+  fetch_script: "~/.claude/skills/qc-auditor/scripts/fetch_spec.py"
+
+skill:
+  # bundle download/extract — reused unchanged
+  prepare_inputs: "~/.claude/skills/customer-data-quality-check/prepare_inputs.py"
+  eval_guide: "~/.claude/skills/customer-data-quality-check/references/agentic_quality_eval_guide.md"
+  # NOTE: the skill is vendored under eval-pipeline/vendor/ so the pipeline is self-contained;
+  # these ~/.claude paths are the fallback if vendor/ is absent.

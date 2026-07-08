@@ -1,0 +1,78 @@
+# Defect taxonomy — the FULL union of our tokens + the customer's (Customer Feedback 2026-07-06).
+# Each finding a check emits must use one of these `token`s. `tier_default` is the fallback
+# tier when a check doesn't set one; the LLM verifier/master always assigns its own tier.
+
+tiers:
+  - action_required        # critical; makes the task's score untrustworthy until fixed  (=> Fail)
+  - review_recommended     # likely issue; human should validate                          (=> Non-Fail)
+
+defect_types:
+  - token: RUBRIC_CONTRADICTION
+    desc: "Rubric/answer-key contradicts the prompt, the data, an image, or another rubric."
+    tier_default: action_required
+  - token: RUBRIC_AMBIGUOUS
+    desc: "Criterion is under-determined; multiple defensible readings graded as one."
+    tier_default: review_recommended
+  - token: RUBRIC_OVERSPEC
+    desc: "Over-specified target (exact value/timestamp) that penalizes valid alternatives; tautological test."
+    tier_default: review_recommended
+  - token: RUBRIC_UNFAIR
+    desc: "Trivially-satisfiable criterion, or sign error on a penalty guard."
+    tier_default: review_recommended
+  - token: RUBRIC_INACCURATE          # customer token — answer-key value simply wrong vs data
+    desc: "Rubric's expected value is factually wrong given the provided data (not just contradictory framing)."
+    tier_default: action_required
+  - token: DATA_SPARSE
+    desc: "A graded fact is not derivable from any agent-visible data/tool."
+    tier_default: review_recommended
+  - token: MEDIA_PATH
+    desc: "Referenced media/file missing, or placed at a path the prompt/rules don't match."
+    tier_default: review_recommended
+  - token: MULTIMODAL_ARTIFACT
+    desc: "Image/video/audio artifact issue: mistagged modality, corrupt, or unreadable."
+    tier_default: review_recommended
+  - token: ORACLE_LEAK
+    desc: "Reference answer reachable by the agent (answer file in workspace, spec in inputs, tool output)."
+    tier_default: action_required
+  - token: GRADER_BROKEN
+    desc: "A test can never pass as written, missing/malformed weights, or judge-vs-test contradiction."
+    tier_default: action_required
+  - token: TOOL_FAILURE               # customer token — a required tool/mock errors or is disabled
+    desc: "A required tool/mock-API is disabled, missing, or errors so the task can't be completed as graded."
+    tier_default: action_required
+  - token: SKILL_LOADOUT
+    desc: "A required skill is missing, pruned at boot, or broken."
+    tier_default: action_required
+  - token: CONTAINER_ENV
+    desc: "Runtime environment can't support a required action (service/tool absent)."
+    tier_default: action_required
+  - token: SP_UNCLEAR
+    desc: "Prompt is genuinely ambiguous / internally inconsistent (e.g. date anchor mismatch)."
+    tier_default: review_recommended
+  - token: WEIGHT_MIX                  # new — Karan's weight-distribution bar
+    desc: "Rubric weight mix off-spec: accuracy < min, or vision < min share (see thresholds.yaml)."
+    tier_default: review_recommended
+
+# Map each defect_type to an eval-guide dimension (for the sheet's flagged_dimensions column).
+dimension_of:
+  RUBRIC_CONTRADICTION: rubric_accuracy
+  RUBRIC_AMBIGUOUS: rubric_accuracy
+  RUBRIC_INACCURATE: rubric_accuracy
+  RUBRIC_UNFAIR: rubric_accuracy
+  ORACLE_LEAK: rubric_accuracy
+  RUBRIC_OVERSPEC: test_correctness
+  GRADER_BROKEN: test_correctness
+  DATA_SPARSE: input_adequacy
+  MEDIA_PATH: input_adequacy
+  MULTIMODAL_ARTIFACT: input_adequacy
+  TOOL_FAILURE: environment_adequacy
+  CONTAINER_ENV: environment_adequacy
+  SKILL_LOADOUT: environment_adequacy
+  SP_UNCLEAR: prompt_clarity
+  WEIGHT_MIX: coverage_and_balance
+
+# Task-level verdict rollup from surviving findings.
+verdict_rule:
+  fail_if_any: action_required
+  nonfail_if_any: review_recommended
+  else: pass

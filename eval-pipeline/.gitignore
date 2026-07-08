@@ -1,0 +1,13 @@
+# Heavy / ephemeral / secret — never commit
+qa_inputs/
+raw/
+*.zip
+__pycache__/
+*.pyc
+.env
+creds/
+sa.json
+spec.md            # fetched fresh every run
+# runs/ IS committed (durable per-run results), but not its bulky inputs:
+runs/**/qa_inputs/
+runs/**/raw/
