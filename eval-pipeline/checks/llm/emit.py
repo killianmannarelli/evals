@@ -54,7 +54,8 @@ def emit_all(cfg, run_dir):
     effort = cfg["pipeline"]["models"].get("reviewer_effort", "high")  # "max"
     paths = []
     (wf / "cdq_static.js").write_text(_cdq_static_js(tasks, guide, model, effort)); paths.append(str(wf / "cdq_static.js"))
-    (wf / "audit_hybrid31.js").write_text(_audit_js(tasks, csv_path, appendix, model, effort)); paths.append(str(wf / "audit_hybrid31.js"))
+    roles = cfg["pipeline"]["models"].get("audit_grader_roles", ["gen1", "gen2", "gen3", "rubric"])
+    (wf / "audit_hybrid31.js").write_text(_audit_js(tasks, csv_path, appendix, model, effort, roles)); paths.append(str(wf / "audit_hybrid31.js"))
     return paths
 
 
@@ -88,7 +89,7 @@ f"  return agent(p,{opts}).then(r=>r&&Object.assign({{}},r,{{task_id:t.id}}))\n"
 
 
 # ── Hybrid 3+1 — the DRAWER eval (grade all 21 dims -> Task-level flags) ────────
-def _audit_js(tasks, csv_path, appendix, model, effort):
+def _audit_js(tasks, csv_path, appendix, model, effort, roles=("gen1", "gen2", "gen3", "rubric")):
     data = json.dumps([{"id": t["id"], "ctx": t["ctx"], "task_dir": t["task_dir"],
                         "cat": t["cat"], "sub": t["sub"], "mm": t["mm"], "ttype": t["ttype"]} for t in tasks])
     # grader returns ONLY the flagged (Fail/Non-Fail) dimensions — small output, avoids the
@@ -122,7 +123,7 @@ f"const AUD={AUD}\nconst MASTER={MASTER}\n"
 "    'OUTPUT ONLY THE FLAGGED DIMENSIONS (score 2 or 3) — NOT the clean ones. Keep it small: reason <=2 sentences. Each flag {dimension (CSV title), category (exact [Fail-]/[Non-Fail-] label from errorCategories), severity (Fail if score 2 / Non-Fail if 3), reason, spec_ref (dimension name or § section)}. If every dimension is clean, flags:[]. Overall verdict: Fail if any Fail flag, Non-Fail if any Non-Fail flag, else Pass. Return exactly {task_id:\"'+t.id+'\", flags:[...], verdict, confidence}.'\n"
 "  ].join(String.fromCharCode(10,10));}\n"
 "function mp(t,auds){return ['You are the MASTER for the Task-level flags eval of OpenClaw task '+t.id+'. Merge these '+auds.length+' independent graders (3 generalists + 1 rubric specialist) into the FINAL drawer flags.','GRADER REPORTS (JSON): '+JSON.stringify(auds),'Rules: UNION the graders flags by dimension; keep a flag only if corroborated (>=2 graders raised it, OR one grader with clear cited evidence you can confirm); DROP miscounts/misreads (especially visual) and any flag you cannot reconfirm. When graders disagree on a dimension, keep the most-defensible severity/category. Overall verdict: Fail if any surviving Fail flag, Non-Fail if any Non-Fail flag, else Pass. Re-open CSV '+CSV+', appendix '+APPENDIX+', ctx '+t.ctx+' or media '+t.task_dir+' to adjudicate.','Return {task_id:\"'+t.id+'\", verdict, confidence (0-100 the task is deliverable/clean), flags:[{dimension, category (exact [Fail-]/[Non-Fail-] band label), severity, reason, fix, spec_ref}], why (2-4 sentences), agreement (e.g. \"3/4 graders flagged §9g\")}.'].join(String.fromCharCode(10,10));}\n"
-"phase('Audit')\nconst ROLES=['gen1','gen2','gen3','rubric']\n"
+"phase('Audit')\nconst ROLES=" + json.dumps(list(roles)) + "\n"
 "const out=await pipeline(TASKS,\n"
 f"  t=>parallel(ROLES.map(role=>()=>agent(ap(t,role==='rubric'?'rubric':'gen'),{aopts}))).then(rs=>({{t,auditors:rs.filter(Boolean)}})),\n"
 f"  (prev)=>prev.auditors.length?agent(mp(prev.t,prev.auditors),{mopts}).then(m=>m&&Object.assign({{}},m,{{task_id:prev.t.id}})):null\n"

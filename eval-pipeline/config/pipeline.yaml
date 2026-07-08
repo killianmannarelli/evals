@@ -30,6 +30,10 @@ models:
   reviewer: "opus"                       # CDQ + audit reviewers run on Opus (per Killian 2026-07-08)
   reviewer_effort: "max"                 # MAX reasoning effort on every reviewer/master agent
   orchestrator_note: "master/orchestrator inherits the session model"
+  # Grader roles for the drawer audit (per task): each is one grader agent, then 1 master.
+  # 4 roles (gen1/gen2/gen3/rubric) = full Hybrid 3+1 (~7-11h at Opus MAX). At Opus MAX,
+  # 2 graders (1 generalist + 1 rubric specialist) match quality in ~3-4h. Tune here.
+  audit_grader_roles: ["gen1", "rubric"]
 
 waves:
   # Workflow concurrency is auto-capped; these bound fan-out sizing only.
