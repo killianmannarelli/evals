@@ -11,3 +11,7 @@ spec.md            # fetched fresh every run
 # runs/ IS committed (durable per-run results), but not its bulky inputs:
 runs/**/qa_inputs/
 runs/**/raw/
+runs/**/task_dirs/
+runs/**/ctx/
+runs/**/batch/
+runs/**/*.log
