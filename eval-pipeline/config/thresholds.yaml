@@ -51,6 +51,13 @@ answer_key_data:
   require_cents: true              # only adjudicate amounts with cents (likely direct lookups)
   aggregate_markers: ["total", "sum", "average", "avg", "combined", "subtotal", "net ", "overall", "grand"]
 
+negweight_ratio:
+  # §9g: ~25% negative-weight criteria, hard cap 30%. Zero negatives is a structural miss.
+  target_frac: 0.25
+  cap_frac: 0.30
+  tier_zero: action_required     # zero negative-weight criteria (the drawer fired Fail on this)
+  tier_below: review_recommended # below target or over cap
+
 reward:
   # Reward-aware prioritization in stage4. Reward = weighted rubric+test pass rate over rollouts.
   low_reward: 0.30                 # tasks below this are "hard/at-risk" — sort first, escalate tier hints

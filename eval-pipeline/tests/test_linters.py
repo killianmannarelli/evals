@@ -6,7 +6,7 @@ so tuning a threshold that breaks intent fails here.
 """
 from src.common import load_config
 from checks.linters import (weight_mix, pytest_hardcount, visual_sign, visual_vs_text,
-                            overspec_exact, answer_key_data)
+                            overspec_exact, answer_key_data, negweight_ratio)
 
 CFG = load_config()
 
@@ -106,3 +106,17 @@ def test_answer_key_silent_when_amount_present():
     rub = [{"criteria": "purchase for $78.40", "weight": 3}]
     data = {"fintrack": '{"amount": -78.40}'}
     assert answer_key_data.run(ctx(rubric=rub, service_data=data), CFG) == []
+
+
+# ── negweight_ratio (§9g) ─────────────────────────────────────────────────────
+def test_negweight_flags_zero_negatives():
+    rub = [{"criteria": "a", "weight": 5}, {"criteria": "b", "weight": 3}, {"criteria": "c", "weight": 1}]
+    out = negweight_ratio.run(ctx(rubric=rub), CFG)
+    assert out and out[0]["tier"] == "action_required" and "ZERO" in out[0]["explanation"]
+
+
+def test_negweight_silent_when_in_band():
+    # 1 of 4 = 25% negative -> in [25%,30%] band -> clean
+    rub = [{"criteria": "a", "weight": 5}, {"criteria": "b", "weight": 3},
+           {"criteria": "c", "weight": 1}, {"criteria": "d", "weight": -3}]
+    assert negweight_ratio.run(ctx(rubric=rub), CFG) == []

@@ -27,7 +27,8 @@ selection:
   ids_file: null                         # path to newline-separated task_ids when mode=ids
 
 models:
-  reviewer: "sonnet"                     # required for CDQ + audit reviewers (skill requirement)
+  reviewer: "opus"                       # CDQ + audit reviewers run on Opus (per Killian 2026-07-08)
+  reviewer_effort: "max"                 # MAX reasoning effort on every reviewer/master agent
   orchestrator_note: "master/orchestrator inherits the session model"
 
 waves:
@@ -44,12 +45,22 @@ enabled_checks:
   - visual_vs_text
   - overspec_exact
   - answer_key_data
+  - negweight_ratio     # §9g negative-weight ratio — the drawer's deterministic Task-level flag
   # LLM checks (Sonnet workflows; the judgment-heavy net)
   - cdq_static          # customer static eval-design QA + blind verify
   - audit_hybrid31      # our Hybrid 3+1 rubric-quality audit vs V10 spec
 
 spec:
-  # V10 rubric spec, fetched fresh every run via qc-auditor fetch_spec.py (query 304995)
+  # THE SPEC DOC — the V10 grading rubric (21 dimensions, each with its exact [Fail-]/[Non-Fail-]
+  # bands + score options 2/3/5). This IS what the drawer's "Task-level flags" eval grades against
+  # (e.g. Overall Rubric Quality - Major/Moderate -> [Fail - 15%+ Moderate Rubric Errors]).
+  # Vendored so the pipeline is self-contained; provided by Killian 2026-07-08.
+  rubric_csv: "spec/V10_rubric.csv"
+  # Appendix: rubric-quality error definitions (major/moderate/minor) + authoring rules (§9g
+  # negative-weight ~25% cap 30%) that the CSV references ("See Rubric Quality Definitions in the
+  # spec appendix"). Supporting reference for the graders.
+  appendix_doc: "spec/authoring_spec.md"
+  # Kept for the error-category taxonomy only; the CSV above is authoritative for grading.
   query_id: 304995
   fetch_script: "~/.claude/skills/qc-auditor/scripts/fetch_spec.py"
 

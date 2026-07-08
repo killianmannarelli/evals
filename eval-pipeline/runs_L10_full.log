@@ -1,0 +1,26 @@
+/Users/killian.mannarelli/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+QC Auditor — created by Marius Delahay.
+Running SPEC_GETTER (query 304995) for project=69f95a0f0992772af7907a03...
+Got 57 option rows across the rubric
+Wrote /private/tmp/claude-502/-Users-killian-mannarelli/cf1c8afd-39d4-4017-8a8d-964da247826e/scratchpad/evals/eval-pipeline/runs/L10_full/spec.md (31051 chars, 510 lines)
+=== eval-pipeline run: L10_full ===
+stage1: selected 83, resolved 83
+stage1: reward mean_reward min/median/max = 0.091 / 0.524 / 0.830; < 0.3 : 9
+stage2: prepared 83/83 ctx (env_tree=yes)
+stage3: ran linters ['weight_mix', 'pytest_hardcount', 'visual_sign', 'visual_vs_text', 'overspec_exact', 'answer_key_data'] over 83 tasks -> 297 findings
+   weight_mix: 154
+   overspec_exact: 75
+   pytest_hardcount: 46
+   visual_sign: 16
+   answer_key_data: 6
+
+>>> LLM checks enabled (True). Emitted workflow scripts:
+      /private/tmp/claude-502/-Users-killian-mannarelli/cf1c8afd-39d4-4017-8a8d-964da247826e/scratchpad/evals/eval-pipeline/runs/L10_full/workflows/cdq_static.js
+      /private/tmp/claude-502/-Users-killian-mannarelli/cf1c8afd-39d4-4017-8a8d-964da247826e/scratchpad/evals/eval-pipeline/runs/L10_full/workflows/audit_hybrid31.js
+>>> Launch each via the Workflow tool, then run: python -m src.resume --run-dir /private/tmp/claude-502/-Users-killian-mannarelli/cf1c8afd-39d4-4017-8a8d-964da247826e/scratchpad/evals/eval-pipeline/runs/L10_full && python -m src.stage4_assemble --run-dir /private/tmp/claude-502/-Users-killian-mannarelli/cf1c8afd-39d4-4017-8a8d-964da247826e/scratchpad/evals/eval-pipeline/runs/L10_full && python -m src.stage5_sheet --run-dir /private/tmp/claude-502/-Users-killian-mannarelli/cf1c8afd-39d4-4017-8a8d-964da247826e/scratchpad/evals/eval-pipeline/runs/L10_full
+
+stage4: {'n_tasks': 83, 'fail': 23, 'non_fail': 60, 'pass': 0, 'flagged': 83, 'total_findings': 297, 'low_reward_tasks': 9}
+stage4: hygiene CLEAN
+stage5: wrote tab 'eval L10_full' (gid=154607718) — 83 tasks
+=== done: /private/tmp/claude-502/-Users-killian-mannarelli/cf1c8afd-39d4-4017-8a8d-964da247826e/scratchpad/evals/eval-pipeline/runs/L10_full/report.json ===

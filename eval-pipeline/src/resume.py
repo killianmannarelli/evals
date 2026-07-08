@@ -82,21 +82,27 @@ def harvest_cdq(outfile, tdir):
 
 
 def harvest_audit(outfile, tdir):
-    """Audit master results -> normalize {dimension,severity,...} into common findings."""
+    """Audit master = the DRAWER eval. Normalize its Task-level flags[{dimension,category,severity,
+    reason,fix,spec_ref}] into common findings (severity Fail->action_required, Non-Fail->review).
+    The band label (category) is preserved in the explanation so the sheet shows e.g.
+    '[Fail - 15%+ Moderate Rubric Errors]'."""
     by = {}
-    for r in _iter_records(outfile, tdir, '"what_to_fix"'):
+    for r in _iter_records(outfile, tdir, '"agreement"'):
         tid = r.get("task_id")
-        if not tid or "what_to_fix" not in r or "findings" not in r:
+        if not tid or "flags" not in r or "agreement" not in r:
             continue
         norm = []
-        for f in r.get("findings", []):
+        for f in r.get("flags", []):
             if not isinstance(f, dict):
                 continue
+            cat = f.get("category", "")
+            tier = "action_required" if str(f.get("severity", "")).lower().startswith("fail") else "review_recommended"
             norm.append({"check": "audit_hybrid31", "defect_type": _dim2defect(f.get("dimension", "")),
-                         "tier": SEV2TIER.get(f.get("severity"), "review_recommended"),
-                         "rubric_ids": f.get("rubric_ids", []), "test_names": [],
-                         "explanation": f.get("issue", ""), "fix": f.get("fix", ""),
-                         "evidence": f"dim={f.get('dimension','')}; audit_verdict={r.get('verdict')}"})
+                         "tier": tier, "rubric_ids": [], "test_names": [],
+                         "explanation": (f"[{cat}] " if cat else "") + f.get("reason", ""),
+                         "fix": f.get("fix", ""),
+                         "evidence": f"dim={f.get('dimension','')}; {f.get('spec_ref','')}; verdict={r.get('verdict')}",
+                         "flag_category": cat, "flag_dimension": f.get("dimension", "")})
         by[tid] = norm
     return by
 

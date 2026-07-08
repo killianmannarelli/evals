@@ -1,14 +1,13 @@
 """checks/llm/emit.py — generate the LLM-check Workflow scripts for a run.
 
-Emits self-contained workflow .js files (data baked in — the proven pattern; `args` doesn't
-thread through scriptPath) into <run_dir>/workflows/:
-  - cdq_static.js       : customer static eval-design QA, 1 Sonnet reviewer / task
-  - audit_hybrid31.js   : our Hybrid 3+1 rubric-quality audit vs V10 spec, pipeline per task
-  - verify.js           : written on demand by emit_verify() after static findings are harvested
+Emits self-contained workflow .js files (data baked in) into <run_dir>/workflows/:
+  - cdq_static.js       : customer static eval-design QA, 1 reviewer / task (finds defects)
+  - audit_hybrid31.js   : the DRAWER eval — Hybrid 3+1 QC audit that grades every V10-spec
+                          dimension and emits the per-dimension "Task-level flags"
+                          ([Fail - X]/[Non-Fail - Y]) exactly like the viewer's trajectory drawer.
 
-Claude launches these via the Workflow tool; src/resume.py harvests their transcripts.
-Reads <run_dir>/ctx/<id>.json (rubric/tests/instruction/reward/task_dir) + batch/<id>.json.
-Ensures <run_dir>/spec.md exists (fetches via qc-auditor fetch_spec.py).
+Reviewers run on the config model+effort (Opus MAX). Graders read the ACTUAL spec:
+spec/V10_rubric.csv (21 dimensions + bands) + spec/authoring_spec.md (§ definitions, §9g).
 """
 from __future__ import annotations
 import glob, json, os, subprocess
@@ -25,12 +24,11 @@ FIND_SCHEMA = ("{type:'object',additionalProperties:false,required:['task_id','f
 
 def _ensure_spec(cfg, run_dir: Path):
     spec = run_dir / "spec.md"
-    if spec.exists() and spec.stat().st_size > 1000:
-        return str(spec)
-    script = common.expand(cfg["pipeline"]["spec"]["fetch_script"])
-    proj = cfg["pipeline"]["project"]["id"]
-    subprocess.run(["python3", script, "--project", proj, "--api-key", os.environ["REDASH_KEY"],
-                    "--out", str(spec)], check=False)
+    if not (spec.exists() and spec.stat().st_size > 1000):
+        script = common.expand(cfg["pipeline"]["spec"]["fetch_script"])
+        proj = cfg["pipeline"]["project"]["id"]
+        subprocess.run(["python3", script, "--project", proj, "--api-key", os.environ["REDASH_KEY"],
+                        "--out", str(spec)], check=False)
     return str(spec)
 
 
@@ -48,20 +46,29 @@ def emit_all(cfg, run_dir):
     run_dir = Path(run_dir)
     wf = run_dir / "workflows"; wf.mkdir(parents=True, exist_ok=True)
     guide = common.expand(cfg["pipeline"]["skill"]["eval_guide"])
-    spec = _ensure_spec(cfg, run_dir)
+    _ensure_spec(cfg, run_dir)
+    csv_path = str(common.PKG / cfg["pipeline"]["spec"]["rubric_csv"])
+    appendix = str(common.PKG / cfg["pipeline"]["spec"]["appendix_doc"])
     tasks = _tasks(run_dir)
-    model = cfg["pipeline"]["models"]["reviewer"]
+    model = cfg["pipeline"]["models"]["reviewer"]                 # "opus"
+    effort = cfg["pipeline"]["models"].get("reviewer_effort", "high")  # "max"
     paths = []
-    (wf / "cdq_static.js").write_text(_cdq_static_js(tasks, guide, model)); paths.append(str(wf / "cdq_static.js"))
-    (wf / "audit_hybrid31.js").write_text(_audit_js(tasks, spec, model)); paths.append(str(wf / "audit_hybrid31.js"))
+    (wf / "cdq_static.js").write_text(_cdq_static_js(tasks, guide, model, effort)); paths.append(str(wf / "cdq_static.js"))
+    (wf / "audit_hybrid31.js").write_text(_audit_js(tasks, csv_path, appendix, model, effort)); paths.append(str(wf / "audit_hybrid31.js"))
     return paths
 
 
-# ── CDQ static ────────────────────────────────────────────────────────────────
-def _cdq_static_js(tasks, guide, model):
+def _opts(label, phase, model, effort, schema):
+    return f"{{label:{json.dumps(label)},phase:{json.dumps(phase)},model:{json.dumps(model)},effort:{json.dumps(effort)},schema:{schema}}}"
+
+
+# ── CDQ static (defect finder) ────────────────────────────────────────────────
+def _cdq_static_js(tasks, guide, model, effort):
     data = json.dumps([{"id": t["id"], "batch": t["batch"], "task_dir": t["task_dir"]} for t in tasks])
+    opts = ("{label:'static:'+t.id.slice(-6),phase:'Static',model:" + json.dumps(model) +
+            ",effort:" + json.dumps(effort) + ",schema:SCHEMA}")
     return (
-"export const meta = { name:'cdq-static', description:'CDQ static eval-design QA', phases:[{title:'Static'}] }\n"
+"export const meta = { name:'cdq-static', description:'CDQ static eval-design QA (Opus MAX)', phases:[{title:'Static'}] }\n"
 f"const GUIDE={json.dumps(guide)}\nconst TASKS={data}\n"
 f"const SCHEMA={FIND_SCHEMA}\n"
 "phase('Static')\n"
@@ -76,43 +83,45 @@ f"const SCHEMA={FIND_SCHEMA}\n"
 "    'OUTPUT DISCIPLINE: explanation 2-3 sentences, fix 1 sentence, <=8 findings. Each finding EXACTLY six keys: tier, defect_type, rubric_ids (ints), test_names, explanation, fix. Clean task -> findings:[].',\n"
 "    'Also dims {prompt_clarity,criteria_completeness,input_adequacy,environment_adequacy,is_self_contained,missing_data,missing_tools}. Return exactly {task_id:\"'+t.id+'\", findings:[...], dims:{...}}.'\n"
 "  ].join(String.fromCharCode(10,10))\n"
-f"  return agent(p,{{label:'static:'+t.id.slice(-6),phase:'Static',model:{json.dumps(model)},schema:SCHEMA}}).then(r=>r&&Object.assign({{}},r,{{task_id:t.id}}))\n"
+f"  return agent(p,{opts}).then(r=>r&&Object.assign({{}},r,{{task_id:t.id}}))\n"
 "}))\nreturn results.filter(Boolean)\n")
 
 
-# ── Hybrid 3+1 audit ────────────────────────────────────────────────────────
-def _audit_js(tasks, spec, model):
+# ── Hybrid 3+1 — the DRAWER eval (grade all 21 dims -> Task-level flags) ────────
+def _audit_js(tasks, csv_path, appendix, model, effort):
     data = json.dumps([{"id": t["id"], "ctx": t["ctx"], "task_dir": t["task_dir"],
                         "cat": t["cat"], "sub": t["sub"], "mm": t["mm"], "ttype": t["ttype"]} for t in tasks])
-    AUD = ("{type:'object',additionalProperties:false,required:['task_id','findings','verdict','confidence','rationale'],"
-      "properties:{task_id:{type:'string'},findings:{type:'array',items:{type:'object',additionalProperties:false,"
-      "required:['dimension','severity','rubric_ids','issue','evidence','fix'],properties:{dimension:{type:'string'},"
-      "severity:{enum:['Major','Moderate','Minor']},rubric_ids:{type:'array',items:{type:'integer'}},issue:{type:'string'},"
-      "evidence:{type:'string'},fix:{type:'string'}}}},verdict:{enum:['Fail','Non-Fail','Pass']},confidence:{type:'integer'},rationale:{type:'string'}}}")
-    MASTER = ("{type:'object',additionalProperties:false,required:['task_id','verdict','confidence','why','what_to_fix',"
-      "'flagged_dimensions','major_count','moderate_count','minor_count','agreement','findings'],properties:{task_id:{type:'string'},"
-      "verdict:{enum:['Fail','Non-Fail','Pass']},confidence:{type:'integer'},why:{type:'string'},what_to_fix:{type:'string'},"
-      "flagged_dimensions:{type:'array',items:{type:'string'}},major_count:{type:'integer'},moderate_count:{type:'integer'},"
-      "minor_count:{type:'integer'},agreement:{type:'string'},findings:{type:'array',items:{type:'object',additionalProperties:false,"
-      "required:['dimension','severity','rubric_ids','issue','fix'],properties:{dimension:{type:'string'},severity:{enum:['Major','Moderate','Minor']},"
-      "rubric_ids:{type:'array',items:{type:'integer'}},issue:{type:'string'},fix:{type:'string'}}}}}}")
+    DIMGRADE = ("{type:'object',additionalProperties:false,required:['dimension','score','category','severity','reason'],"
+      "properties:{dimension:{type:'string'},score:{enum:[2,3,5]},category:{type:'string'},"
+      "severity:{enum:['Fail','Non-Fail','Pass','Skip']},reason:{type:'string'},spec_ref:{type:'string'}}}")
+    AUD = ("{type:'object',additionalProperties:false,required:['task_id','grades','verdict','confidence'],"
+      "properties:{task_id:{type:'string'},grades:{type:'array',items:" + DIMGRADE + "},"
+      "verdict:{enum:['Fail','Non-Fail','Pass']},confidence:{type:'integer'}}}")
+    FLAG = ("{type:'object',additionalProperties:false,required:['dimension','category','severity','reason'],"
+      "properties:{dimension:{type:'string'},category:{type:'string'},severity:{enum:['Fail','Non-Fail']},"
+      "reason:{type:'string'},fix:{type:'string'},spec_ref:{type:'string'}}}")
+    MASTER = ("{type:'object',additionalProperties:false,required:['task_id','verdict','confidence','flags','why','agreement'],"
+      "properties:{task_id:{type:'string'},verdict:{enum:['Fail','Non-Fail','Pass']},confidence:{type:'integer'},"
+      "flags:{type:'array',items:" + FLAG + "},why:{type:'string'},agreement:{type:'string'}}}")
+    aopts = "{label:'aud:'+t.id.slice(-6)+':'+role,phase:'Audit',model:" + json.dumps(model) + ",effort:" + json.dumps(effort) + ",schema:AUD}"
+    mopts = "{label:'flags:'+prev.t.id.slice(-6),phase:'Master',model:" + json.dumps(model) + ",effort:" + json.dumps(effort) + ",schema:MASTER}"
     return (
-"export const meta = { name:'audit-hybrid31', description:'OpenClaw Hybrid 3+1 rubric audit vs V10 spec', phases:[{title:'Audit'},{title:'Master'}] }\n"
-f"const SPEC={json.dumps(spec)}\nconst TASKS={data}\n"
+"export const meta = { name:'audit-drawer-flags', description:'DRAWER eval — Task-level flags graded vs V10 spec (Opus MAX)', phases:[{title:'Audit'},{title:'Master'}] }\n"
+f"const CSV={json.dumps(csv_path)}\nconst APPENDIX={json.dumps(appendix)}\nconst TASKS={data}\n"
 f"const AUD={AUD}\nconst MASTER={MASTER}\n"
-"function ap(t,role){const focus=role==='rubric'?'You are the RUBRIC-QUALITY SPECIALIST — focus on atomicity, necessity, value-embedding, target correctness, weight sign, per-criterion MM-dependence, negative-weight ratio, coverage.':'You are a GENERALIST auditor — grade EVERY in-scope spec dimension.';\n"
+"function ap(t,role){const focus=role==='rubric'?'You are the RUBRIC-QUALITY SPECIALIST — grade the three Overall Rubric Quality dimensions (Major / Major-Moderate / Major-Moderate-Minor), Rubric Structure (weights in {-5,-3,-1,1,3,5}), Rubric Spot Checks, and negative-weight ratio (§9g ~25%, cap 30%) with extra rigor.':'You are a GENERALIST grader — grade EVERY applicable dimension.';\n"
 "  return [\n"
-"    'You QC-audit OpenClaw task '+t.id+' ('+t.cat+' / '+t.sub+', modality '+t.mm+'). Grade the QUALITY OF THE AUTHORED EVAL vs the customer V10 spec — NOT the model.',\n"
+"    'You produce the TASK-LEVEL FLAGS eval (the viewer trajectory drawer) for OpenClaw task '+t.id+' ('+t.cat+' / '+t.sub+', modality '+t.mm+'). You grade the AUTHORED EVAL (prompt/inputs/rubric/tests/trajectory) — NOT the model.',\n"
 "    focus,\n"
-"    'STEP 1: Read the spec IN FULL: '+SPEC+' (each dimension + [Fail-]/[Non-Fail-] error categories + 1-5 scale).',\n"
-"    'STEP 2: Read the task ctx JSON: '+t.ctx+' (full rubric with type/modality/weight/pass_rate, visual_rubrics, test_code, instruction, reward).',\n"
-"    'STEP 3: Explore + VIEW media: ls -R '+t.task_dir+' then open images/pdf/video/audio referenced by criteria; verify each criterion is grounded in what the artifacts actually show. Do NOT guess visual content.',\n"
-"    'SCOPE: Prompt (MM-dependence, output filename, feasibility), Input Artifacts (realism, verification, answer-leak), Verifiers-Safety, Trajectory dims. SKIP Tests dims (out of scope 2026-05-23). SKIP Silver-Trajectory if none.',\n"
-"    'Findings {dimension, severity(Major=[Fail-]/Moderate=[Non-Fail-]/Minor), rubric_ids ints, issue 2-3 sentences, evidence cite file/criterion/image, fix}. Verdict: Fail if any Major; Non-Fail if only Moderate; Pass if clean. confidence 0-100. <=10 findings. Return exactly {task_id:\"'+t.id+'\", findings:[...], verdict, confidence, rationale}.'\n"
+"    'STEP 1: Read THE SPEC (authoritative grading form): '+CSV+' — a CSV of 21 dimensions; each row-group has questionText/questionDescription and answer options with answerOptionScore 2 (a [Fail - X] category), 3 (a [Non-Fail - Y] category), or 5 (clean). The errorCategories column names the exact band label.',\n"
+"    'STEP 2: Read the appendix definitions: '+APPENDIX+' — major/moderate/minor rubric-error definitions (for the three Overall Rubric Quality dimensions: >10% major=Fail; >15% moderate-or-major=Fail; >20% minor+=Fail) and §9g negative-weight ~25% (cap 30%).',\n"
+"    'STEP 3: Read the task ctx JSON: '+t.ctx+' (full rubric with type/modality/weight, visual_rubrics, test_code, instruction, reward). Explore + VIEW media: ls -R '+t.task_dir+' then open referenced images/pdf/video/audio and verify each graded fact.',\n"
+"    'STEP 4: For EACH of the 21 dimensions pick the score option (2/3/5) from the CSV. Score 5 = no issue. For dimensions gated \"only evaluate if silver trajectory / unit tests present\", set score 5 and severity Skip when N/A. For the three Overall Rubric Quality dims, COUNT criteria with major/moderate/minor issues (denominator = # criteria the CB wrote; do not double-count) and apply the % thresholds.',\n"
+"    'Return grades[] for ALL dimensions {dimension (CSV title), score (2/3/5), category (the exact [Fail-]/[Non-Fail-] label from errorCategories, or \"clean\"), severity (Fail if score 2 / Non-Fail if 3 / Pass if 5 / Skip), reason (cite the criteria %/the exact defect/the media), spec_ref (dimension or § section)}. Overall verdict: Fail if any score-2, Non-Fail if any score-3, else Pass. Return {task_id:\"'+t.id+'\", grades:[...], verdict, confidence}.'\n"
 "  ].join(String.fromCharCode(10,10));}\n"
-"function mp(t,auds){return ['You are the MASTER for OpenClaw task '+t.id+'. Merge these '+auds.length+' auditor reports into ONE verdict.','AUDITOR REPORTS: '+JSON.stringify(auds),'Rules: keep a finding only if corroborated (drop miscounts/misreads, especially visual); merge duplicates noting auditor agreement; Fail if any surviving Major, Non-Fail if only Moderate, else Pass; confidence 0-100 = deliverable/clean. Re-open SPEC '+SPEC+', ctx '+t.ctx+', or media '+t.task_dir+' if needed.','Return {task_id:\"'+t.id+'\", verdict, confidence, why (2-4 sentences), what_to_fix, flagged_dimensions[], major_count, moderate_count, minor_count, agreement, findings(merged {dimension,severity,rubric_ids,issue,fix})}.'].join(String.fromCharCode(10,10));}\n"
+"function mp(t,auds){return ['You are the MASTER for the Task-level flags eval of OpenClaw task '+t.id+'. Merge these '+auds.length+' independent graders (3 generalists + 1 rubric specialist) into the FINAL drawer flags.','GRADER REPORTS (JSON): '+JSON.stringify(auds),'Rules: for each dimension take the consensus/most-defensible score; keep a Fail/Non-Fail only if corroborated (drop miscounts/misreads, especially visual). A FLAG is any dimension whose final severity is Fail or Non-Fail. Overall verdict: Fail if any Fail flag, Non-Fail if any Non-Fail flag, else Pass. Re-open CSV '+CSV+', appendix '+APPENDIX+', ctx '+t.ctx+' or media '+t.task_dir+' to adjudicate.','Return {task_id:\"'+t.id+'\", verdict, confidence (0-100 the task is deliverable/clean), flags:[{dimension, category (exact [Fail-]/[Non-Fail-] band label), severity, reason, fix, spec_ref}], why (2-4 sentences), agreement (e.g. \"3/4 graders flagged §9g\")}.'].join(String.fromCharCode(10,10));}\n"
 "phase('Audit')\nconst ROLES=['gen1','gen2','gen3','rubric']\n"
 "const out=await pipeline(TASKS,\n"
-f"  t=>parallel(ROLES.map(role=>()=>agent(ap(t,role==='rubric'?'rubric':'gen'),{{label:'aud:'+t.id.slice(-6)+':'+role,phase:'Audit',model:{json.dumps(model)},schema:AUD}}))).then(rs=>({{t,auditors:rs.filter(Boolean)}})),\n"
-f"  (prev)=>prev.auditors.length?agent(mp(prev.t,prev.auditors),{{label:'master:'+prev.t.id.slice(-6),phase:'Master',model:{json.dumps(model)},schema:MASTER}}).then(m=>m&&Object.assign({{}},m,{{task_id:prev.t.id}})):null\n"
+f"  t=>parallel(ROLES.map(role=>()=>agent(ap(t,role==='rubric'?'rubric':'gen'),{aopts}))).then(rs=>({{t,auditors:rs.filter(Boolean)}})),\n"
+f"  (prev)=>prev.auditors.length?agent(mp(prev.t,prev.auditors),{mopts}).then(m=>m&&Object.assign({{}},m,{{task_id:prev.t.id}})):null\n"
 ")\nreturn out.filter(Boolean)\n")
