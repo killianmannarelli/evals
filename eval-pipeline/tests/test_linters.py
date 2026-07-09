@@ -131,3 +131,31 @@ def test_negweight_silent_when_in_band():
     rub = [{"criteria": "a", "weight": 5}, {"criteria": "b", "weight": 3},
            {"criteria": "c", "weight": 1}, {"criteria": "d", "weight": -3}]
     assert negweight_ratio.run(ctx(rubric=rub), CFG) == []
+
+
+# ── false-positive guards (heuristic tightening, 2026-07-09) ─────────────────────
+def test_visual_sign_silent_on_valid_positive_constraints():
+    # "must not contain PII" / "without errors" are valid POSITIVE criteria, not sign errors.
+    rub = [{"criteria": "The response must not contain PII", "weight": 3},
+           {"criteria": "Agent completes the task without errors", "weight": 4}]
+    assert visual_sign.run(ctx(rubric=rub), CFG) == []
+
+
+def test_pytest_hardcount_silent_on_zero_and_non_count():
+    # `== 0` ("no errors") is a valid assertion; `account`/`_is_correct` are not counts.
+    code = "def test_result_is_correct():\n    assert error_count == 0\n    assert account == 5\n"
+    assert pytest_hardcount.run(ctx(test_code=code), CFG) == []
+
+
+def test_overspec_silent_on_colon_and_mustbe_word():
+    # A colon or "must be <word>" is not an exact-value overspec, even when empirically hard.
+    rub = [{"criteria": "Agent must be polite: greets the user by name", "weight": 3,
+            "pass_rate_gpt": 0.1, "pass_rate_opus": 0.2}]
+    assert overspec_exact.run(ctx(rubric=rub), CFG) == []
+
+
+def test_overspec_flags_mustbe_number_when_hard():
+    # but "must be <number>" that both models rarely pass IS overspec
+    rub = [{"criteria": "The total must be 42 units", "weight": 3, "pass_rate_gpt": 0.0, "pass_rate_opus": 0.1}]
+    out = overspec_exact.run(ctx(rubric=rub), CFG)
+    assert out and out[0]["defect_type"] == "RUBRIC_OVERSPEC"

@@ -32,7 +32,10 @@ visual_sign:
   # HEURISTIC — keyword markers can misfire on valid positive constraints ("must not contain PII"),
   # so it only RAISES a review flag; the LLM audit escalates to a real Fail when it agrees.
   tier: review_recommended
-  undesired_markers: ["should not", "fails to", "incorrectly", "hallucinat", "must not", "penaliz", "without "]
+  # Tightened 2026-07-09: dropped "must not" and "without " — both fire on valid POSITIVE
+  # constraint criteria ("must not contain PII", "completes without errors") and were the
+  # main false-positive source. Kept markers name an actual failure/mistake.
+  undesired_markers: ["should not", "fails to", "incorrectly", "hallucinat", "penaliz"]
 
 visual_vs_text:
   # Same criterion appearing in both visual_rubrics.json and tests/rubric.json with a
@@ -45,7 +48,9 @@ visual_vs_text:
 overspec_exact:
   # Heuristic: criterion demands an exact timestamp / long decimal / precise count where a
   # range is defensible AND the reference models struggled (low pass_rate) — likely overspec.
-  exact_value_markers: ["exactly", "exact ", ":", "must equal", "must be "]
+  # Tightened 2026-07-09: dropped bare ":" (fires on any colon) and "must be " (fires on
+  # "must be polite"). Timestamps are caught by the mm:ss regex; "must be <number>" by a regex.
+  exact_value_markers: ["exactly", "exact ", "must equal"]
   pass_rate_ceiling: 0.30          # only flag when both-model pass_rate <= this (hard/brittle)
   tier: review_recommended
 

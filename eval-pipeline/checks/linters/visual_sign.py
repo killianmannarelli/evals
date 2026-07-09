@@ -8,8 +8,9 @@ Works on both shapes:
   - tests/rubric.json criteria: signed `weight` (negative = penalty guard)
 
 Heuristic: if the criterion text contains an "undesired" marker (should not / fails to /
-hallucinat / incorrectly / must not / penaliz / without) then it SHOULD be scored negative
-(is_positive=false or weight<0). If it's scored positive, flag it.
+hallucinat / incorrectly / penaliz) then it SHOULD be scored negative (is_positive=false or
+weight<0). If it's scored positive, flag it. (Markers "must not" / "without" were dropped —
+they fire on valid positive constraints like "must not contain PII".)
 """
 from src.common import finding
 

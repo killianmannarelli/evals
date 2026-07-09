@@ -15,6 +15,9 @@ from src.common import finding
 
 _TS = re.compile(r"\b\d{1,2}:\d{2}(?::\d{2})?\b")
 _DECIMAL3 = re.compile(r"\b\d+\.\d{3,}\b")
+# "must be <number/currency>" (e.g. "must be 42", "must be $84.87") — precise replacement for the
+# dropped broad "must be " substring marker, so "must be polite" no longer counts as exact.
+_MUSTBE_NUM = re.compile(r"must\s+be\s+(?:exactly\s+)?[-+$]?\d", re.I)
 
 
 def _pass_rate(ctx, c):
@@ -39,7 +42,8 @@ def run(ctx, cfg):
             continue
         text = c.get("criteria") or c.get("title") or ""
         low = text.lower()
-        has_exact = any(m in low for m in markers) or bool(_TS.search(text)) or bool(_DECIMAL3.search(text))
+        has_exact = (any(m in low for m in markers) or bool(_TS.search(text))
+                     or bool(_DECIMAL3.search(text)) or bool(_MUSTBE_NUM.search(text)))
         if not has_exact:
             continue
         pr = _pass_rate(ctx, c)

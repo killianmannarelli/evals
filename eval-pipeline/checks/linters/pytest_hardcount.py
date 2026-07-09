@@ -11,8 +11,14 @@ suppressing correct answers).
 import re
 from src.common import finding
 
-_LEN_EQ = re.compile(r"(len\s*\([^)]*\)|\b\w*(?:count|rows|len|num|n_)\w*\b)\s*(==|!=)\s*(\d+)", re.I)
-_NAME_NUM = re.compile(r"def\s+(test_\w*?(?:count|_is_|_exactly_|_has_)\w*)\s*\(", re.I)
+# Tightened 2026-07-09 to cut false positives:
+#  - the count-word must be a token (leading underscore or bare "rows") so "account"/"discount"
+#    no longer match; and the compared value must be >= 1 so `error_count == 0` ("no errors",
+#    a valid assertion) no longer fires.
+#  - the NAME regex is now "exactly"-only (high precision); number-word names are covered by
+#    _WORD_NUM and the assertion itself by _LEN_EQ, so bare `_is_`/`_has_` (over-broad) are gone.
+_LEN_EQ = re.compile(r"(len\s*\([^)]*\)|\b\w*_(?:count|counts|rows|len|num|items|entries)\b|\brows\b)\s*(==|!=)\s*([1-9]\d*)", re.I)
+_NAME_NUM = re.compile(r"def\s+(test_\w*_exactly_\w*)\s*\(", re.I)
 _WORD_NUM = re.compile(r"def\s+(test_\w*_(?:is|has|of)_(?:one|two|three|four|five|six|seven|eight|nine|ten)\b\w*)", re.I)
 
 
