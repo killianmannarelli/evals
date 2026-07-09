@@ -20,10 +20,10 @@ LLM_CHECKS = {"cdq_static", "audit_hybrid31"}
 VNORM = {"fail": "FAIL", "non-fail": "NON-FAIL", "pass": "PASS",
          "Fail": "FAIL", "Non-Fail": "NON-FAIL", "Pass": "PASS"}
 VRANK = {"FAIL": 0, "NON-FAIL": 1, "PASS": 2}
-HEADER = ["Global verdict", "Task ID", "Headline", "What's wrong (prioritized)",
+HEADER = ["Global verdict", "Confidence", "Task ID", "Headline", "What's wrong (prioritized)",
           "Recommended fix", "Reward", "DRAWER audit", "CDQ", "Linter flags",
           "Category · Subcategory · Modality", "Open the task"]
-WIDTHS = [98, 185, 300, 470, 380, 92, 340, 96, 200, 175, 230]
+WIDTHS = [98, 120, 185, 300, 470, 380, 92, 340, 96, 200, 175, 230]
 
 
 def _first_sentence(s, cap=220):
@@ -86,8 +86,19 @@ def _row(t, drawer, human, viewer):
     lint_txt = " · ".join(f"{f['check']}:{f['defect_type']}" for f in lint) or "—"
 
     meta = " · ".join(x for x in [t.get("category"), t.get("subcategory"), t.get("mm_input")] if x)
-    return [gv, t["task_id"], headline, whats, fix_txt, reward, drawer_txt, cdq_txt, lint_txt,
-            meta, viewer + (t.get("attempt_id") or "")]
+    # cross-lens corroboration: how many of {linter, CDQ, DRAWER} independently flagged this task.
+    # More lenses agreeing => higher confidence the verdict is real (triage the clear ones first).
+    lenses = ((1 if any(f.get("check") not in LLM_CHECKS for f in findings) else 0)
+              + (1 if cdq else 0)
+              + (1 if (dm and VNORM.get(dm.get("verdict", ""), "") != "PASS") else 0))
+    if gv == "PASS":
+        conf = "—"
+    else:
+        lbl = "High" if lenses >= 3 else ("Medium" if lenses == 2 else "Low")
+        conf = f"{lbl} · {lenses}/3 lenses"
+    row = [gv, conf, t["task_id"], headline, whats, fix_txt, reward, drawer_txt, cdq_txt, lint_txt,
+           meta, viewer + (t.get("attempt_id") or "")]
+    return row, lenses
 
 
 def _format(spreadsheet_id, gid, ncols, widths, ndata):
@@ -125,6 +136,98 @@ def _format(spreadsheet_id, gid, ncols, widths, ndata):
     ss.batchUpdate(spreadsheetId=spreadsheet_id, body={"requests": reqs}).execute()
 
 
+def _overview(cfg, report, drawer, run_name):
+    """A one-glance summary tab: verdict split, cross-lens confidence, top defect types, fail
+    tasks by category, and risk counts. Written as a sibling tab to the human sheet."""
+    tasks = report["tasks"]
+    tot = report["totals"]
+    n = tot.get("n_tasks", 0) or 1
+    human = cfg["taxonomy"].get("human_label", {})
+    dtc = collections.Counter(f.get("defect_type") for t in tasks for f in t.get("findings", []))
+    catf = collections.Counter((t.get("category") or "?") for t in tasks if t.get("verdict") == "fail")
+
+    def _lenses(t):
+        fs = t.get("findings", [])
+        dm = drawer.get(t["task_id"])
+        return ((1 if any(f.get("check") not in LLM_CHECKS for f in fs) else 0)
+                + (1 if any(f.get("check") == "cdq_static" for f in fs) else 0)
+                + (1 if (dm and VNORM.get(dm.get("verdict", ""), "") != "PASS") else 0))
+    confc = collections.Counter()
+    for t in tasks:
+        if t.get("verdict") == "pass":
+            continue
+        l = _lenses(t)
+        confc["High · 3 lenses" if l >= 3 else ("Medium · 2 lenses" if l == 2 else "Low · 1 lens")] += 1
+
+    R, sec_rows = [], []
+
+    def sec(title):
+        sec_rows.append(len(R) + 2)          # +2 for banner row + header row
+        R.append([title, "", ""])
+
+    def kv(k, v, extra=""):
+        R.append([k, v, extra])
+
+    sec("VERDICTS")
+    kv("FAIL", tot.get("fail", 0), f"{tot.get('fail', 0)/n:.0%}")
+    kv("NON-FAIL", tot.get("non_fail", 0), f"{tot.get('non_fail', 0)/n:.0%}")
+    kv("PASS", tot.get("pass", 0), f"{tot.get('pass', 0)/n:.0%}")
+    kv("total tasks", n, "")
+    R.append(["", "", ""])
+    sec("CONFIDENCE — flagged tasks by cross-lens agreement")
+    flagged = tot.get("fail", 0) + tot.get("non_fail", 0)
+    for k in ("High · 3 lenses", "Medium · 2 lenses", "Low · 1 lens"):
+        if confc.get(k):
+            kv(k, confc[k], f"{confc[k]/max(1, flagged):.0%}")
+    R.append(["", "", ""])
+    sec("TOP DEFECT TYPES (by findings)")
+    for dt, c in dtc.most_common(12):
+        kv(human.get(dt, dt), c, "")
+    R.append(["", "", ""])
+    sec("FAIL TASKS BY CATEGORY")
+    for cat, c in catf.most_common(12):
+        kv(cat, c, "")
+    R.append(["", "", ""])
+    sec("RISK")
+    kv("low-reward tasks (<0.30)", sum(1 for t in tasks if t.get("low_reward")), "")
+    kv("total findings", tot.get("total_findings", 0), "")
+
+    sc = cfg["pipeline"]["sheets"]
+    banner = [f"OVERVIEW — {run_name}   ·   {tot.get('fail',0)} FAIL / {tot.get('non_fail',0)} NON-FAIL"
+              f" / {tot.get('pass',0)} PASS   ·   {tot.get('total_findings',0)} findings", "", ""]
+    name, gid = common.write_new_tab(sc["spreadsheet_id"], f"eval {run_name} (overview)",
+                                     banner, [["Overview", "Count", "%"]] + R)
+    _format_overview(sc["spreadsheet_id"], gid, len(R), sec_rows)
+    return name, gid
+
+
+def _format_overview(spreadsheet_id, gid, ndata, sec_rows):
+    ss = common.sheets()
+    LIGHT = {"red": 0.93, "green": 0.94, "blue": 0.96}
+    BAND = {"red": 0.85, "green": 0.89, "blue": 0.98}
+    reqs = [
+        {"updateSheetProperties": {"properties": {"sheetId": gid, "gridProperties": {"frozenRowCount": 2}},
+            "fields": "gridProperties.frozenRowCount"}},
+        {"mergeCells": {"range": {"sheetId": gid, "startRowIndex": 0, "endRowIndex": 1,
+            "startColumnIndex": 0, "endColumnIndex": 3}, "mergeType": "MERGE_ALL"}},
+        {"repeatCell": {"range": {"sheetId": gid, "startRowIndex": 0, "endRowIndex": 1},
+            "cell": {"userEnteredFormat": {"textFormat": {"bold": True, "fontSize": 11},
+                "backgroundColor": LIGHT, "verticalAlignment": "MIDDLE"}},
+            "fields": "userEnteredFormat(textFormat,backgroundColor,verticalAlignment)"}},
+        {"repeatCell": {"range": {"sheetId": gid, "startRowIndex": 1, "endRowIndex": 2},
+            "cell": {"userEnteredFormat": {"textFormat": {"bold": True}, "backgroundColor": LIGHT}},
+            "fields": "userEnteredFormat(textFormat,backgroundColor)"}},
+    ]
+    for r in sec_rows:
+        reqs.append({"repeatCell": {"range": {"sheetId": gid, "startRowIndex": r, "endRowIndex": r + 1},
+            "cell": {"userEnteredFormat": {"textFormat": {"bold": True}, "backgroundColor": BAND}},
+            "fields": "userEnteredFormat(textFormat,backgroundColor)"}})
+    for i, w in enumerate([320, 90, 90]):
+        reqs.append({"updateDimensionProperties": {"range": {"sheetId": gid, "dimension": "COLUMNS",
+            "startIndex": i, "endIndex": i + 1}, "properties": {"pixelSize": w}, "fields": "pixelSize"}})
+    ss.batchUpdate(spreadsheetId=spreadsheet_id, body={"requests": reqs}).execute()
+
+
 def main(cfg, run_dir, tab=None):
     run_dir = Path(run_dir)
     report = json.load(open(run_dir / "report.json"))
@@ -134,8 +237,11 @@ def main(cfg, run_dir, tab=None):
     viewer = sc["viewer_base"]
     tab = tab or f"eval {run_dir.name} (human)"
 
-    rows = [_row(t, drawer, human, viewer) for t in report["tasks"]]
-    rows.sort(key=lambda r: (VRANK.get(r[0], 3), 0 if "⚠" in r[5] else 1, r[1]))
+    built = [_row(t, drawer, human, viewer) for t in report["tasks"]]
+    # worst-first: FAIL > NON-FAIL > PASS, then most-corroborated (highest confidence),
+    # then low-reward, then task id.
+    built.sort(key=lambda b: (VRANK.get(b[0][0], 3), -b[1], 0 if "⚠" in b[0][6] else 1, b[0][2]))
+    rows = [b[0] for b in built]
 
     blob = json.dumps(rows)
     leaks = [x for x in ("why_rubric_is_correct", "/private/tmp", "REDASH_KEY", "claude-502") if x in blob]
@@ -152,8 +258,9 @@ def main(cfg, run_dir, tab=None):
     tab_name, gid = common.write_new_tab(sc["spreadsheet_id"], tab, banner, [HEADER] + rows)
     _format(sc["spreadsheet_id"], gid, len(HEADER), WIDTHS, len(rows))
     common.color_verdict_column(sc["spreadsheet_id"], gid, 0, 2, 2 + len(rows))
+    ov_name, ov_gid = _overview(cfg, report, drawer, run_dir.name)
     vc = collections.Counter(r[0] for r in rows)
-    print(f"stage5_human: wrote {tab_name!r} (gid={gid}) — {len(rows)} tasks · {dict(vc)}")
+    print(f"stage5_human: wrote {tab_name!r} (gid={gid}) + {ov_name!r} (gid={ov_gid}) — {len(rows)} tasks · {dict(vc)}")
     return tab_name, gid
 
 
