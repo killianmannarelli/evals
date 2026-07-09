@@ -25,6 +25,8 @@ selection:
     review_level: 10                     # -1 attempt · 0 L0 · 10 L10 · 12 L12
     status: "pending"
   ids_file: null                         # path to newline-separated task_ids when mode=ids
+  exclude_ids_file: null                 # optional: repo-relative file of task_ids to EXCLUDE
+                                         # from the selection (or pass --exclude PATH on the CLI)
 
 models:
   reviewer: "opus"                       # CDQ + audit reviewers run on Opus (per Killian 2026-07-08; never Sonnet)

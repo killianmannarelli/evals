@@ -8,27 +8,38 @@ from pathlib import Path
 from src import common
 
 
-def _task_ids(cfg, selection, ids_file):
+def _load_ids(path):
+    return [l.strip() for l in open(path) if l.strip()] if path else []
+
+
+def _task_ids(cfg, selection, ids_file, exclude=None):
     proj = cfg["pipeline"]["project"]["id"]
     if selection == "ids":
-        return [l.strip() for l in open(ids_file) if l.strip()]
-    q = cfg["pipeline"]["selection"]["queue"]
-    sql = f"""
-    WITH LA AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY task ORDER BY attempted_at DESC) rn
-      FROM public_raw.taskattempts WHERE project='{proj}')
-    SELECT DISTINCT ta.task::STRING task
-    FROM LA ta JOIN PUBLIC.PIPELINEV3HUMANNODES hn ON hn.task=ta.task
-    LEFT JOIN public_raw.tasks t ON ta.task=t._id
-    WHERE ta.rn=1 AND LOWER(t.status)='pending' AND LOWER(hn.status)='pending'
-      AND hn.review_level={int(q['review_level'])}"""
-    return [r["task"] for r in common.rows_of(common.redash_run(sql, cfg["pipeline"]["redash"]["data_source_id"]))]
+        ids = _load_ids(ids_file)
+    else:
+        q = cfg["pipeline"]["selection"]["queue"]
+        sql = f"""
+        WITH LA AS (SELECT *, ROW_NUMBER() OVER (PARTITION BY task ORDER BY attempted_at DESC) rn
+          FROM public_raw.taskattempts WHERE project='{proj}')
+        SELECT DISTINCT ta.task::STRING task
+        FROM LA ta JOIN PUBLIC.PIPELINEV3HUMANNODES hn ON hn.task=ta.task
+        LEFT JOIN public_raw.tasks t ON ta.task=t._id
+        WHERE ta.rn=1 AND LOWER(t.status)='pending' AND LOWER(hn.status)='pending'
+          AND hn.review_level={int(q['review_level'])}"""
+        ids = [r["task"] for r in common.rows_of(common.redash_run(sql, cfg["pipeline"]["redash"]["data_source_id"]))]
+    exclude = set(exclude or [])
+    return [i for i in ids if i not in exclude]
 
 
-def main(cfg, run_dir, selection="queue", ids_file=None):
+def main(cfg, run_dir, selection="queue", ids_file=None, exclude_file=None):
     run_dir = Path(run_dir)
     run_dir.mkdir(parents=True, exist_ok=True)
     proj = cfg["pipeline"]["project"]["id"]
-    ids = _task_ids(cfg, selection, ids_file)
+    excl_cfg = cfg["pipeline"]["selection"].get("exclude_ids_file")
+    exclude = _load_ids(exclude_file) or (_load_ids(str(common.PKG / excl_cfg)) if excl_cfg else [])
+    ids = _task_ids(cfg, selection, ids_file, exclude)
+    if exclude:
+        print(f"stage1: excluding {len(exclude)} task_ids from selection")
     if not ids:
         print("stage1: no tasks selected"); return []
     inlist = "','".join(ids)
@@ -72,9 +83,9 @@ if __name__ == "__main__":
     import argparse
     ap = argparse.ArgumentParser()
     ap.add_argument("--run-dir", required=True)
-    ap.add_argument("--ids"); ap.add_argument("--queue", type=int)
+    ap.add_argument("--ids"); ap.add_argument("--queue", type=int); ap.add_argument("--exclude")
     a = ap.parse_args()
     cfg = common.load_config()
     if a.queue is not None:
         cfg["pipeline"]["selection"]["queue"]["review_level"] = a.queue
-    main(cfg, a.run_dir, "ids" if a.ids else "queue", a.ids)
+    main(cfg, a.run_dir, "ids" if a.ids else "queue", a.ids, a.exclude)

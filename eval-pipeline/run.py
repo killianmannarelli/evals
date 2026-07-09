@@ -33,6 +33,7 @@ def main():
     ap.add_argument("--no-sheet", action="store_true")
     ap.add_argument("--run-id")
     ap.add_argument("--tab")
+    ap.add_argument("--exclude", help="path to newline-separated task_ids to EXCLUDE from the run")
     a = ap.parse_args()
 
     cfg = common.load_config()
@@ -46,7 +47,7 @@ def main():
     llm_enabled = [c for c in cfg["pipeline"]["enabled_checks"]
                    if c in registry.LLM_CHECKS] and not a.only_linters
 
-    stage1_pull.main(cfg, run_dir, "ids" if a.ids else "queue", a.ids)
+    stage1_pull.main(cfg, run_dir, "ids" if a.ids else "queue", a.ids, a.exclude)
     stage2_prepare.main(cfg, run_dir, want_env=bool(llm_enabled))
     stage3_checks.main(cfg, run_dir)
 
