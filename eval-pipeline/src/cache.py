@@ -101,7 +101,11 @@ def update(cfg, run_dir):
     p = _path(cfg)
     p.parent.mkdir(parents=True, exist_ok=True)
     json.dump(c, open(p, "w"), indent=1)
-    print(f"cache: stored/updated {n} task verdict(s) -> {p.relative_to(common.PKG)}")
+    try:
+        shown = p.relative_to(common.PKG)
+    except ValueError:
+        shown = p
+    print(f"cache: stored/updated {n} task verdict(s) -> {shown}")
     return n
 
 
