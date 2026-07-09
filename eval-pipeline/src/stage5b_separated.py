@@ -50,15 +50,15 @@ def main(cfg, run_dir, tab="eval L10_opus (drawer+CDQ+linters)"):
         if dm:
             dv = dm.get("verdict", "")
             dflags = " | ".join(f"{f.get('category','')} ({f.get('dimension','')})" for f in dm.get("flags", []))
-            dwhy = _redact(dm.get("why", ""))[:400]
+            dwhy = _redact(dm.get("why", ""))          # FULL — wrap handles length; truncation reads as "cut off"
         else:
             dv, dflags, dwhy = "— (audit failed)", "", ""
-        # CDQ
+        # CDQ — full text, one bullet per finding on its own line (wrap + auto row height show it all)
         cfs = [f for f in llm.get(tid, []) if f.get("check") == "cdq_static"]
         cv, ctop = _cdq_verdict(cfs)
         if not cfs:
             cv = "pass"
-        ctxt = " | ".join(f"{f['defect_type']}: {_redact(f.get('explanation',''))[:90]}" for f in ctop[:3])
+        ctxt = _redact("\n".join(f"• {f['defect_type']}: {f.get('explanation','')}" for f in ctop))
         # linters
         lfs = lint.get(tid, [])
         lflags = " | ".join(f"{f['check']}:{f['defect_type']}" for f in lfs)
@@ -78,7 +78,7 @@ def main(cfg, run_dir, tab="eval L10_opus (drawer+CDQ+linters)"):
     sc = cfg["pipeline"]["sheets"]
     t, gid = common.write_new_tab(sc["spreadsheet_id"], tab, HEADER, rows)
     common.format_tab(sc["spreadsheet_id"], gid, len(HEADER),
-                      widths=[190,190,42,120,150,80,72,82,90,300,440,82,360,240,230], nrows=len(rows))
+                      widths=[190,190,42,120,150,80,72,82,90,300,470,82,520,240,230], nrows=len(rows))
     dv = collections.Counter(r[8] for r in rows); cvc = collections.Counter(r[11] for r in rows)
     print(f"stage5b: wrote {t!r} (gid={gid}) — {len(rows)} tasks")
     print(f"  DRAWER: {dict(dv)}")
