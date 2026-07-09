@@ -1,0 +1,1283 @@
+{
+ "source": "1muNhEv7AdxtiC7KyayzvdbfCx1GLF85aOuY2Dec4cSg",
+ "tab": "Findings (per flag)",
+ "n_tasks": 82,
+ "n_findings": 143,
+ "tasks": {
+  "69fb9655277dce0e70070e37": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     1
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     4
+    ]
+   },
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     1
+    ]
+   }
+  ],
+  "6a04c2de0b4f42487f8e5e00": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     2
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     3
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     6
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     10
+    ]
+   }
+  ],
+  "6a076b30fb7ee59da499fd2c": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     2
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     1,
+     24
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     6
+    ]
+   }
+  ],
+  "6a14c6a002f937bcb61ec0ee": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     13
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_OVERSPEC",
+    "tier": "action_required",
+    "rubric_ids": [
+     16
+    ]
+   }
+  ],
+  "6a17cc59ea9a7319a6ca06e1": [
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     10
+    ]
+   }
+  ],
+  "6a1fbaebeae04350ba1af20a": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     1,
+     2,
+     5,
+     7,
+     8,
+     9,
+     16,
+     17
+    ]
+   },
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "action_required",
+    "rubric_ids": [
+     19
+    ]
+   },
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     20,
+     23
+    ]
+   }
+  ],
+  "6a1fbaebeae04350ba1af20d": [
+   {
+    "defect_type": "RUBRIC_OVERSPEC",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     2
+    ]
+   }
+  ],
+  "6a1fbaebeae04350ba1af214": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     12,
+     13,
+     15,
+     16,
+     18
+    ]
+   }
+  ],
+  "6a1fbaebeae04350ba1af217": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     7
+    ]
+   }
+  ],
+  "6a1fbaebeae04350ba1af21a": [
+   {
+    "defect_type": "SKILL_LOADOUT",
+    "tier": "action_required",
+    "rubric_ids": [
+     6
+    ]
+   },
+   {
+    "defect_type": "TOOL_FAILURE",
+    "tier": "action_required",
+    "rubric_ids": [
+     1,
+     7
+    ]
+   }
+  ],
+  "6a1fbaebeae04350ba1af21b": [
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     13
+    ]
+   }
+  ],
+  "6a1fbaebeae04350ba1af21c": [
+   {
+    "defect_type": "RUBRIC_OVERSPEC",
+    "tier": "action_required",
+    "rubric_ids": [
+     6
+    ]
+   }
+  ],
+  "6a1fbaebeae04350ba1af21d": [
+   {
+    "defect_type": "SP_UNCLEAR",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     24
+    ]
+   }
+  ],
+  "6a210a723e6e63649d93d611": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     19
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     18
+    ]
+   }
+  ],
+  "6a210a723e6e63649d93d618": [
+   {
+    "defect_type": "RUBRIC_OVERSPEC",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     8
+    ]
+   }
+  ],
+  "6a210a723e6e63649d93d621": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     16
+    ]
+   },
+   {
+    "defect_type": "SP_UNCLEAR",
+    "tier": "review_recommended",
+    "rubric_ids": []
+   }
+  ],
+  "6a210a723e6e63649d93d626": [
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     12
+    ]
+   }
+  ],
+  "6a2252a7226df6fc69476d4d": [
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     14
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     16,
+     17
+    ]
+   }
+  ],
+  "6a2252a7226df6fc69476d4e": [
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "action_required",
+    "rubric_ids": [
+     4,
+     5,
+     7
+    ]
+   }
+  ],
+  "6a2252a7226df6fc69476d53": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     2
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     3
+    ]
+   }
+  ],
+  "6a2252a7226df6fc69476d63": [
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     16
+    ]
+   }
+  ],
+  "6a271a812033c9fde3b43f61": [
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "action_required",
+    "rubric_ids": []
+   }
+  ],
+  "6a271a812033c9fde3b43f63": [
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     9,
+     10
+    ]
+   }
+  ],
+  "6a271a812033c9fde3b43f6e": [
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "action_required",
+    "rubric_ids": [
+     15,
+     16,
+     17
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     27
+    ]
+   }
+  ],
+  "6a271a812033c9fde3b43f70": [
+   {
+    "defect_type": "RUBRIC_OVERSPEC",
+    "tier": "action_required",
+    "rubric_ids": [
+     7
+    ]
+   }
+  ],
+  "6a271a812033c9fde3b43f76": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     1
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     5
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "action_required",
+    "rubric_ids": [
+     6
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "action_required",
+    "rubric_ids": [
+     7
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     8
+    ]
+   }
+  ],
+  "6a271a812033c9fde3b43f82": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ]
+   }
+  ],
+  "6a271a812033c9fde3b43f83": [
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     13
+    ]
+   }
+  ],
+  "6a2a516109edd4a3aa3056ca": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     16
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "action_required",
+    "rubric_ids": [
+     9,
+     12
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_OVERSPEC",
+    "tier": "review_recommended",
+    "rubric_ids": []
+   },
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     10
+    ]
+   },
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     1,
+     2
+    ]
+   }
+  ],
+  "6a2a516109edd4a3aa3056ce": [
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "action_required",
+    "rubric_ids": [
+     4,
+     5,
+     6,
+     9,
+     14,
+     17,
+     18
+    ]
+   }
+  ],
+  "6a2a516109edd4a3aa3056da": [
+   {
+    "defect_type": "RUBRIC_OVERSPEC",
+    "tier": "action_required",
+    "rubric_ids": [
+     2
+    ]
+   }
+  ],
+  "6a2a516109edd4a3aa3056e5": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     3,
+     8,
+     14
+    ]
+   }
+  ],
+  "6a2e2c326db3981084352d26": [
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "action_required",
+    "rubric_ids": [
+     13,
+     14,
+     15
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     3
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_UNFAIR",
+    "tier": "action_required",
+    "rubric_ids": [
+     15
+    ]
+   }
+  ],
+  "6a2e2c326db3981084352d27": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     19
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     17
+    ]
+   },
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     16
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     13
+    ]
+   },
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     7
+    ]
+   }
+  ],
+  "6a2e2c326db3981084352d29": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     1
+    ]
+   }
+  ],
+  "6a2e2c326db3981084352d3a": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     14
+    ]
+   }
+  ],
+  "6a2e2c326db3981084352d3f": [
+   {
+    "defect_type": "RUBRIC_INACCURATE",
+    "tier": "action_required",
+    "rubric_ids": [
+     16
+    ]
+   }
+  ],
+  "6a31a2f7424da28b8ccb4454": [
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "action_required",
+    "rubric_ids": [
+     2
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     1
+    ]
+   }
+  ],
+  "6a31a2f7424da28b8ccb4456": [
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     11,
+     12
+    ]
+   }
+  ],
+  "6a31a2f7424da28b8ccb4457": [
+   {
+    "defect_type": "RUBRIC_OVERSPEC",
+    "tier": "action_required",
+    "rubric_ids": [
+     13
+    ]
+   }
+  ],
+  "6a31a2f7424da28b8ccb4465": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18
+    ]
+   }
+  ],
+  "6a31a2f7424da28b8ccb446a": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     13,
+     14
+    ]
+   },
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "action_required",
+    "rubric_ids": [
+     10
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     1,
+     2
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     3,
+     4,
+     5,
+     6,
+     7
+    ]
+   }
+  ],
+  "6a31a2f7424da28b8ccb446d": [
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     11
+    ]
+   }
+  ],
+  "6a34843aa0d92ff63eee2e24": [
+   {
+    "defect_type": "TOOL_FAILURE",
+    "tier": "action_required",
+    "rubric_ids": [
+     10,
+     14
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     19
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     20
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     21
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     27
+    ]
+   }
+  ],
+  "6a34843aa0d92ff63eee2e34": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     2,
+     3
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "action_required",
+    "rubric_ids": [
+     2
+    ]
+   }
+  ],
+  "6a34843aa0d92ff63eee2e36": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     5,
+     10
+    ]
+   }
+  ],
+  "6a34843aa0d92ff63eee2e3f": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     1,
+     2,
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "action_required",
+    "rubric_ids": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ]
+   }
+  ],
+  "6a38469525262cee87640095": [
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     1
+    ]
+   }
+  ],
+  "6a38469525262cee87640098": [
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     2
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     6
+    ]
+   },
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     23
+    ]
+   }
+  ],
+  "6a38469525262cee876400a0": [
+   {
+    "defect_type": "ORACLE_LEAK",
+    "tier": "action_required",
+    "rubric_ids": [
+     14,
+     25
+    ]
+   }
+  ],
+  "6a38469525262cee876400a2": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     13,
+     14
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_OVERSPEC",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     9
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_OVERSPEC",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     13
+    ]
+   }
+  ],
+  "6a38469525262cee876400a4": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     14,
+     15
+    ]
+   }
+  ],
+  "6a38469525262cee876400a5": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     2
+    ]
+   }
+  ],
+  "6a38469525262cee876400a7": [
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     4
+    ]
+   }
+  ],
+  "6a38469525262cee876400ae": [
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "action_required",
+    "rubric_ids": [
+     5,
+     6,
+     7,
+     8
+    ]
+   }
+  ],
+  "6a38469525262cee876400b1": [
+   {
+    "defect_type": "TOOL_FAILURE",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     2,
+     5
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     6,
+     7,
+     8,
+     9
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     10
+    ]
+   }
+  ],
+  "6a38469525262cee876400b2": [
+   {
+    "defect_type": "RUBRIC_OVERSPEC",
+    "tier": "action_required",
+    "rubric_ids": [
+     3
+    ]
+   }
+  ],
+  "6a38469525262cee876400b3": [
+   {
+    "defect_type": "RUBRIC_OVERSPEC",
+    "tier": "action_required",
+    "rubric_ids": []
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     22
+    ]
+   }
+  ],
+  "6a3ae0c1291d4e4d5637316d": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     17,
+     18
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     19
+    ]
+   }
+  ],
+  "6a3ae0c1291d4e4d5637316f": [
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     10
+    ]
+   }
+  ],
+  "6a3ae0c1291d4e4d56373170": [
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "action_required",
+    "rubric_ids": [
+     1,
+     2,
+     3,
+     4,
+     7,
+     10
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     2
+    ]
+   },
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "action_required",
+    "rubric_ids": [
+     9
+    ]
+   }
+  ],
+  "6a3ae0c1291d4e4d56373173": [
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     5,
+     11
+    ]
+   }
+  ],
+  "6a3ae0c1291d4e4d56373175": [
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     2,
+     3
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     6
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "action_required",
+    "rubric_ids": [
+     14
+    ]
+   }
+  ],
+  "6a3ae0c1291d4e4d5637317a": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     1
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     14
+    ]
+   }
+  ],
+  "6a3ae0c1291d4e4d5637317b": [
+   {
+    "defect_type": "RUBRIC_OVERSPEC",
+    "tier": "action_required",
+    "rubric_ids": [
+     11
+    ]
+   }
+  ],
+  "6a3ae0c1291d4e4d5637317f": [
+   {
+    "defect_type": "RUBRIC_OVERSPEC",
+    "tier": "action_required",
+    "rubric_ids": [
+     7
+    ]
+   }
+  ],
+  "6a3ae0c1291d4e4d56373180": [
+   {
+    "defect_type": "GRADER_BROKEN",
+    "tier": "action_required",
+    "rubric_ids": [
+     3,
+     11
+    ]
+   }
+  ],
+  "6a3ae0c1291d4e4d56373182": [
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "action_required",
+    "rubric_ids": [
+     5
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "action_required",
+    "rubric_ids": [
+     9
+    ]
+   },
+   {
+    "defect_type": "DATA_SPARSE",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     9
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     4
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_UNFAIR",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     10
+    ]
+   }
+  ],
+  "6a3ae0c1291d4e4d56373184": [
+   {
+    "defect_type": "ORACLE_LEAK",
+    "tier": "action_required",
+    "rubric_ids": [
+     2
+    ]
+   }
+  ],
+  "6a3ae0c1291d4e4d5637318a": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": []
+   }
+  ],
+  "6a3ae0c1291d4e4d5637318b": [
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     7
+    ]
+   }
+  ],
+  "6a3ae0c1291d4e4d5637318d": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     3,
+     4,
+     5
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     5
+    ]
+   }
+  ],
+  "6a3d7db012a738e7ef9c09b0": [
+   {
+    "defect_type": "TOOL_FAILURE",
+    "tier": "action_required",
+    "rubric_ids": [
+     4,
+     20
+    ]
+   }
+  ],
+  "6a3d7db012a738e7ef9c09b1": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     2
+    ]
+   }
+  ],
+  "6a3d7db012a738e7ef9c09b2": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     3,
+     11,
+     12
+    ]
+   }
+  ],
+  "6a3d7db012a738e7ef9c09b3": [
+   {
+    "defect_type": "CONTAINER_ENV",
+    "tier": "action_required",
+    "rubric_ids": [
+     14,
+     15,
+     16
+    ]
+   }
+  ],
+  "6a3d7db012a738e7ef9c09bc": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     21
+    ]
+   }
+  ],
+  "6a3d7db012a738e7ef9c09bd": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     1,
+     2,
+     5,
+     6,
+     10
+    ]
+   }
+  ],
+  "6a3d7db012a738e7ef9c09cd": [
+   {
+    "defect_type": "RUBRIC_OVERSPEC",
+    "tier": "action_required",
+    "rubric_ids": [
+     3
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_OVERSPEC",
+    "tier": "action_required",
+    "rubric_ids": [
+     16
+    ]
+   }
+  ],
+  "6a3d7db012a738e7ef9c09ce": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     24
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     12
+    ]
+   },
+   {
+    "defect_type": "RUBRIC_AMBIGUOUS",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     17,
+     18
+    ]
+   }
+  ],
+  "6a3d7db012a738e7ef9c09d1": [
+   {
+    "defect_type": "RUBRIC_OVERSPEC",
+    "tier": "review_recommended",
+    "rubric_ids": [
+     16
+    ]
+   }
+  ],
+  "6a42a89fbff245d051aeb41e": [
+   {
+    "defect_type": "RUBRIC_CONTRADICTION",
+    "tier": "action_required",
+    "rubric_ids": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     15,
+     16,
+     18
+    ]
+   }
+  ]
+ }
+}

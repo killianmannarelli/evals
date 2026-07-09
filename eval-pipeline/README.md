@@ -26,8 +26,10 @@ python run.py --ids mytasks.txt
 # Run only the fast deterministic linters (no LLM cost):
 python run.py --ids mytasks.txt --only-linters
 
-# Backtest recall against the customer feedback set:
-python run.py --ids runs/customer_feedback_128.txt --backtest gold/customer_findings.json
+# Backtest recall against the customer feedback set (the "catch everything" proof):
+python -m src.build_gold                                    # sheet -> gold/customer_findings.json (+ customer_tasks.txt)
+python run.py --ids gold/customer_tasks.txt --backtest gold/customer_findings.json
+python -m src.backtest --run-dir runs/<id>                 # or compare any run's report.json to gold
 ```
 
 `run.py` orchestrates the stages; you can also run any stage standalone (`python -m src.stage1_pull ...`).

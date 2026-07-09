@@ -34,6 +34,7 @@ def main():
     ap.add_argument("--run-id")
     ap.add_argument("--tab")
     ap.add_argument("--exclude", help="path to newline-separated task_ids to EXCLUDE from the run")
+    ap.add_argument("--backtest", help="gold findings json to measure recall against after assembly")
     a = ap.parse_args()
 
     cfg = common.load_config()
@@ -66,6 +67,9 @@ def main():
             print(f"[warn] LLM emit unavailable ({e}); continuing with linter findings only")
 
     report = stage4_assemble.main(cfg, run_dir)
+    if a.backtest:
+        from src import backtest
+        backtest.run(a.backtest, str(run_dir / "report.json"))
     if not a.no_sheet:
         stage5_human.main(cfg, run_dir, a.tab)
     print(f"=== done: {run_dir}/report.json ===")
