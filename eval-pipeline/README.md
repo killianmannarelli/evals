@@ -54,8 +54,10 @@ register it in `checks/registry.py`, and add its name to `enabled_checks`.
    (`tests/rubric.json`, optional `visual_rubrics.json`, `tests/test_outputs.py`,
    `tests/test_weights.json`, `task.toml`) + the agent-visible `environment/` tree.
 3. **stage3_checks** — run every enabled check. Linters run inline (instant). LLM checks are
-   emitted as background Workflow scripts (**Opus**, effort from `config/pipeline.yaml`) whose
-   transcripts persist in `~/.claude`.
+   emitted as background Workflow scripts (model + effort from `config/pipeline.yaml` — default
+   **Sonnet / medium** for low cost; bump to Opus/high for a deeper run) whose transcripts persist
+   in `~/.claude`. Audit cost is further tuned by `audit_grader_roles` and `audit_master`
+   (`if_flagged` skips the verify pass on clean tasks).
 4. **stage4_assemble** — merge + dedupe all findings, reward-prioritize, roll up a per-task
    verdict (worst-wins across linters ∪ CDQ ∪ DRAWER), run the leakage hygiene scan.
 5. **stage5_human** — write ONE human-first tab: a color-coded global **PASS / NON-FAIL / FAIL**,

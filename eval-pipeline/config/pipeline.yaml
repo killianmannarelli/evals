@@ -29,19 +29,26 @@ selection:
                                          # from the selection (or pass --exclude PATH on the CLI)
 
 models:
-  reviewer: "opus"                       # CDQ + audit reviewers run on Opus (per Killian 2026-07-08; never Sonnet)
-  reviewer_effort: "high"                # reasoning effort on every reviewer/master/grader agent.
-                                         # "high" is the uniform-trim default — ~2x+ faster than "max"
-                                         # at full depth on every task; set "max" for a slow deep run.
+  reviewer: "sonnet"                     # CDQ + audit reviewers. Sonnet output is ~5x cheaper than Opus
+                                         # (Killian 2026-07-09: cost is the priority, Sonnet OK). Set "opus"
+                                         # for maximum depth on a pricier run.
+  reviewer_effort: "medium"              # reasoning effort on every reviewer/master/grader agent.
+                                         # "medium" = cost-optimized default; "low" is cheaper still;
+                                         # "high"/"max" for a deeper (pricier) run.
   orchestrator_note: "master/orchestrator inherits the session model"
-  # Grader roles for the drawer audit (per task): each role = one grader agent, then 1 master.
-  # Total agents = N_tasks x (len(roles) + 2)   [ +2 = 1 CDQ reviewer + 1 audit master ]. Tune here:
-  #   ["gen1"]                        -> 3N  (trim-uniform default: 1 grader + master + CDQ)  <-- current
-  #   ["gen1","rubric"]               -> 4N  (adds a dedicated rubric-quality specialist grader)
-  #   ["gen1","gen2","gen3","rubric"] -> 6N  (full Hybrid 3+1; ~7-11h at max)
-  # The single gen1 grader carries the rubric-quality/§9g rigor (folded into its prompt in emit.py),
-  # so dropping to 1 grader keeps rubric-quality depth. The master is an independent verify pass.
+  # Grader roles for the drawer audit (per task): each role = one grader agent, then (maybe) 1 master.
+  # Tune here:
+  #   ["gen1"]                        -> 1 grader (+ CDQ + master-if-flagged)  <-- current
+  #   ["gen1","rubric"]               -> adds a dedicated rubric-quality specialist grader
+  #   ["gen1","gen2","gen3","rubric"] -> full Hybrid 3+1
+  # The single gen1 grader carries the rubric-quality/§9g rigor (folded into its prompt in emit.py).
   audit_grader_roles: ["gen1"]
+  # Master (verification) pass over the grader flags: "always" | "if_flagged" | "never".
+  #   if_flagged (default, cheapest-that-keeps-a-verify): run the master ONLY when the grader flagged
+  #     something; clean tasks get a synthesized Pass master (no extra agent) -> saves the master call
+  #     on every clean task. "never" = the single grader IS the verdict (no verify pass, cheapest).
+  #     "always" = master on every task (most thorough).
+  audit_master: "if_flagged"
 
 waves:
   # Workflow concurrency is auto-capped; these bound fan-out sizing only.
