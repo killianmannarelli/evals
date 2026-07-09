@@ -76,3 +76,23 @@ verdict_rule:
   fail_if_any: action_required
   nonfail_if_any: review_recommended
   else: pass
+
+# Human-readable labels for the one human-first sheet (stage5_human). A finding's label falls
+# back to the DRAWER CSV dimension title when present, then to this map, then to the raw token.
+human_label:
+  RUBRIC_CONTRADICTION: "Rubric contradicts the data / prompt / image"
+  RUBRIC_AMBIGUOUS: "Ambiguous criterion (multiple valid readings)"
+  RUBRIC_OVERSPEC: "Over-specified target (penalizes valid answers)"
+  RUBRIC_UNFAIR: "Unfair criterion (trivially met / sign error)"
+  RUBRIC_INACCURATE: "Wrong answer key vs the data"
+  DATA_SPARSE: "Graded fact not derivable from visible data"
+  MEDIA_PATH: "Referenced media missing / wrong path"
+  MULTIMODAL_ARTIFACT: "Media artifact issue (mistagged / corrupt)"
+  ORACLE_LEAK: "Answer reachable by the agent (oracle leak)"
+  GRADER_BROKEN: "Grader / test can never pass as written"
+  TOOL_FAILURE: "Required tool / mock is broken or disabled"
+  SKILL_LOADOUT: "Required skill missing / broken"
+  CONTAINER_ENV: "Environment can't support a required action"
+  SP_UNCLEAR: "Prompt is ambiguous / inconsistent"
+  WEIGHT_MIX: "Rubric weight mix off-spec (accuracy / vision)"
+  LINTER_ERROR: "Linter error (internal)"

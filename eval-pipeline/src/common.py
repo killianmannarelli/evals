@@ -242,3 +242,28 @@ def format_tab(spreadsheet_id, gid, ncols, widths=None, nrows=200):
         reqs.append({"updateDimensionProperties": {"range": {"sheetId": gid, "dimension": "COLUMNS",
             "startIndex": i, "endIndex": i + 1}, "properties": {"pixelSize": w}, "fields": "pixelSize"}})
     ss.batchUpdate(spreadsheetId=spreadsheet_id, body={"requests": reqs}).execute()
+
+
+# Verdict colors for the human sheet (background, foreground) — scannable red/amber/green.
+VERDICT_COLORS = {
+    "FAIL":     ({"red": 0.84, "green": 0.19, "blue": 0.15}, {"red": 1, "green": 1, "blue": 1}),
+    "NON-FAIL": ({"red": 0.99, "green": 0.74, "blue": 0.28}, {"red": 0.1, "green": 0.1, "blue": 0.1}),
+    "PASS":     ({"red": 0.22, "green": 0.66, "blue": 0.33}, {"red": 1, "green": 1, "blue": 1}),
+}
+
+
+def color_verdict_column(spreadsheet_id, gid, col_index, start_row, end_row, colors=None):
+    """Color a verdict column by exact text: FAIL red / NON-FAIL amber / PASS green (bold).
+    Rows are 0-indexed, end exclusive (pass the DATA rows only, excluding banner/header).
+    Uses conditional-format rules so re-sorting keeps the colors correct."""
+    ss = sheets()
+    colors = colors or VERDICT_COLORS
+    rng = {"sheetId": gid, "startColumnIndex": col_index, "endColumnIndex": col_index + 1,
+           "startRowIndex": start_row, "endRowIndex": end_row}
+    reqs = []
+    for text, (bg, fg) in colors.items():
+        reqs.append({"addConditionalFormatRule": {"index": 0, "rule": {"ranges": [rng],
+            "booleanRule": {"condition": {"type": "TEXT_EQ", "values": [{"userEnteredValue": text}]},
+                "format": {"backgroundColor": bg,
+                           "textFormat": {"bold": True, "foregroundColor": fg}}}}}})
+    ss.batchUpdate(spreadsheetId=spreadsheet_id, body={"requests": reqs}).execute()

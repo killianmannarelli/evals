@@ -7,7 +7,7 @@
   python run.py --run-id my_run --no-sheet       # custom run dir, skip the sheet write
 
 The deterministic linters + prep + assemble + sheet run fully in Python here. The LLM checks
-(cdq_static, audit_hybrid31) are compute-heavy Sonnet Workflows: when enabled, this emits their
+(cdq_static, audit_hybrid31) are compute-heavy Opus Workflows: when enabled, this emits their
 runnable workflow scripts into <run_dir>/workflows/ and prints launch instructions — Claude
 launches them, then `python -m src.resume` harvests results and re-runs stage4/5.
 """
@@ -15,7 +15,7 @@ from __future__ import annotations
 import argparse, sys, datetime
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from src import common, stage1_pull, stage2_prepare, stage3_checks, stage4_assemble, stage5_sheet
+from src import common, stage1_pull, stage2_prepare, stage3_checks, stage4_assemble, stage5_human
 from checks import registry
 
 
@@ -60,13 +60,13 @@ def main():
             print(">>> Launch each via the Workflow tool, then run: "
                   f"python -m src.resume --run-dir {run_dir} && "
                   f"python -m src.stage4_assemble --run-dir {run_dir} && "
-                  f"python -m src.stage5_sheet --run-dir {run_dir}\n")
+                  f"python -m src.stage5_human --run-dir {run_dir}\n")
         except Exception as e:
             print(f"[warn] LLM emit unavailable ({e}); continuing with linter findings only")
 
     report = stage4_assemble.main(cfg, run_dir)
     if not a.no_sheet:
-        stage5_sheet.main(cfg, run_dir, a.tab)
+        stage5_human.main(cfg, run_dir, a.tab)
     print(f"=== done: {run_dir}/report.json ===")
 
 
