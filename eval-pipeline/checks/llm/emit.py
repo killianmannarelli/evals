@@ -67,7 +67,8 @@ def emit_all(cfg, run_dir):
     (wf / "cdq_static.js").write_text(_cdq_static_js(tasks, guide, model, effort)); paths.append(str(wf / "cdq_static.js"))
     roles = cfg["pipeline"]["models"].get("audit_grader_roles", ["gen1", "gen2", "gen3", "rubric"])
     master_mode = cfg["pipeline"]["models"].get("audit_master", "if_flagged")
-    (wf / "audit_hybrid31.js").write_text(_audit_js(tasks, csv_path, appendix, model, effort, roles, master_mode)); paths.append(str(wf / "audit_hybrid31.js"))
+    verify = cfg["pipeline"].get("audit_verify", {}) or {}
+    (wf / "audit_hybrid31.js").write_text(_audit_js(tasks, csv_path, appendix, model, effort, roles, master_mode, verify)); paths.append(str(wf / "audit_hybrid31.js"))
     return paths
 
 
@@ -101,7 +102,7 @@ f"  return agent(p,{opts}).then(r=>r&&Object.assign({{}},r,{{task_id:t.id}}))\n"
 
 
 # ── Hybrid 3+1 — the DRAWER eval (grade all 21 dims -> Task-level flags) ────────
-def _audit_js(tasks, csv_path, appendix, model, effort, roles=("gen1", "gen2", "gen3", "rubric"), master_mode="if_flagged"):
+def _audit_js(tasks, csv_path, appendix, model, effort, roles=("gen1", "gen2", "gen3", "rubric"), master_mode="if_flagged", verify=None):
     data = json.dumps([{"id": t["id"], "ctx": t["ctx"], "task_dir": t["task_dir"],
                         "cat": t["cat"], "sub": t["sub"], "mm": t["mm"], "ttype": t["ttype"]} for t in tasks])
     # grader returns ONLY the flagged (Fail/Non-Fail) dimensions — small output, avoids the
@@ -118,12 +119,21 @@ def _audit_js(tasks, csv_path, appendix, model, effort, roles=("gen1", "gen2", "
     MASTER = ("{type:'object',additionalProperties:false,required:['task_id','verdict','confidence','flags','why','agreement'],"
       "properties:{task_id:{type:'string'},verdict:{enum:['Fail','Non-Fail','Pass']},confidence:{type:'integer'},"
       "flags:{type:'array',items:" + FLAG + "},why:{type:'string'},agreement:{type:'string'}}}")
+    verify = verify or {}
+    v_en = bool(verify.get("enabled", False)); v_on = verify.get("on", "fail")
+    v_conf = int(verify.get("confidence_below", 70))
+    v_model = verify.get("model", model); v_effort = verify.get("effort", "high")
+    VERIFY = ("{type:'object',additionalProperties:false,required:['task_id','upheld','final_verdict','why'],"
+      "properties:{task_id:{type:'string'},upheld:{type:'boolean'},final_verdict:{enum:['Fail','Non-Fail','Pass']},"
+      "overturned_dimensions:{type:'array',items:{type:'string'}},why:{type:'string'}}}")
     aopts = "{label:'aud:'+t.id.slice(-6)+':'+role,phase:'Audit',model:" + json.dumps(model) + ",effort:" + json.dumps(effort) + ",schema:AUD}"
     mopts = "{label:'flags:'+prev.t.id.slice(-6),phase:'Master',model:" + json.dumps(model) + ",effort:" + json.dumps(effort) + ",schema:MASTER}"
+    vopts = "{label:'verify:'+m.task_id.slice(-6),phase:'Verify',model:" + json.dumps(v_model) + ",effort:" + json.dumps(v_effort) + ",schema:VERIFY}"
     return (
-"export const meta = { name:'audit-drawer-flags', description:'DRAWER eval — Task-level flags graded vs V10 spec', phases:[{title:'Audit'},{title:'Master'}] }\n"
+"export const meta = { name:'audit-drawer-flags', description:'DRAWER eval — Task-level flags graded vs V10 spec', phases:[{title:'Audit'},{title:'Master'},{title:'Verify'}] }\n"
 f"const CSV={json.dumps(csv_path)}\nconst APPENDIX={json.dumps(appendix)}\nconst TASKS={data}\n"
-f"const AUD={AUD}\nconst MASTER={MASTER}\n"
+f"const AUD={AUD}\nconst MASTER={MASTER}\nconst VERIFY={VERIFY}\n"
+f"const VERIFY_ENABLED={json.dumps(v_en)}, VERIFY_ON={json.dumps(v_on)}, VERIFY_CONF={v_conf};\n"
 "function ap(t,role){const focus=role==='rubric'?'You are the RUBRIC-QUALITY SPECIALIST — grade the three Overall Rubric Quality dimensions (Major / Major-Moderate / Major-Moderate-Minor), Rubric Structure (weights in {-5,-3,-1,1,3,5}), Rubric Spot Checks, and negative-weight ratio (§9g ~25%, cap 30%) with extra rigor.':'You are THE grader (single-grader + master design) — grade EVERY applicable dimension, AND apply extra rigor to the three Overall Rubric Quality dimensions (Major / Major-Moderate / Major-Moderate-Minor), Rubric Structure (weights in {-5,-3,-1,1,3,5}), Rubric Spot Checks, and the negative-weight ratio (§9g ~25%, cap 30%).';\n"
 "  return [\n"
 "    'You produce the TASK-LEVEL FLAGS eval (the viewer trajectory drawer) for OpenClaw task '+t.id+' ('+t.cat+' / '+t.sub+', modality '+t.mm+'). You grade the AUTHORED EVAL (prompt/inputs/rubric/tests/trajectory) — NOT the model.',\n"
@@ -135,6 +145,8 @@ f"const AUD={AUD}\nconst MASTER={MASTER}\n"
 "    'OUTPUT ONLY THE FLAGGED DIMENSIONS (score 2 or 3) — NOT the clean ones. Keep it small: reason <=2 sentences. Each flag {dimension (CSV title), category (exact [Fail-]/[Non-Fail-] label from errorCategories), severity (Fail if score 2 / Non-Fail if 3), reason, spec_ref (dimension name or § section)}. If every dimension is clean, flags:[]. Overall verdict: Fail if any Fail flag, Non-Fail if any Non-Fail flag, else Pass. Return exactly {task_id:\"'+t.id+'\", flags:[...], verdict, confidence}.'\n"
 "  ].join(String.fromCharCode(10,10));}\n"
 "function mp(t,auds){return ['You are the MASTER for the Task-level flags eval of OpenClaw task '+t.id+'. You are the independent VERIFICATION pass over these '+auds.length+' grader report(s) — produce the FINAL drawer flags.','GRADER REPORTS (JSON): '+JSON.stringify(auds),'Rules: UNION the grader flags by dimension; independently CONFIRM each flag by re-checking its cited evidence; when multiple graders ran, prefer flags >=2 of them agreed on; DROP any miscount/misread (especially visual) you cannot reconfirm. When graders disagree on a dimension, keep the most-defensible severity/category. Overall verdict: Fail if any surviving Fail flag, Non-Fail if any Non-Fail flag, else Pass. Re-open CSV '+CSV+', appendix '+APPENDIX+', ctx '+t.ctx+' or media '+t.task_dir+' to adjudicate.','Return {task_id:\"'+t.id+'\", verdict, confidence (0-100 the task is deliverable/clean), flags:[{dimension, category (exact [Fail-]/[Non-Fail-] band label), severity, reason, fix, spec_ref}], why (2-4 sentences), agreement (e.g. \"grader flagged §9g, confirmed\" or \"2/2 graders agreed\")}.'].join(String.fromCharCode(10,10));}\n"
+"function vp(m){return ['You are an ADVERSARIAL reviewer for the Task-level flags eval of OpenClaw task '+m.task_id+'. The audit marked it '+m.verdict+' (confidence '+m.confidence+'). Try to REFUTE it — show the task is actually deliverable.','Flags to challenge (JSON): '+JSON.stringify(m.flags||[]),'For EACH flag decide: a genuine spec violation, or a defensible authoring choice / a misread (especially of an image or a number)? Re-open CSV '+CSV+', appendix '+APPENDIX+', ctx '+m._ctx+', media '+m._tdir+' to confirm. Overturn ONLY flags you can positively refute with evidence; keep the rest.','Return {task_id:\"'+m.task_id+'\", upheld (true if >=1 Fail-severity flag genuinely stands), final_verdict (Fail if a Fail flag stands, else Non-Fail if a Non-Fail flag stands, else Pass), overturned_dimensions (the dimensions you refuted), why (2-3 sentences)}.'].join(String.fromCharCode(10,10));}\n"
+"function applyVerify(m,v){if(!v) return m; const ov=new Set(v.overturned_dimensions||[]); const kept=(m.flags||[]).filter(f=>!ov.has(f.dimension)); if(v.upheld && !ov.size) return Object.assign({},m,{why:(m.why||'')+' [adversarial check upheld the verdict]'}); return Object.assign({},m,{verdict:(v.final_verdict||m.verdict),flags:kept,why:(m.why||'')+' [adversarial review: '+(v.why||'')+']',agreement:(m.agreement||'')+' | adversarial:'+(v.upheld?'upheld':'downgraded->'+(v.final_verdict||''))});}\n"
 "phase('Audit')\nconst ROLES=" + json.dumps(list(roles)) + "\nconst MASTER_MODE=" + json.dumps(master_mode) + "\n"
 "const out=await pipeline(TASKS,\n"
 f"  t=>parallel(ROLES.map(role=>()=>agent(ap(t,role==='rubric'?'rubric':'gen'),{aopts}))).then(rs=>({{t,auditors:rs.filter(Boolean)}})),\n"
@@ -143,7 +155,14 @@ f"  t=>parallel(ROLES.map(role=>()=>agent(ap(t,role==='rubric'?'rubric':'gen'),{
 "    const a=prev.auditors[0];\n"
 "    const flagged=(a.verdict&&a.verdict!=='Pass')||(a.flags&&a.flags.length>0);\n"
 "    if(MASTER_MODE==='never'||(MASTER_MODE==='if_flagged'&&!flagged))\n"
-"      return {task_id:prev.t.id, verdict:(a.verdict||'Pass'), confidence:(a.confidence||90), flags:(a.flags||[]).map(f=>Object.assign({},f,{fix:(f.fix||'')})), why:(flagged?('Single-grader flags kept; master verification skipped by config (audit_master='+MASTER_MODE+').'):'Clean per the single grader; master verification skipped.'), agreement:('1 grader ('+(flagged?'flagged':'clean')+'), no master pass')};\n"
-f"    return agent(mp(prev.t,prev.auditors),{mopts}).then(m=>m&&Object.assign({{}},m,{{task_id:prev.t.id}}));\n"
+"      return {task_id:prev.t.id, verdict:(a.verdict||'Pass'), confidence:(a.confidence||90), flags:(a.flags||[]).map(f=>Object.assign({},f,{fix:(f.fix||'')})), why:(flagged?('Single-grader flags kept; master verification skipped by config (audit_master='+MASTER_MODE+').'):'Clean per the single grader; master verification skipped.'), agreement:('1 grader ('+(flagged?'flagged':'clean')+'), no master pass'), _ctx:prev.t.ctx, _tdir:prev.t.task_dir};\n"
+f"    return agent(mp(prev.t,prev.auditors),{mopts}).then(m=>m&&Object.assign({{}},m,{{task_id:prev.t.id,_ctx:prev.t.ctx,_tdir:prev.t.task_dir}}));\n"
+"  },\n"
+"  (m)=>{\n"
+"    if(!m) return null;\n"
+"    const strip=x=>{const r=Object.assign({},x); delete r._ctx; delete r._tdir; return r;};\n"
+"    const needy=VERIFY_ENABLED&&(((VERIFY_ON==='fail'||VERIFY_ON==='both')&&m.verdict==='Fail')||((VERIFY_ON==='low_confidence'||VERIFY_ON==='both')&&(m.confidence!=null&&m.confidence<VERIFY_CONF)));\n"
+"    if(!needy) return strip(m);\n"
+f"    return agent(vp(m),{vopts}).then(v=>strip(applyVerify(m,v)));\n"
 "  }\n"
 ")\nreturn out.filter(Boolean)\n")

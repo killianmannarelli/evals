@@ -56,6 +56,16 @@ cache:
                                          # A first run caches nothing; disable per-run with --no-cache.
   file: "cache/audited.json"             # repo-relative store {task_id:{attempt_id,verdict,drawer,...}}
 
+audit_verify:
+  # Optional adversarial second-opinion that tries to REFUTE the audit's verdict (catches
+  # false-positive FAILs) and re-checks low-confidence verdicts. OFF by default (adds one agent
+  # per matching task); turn on for high-stakes runs — runs ONLY on tasks matching `on`, on Opus.
+  enabled: false
+  on: "fail"                 # "fail" | "low_confidence" | "both"
+  confidence_below: 70       # re-verify verdicts with confidence < this (when `on` includes low_confidence)
+  model: "opus"              # escalate the adversarial check to Opus even if graders ran on Sonnet
+  effort: "high"
+
 waves:
   # Workflow concurrency is auto-capped; these bound fan-out sizing only.
   cdq_static_batch: 15

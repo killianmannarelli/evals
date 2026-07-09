@@ -1,5 +1,6 @@
 # Heavy / ephemeral / secret — never commit
-cache/             # local LLM-verdict reuse cache (raw audit text; rebuilds on next run)
+# local LLM-verdict reuse cache (raw audit text; rebuilds on next run)
+cache/
 qa_inputs/
 raw/
 *.zip
@@ -8,7 +9,8 @@ __pycache__/
 .env
 creds/
 sa.json
-spec.md            # fetched fresh every run
+# fetched fresh every run
+spec.md
 # runs/ IS committed (durable per-run results), but not its bulky inputs:
 runs/**/qa_inputs/
 runs/**/raw/
