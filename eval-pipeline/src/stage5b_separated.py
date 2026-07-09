@@ -77,6 +77,8 @@ def main(cfg, run_dir, tab="eval L10_opus (drawer+CDQ+linters)"):
         raise SystemExit(f"stage5b: REFUSING — leaks {leaks}")
     sc = cfg["pipeline"]["sheets"]
     t, gid = common.write_new_tab(sc["spreadsheet_id"], tab, HEADER, rows)
+    common.format_tab(sc["spreadsheet_id"], gid, len(HEADER),
+                      widths=[190,190,42,120,150,80,72,82,90,300,440,82,360,240,230], nrows=len(rows))
     dv = collections.Counter(r[8] for r in rows); cvc = collections.Counter(r[11] for r in rows)
     print(f"stage5b: wrote {t!r} (gid={gid}) — {len(rows)} tasks")
     print(f"  DRAWER: {dict(dv)}")

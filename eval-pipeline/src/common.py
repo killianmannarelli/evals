@@ -219,3 +219,26 @@ def finding(check, defect_type, tier, explanation, fix="", rubric_ids=None, test
         "rubric_ids": rubric_ids or [], "test_names": test_names or [],
         "explanation": explanation, "fix": fix, "evidence": evidence,
     }
+
+
+def format_tab(spreadsheet_id, gid, ncols, widths=None, nrows=200):
+    """Make a written tab readable: wrap text, freeze header + col A, bold header, set column
+    widths. Called after write_new_tab so tabs never come out with cut-off columns."""
+    ss = sheets()
+    reqs = [
+        {"updateSheetProperties": {"properties": {"sheetId": gid, "gridProperties": {
+            "frozenRowCount": 1, "frozenColumnCount": 1}},
+            "fields": "gridProperties.frozenRowCount,gridProperties.frozenColumnCount"}},
+        {"repeatCell": {"range": {"sheetId": gid, "startRowIndex": 0, "endRowIndex": 1},
+            "cell": {"userEnteredFormat": {"textFormat": {"bold": True}, "wrapStrategy": "WRAP",
+                     "verticalAlignment": "MIDDLE"}},
+            "fields": "userEnteredFormat(textFormat,wrapStrategy,verticalAlignment)"}},
+        {"repeatCell": {"range": {"sheetId": gid, "startRowIndex": 1, "endRowIndex": nrows + 1},
+            "cell": {"userEnteredFormat": {"wrapStrategy": "WRAP", "verticalAlignment": "TOP"}},
+            "fields": "userEnteredFormat(wrapStrategy,verticalAlignment)"}},
+    ]
+    for i in range(ncols):
+        w = (widths[i] if widths and i < len(widths) else 160)
+        reqs.append({"updateDimensionProperties": {"range": {"sheetId": gid, "dimension": "COLUMNS",
+            "startIndex": i, "endIndex": i + 1}, "properties": {"pixelSize": w}, "fields": "pixelSize"}})
+    ss.batchUpdate(spreadsheetId=spreadsheet_id, body={"requests": reqs}).execute()
