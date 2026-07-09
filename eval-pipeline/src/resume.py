@@ -15,15 +15,80 @@ from pathlib import Path
 SEV2TIER = {"Major": "action_required", "Moderate": "review_recommended", "Minor": "review_recommended"}
 
 
-def _dim2defect(dim: str) -> str:
+# Accurate map: each of the 21 real V10 spec dimensions (CSV title) -> our defect taxonomy token.
+# Grounded in spec/V10_rubric.csv; the keyword heuristic below is only a fallback for variant/abbrev
+# strings a grader might emit. (Human sheets show the CSV title directly via flag_dimension; this
+# token drives dedup with CDQ/linter findings + the Overview "top defect types".)
+DIM2DEFECT = {
+    "prompt - mm dependence": "MULTIMODAL_ARTIFACT",
+    "prompt - output file(s) name": "SP_UNCLEAR",
+    "prompt - feasibility with tools": "TOOL_FAILURE",
+    "input artifacts - realism": "DATA_SPARSE",
+    "input artifacts - artifact verification": "DATA_SPARSE",
+    "input artifacts - leak prevention": "ORACLE_LEAK",
+    "verifiers - safety": "RUBRIC_UNFAIR",
+    "silver trajectory - category and subcategory": "SP_UNCLEAR",
+    "silver trajectory - cross-modal & cross-service synthesis": "DATA_SPARSE",
+    "trajectory - architectural depth & friction exposure": "SP_UNCLEAR",
+    "rubric criteria - overall rubric quality - major": "RUBRIC_CONTRADICTION",
+    "rubric criteria - overall rubric quality - major/moderate": "RUBRIC_AMBIGUOUS",
+    "rubric criteria - overall rubric quality - major/moderate/minor": "RUBRIC_AMBIGUOUS",
+    "rubric criteria - rubric structure": "WEIGHT_MIX",
+    "rubric criteria - rubric spot checks": "RUBRIC_INACCURATE",
+    "tests - correctness": "GRADER_BROKEN",
+    "tests - underfitted tests": "RUBRIC_OVERSPEC",
+    "tests - coverage": "GRADER_BROKEN",
+    "tests - redundancy": "RUBRIC_OVERSPEC",
+    "failed rubric/unit test - justification": "GRADER_BROKEN",
+    "universe - universe viewer consistency": "RUBRIC_CONTRADICTION",
+}
+
+
+# For the rubric-quality ROLLUP dimensions (Overall Rubric Quality / Structure / Spot Checks) a
+# single dimension can't pin the specific defect — the finding's own reason text does. These keyword
+# groups refine the token from that text; order matters (first match wins).
+_REASON_TOKENS = [
+    (("contradict", "conflict", "mismatch", "inconsistent", "does not match", "disagree"), "RUBRIC_CONTRADICTION"),
+    (("ambiguous", "unclear", "vague", "multiple interpretation", "multiple reading", "underdetermined", "subjective", "open to interpretation"), "RUBRIC_AMBIGUOUS"),
+    (("over-specif", "overspec", "exact match", "exact value", "too strict", "brittle", "should be a range", "tolerance", "hardcoded"), "RUBRIC_OVERSPEC"),
+    (("answer key", "expected value is wrong", "factually wrong", "incorrect value", "should be "), "RUBRIC_INACCURATE"),
+    (("trivial", "sign error", "penaliz", "unfair", "always pass", "tautolog", "trivially"), "RUBRIC_UNFAIR"),
+    (("not derivable", "missing data", "sparse", "no data", "cannot be found", "not available in"), "DATA_SPARSE"),
+    (("leak", "reachable", "answer file", "oracle"), "ORACLE_LEAK"),
+]
+
+
+def _flag2defect(dim: str, reason: str = "") -> str:
+    """Most-accurate token for a DRAWER flag: the dimension map, refined by the reason text for the
+    rubric-quality rollup dimensions (where the dimension alone is too coarse)."""
+    base = _dim2defect(dim)
     d = (dim or "").lower()
+    is_rollup = ("rubric" in d and ("quality" in d or "structure" in d or "spot check" in d)) \
+        or base in ("RUBRIC_CONTRADICTION", "RUBRIC_AMBIGUOUS")
+    if is_rollup and reason:
+        r = reason.lower()
+        for kws, tok in _REASON_TOKENS:
+            if any(k in r for k in kws):
+                return tok
+    return base
+
+
+def _dim2defect(dim: str) -> str:
+    d = (dim or "").strip().lower()
+    if d in DIM2DEFECT:
+        return DIM2DEFECT[d]
+    # fallback keyword heuristic for abbreviated / variant dimension strings
     if "leak" in d: return "ORACLE_LEAK"
-    if "safety" in d: return "TOOL_FAILURE" if "tool" in d else "RUBRIC_UNFAIR"
-    if "mm" in d or "modal" in d or "visual" in d: return "MULTIMODAL_ARTIFACT"
-    if "test" in d: return "RUBRIC_OVERSPEC"
-    if "realism" in d or "artifact" in d or "input" in d or "sparse" in d or "data" in d: return "DATA_SPARSE"
+    if "structure" in d or "weight" in d: return "WEIGHT_MIX"
+    if "spot check" in d or "inaccur" in d: return "RUBRIC_INACCURATE"
+    if "safety" in d: return "RUBRIC_UNFAIR"
+    if "mm depend" in d or "modal" in d or "visual" in d: return "MULTIMODAL_ARTIFACT"
+    if "underfit" in d or "redundan" in d or "overspec" in d: return "RUBRIC_OVERSPEC"
+    if "test" in d or "coverage" in d or "justification" in d: return "GRADER_BROKEN"
+    if "realism" in d or "artifact" in d or "synthesis" in d or "sparse" in d or "data" in d: return "DATA_SPARSE"
     if "feasib" in d or "tool" in d or "environment" in d or "container" in d: return "TOOL_FAILURE"
-    if "prompt" in d or "unclear" in d: return "SP_UNCLEAR"
+    if "moderate" in d or "ambiguous" in d: return "RUBRIC_AMBIGUOUS"
+    if "prompt" in d or "unclear" in d or "trajectory" in d or "universe" in d: return "SP_UNCLEAR"
     return "RUBRIC_CONTRADICTION"
 
 
@@ -97,7 +162,7 @@ def harvest_audit(outfile, tdir):
                 continue
             cat = f.get("category", "")
             tier = "action_required" if str(f.get("severity", "")).lower().startswith("fail") else "review_recommended"
-            norm.append({"check": "audit_hybrid31", "defect_type": _dim2defect(f.get("dimension", "")),
+            norm.append({"check": "audit_hybrid31", "defect_type": _flag2defect(f.get("dimension", ""), f.get("reason", "")),
                          "tier": tier, "rubric_ids": [], "test_names": [],
                          "explanation": (f"[{cat}] " if cat else "") + f.get("reason", ""),
                          "fix": f.get("fix", ""),

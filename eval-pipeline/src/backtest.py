@@ -56,16 +56,33 @@ def run(gold_path, report_path):
             else:
                 missed.append(f"{t[:10]}:{dt}({f.get('tier','')[:6]})")
 
+    # set-level precision / recall / F1 on defect_types per task (dedup our verbose findings to a
+    # set first). Extras (types we raised, gold didn't) are NOT necessarily false positives — we may
+    # catch real issues the customer's spot-check missed — so they're reported separately, not as errors.
+    tp = ourtot = goldtot = 0
+    extras = []
+    for t in overlap:
+        g = {f.get("defect_type") for f in gtasks[t]}
+        o = ours[t]["defect_types"]
+        tp += len(o & g); ourtot += len(o); goldtot += len(g)
+        extras += [f"{t[:10]}:{dt}" for dt in sorted(o - g)]
+    prec = tp / ourtot if ourtot else 0.0
+    rec = tp / goldtot if goldtot else 0.0
+    f1 = (2 * prec * rec / (prec + rec)) if (prec + rec) else 0.0
+
     print(f"  overlap tasks: {len(overlap)} / {gold['n_tasks']}")
     print(f"  TASK-level recall : {task_hit}/{len(overlap)} flagged ({task_hit/len(overlap):.0%})")
-    print(f"  DEFECT-type recall: {df}/{gf} matched ({df/gf:.0%})")
+    print(f"  DEFECT-type recall (per gold finding): {df}/{gf} ({(df/gf if gf else 0):.0%})")
+    print(f"  DEFECT-type set  : precision={prec:.0%} recall={rec:.0%} F1={f1:.0%}  (TP={tp}, ours={ourtot}, gold={goldtot})")
     for dt, (c, n) in sorted(by_dt.items(), key=lambda x: -x[1][1]):
         print(f"     {dt}: {c}/{n} ({(c/n if n else 0):.0%})")
     if missed:
-        print(f"  missed findings ({len(missed)}): {missed[:15]}{'…' if len(missed) > 15 else ''}")
+        print(f"  MISSED gold findings ({len(missed)}): {missed[:15]}{'…' if len(missed) > 15 else ''}")
+    if extras:
+        print(f"  EXTRA types we raised (not in gold; may be real or noise): {extras[:15]}{'…' if len(extras) > 15 else ''}")
     return {"overlap": len(overlap), "task_recall": task_hit / len(overlap),
-            "defect_recall": (df / gf if gf else 0), "by_defect": {k: v for k, v in by_dt.items()},
-            "missed": missed}
+            "defect_recall": (df / gf if gf else 0), "precision": prec, "f1": f1,
+            "by_defect": {k: v for k, v in by_dt.items()}, "missed": missed, "extras": extras}
 
 
 if __name__ == "__main__":
