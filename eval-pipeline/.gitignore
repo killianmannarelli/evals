@@ -1,4 +1,5 @@
 # Heavy / ephemeral / secret — never commit
+cache/             # local LLM-verdict reuse cache (raw audit text; rebuilds on next run)
 qa_inputs/
 raw/
 *.zip

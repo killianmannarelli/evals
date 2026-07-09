@@ -50,6 +50,12 @@ models:
   #     "always" = master on every task (most thorough).
   audit_master: "if_flagged"
 
+cache:
+  enabled: true                          # reuse prior LLM verdicts for tasks whose attempt_id is
+                                         # unchanged -> skips the expensive LLM (linters still re-run).
+                                         # A first run caches nothing; disable per-run with --no-cache.
+  file: "cache/audited.json"             # repo-relative store {task_id:{attempt_id,verdict,drawer,...}}
+
 waves:
   # Workflow concurrency is auto-capped; these bound fan-out sizing only.
   cdq_static_batch: 15

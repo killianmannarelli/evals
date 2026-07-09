@@ -15,7 +15,7 @@ from __future__ import annotations
 import argparse, sys, datetime
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from src import common, stage1_pull, stage2_prepare, stage3_checks, stage4_assemble, stage5_human
+from src import common, stage1_pull, stage2_prepare, stage3_checks, stage4_assemble, stage5_human, cache
 from checks import registry
 
 
@@ -35,6 +35,7 @@ def main():
     ap.add_argument("--tab")
     ap.add_argument("--exclude", help="path to newline-separated task_ids to EXCLUDE from the run")
     ap.add_argument("--backtest", help="gold findings json to measure recall against after assembly")
+    ap.add_argument("--no-cache", action="store_true", help="re-audit every task (ignore cached verdicts)")
     a = ap.parse_args()
 
     cfg = common.load_config()
@@ -51,6 +52,8 @@ def main():
     stage1_pull.main(cfg, run_dir, "ids" if a.ids else "queue", a.ids, a.exclude)
     stage2_prepare.main(cfg, run_dir, want_env=bool(llm_enabled))
     stage3_checks.main(cfg, run_dir)
+    if not a.no_cache:
+        cache.seed(cfg, run_dir)          # reuse cached LLM verdicts (attempt_id unchanged)
 
     if llm_enabled:
         try:
@@ -62,11 +65,14 @@ def main():
             print(">>> Launch each via the Workflow tool, then run: "
                   f"python -m src.resume --run-dir {run_dir} && "
                   f"python -m src.stage4_assemble --run-dir {run_dir} && "
+                  f"python -m src.cache --update --run-dir {run_dir} && "
                   f"python -m src.stage5_human --run-dir {run_dir}\n")
         except Exception as e:
             print(f"[warn] LLM emit unavailable ({e}); continuing with linter findings only")
 
     report = stage4_assemble.main(cfg, run_dir)
+    if not a.no_cache:
+        cache.update(cfg, run_dir)
     if a.backtest:
         from src import backtest
         backtest.run(a.backtest, str(run_dir / "report.json"))

@@ -33,9 +33,20 @@ def _ensure_spec(cfg, run_dir: Path):
 
 
 def _tasks(run_dir: Path):
+    # tasks whose LLM verdict is cached (attempt_id unchanged) are pre-seeded and listed in
+    # skip_llm.json — skip emitting LLM work for them (see src/cache.py).
+    skip = set()
+    sp = run_dir / "skip_llm.json"
+    if sp.exists():
+        try:
+            skip = set(json.load(open(sp)))
+        except Exception:
+            skip = set()
     out = []
     for p in sorted(glob.glob(str(run_dir / "ctx" / "*.json"))):
         c = json.load(open(p))
+        if c["task_id"] in skip:
+            continue
         out.append({"id": c["task_id"], "batch": c.get("batch_file"), "task_dir": c.get("task_dir"),
                     "ctx": p, "cat": c.get("category"), "sub": c.get("subcategory"),
                     "mm": c.get("mm_input"), "ttype": c.get("task_type")})
