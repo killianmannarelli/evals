@@ -11,6 +11,10 @@ Requirement:
 
 Deterministic: sums signed weights from tests/rubric.json (positive weights only for shares).
 Emits WEIGHT_MIX findings for whichever bar(s) are missed, with the exact percentages.
+
+The VISION bar only applies to tasks that actually involve vision (see _is_visual_task): a
+genuinely text-only task has no vision requirement, so applying the vision bar there was a
+false positive on *every* text-only task. Gate off via thresholds.weight_mix.require_visual_task.
 """
 from src.common import finding
 
@@ -20,6 +24,19 @@ def _acc_types(t):
     if t.get("count_optional_as_accuracy"):
         types += list(t.get("accuracy_types_optional", []))
     return set(types)
+
+
+def _is_visual_task(ctx, t, text_only):
+    """True if the task involves vision: it declares a visual input modality (ctx.mm_input),
+    ships a visual_rubrics.json, or tags any criterion with a non-text modality. Used to gate
+    the vision bar so it doesn't fire on genuinely text-only tasks."""
+    mm = str(ctx.get("mm_input") or "").upper().strip()
+    text_vals = {str(v).upper() for v in t.get("text_task_mm_values", ["TEXT_ONLY", "TEXT", "NONE", ""])}
+    if mm and mm not in text_vals:
+        return True
+    if ctx.get("visual_rubrics"):
+        return True
+    return any(c.get("modality") and c["modality"] != text_only for c in (ctx.get("rubric") or []))
 
 
 def run(ctx, cfg):
@@ -58,7 +75,8 @@ def run(ctx, cfg):
             evidence=ev))
 
     vis_ok = (vis_of_acc >= t["vision_min_frac_of_accuracy"]) and (vis_frac >= t["vision_min_frac_of_total"])
-    if not vis_ok:
+    apply_vision_bar = _is_visual_task(ctx, t, text_only) if t.get("require_visual_task", True) else True
+    if apply_vision_bar and not vis_ok:
         out.append(finding(
             "weight_mix", "WEIGHT_MIX", tier,
             f"Vision rubrics are {vis_of_acc:.0%} of the accuracy mix ({vis_frac:.0%} of total), "

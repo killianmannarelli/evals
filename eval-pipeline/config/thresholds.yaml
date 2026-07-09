@@ -13,6 +13,10 @@ weight_mix:
   vision_min_frac_of_total: 0.25
   text_only_modality_value: "TEXT_ONLY"              # anything else = vision-dependent
   tier: review_recommended                            # tier when a bar is missed
+  require_visual_task: true          # only apply the VISION bar to tasks that involve vision
+                                     # (declared mm_input / a visual_rubrics.json / a visual-tagged
+                                     # criterion). Stops the vision bar false-firing on text-only tasks.
+  text_task_mm_values: ["TEXT_ONLY", "TEXT", "NONE", ""]   # ctx.mm_input values treated as non-visual
 
 pytest_hardcount:
   # Flag exact-count assertions that make a correct-but-different output fail.
@@ -25,14 +29,18 @@ pytest_hardcount:
 visual_sign:
   # is_positive vs score sign mismatch, or a positive-weight criterion whose text describes
   # undesired behavior ("fails to", "should not", "incorrectly", "hallucinat").
-  tier: action_required
+  # HEURISTIC — keyword markers can misfire on valid positive constraints ("must not contain PII"),
+  # so it only RAISES a review flag; the LLM audit escalates to a real Fail when it agrees.
+  tier: review_recommended
   undesired_markers: ["should not", "fails to", "incorrectly", "hallucinat", "must not", "penaliz", "without "]
 
 visual_vs_text:
   # Same criterion appearing in both visual_rubrics.json and tests/rubric.json with a
   # diverging target/weight/sign. Match by normalized title similarity >= this.
   title_match_min: 0.85
-  tier: action_required
+  # HEURISTIC — fuzzy title match can collide near-duplicate but distinct criteria, so it only
+  # RAISES a review flag; the LLM audit escalates to a real Fail when it confirms the contradiction.
+  tier: review_recommended
 
 overspec_exact:
   # Heuristic: criterion demands an exact timestamp / long decimal / precise count where a

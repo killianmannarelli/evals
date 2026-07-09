@@ -54,10 +54,38 @@ register it in `checks/registry.py`, and add its name to `enabled_checks`.
    (`tests/rubric.json`, optional `visual_rubrics.json`, `tests/test_outputs.py`,
    `tests/test_weights.json`, `task.toml`) + the agent-visible `environment/` tree.
 3. **stage3_checks** — run every enabled check. Linters run inline (instant). LLM checks are
-   emitted as background Workflow scripts (Sonnet) whose transcripts persist in `~/.claude`.
+   emitted as background Workflow scripts (**Opus**, effort from `config/pipeline.yaml`) whose
+   transcripts persist in `~/.claude`.
 4. **stage4_assemble** — merge + dedupe all findings, reward-prioritize, roll up a per-task
-   verdict, run the leakage hygiene scan.
-5. **stage5_sheet** — write ONE new combined tab (never overwrites existing tabs).
+   verdict (worst-wins across linters ∪ CDQ ∪ DRAWER), run the leakage hygiene scan.
+5. **stage5_human** — write ONE human-first tab: a color-coded global **PASS / NON-FAIL / FAIL**,
+   a one-line headline, prioritized plain-English feedback + the recommended fix, reward, and
+   evidence columns — sorted worst-first (never overwrites existing tabs).
+
+## The linters (deterministic checks)
+
+Seven pure-Python checks (`checks/linters/<name>.py`, `run(task_ctx, cfg) -> [finding]`) that
+catch the *mechanical* defect classes an LLM pass is unreliable for. They run in milliseconds,
+cost nothing, and are unit-tested. Each reads a specific grading artifact and emits the same
+taxonomy tokens the LLM audit uses, so stage4 dedupes them together.
+
+| Linter | What it catches (plain English) | Reads | Tier | Precision |
+|---|---|---|---|---|
+| `negweight_ratio` | Rubric has zero / too few negative-weight penalty criteria — §9g wants ~25% (cap 30%). This is the drawer's own deterministic Task-level flag. | `rubric.json` weights | **action_required** (zero) · review (off-band) | **Rock-solid** — arithmetic reproduction of §9g |
+| `weight_mix` | Weight not concentrated on accuracy (≥60% of total), or vision under-weighted **on a visual task** (≥50% of the accuracy mix) — Karan's bar. | `rubric.json` type+modality+weight, `mm_input` | review | **Solid** math; vision bar now gated to visual tasks (no longer fires on text-only) |
+| `pytest_hardcount` | Brittle exact-count asserts in the grader (`len(x)==6`, `test_..._is_six`) that fail a correct-but-differently-shaped output. | `test_outputs.py` | review → **action_required** when `mean_reward < 0.40` | Heuristic (regex); the reward gate raises precision |
+| `visual_sign` | A criterion describing *undesired* behavior but scored **positive** (rewards the bad thing). | `visual_rubrics.json` / `rubric.json` | review | Heuristic (keyword markers) — raises a flag, LLM audit escalates |
+| `visual_vs_text` | Same criterion in `visual_rubrics.json` and `rubric.json` graded with **opposite sign** (the two grading passes contradict). | both rubric files | review | Heuristic (fuzzy title match ≥0.85); low volume |
+| `overspec_exact` | Criterion demands an **exact** value (timestamp / long decimal) a range would cover, *and* both reference models rarely pass it. | `rubric.json` + model pass-rates | review | Heuristic marker + empirical pass-rate gate |
+| `answer_key_data` | Rubric grades against a currency amount that appears **nowhere** in the mock-API data (likely a wrong answer key). | mock `data.json` + `rubric.json` | review | Conservative (cents-only, aggregates skipped) |
+
+**Design principle — only structural checks fail alone.** `negweight_ratio` (a faithful
+reproduction of the §9g rule) can drive a task to **Fail** on its own. Every *heuristic* linter
+emits `review_recommended` only; it becomes a Fail when the **LLM audit independently agrees**
+(both emit the same token, so stage4 merges them) or, for `pytest_hardcount`, when low reward
+corroborates. This keeps the linters a fast, free, reproducible pre-pass **without letting a
+keyword false-positive hard-fail a correct task.** Tune every threshold in
+`config/thresholds.yaml`; toggle any linter in `enabled_checks`.
 
 ## Resilience
 

@@ -6,7 +6,7 @@ Emits self-contained workflow .js files (data baked in) into <run_dir>/workflows
                           dimension and emits the per-dimension "Task-level flags"
                           ([Fail - X]/[Non-Fail - Y]) exactly like the viewer's trajectory drawer.
 
-Reviewers run on the config model+effort (Opus MAX). Graders read the ACTUAL spec:
+Reviewers run on the config model+effort (Opus; effort from config, default high). Graders read the ACTUAL spec:
 spec/V10_rubric.csv (21 dimensions + bands) + spec/authoring_spec.md (§ definitions, §9g).
 """
 from __future__ import annotations
@@ -51,7 +51,7 @@ def emit_all(cfg, run_dir):
     appendix = str(common.PKG / cfg["pipeline"]["spec"]["appendix_doc"])
     tasks = _tasks(run_dir)
     model = cfg["pipeline"]["models"]["reviewer"]                 # "opus"
-    effort = cfg["pipeline"]["models"].get("reviewer_effort", "high")  # "max"
+    effort = cfg["pipeline"]["models"].get("reviewer_effort", "high")  # from config (default high)
     paths = []
     (wf / "cdq_static.js").write_text(_cdq_static_js(tasks, guide, model, effort)); paths.append(str(wf / "cdq_static.js"))
     roles = cfg["pipeline"]["models"].get("audit_grader_roles", ["gen1", "gen2", "gen3", "rubric"])
@@ -69,7 +69,7 @@ def _cdq_static_js(tasks, guide, model, effort):
     opts = ("{label:'static:'+t.id.slice(-6),phase:'Static',model:" + json.dumps(model) +
             ",effort:" + json.dumps(effort) + ",schema:SCHEMA}")
     return (
-"export const meta = { name:'cdq-static', description:'CDQ static eval-design QA (Opus MAX)', phases:[{title:'Static'}] }\n"
+"export const meta = { name:'cdq-static', description:'CDQ static eval-design QA (Opus)', phases:[{title:'Static'}] }\n"
 f"const GUIDE={json.dumps(guide)}\nconst TASKS={data}\n"
 f"const SCHEMA={FIND_SCHEMA}\n"
 "phase('Static')\n"
@@ -109,10 +109,10 @@ def _audit_js(tasks, csv_path, appendix, model, effort, roles=("gen1", "gen2", "
     aopts = "{label:'aud:'+t.id.slice(-6)+':'+role,phase:'Audit',model:" + json.dumps(model) + ",effort:" + json.dumps(effort) + ",schema:AUD}"
     mopts = "{label:'flags:'+prev.t.id.slice(-6),phase:'Master',model:" + json.dumps(model) + ",effort:" + json.dumps(effort) + ",schema:MASTER}"
     return (
-"export const meta = { name:'audit-drawer-flags', description:'DRAWER eval — Task-level flags graded vs V10 spec (Opus MAX)', phases:[{title:'Audit'},{title:'Master'}] }\n"
+"export const meta = { name:'audit-drawer-flags', description:'DRAWER eval — Task-level flags graded vs V10 spec (Opus)', phases:[{title:'Audit'},{title:'Master'}] }\n"
 f"const CSV={json.dumps(csv_path)}\nconst APPENDIX={json.dumps(appendix)}\nconst TASKS={data}\n"
 f"const AUD={AUD}\nconst MASTER={MASTER}\n"
-"function ap(t,role){const focus=role==='rubric'?'You are the RUBRIC-QUALITY SPECIALIST — grade the three Overall Rubric Quality dimensions (Major / Major-Moderate / Major-Moderate-Minor), Rubric Structure (weights in {-5,-3,-1,1,3,5}), Rubric Spot Checks, and negative-weight ratio (§9g ~25%, cap 30%) with extra rigor.':'You are a GENERALIST grader — grade EVERY applicable dimension.';\n"
+"function ap(t,role){const focus=role==='rubric'?'You are the RUBRIC-QUALITY SPECIALIST — grade the three Overall Rubric Quality dimensions (Major / Major-Moderate / Major-Moderate-Minor), Rubric Structure (weights in {-5,-3,-1,1,3,5}), Rubric Spot Checks, and negative-weight ratio (§9g ~25%, cap 30%) with extra rigor.':'You are THE grader (single-grader + master design) — grade EVERY applicable dimension, AND apply extra rigor to the three Overall Rubric Quality dimensions (Major / Major-Moderate / Major-Moderate-Minor), Rubric Structure (weights in {-5,-3,-1,1,3,5}), Rubric Spot Checks, and the negative-weight ratio (§9g ~25%, cap 30%).';\n"
 "  return [\n"
 "    'You produce the TASK-LEVEL FLAGS eval (the viewer trajectory drawer) for OpenClaw task '+t.id+' ('+t.cat+' / '+t.sub+', modality '+t.mm+'). You grade the AUTHORED EVAL (prompt/inputs/rubric/tests/trajectory) — NOT the model.',\n"
 "    focus,\n"
@@ -122,7 +122,7 @@ f"const AUD={AUD}\nconst MASTER={MASTER}\n"
 "    'STEP 4: Work through ALL 21 dimensions internally, picking each one score 2 (=[Fail-X]), 3 (=[Non-Fail-Y]) or 5 (clean) from the CSV; for gated dims (silver trajectory / unit tests) treat absent as clean. For the three Overall Rubric Quality dims COUNT criteria with major/moderate/minor issues (denominator = # criteria the CB wrote; no double-count) and apply the % thresholds (>10% major, >15% moderate+, >20% minor+).',\n"
 "    'OUTPUT ONLY THE FLAGGED DIMENSIONS (score 2 or 3) — NOT the clean ones. Keep it small: reason <=2 sentences. Each flag {dimension (CSV title), category (exact [Fail-]/[Non-Fail-] label from errorCategories), severity (Fail if score 2 / Non-Fail if 3), reason, spec_ref (dimension name or § section)}. If every dimension is clean, flags:[]. Overall verdict: Fail if any Fail flag, Non-Fail if any Non-Fail flag, else Pass. Return exactly {task_id:\"'+t.id+'\", flags:[...], verdict, confidence}.'\n"
 "  ].join(String.fromCharCode(10,10));}\n"
-"function mp(t,auds){return ['You are the MASTER for the Task-level flags eval of OpenClaw task '+t.id+'. Merge these '+auds.length+' independent graders (3 generalists + 1 rubric specialist) into the FINAL drawer flags.','GRADER REPORTS (JSON): '+JSON.stringify(auds),'Rules: UNION the graders flags by dimension; keep a flag only if corroborated (>=2 graders raised it, OR one grader with clear cited evidence you can confirm); DROP miscounts/misreads (especially visual) and any flag you cannot reconfirm. When graders disagree on a dimension, keep the most-defensible severity/category. Overall verdict: Fail if any surviving Fail flag, Non-Fail if any Non-Fail flag, else Pass. Re-open CSV '+CSV+', appendix '+APPENDIX+', ctx '+t.ctx+' or media '+t.task_dir+' to adjudicate.','Return {task_id:\"'+t.id+'\", verdict, confidence (0-100 the task is deliverable/clean), flags:[{dimension, category (exact [Fail-]/[Non-Fail-] band label), severity, reason, fix, spec_ref}], why (2-4 sentences), agreement (e.g. \"3/4 graders flagged §9g\")}.'].join(String.fromCharCode(10,10));}\n"
+"function mp(t,auds){return ['You are the MASTER for the Task-level flags eval of OpenClaw task '+t.id+'. You are the independent VERIFICATION pass over these '+auds.length+' grader report(s) — produce the FINAL drawer flags.','GRADER REPORTS (JSON): '+JSON.stringify(auds),'Rules: UNION the grader flags by dimension; independently CONFIRM each flag by re-checking its cited evidence; when multiple graders ran, prefer flags >=2 of them agreed on; DROP any miscount/misread (especially visual) you cannot reconfirm. When graders disagree on a dimension, keep the most-defensible severity/category. Overall verdict: Fail if any surviving Fail flag, Non-Fail if any Non-Fail flag, else Pass. Re-open CSV '+CSV+', appendix '+APPENDIX+', ctx '+t.ctx+' or media '+t.task_dir+' to adjudicate.','Return {task_id:\"'+t.id+'\", verdict, confidence (0-100 the task is deliverable/clean), flags:[{dimension, category (exact [Fail-]/[Non-Fail-] band label), severity, reason, fix, spec_ref}], why (2-4 sentences), agreement (e.g. \"grader flagged §9g, confirmed\" or \"2/2 graders agreed\")}.'].join(String.fromCharCode(10,10));}\n"
 "phase('Audit')\nconst ROLES=" + json.dumps(list(roles)) + "\n"
 "const out=await pipeline(TASKS,\n"
 f"  t=>parallel(ROLES.map(role=>()=>agent(ap(t,role==='rubric'?'rubric':'gen'),{aopts}))).then(rs=>({{t,auditors:rs.filter(Boolean)}})),\n"

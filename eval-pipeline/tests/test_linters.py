@@ -19,15 +19,24 @@ def ctx(**kw):
 
 
 # ── weight_mix ────────────────────────────────────────────────────────────────
-def test_weight_mix_flags_low_accuracy_and_zero_vision():
+def test_weight_mix_flags_low_accuracy_and_zero_vision_on_visual_task():
+    # IMAGE task with zero vision-tagged criteria => the vision bar legitimately fires (mistag).
     rub = [{"criteria": "did X", "weight": 5, "type": "task completion", "modality": "TEXT_ONLY"},
            {"criteria": "did Y", "weight": 5, "type": "instruction following", "modality": "TEXT_ONLY"},
            {"criteria": "value is 42", "weight": 2, "type": "factuality and hallucination", "modality": "TEXT_ONLY"}]
-    out = weight_mix.run(ctx(rubric=rub), CFG)
-    kinds = {f["explanation"].split()[0] for f in out}
+    out = weight_mix.run(ctx(rubric=rub, mm_input="IMAGE"), CFG)
     assert any("Accuracy" in f["explanation"] for f in out)   # 2/12 = 17% < 60%
-    assert any("Vision" in f["explanation"] for f in out)     # 0% vision
+    assert any("Vision" in f["explanation"] for f in out)     # 0% vision on a visual task
     assert all(f["defect_type"] == "WEIGHT_MIX" for f in out)
+
+
+def test_weight_mix_text_only_task_skips_vision_bar():
+    # Genuinely text-only task (no visual input, no visual criteria) => vision bar must NOT fire.
+    rub = [{"criteria": "value is 42", "weight": 7, "type": "factuality and hallucination", "modality": "TEXT_ONLY"},
+           {"criteria": "did X", "weight": 3, "type": "task completion", "modality": "TEXT_ONLY"}]
+    out = weight_mix.run(ctx(rubric=rub, mm_input="TEXT_ONLY"), CFG)
+    assert not any("Vision" in f["explanation"] for f in out)  # gated off on text-only tasks
+    assert out == []                                           # accuracy is 70% >= 60% => fully silent
 
 
 def test_weight_mix_silent_when_compliant():
@@ -55,6 +64,7 @@ def test_visual_sign_flags_positive_on_undesired():
     vr = [{"title": "Agent incorrectly hallucinated a price", "is_positive": True, "score": 3}]
     out = visual_sign.run(ctx(visual_rubrics=vr), CFG)
     assert out and out[0]["rubric_ids"] == [1]
+    assert out[0]["tier"] == "review_recommended"   # heuristic: raises a review flag, not a lone Fail
 
 
 def test_visual_sign_flags_positive_weight_penalty_text():
@@ -75,6 +85,7 @@ def test_visual_vs_text_flags_opposite_sign():
     rub = [{"criteria": "Thumbnail shows the final chisel frame", "weight": -3}]
     out = visual_vs_text.run(ctx(visual_rubrics=vr, rubric=rub), CFG)
     assert out and out[0]["defect_type"] == "RUBRIC_CONTRADICTION"
+    assert out[0]["tier"] == "review_recommended"   # heuristic: raises a review flag, not a lone Fail
 
 
 def test_visual_vs_text_noop_without_visual():

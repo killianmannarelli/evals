@@ -27,13 +27,19 @@ selection:
   ids_file: null                         # path to newline-separated task_ids when mode=ids
 
 models:
-  reviewer: "opus"                       # CDQ + audit reviewers run on Opus (per Killian 2026-07-08)
-  reviewer_effort: "max"                 # MAX reasoning effort on every reviewer/master agent
+  reviewer: "opus"                       # CDQ + audit reviewers run on Opus (per Killian 2026-07-08; never Sonnet)
+  reviewer_effort: "high"                # reasoning effort on every reviewer/master/grader agent.
+                                         # "high" is the uniform-trim default — ~2x+ faster than "max"
+                                         # at full depth on every task; set "max" for a slow deep run.
   orchestrator_note: "master/orchestrator inherits the session model"
-  # Grader roles for the drawer audit (per task): each is one grader agent, then 1 master.
-  # 4 roles (gen1/gen2/gen3/rubric) = full Hybrid 3+1 (~7-11h at Opus MAX). At Opus MAX,
-  # 2 graders (1 generalist + 1 rubric specialist) match quality in ~3-4h. Tune here.
-  audit_grader_roles: ["gen1", "rubric"]
+  # Grader roles for the drawer audit (per task): each role = one grader agent, then 1 master.
+  # Total agents = N_tasks x (len(roles) + 2)   [ +2 = 1 CDQ reviewer + 1 audit master ]. Tune here:
+  #   ["gen1"]                        -> 3N  (trim-uniform default: 1 grader + master + CDQ)  <-- current
+  #   ["gen1","rubric"]               -> 4N  (adds a dedicated rubric-quality specialist grader)
+  #   ["gen1","gen2","gen3","rubric"] -> 6N  (full Hybrid 3+1; ~7-11h at max)
+  # The single gen1 grader carries the rubric-quality/§9g rigor (folded into its prompt in emit.py),
+  # so dropping to 1 grader keeps rubric-quality depth. The master is an independent verify pass.
+  audit_grader_roles: ["gen1"]
 
 waves:
   # Workflow concurrency is auto-capped; these bound fan-out sizing only.
