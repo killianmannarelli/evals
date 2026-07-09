@@ -38,14 +38,26 @@ python -m src.backtest --run-dir runs/<id>                 # or compare any run'
 
 | Want to change… | Edit |
 |---|---|
-| project / layer / status / models / which checks run | `config/pipeline.yaml` |
-| defect types, tiers, defect→dimension map, verdict rule | `config/taxonomy.yaml` |
-| weight-mix bar, linter sensitivities, reward cutoffs, accuracy-type mapping | `config/thresholds.yaml` |
+| project / layer / status / which checks run | `config/pipeline.yaml` |
+| **cost**: Sonnet vs Opus, reasoning effort, grader count, master skip-on-clean | `config/pipeline.yaml` `models` (`reviewer`, `reviewer_effort`, `audit_grader_roles`, `audit_master`) |
+| **task selection**: exclude a list, reuse cached verdicts | `config/pipeline.yaml` (`selection.exclude_ids_file`, `cache`) or `--exclude PATH` / `--no-cache` |
+| **audit quality**: adversarial refute of FAILs / low-confidence re-check | `config/pipeline.yaml` `audit_verify` (default off) |
+| defect types, tiers, human labels, verdict rule | `config/taxonomy.yaml` |
+| weight-mix bar, linter sensitivities/tiers, reward cutoffs, accuracy-type mapping | `config/thresholds.yaml` |
 | a linter's logic | `checks/linters/<name>.py` (one small, unit-tested file each) |
 | an LLM reviewer's prompt/schema | `checks/llm/<name>.py` (workflow-script generator) |
 
 Add a new check: drop a module in `checks/linters/` exposing `run(task_ctx, cfg) -> [finding]`,
 register it in `checks/registry.py`, and add its name to `enabled_checks`.
+
+**Cost dial (biggest levers first):** `reviewer: sonnet` (~5× cheaper than opus) → `reviewer_effort`
+(medium/low) → `audit_grader_roles` (fewer graders) → `audit_master: if_flagged|never` (skip the
+verify pass) → the `cache` (skip unchanged tasks entirely) and `--exclude` (skip a known set).
+Turn `audit_verify` on (Opus) only for high-stakes runs.
+
+**Prove coverage:** `python -m src.build_gold` then `--backtest gold/customer_findings.json` reports
+recall vs the customer's real findings (task-level + per-defect-type). Every run's human sheet also
+ships an **Overview** tab (verdict split, cross-lens confidence, top defects, fails by category).
 
 ## How it works (stages)
 
