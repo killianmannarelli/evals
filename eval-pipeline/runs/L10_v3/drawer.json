@@ -1,0 +1,1177 @@
+{
+ "6a04c2de0b4f42487f8e5e08": {
+  "task_id": "6a04c2de0b4f42487f8e5e08",
+  "verdict": "Fail",
+  "confidence": 5,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major",
+    "category": "[Fail - 10%+ Major Rubric Errors]",
+    "severity": "Fail",
+    "reason": "Independently re-verified with pixel-level crops of both videos: the lecture graph (werfvs.mp4, big_graph.png) has a directed edge 2\u21923 weight 3 (arrowhead into node 3) and NO edge 3\u21922. Elena's worksheet (hrwsa.mp4) shows the mirror-image error in all three of her representations: Adjacency Matrix M[2][3]=0 (should be 3) and M[3][2]=3 (should be 0); Adjacency List for vertex 3 contains a phantom '(2,3)' entry; Edge List row reads '3,2,3' instead of the correct '2,3,3'. None of the 14 rubric criteria test this discrepancy, and criterion 1's hard-coded claim of exactly 'ten discrepancies' is factually contradicted by this 11th, verifiably real omission.",
+    "spec_ref": "Rubric Criteria - Overall Rubric Quality - Major",
+    "fix": "Add a 15th criterion requiring an entry for the 2/3 mirror-edge error (matrix + edge list + adjacency list), and correct criterion 1's count from 'ten' to 'eleven' discrepancies."
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "category": "[Non-Fail - Up to 15% Moderate Errors]",
+    "severity": "Non-Fail",
+    "reason": "Same confirmed missing-edge-pair/miscounted-total defect viewed at the moderate-or-major combined band; superseded in overall severity by the Major-only Fail above but recorded per this dimension's own literal wording.",
+    "spec_ref": "Rubric Criteria - Overall Rubric Quality - Major/Moderate"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "[Non-Fail - 5-20% Minor Errors]",
+    "severity": "Non-Fail",
+    "reason": "Same underlying confirmed defect; 14.3% minor-or-worse falls within the 5-20% band under this dimension's own literal wording, independent of the Major-only Fail already recorded above.",
+    "spec_ref": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor"
+   },
+   {
+    "dimension": "Tests - Correctness",
+    "category": "[Fail - Incorrect Tests]",
+    "severity": "Fail",
+    "reason": "Read the full test_code.py: all 14 unit tests (test_study_schedule_csv_exists, test_csv_has_correct_columns, test_memory_md_exists, test_memory_contains_weighting_calculation, etc.) check for study_schedule.csv, MEMORY.md weighting/verification content, PSYC-101 exclusions, and Alex's draft schedule \u2014 none reference elena_petrova_graph_review.md, Elena, Petrova, or graph/discrepancy content at all. 100% of tests are misaligned with this task's actual deliverable, far above the 10% threshold.",
+    "spec_ref": "Tests - Correctness",
+    "fix": "Replace test_code.py with tests that check for elena_petrova_graph_review.md and verify its discrepancy-table content."
+   },
+   {
+    "dimension": "Tests - Coverage",
+    "category": "[Fail - Test Coverage]",
+    "severity": "Fail",
+    "reason": "Confirmed via test_code.py inspection: no unit test checks for the existence or content of elena_petrova_graph_review.md or any discrepancy entry; the entire suite targets an unrelated study-schedule/MEMORY.md workflow copied from a different task, leaving 100% of this task's required output untested by unit tests.",
+    "spec_ref": "Tests - Coverage",
+    "fix": "Author task-specific unit tests for elena_petrova_graph_review.md as above."
+   }
+  ],
+  "why": "Pixel-level cross-check of both source videos confirms a real, uncovered 11th discrepancy (a mirrored 2\u21943 edge/weight error appearing identically in Elena's Adjacency Matrix, Adjacency List, and Edge List) that none of the 14 rubric criteria test, and that contradicts criterion 1's hard-coded 'ten discrepancies' claim \u2014 this is a genuine Major rubric-quality defect, not a misread. Separately, reading test_code.py in full confirms all 14 unit tests target an unrelated study_schedule.csv/MEMORY.md workflow with zero reference to this task's actual deliverable, fully confirming both the Tests-Correctness and Tests-Coverage Fail flags. All five reported flags survive independent re-verification.",
+  "agreement": "1/1 grader; all 5 flags independently reconfirmed via direct pixel inspection of both source videos and full read of test_code.py"
+ },
+ "6a0b6c51dd899aff89927536": {
+  "task_id": "6a0b6c51dd899aff89927536",
+  "verdict": "Fail",
+  "confidence": 25,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality",
+    "category": "[Fail - 10%+ Major Rubric Errors]",
+    "severity": "Fail",
+    "reason": "Verified directly against the 25-item rubric array in the ctx JSON: weights are [5,5,1,3,5,5,1,3,3,1,1,1,1,5,5,3,3,1,1,1,1,5,1,5,5] \u2014 all positive, zero negative-weight criteria (0/25 = 0%). Spec \u00a79g targets ~25% negative-weight ratio (cap 30%) so the set can penalize fabrication/hallucination/scope-creep in this financial dispute task; with none, no criterion anywhere docks the agent for inventing numbers or overstepping the withheld-amount/lawyer-fee facts, a hard Fail-band violation per checklist #13 and the grading-card note \"zero negatives = Fail-band.\"",
+    "fix": "Add 5-7 negative-weight criteria (targeting ~25% of the 25-item set) that penalize plausible failure modes specific to this task: fabricating dollar figures not present in fintrack/email data, inventing the withheld amount or contractor total, mis-attributing the referral fee, or scope-creeping into unrequested legal advice.",
+    "spec_ref": "\u00a79g negative-weight ratio / checklist #13"
+   },
+   {
+    "dimension": "Tests - Redundancy",
+    "category": "[Non-Fail - Some Redundant Tests]",
+    "severity": "Non-Fail",
+    "reason": "Verified against test_code and rubric arrays: test_msg_to_brooke asserts a new email/message to Brooke with reno.pdf attached, which is functionally identical to the rubric criterion \"The trajectory sends a message to Brooke containing the reno.pdf file.\" (weight 1). This is a genuine 1-pair duplicate check between the unit-test file and the rubric, confirmed by matching logic (BROOKE_EMAIL/recipient + reno.pdf attachment) against the criterion text.",
+    "fix": "Drop test_msg_to_brooke (or the duplicate rubric criterion) and, if test coverage is kept, redirect it to check a distinct behavior not already scored by the rubric (e.g. verifying the attorney message rather than re-checking Brooke).",
+    "spec_ref": "checklist #20 / Tests - Redundancy"
+   }
+  ],
+  "why": "Both grader flags were independently re-confirmed against the raw ctx JSON: the rubric's 25 weights are all positive integers (1/3/5) with zero negative-weight criteria, meeting the Fail-band definition for missing negative-weight coverage in a task ripe for fabrication/scope-creep errors (financial/legal renovation dispute). The test-redundancy flag was also confirmed \u2014 test_msg_to_brooke and the \"sends a message to Brooke containing the reno.pdf file\" rubric criterion check the exact same trajectory behavior. No evidence was found to dispute either finding, so both survive verification.",
+  "agreement": "1/1 grader; both flags independently re-confirmed against ctx JSON (rubric weights array and test_code)."
+ },
+ "6a1fbaebeae04350ba1af213": {
+  "task_id": "6a1fbaebeae04350ba1af213",
+  "verdict": "Fail",
+  "confidence": 25,
+  "flags": [
+   {
+    "dimension": "Tests - Coverage",
+    "category": "Fail - Test Coverage (Insufficient Overall Coverage)",
+    "severity": "Fail",
+    "reason": "Only 3 unit tests exist (pptx exists, non-empty, last-slide table has 2 columns). Confirmed against format.txt and the instruction: title text (\"Skin Lesions\"), the TOC slide, background color #082032, title font (Arial Rounded MT Bold 50-60pt), body font (Georgia 18-26pt), and slide-number placement (bottom-right, all-but-cover) are all deterministic, programmatically-checkable requirements left completely untested, as is the email-send/attachment/appointment-request instruction. This is well over 20% of expected deterministic checks missing.",
+    "fix": "Add unit tests for slide 1 title text, TOC slide presence, background color hex on all slides, title/body font family+size, slide-number placement rule, and mock/verify the email send with attachment + appointment request.",
+    "spec_ref": "Tests - Coverage"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major",
+    "category": "Non-Fail - Up to 10% Major Errors",
+    "severity": "Non-Fail",
+    "reason": "Verified by viewing 204553.png directly: the image shows multiple discrete, cauliflower-textured papules clustered on the palm (classic verrucae/palmar warts presentation), not a callus (a single diffuse, flat, thickened patch). Confirmed via ctx JSON that a weight-3 rubric criterion explicitly grades \"204553.png is correctly identified as a callus\" -- this is a factually incorrect grounding, 1/34 = 2.9% Major.",
+    "fix": "Correct the gold label for 204553.png from \"callus\" to \"wart/verruca\" (palmar wart).",
+    "spec_ref": "Rubric Criteria - Overall Rubric Quality - Major"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "category": "Non-Fail - Up to 15% Moderate Errors",
+    "severity": "Non-Fail",
+    "reason": "Confirmed via ctx JSON: 0 of 34 rubric criteria (0%) have negative weights, verified by scanning all 34 entries for weight<0 -- none found. This is a structural gap against the ~25% (cap 30%) negative-weight-ratio requirement, meaning the rubric is entirely reward-only with nothing that penalizes model errors/fabrications (e.g., misclassifying a lesion, wrong body-part, hallucinated lesion count).",
+    "fix": "Add negative-weight criteria (e.g., penalize misclassifying a lesion type, wrong body-part attribution, fabricated lesion counts) to bring the negative ratio toward ~25%.",
+    "spec_ref": "\u00a79g negative-weight ratio + Overall Rubric Quality - Major/Moderate"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "Non-Fail - 5-20% Minor Errors",
+    "severity": "Non-Fail",
+    "reason": "Same confirmed 204553.png callus/wart Major (1/34=2.9%) precludes the clean \"zero major/moderate\" band; combined with the confirmed 0% negative-weight structural gap, this keeps the set out of the clean band even though the raw defect percentage alone is low.",
+    "fix": "Fix the 204553.png gold label and add negative-weight criteria as above.",
+    "spec_ref": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor"
+   }
+  ],
+  "why": "Independently re-verified all four grader flags against primary evidence: viewed 204553.png directly and confirmed the callus label is factually wrong (warts, not a callus, per a real weight-3 criterion found in the ctx JSON rubric list); confirmed via a full scan of the 34-criterion rubric that zero criteria carry negative weight against the ~25% customer requirement; and confirmed via test_code + format.txt that only 3 trivial tests exist while numerous deterministic prompt/format requirements (title, TOC, background color, fonts, slide numbering, email send/appointment) are completely untested. All flags survive verification; overall verdict is Fail due to the Test Coverage gap.",
+  "agreement": "1/1 grader flagged all four dimensions; all four independently reconfirmed against 204553.png image, the 34-item rubric JSON, test_code, and format.txt/instruction."
+ },
+ "6a2252a7226df6fc69476d54": {
+  "task_id": "6a2252a7226df6fc69476d54",
+  "verdict": "Fail",
+  "confidence": 15,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major",
+    "category": "Non-Fail - Up to 10% Major Errors",
+    "severity": "Fail",
+    "reason": "Direct count of the 21 rubric-criterion weights in ctx confirms all are positive (1/1/1/5/5/5/5/3/3/1/1/3/3/1/1/3/3/1/1/3/3) \u2014 0 of 21 (0%) are negative-weight. This is a hard violation of authoring_spec.md \u00a79g / checklist item #13 [F], which mandates negative-weight criteria at ~25% (cap 30%) so the rubric can penalize wrong actions (e.g., emailing the wrong parent, fabricating an observation, misreporting a count) rather than only rewarding correct ones.",
+    "fix": "Convert 5-6 of the weakest positive criteria into affirmative negative-weight criteria (e.g., award the negative weight if the wrong child's email is sent, if a fabricated/ungrounded observation appears, or if a count is misreported) to bring the ratio to ~25%, capped at 30%.",
+    "spec_ref": "\u00a79g Negative-weight ratio / checklist #13"
+   },
+   {
+    "dimension": "Rubric Criteria - Rubric Spot Checks",
+    "category": "Non-Fail - Too Many Spot Checks",
+    "severity": "Non-Fail",
+    "reason": "Verified against the rubric list: Tyler's outputs are checked by 7 separate criteria (focus-plan section, email developmental summary, email action plan, social interactions, words, motor skills, reading) and Lily's outputs likewise by 7 \u2014 both exceed the spec's 5-spot-check cap per group of similar outcomes, with no accompanying volume-check criterion.",
+    "fix": "Consolidate some of the per-attribute checks (e.g., combine words+social-interactions or motor-skills+reading into a single criterion) or add a volume-check criterion per child to bring each child's group to <=5 spot checks.",
+    "spec_ref": "Rubric Criteria - Rubric Spot Checks"
+   }
+  ],
+  "why": "Verified both grader flags directly against the task's rubric data: a literal count of the 21 criteria weights shows zero negative-weight criteria, a clear-cut breach of the customer's hard ~25%/cap-30% negative-weight rule (\u00a79g, checklist #13), which the spec explicitly tags as Fail-severity. The spot-check count for Tyler and Lily (7 each) was also independently reconfirmed against the rubric text and exceeds the 5-per-group cap, warranting the Non-Fail spot-check flag. Both survive verification, so the task is Fail overall.",
+  "agreement": "1/1 grader flagged both; both independently reconfirmed against ctx rubric weights and criteria text"
+ },
+ "6a2252a7226df6fc69476d60": {
+  "agreement": "1/1 grader; all 3 flags independently reconfirmed against the environment files, ctx rubric JSON, and test_code.py",
+  "confidence": 20,
+  "task_id": "6a2252a7226df6fc69476d60",
+  "verdict": "Fail",
+  "why": "Verified directly: weekly_nutrition_log.xlsx uses backslash-separated zip entry paths and fails to open in openpyxl (\"no item named 'xl/sharedStrings.xml'\"), while weekly_nutrition_log_fixed.xlsx sits alongside with identical content and correct forward-slash paths \u2014 a clear authoring leftover, confirmed Fail. The rubric JSON for all 23 criteria has no justification field populated at all (not just the ones cited), so the Non-Fail weak-justification flag is confirmed and if anything understated in scope. test_code.py contains exactly the 4 structural tests described (file existence, non-empty, CSV header/row completeness) with zero numeric/content assertions, confirming the Tests-Coverage flag.",
+  "flags": [
+   {
+    "dimension": "Input Artifacts - Realism",
+    "category": "[Fail - Contrived Inputs]",
+    "severity": "Fail",
+    "reason": "weekly_nutrition_log.xlsx has malformed backslash-separated internal zip entry paths (e.g. docProps\\app.xml) and fails to open with openpyxl (raises \"no item named 'xl/sharedStrings.xml' in the archive\"), while an authoring-leftover duplicate weekly_nutrition_log_fixed.xlsx with identical content but correct forward-slash paths sits in the same agent-visible inputs folder. No real user would ship a corrupted primary file next to its own manually-patched duplicate.",
+    "fix": "Remove weekly_nutrition_log_fixed.xlsx from the environment and repair the zip entry paths in weekly_nutrition_log.xlsx so it opens normally with standard xlsx libraries.",
+    "spec_ref": "Input Artifacts - Realism"
+   },
+   {
+    "dimension": "Failed Rubric/Unit Test - Justification",
+    "category": "[Non-Fail - Weak Justification]",
+    "severity": "Non-Fail",
+    "reason": "Checked the full rubric list in ctx JSON (23 criteria): none of them, including all opus-failed criteria (Apple Health query, $32.41 receipt total, March-19-vs-22 flag, IMG_4838 under-report flag, 370-vs-520 kcal lunch flag, 3,680 kcal weekly total), contain any justification field/content at all \u2014 the gap is broader than the grader described (all criteria lack justification, not just several).",
+    "fix": "Add the required 3-part justification (why the rubric/test is correct, why Model A's answer is wrong, and specific evidence/turn citation) for every criterion Model A failed.",
+    "spec_ref": "Failed Rubric/Unit Test - Justification"
+   },
+   {
+    "dimension": "Tests - Coverage",
+    "category": "[Non-Fail - Incorrectly Covered by Rubric]",
+    "severity": "Non-Fail",
+    "reason": "test_code.py contains exactly 4 tests, all purely structural (required files exist, non-empty, meal_issues.csv has required columns, CSV rows are complete when present) with zero numeric/content assertions anywhere in the ~9.6KB file, while objectively verifiable exact values (weekly kcal total, weight average, receipt total, Apple Health steps) are left entirely to LLM-judged rubric criteria.",
+    "fix": "Add deterministic unit-test assertions for the exact-value outputs (weekly kcal total, weight-tracker average, receipt total, Apple Health step count) rather than relying solely on rubric criteria.",
+    "spec_ref": "Tests - Coverage"
+   }
+  ]
+ },
+ "6a2e2c326db3981084352d3c": {
+  "task_id": "6a2e2c326db3981084352d3c",
+  "verdict": "Non-Fail",
+  "confidence": 80,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major",
+    "category": "[Non-Fail - Up to 10% Major Errors]",
+    "severity": "Non-Fail",
+    "reason": "The -5 'factuality and hallucination' criterion asserting package number 3 (ID2) was delivered on Feb 20, 2026 is actually a TRUE, correctly-grounded fact: mapping.csv maps ID2/box-count-3 to system_id 1Z999AA10678234567, which resolves in logistics_tracking/data.json to a Delivered shipment with actual_delivery=2026-02-20 (tracking event 1061 confirms 'Delivered to front door' on 2026-02-20). This is structurally identical to the four other positive (+5) 'delivered on [date]' criteria for IDs 1, 3, 4, 5, 6, which are all correctly grounded to the same data source, except this one is inverted to a -5 trap that penalizes the agent for stating a correct, grounded fact. Confirmed as 1/14 = 7.14% Major Incorrect-Criteria issue.",
+    "spec_ref": "Rubric Criteria - Overall Rubric Quality - Major",
+    "fix": "Change the criterion's weight from -5 to +5 (factuality and hallucination trap should target a genuinely false date, or this criterion should be reclassified as a standard positive instruction-following criterion like its siblings)."
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "category": "[Non-Fail - Up to 15% Moderate Errors]",
+    "severity": "Non-Fail",
+    "reason": "Same single confirmed defect (backward -5 trap for package3/ID2, factually delivered Feb 20 2026 per logistics_tracking data) = 1/14 = 7.14% moderate-or-major, within the <=15% Non-Fail band.",
+    "spec_ref": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "fix": "Same as above."
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "[Non-Fail - 5-20% Minor Errors]",
+    "severity": "Non-Fail",
+    "reason": "Same defect at 1/14 = 7.14% falls in the 5-20% minor-or-worse Non-Fail band.",
+    "spec_ref": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "fix": "Same as above."
+   }
+  ],
+  "why": "Independently re-verified the grader's citation by reading mapping.csv, notes.md, and logistics_tracking/data.json directly. ID2 (box count 3, system_id 1Z999AA10678234567) unambiguously resolves to a Delivered shipment with actual_delivery=2026-02-20, matching the exact date asserted in the -5 criterion. This is the same cross-reference pattern used for all other correctly-graded positive delivery-date criteria (ID1->Oct 16 2025, ID3->Feb 13 2026, etc.), confirming a single genuine backward-trap defect at 1/14=7.14%, which lands in Non-Fail territory on all three overall-rubric-quality bands.",
+  "agreement": "1/1 grader flagged this defect; independently reconfirmed against mapping.csv + logistics_tracking/data.json ground truth."
+ },
+ "6a31a2f7424da28b8ccb4459": {
+  "task_id": "6a31a2f7424da28b8ccb4459",
+  "verdict": "Non-Fail",
+  "confidence": 74,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "category": "[Non-Fail - Up to 15% Moderate Errors]",
+    "severity": "Non-Fail",
+    "reason": "Verified via direct count of the 14-criterion rubric JSON: exactly 1 criterion (\"MEMORY.md states that all existing zone labels were already correct...\") carries a negative weight (-3), giving a 1/14 = 7.1% negative-weight ratio, well short of the customer's Rubric Architect SP \u00a79g target of ~25% (cap 30%). This is a real structural gap (rubric is skewed almost entirely positive-weight) but is non-zero, so it lands in the moderate-band, Non-Fail range rather than the Fail-band reserved for zero negatives.",
+    "fix": "Add 2-3 additional negative-weight criteria (e.g., penalizing use of the slide/age-based max-HR formula, penalizing omission of resting-HR attribution, or penalizing an incorrect zone count) to bring the ratio closer to the ~25% target.",
+    "spec_ref": "\u00a79g Negative-weight ratio"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "[Non-Fail - 5-20% Minor Errors]",
+    "severity": "Non-Fail",
+    "reason": "Same confirmed 7.1% negative-weight shortfall, additionally counted against the minor-or-worse (5-20%) band per the grading card's cascading structure; this is the same underlying root cause as the prior flag rather than an independent defect, but both dimension line-items are legitimately triggered by the confirmed 7.1% figure.",
+    "fix": "Same fix as above (add negative-weight criteria); resolving the ratio resolves both flagged dimensions simultaneously.",
+    "spec_ref": "\u00a79g Negative-weight ratio"
+   },
+   {
+    "dimension": "Failed Rubric/Unit Test - Justification",
+    "category": "[Non-Fail - Weak Justification]",
+    "severity": "Non-Fail",
+    "reason": "Confirmed directly in the rubric JSON: the criterion \"MEMORY.md states the method used to label the workout zones came from the class recordings (the audio or video)\" has pass_rate_opus=0.25 and pass_rate_gpt=0.375 (failed most runs) but is the only partially-failed criterion in the rubric with no why_rubric_is_correct, why_rubric_is_important, or what_model_did_wrong fields at all, while every other criterion with a sub-1.0 pass rate (e.g. the Zone 1/Zone 2 workout-log criteria, the max/resting-HR attribution criteria, the HRR-boundary criteria) has all three fields populated.",
+    "fix": "Add the three justification fields for this criterion explaining why the class-recordings sourcing requirement is correct, why it matters, and what the failing model runs did instead (e.g., attributed the method to a generic source or omitted attribution).",
+    "spec_ref": "Failed Rubric/Unit Test - Justification"
+   }
+  ],
+  "why": "Directly inspected the rubric JSON (14 criteria) and confirmed the negative-weight ratio is exactly 1/14 = 7.1%, far below the \u00a79g ~25% target but non-zero, placing it in Non-Fail moderate/minor bands rather than Fail. Also confirmed the specific MEMORY.md criterion with pass_rate_opus=0.25 uniquely lacks all three justification fields that every other partially-failed criterion in the same rubric has populated. All three grader flags reconfirmed against source data; no flags were dropped.",
+  "agreement": "1/1 grader; all 3 flags independently reconfirmed against the raw rubric JSON."
+ },
+ "6a31a2f7424da28b8ccb445a": {
+  "task_id": "6a31a2f7424da28b8ccb445a",
+  "verdict": "Fail",
+  "confidence": 20,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major",
+    "category": "[Non-Fail - Up to 10% Major Errors]",
+    "severity": "Fail",
+    "reason": "Verified against ctx JSON: rubric criteria #2 and #11 (grader mislabeled these as #1/#10) require the exact column names `final_decision`/`conflict_or_uncertainty`, but the prompt literally spells them `fianl_decision`/`conflicts_or_uncertainty`. The pytest suite even contains an explicit comment 'Accept either the typo from the initial prompt or the corrected version from Silver' and checks both spellings \u2014 confirming this is a known, unresolved prompt/rubric mismatch, not a grading artifact. Matches the observed 0.0/0.0 (#2) and 0.125/0.0 (#11) pass rates. 2/17 = 11.76% major, exceeding the 10% cap.",
+    "fix": "Update the rubric criteria text to use the prompt's literal spelling (`fianl_decision`, `conflicts_or_uncertainty`) or explicitly accept both spellings the way the test suite does.",
+    "spec_ref": "Rubric Criteria - Overall Rubric Quality - Major"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "category": "[Non-Fail - Up to 15% Moderate Errors]",
+    "severity": "Non-Fail",
+    "reason": "Same two column-name-mismatch criteria; moderate-or-major = 2/17 = 11.76% \u2264 15%. Confirmed via ctx JSON.",
+    "fix": "Same fix as above resolves this band too.",
+    "spec_ref": "Rubric Criteria - Overall Rubric Quality - Major/Moderate"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "[Non-Fail - 5-20% Minor Errors]",
+    "severity": "Non-Fail",
+    "reason": "Minor-or-worse = 2/17 = 11.76%, in the 5-20% band due to the same two criteria. Confirmed.",
+    "fix": "Same fix as above.",
+    "spec_ref": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor"
+   },
+   {
+    "dimension": "Tests - Coverage",
+    "category": "[Non-Fail - Incorrectly Covered by Rubric]",
+    "severity": "Non-Fail",
+    "reason": "Verified test_code contains no check for leftover frame_*.jpg artifacts or surprise-detail leakage in chat \u2014 both deterministic, programmatically-verifiable constraints (file globbing / keyword absence) that are enforced only via rubric criteria #14 and #15 (negative-weight) with no corresponding pytest test.",
+    "fix": "Add pytest assertions: glob workspace for frame_*.jpg (should be absent) and grep final chat response for surprise/party keywords (should be absent).",
+    "spec_ref": "Tests - Coverage"
+   }
+  ],
+  "why": "All four grader flags were independently reconfirmed against the actual ctx JSON (instruction text, rubric criteria list, and test_code). The rubric column-name mismatch is real and even self-acknowledged by the pytest suite's comment about accepting 'the typo from the initial prompt or the corrected version from Silver,' though the grader mislabeled the criteria indices (#2/#11, not #1/#10). The 11.76% major-error rate exceeds the 10% Fail threshold, and the two negative-weight rubric criteria (frame_*.jpg leftovers, surprise-detail leakage) indeed lack pytest coverage despite being deterministically checkable.",
+  "agreement": "1/1 grader; all 4 flags independently reconfirmed against ctx JSON (instruction, rubric, test_code), with criteria index numbers corrected from #1/#10 to #2/#11"
+ },
+ "6a31a2f7424da28b8ccb445b": {
+  "task_id": "6a31a2f7424da28b8ccb445b",
+  "verdict": "Fail",
+  "confidence": 25,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "category": "[Fail - 15%+ Moderate Rubric Errors]",
+    "severity": "Fail",
+    "reason": "Confirmed against ctx JSON: all 10 rubric criteria carry positive weights (5,3,3,3,5,3,1,1,1,1) with zero negative-weight criteria, versus the spec's \u00a79g requirement of ~25% (cap 30%) negative-weight criteria; grading_card.md explicitly states 'zero negatives = Fail-band' for this dimension. Additionally the calendar-title/time criterion is a rigid exact-match (pass_rate_opus=0.0, pass_rate_gpt=0.0, crit_pass_rate=0.0 across all 16 held-out runs) \u2014 a confirmed Overfitting defect (Moderate per Rubric Quality Definitions). Together these push moderate-or-worse well past the 15% ceiling.",
+    "fix": "Rebalance the rubric to include 2-3 negative-weight criteria (~25-30%) using affirmative phrasing of the bad event (e.g. 'Output creates flashcards from the introduction/warmup slides the notes set aside' as a -3 criterion) instead of positive-weight 'no X happens' prohibitions; loosen the calendar criterion to accept any reasonable title/time consistent with the notes rather than an exact string+window match.",
+    "spec_ref": "authoring_spec.md \u00a79g negative-weight ratio; Rubric Quality Definitions (Overfitting); grading_card.md 'zero negatives = Fail-band'"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "[Fail - 20%+ Minor Rubric Errors]",
+    "severity": "Fail",
+    "reason": "The same systemic 0/10 negative-weight ratio plus the overfit calendar criterion push the minor-or-worse rate past the 20% ceiling; the reasoning is the same underlying rubric-set defect as the Major/Moderate flag, not a distinct independent count.",
+    "fix": "Same fix as the Major/Moderate flag: add negative-weight criteria and de-overfit the calendar criterion.",
+    "spec_ref": "authoring_spec.md \u00a79g; grading_card.md thresholds"
+   },
+   {
+    "dimension": "Failed Rubric/Unit Test - Justification",
+    "category": "[Non-Fail - Weak Justification]",
+    "severity": "Non-Fail",
+    "reason": "Confirmed in ctx JSON: the criterion 'Every flashcard...covers one of the three shaky topics' has pass_rate_opus=0.0 and pass_rate_gpt=0.0 (Opus and GPT both fail it) but lacks why_rubric_is_correct/why_rubric_is_important/what_model_did_wrong fields, while the calendar-event and reminder criteria (also 0.0/0.0) do have all three justification fields populated \u2014 an inconsistent application of the justification requirement.",
+    "fix": "Add the three justification fields to the flashcard-topic-coverage criterion, mirroring the calendar and reminder criteria.",
+    "spec_ref": "Failure justification (3 questions per failure)"
+   },
+   {
+    "dimension": "Tests - Coverage",
+    "category": "[Non-Fail - Incorrectly Covered by Rubric]",
+    "severity": "Non-Fail",
+    "reason": "Confirmed: the only unit test (test_flashcards_file_exists_nonempty) checks file existence/non-emptiness only. Deterministic, objectively-checkable end-states \u2014 the calendar event, the reminder, and the four numeric flashcard values (7.25 ms, 0x0775, 130 ns, PAGE FAULT) \u2014 are backed by real calendar/reminder MCP services (server/services/calendar, server/services/reminder) and a fixed answer key, yet are graded only via LLM rubric criteria instead of pytest.",
+    "fix": "Add pytest checks that query the calendar/reminder service data directly for the event title/window and reminder existence, and assert the four exact numeric values in cs401_m3_flashcards.md.",
+    "spec_ref": "Tests - Coverage / Incorrectly Covered by Rubric"
+   },
+   {
+    "dimension": "Input Artifacts - Realism",
+    "category": "[Non-Fail - Partially Contrived Inputs]",
+    "severity": "Non-Fail",
+    "reason": "Confirmed: the slide deck is shipped at inputs/CS401_M3/Completeness_check.pptx \u2014 a build/QA-style filename a real student would not give downloaded lecture slides. Content itself is plausible, so this is a minor naming defect rather than a fatal one.",
+    "fix": "Rename the file to a realistic student-style filename (e.g. 'CS401_Module3_Slides.pptx').",
+    "spec_ref": "Input Artifacts - Realism"
+   }
+  ],
+  "why": "All five grader flags were independently reconfirmed against the ctx JSON, grading_card.md, and authoring_spec.md. The rubric genuinely has 0/10 negative-weight criteria against a ~25% (cap 30%) target, and grading_card.md explicitly states zero negatives is Fail-band on its own; the calendar criterion is a confirmed deterministic 0.0-pass-rate overfit. The Weak Justification, Test Coverage, and Input Realism Non-Fail flags all check out against the raw rubric/test/file data. The two Fail-band flags (Major/Moderate and Minor-or-worse) stem from the same underlying rubric-set defect, so they were kept but noted as non-independent.",
+  "agreement": "1/1 grader; all 5 flags independently reconfirmed against ctx JSON, grading_card.md, and environment files (calendar/reminder services, pptx filename)"
+ },
+ "6a31a2f7424da28b8ccb4469": {
+  "task_id": "6a31a2f7424da28b8ccb4469",
+  "verdict": "Non-Fail",
+  "confidence": 55,
+  "flags": [
+   {
+    "dimension": "Silver Trajectory - Category and Subcategory",
+    "category": "Non-Fail - Category Relevance",
+    "severity": "Non-Fail",
+    "reason": "Confirmed via ctx metadata and the inputs directory: mm_input is tagged 'video, audio' and subcategory is 'Textbook/Lecture Comprehension,' but the actual inputs are only 5 jpg worksheet photos plus md/csv files (readiness_rubric.md, fall_assessment.md, teacher_checklist.md, preschool_newsletter.md, readiness_tracker.csv) - no video or audio, and no textbook/lecture content. The task is grading a child's completed worksheets against a rubric and cross-checking a teacher's checklist, which fits Visual Learning > Homework/Problem Solving, not Textbook/Lecture Comprehension.",
+    "fix": "Retag subcategory to Homework/Problem Solving and correct mm_input to reflect image+text only.",
+    "spec_ref": "Silver Trajectory - Category and Subcategory"
+   },
+   {
+    "dimension": "Tests - Coverage",
+    "category": "Non-Fail - Incorrectly Covered by Rubric",
+    "severity": "Non-Fail",
+    "reason": "Confirmed: the instruction explicitly requires 'set me a reminder to start the summer practice,' which is deterministically checkable against the reminder service's data store, yet the only unit tests present under server/services/reminder/ are generic MCP-server/BaseService infrastructure tests (test_reminder_mcp_server.py, test_base_service.py, test_sync_sequences_backend.py, test_reminder_timestamps.py, etc.), not a task-specific assertion on the created reminder. Coverage relies solely on subjective rubric criterion 'Owen summer-practice reminder count is 1' rather than a deterministic unit test.",
+    "fix": "Add a task-specific unit test asserting exactly one reminder exists referencing summer practice in the reminder data store.",
+    "spec_ref": "Tests - Coverage"
+   }
+  ],
+  "why": "Both grader flags were independently reconfirmed against the task's ctx metadata and environment/inputs directory. The category/subcategory mismatch is verified: only jpg/md/csv inputs exist despite the video/audio tag and Textbook/Lecture Comprehension label, and the content is clearly homework/worksheet grading. The test-coverage gap is also verified: the reminder-creation instruction is deterministically checkable but only generic infrastructure tests exist for the reminder service, leaving this outcome covered only by a rubric criterion.",
+  "agreement": "1/1 grader flagged both dimensions; both independently reconfirmed against ctx.json and the task_dirs/environment file tree"
+ },
+ "6a34843aa0d92ff63eee2e29": {
+  "agreement": "Single grader; both flags independently reconfirmed against ctx JSON rubric array and test_code.",
+  "confidence": 70,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major",
+    "category": "[Non-Fail - Up to 10% Major Errors]",
+    "severity": "Non-Fail",
+    "reason": "Confirmed in ctx JSON: criterion 'The final assistant message confirms completion and names the created deliverables.' is a positively-phrased desired agent behavior with weight -3 (a penalty) and crit_pass_rate 1.0 across 16 runs \u2014 a polarity inversion that docks reward every time the agent does the expected, correct thing. 1/18 criteria = 5.6%, within the >0-10% Major band.",
+    "fix": "Flip criteria[8]'s weight sign to positive (e.g. +1 to +2) so completion confirmation is rewarded, not penalized.",
+    "spec_ref": "criteria[8], weight polarity"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "category": "[Non-Fail - Up to 15% Moderate Errors]",
+    "severity": "Non-Fail",
+    "reason": "Same confirmed weight-polarity defect on criterion 8 (5.6% of criteria) places this dimension in the non-clean 0-15% band.",
+    "fix": "Same fix as above (flip weight sign on criteria[8]).",
+    "spec_ref": "criteria[8], weight polarity"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "[Non-Fail - 5-20% Minor Errors]",
+    "severity": "Non-Fail",
+    "reason": "Same single confirmed defect (criterion 8) lands the combined-severity count in the 5-20% band, precluding a clean score even absent further minor issues.",
+    "fix": "Same fix as above.",
+    "spec_ref": "criteria[8], weight polarity"
+   },
+   {
+    "dimension": "Tests - Coverage",
+    "category": "[Non-Fail - Incorrectly Covered by Rubric]",
+    "severity": "Non-Fail",
+    "reason": "Verified test_code contains only structural/schema tests (test_hydration_schedule_columns_match_notes_spec, test_hydration_schedule_rows_have_valid_schema, etc.) \u2014 none assert the deterministic per-band work/rest/water figures (Moderate 45/15\u00b724oz, High 40/20\u00b732oz, Extreme 30/30\u00b732oz), which are fully checkable from hydration_schedule.csv. Only LLM-judged rubric criterion 11 covers this fact, a gap in unit-test coverage for a deterministic value.",
+    "fix": "Add a unit test asserting the exact numeric work_min_per_hr/rest_min_per_hr/water_oz values per risk_band row against the known constants from safety_module_notes.md.",
+    "spec_ref": "test_code vs rubric criteria[11]"
+   }
+  ],
+  "task_id": "6a34843aa0d92ff63eee2e29",
+  "verdict": "Non-Fail",
+  "why": "Independent re-check of the ctx JSON confirms the sole grader's core finding: criterion 8 ('final assistant message confirms completion...') is a positively-phrased behavior weighted -3 despite a 100% pass rate, a genuine polarity-inversion defect at 1/18=5.6% of criteria. The test-coverage gap for exact per-band hydration figures is also confirmed by inspecting test_code, which only checks schema/structure, not the specific numeric values. No flags were dropped; both survive verification."
+ },
+ "6a3ae0c1291d4e4d56373174": {
+  "task_id": "6a3ae0c1291d4e4d56373174",
+  "verdict": "Non-Fail",
+  "confidence": 78,
+  "flags": [
+   {
+    "dimension": "Tests - Coverage",
+    "category": "Non-Fail - Incorrectly Covered by Rubric",
+    "severity": "Non-Fail",
+    "reason": "The rubric contains two deterministic, bit-exact TEXT_ONLY criteria (MEMORY.md total planned budget = $1,245; cabin = 51.4% of budget), both mathematically verified correct (640+250+150+60+45+100=1245; 640/1245=51.4%), but the only relevant unit test (test_memory_md_not_empty) only asserts MEMORY.md is non-empty and never checks these specific values. Per spec, single bit-exact values should be unit-tested; here correctness is enforced only via rubric.",
+    "spec_ref": "authoring_spec.md line 220 (unit-test-when-bit-exact rule), line 1063/1114-1115 (Tests-Coverage row + Non-Fail-Incorrectly-Covered-by-Rubric definition)",
+    "fix": "Add assertions to the test (or a new test) that parse MEMORY.md and check for '$1,245' (or 1245) and '51.4%' verbatim/numerically."
+   }
+  ],
+  "why": "Verified against ctx JSON: test_code's only MEMORY.md test checks non-emptiness only, while the rubric list contains two weight-5 TEXT_ONLY criteria demanding exact values ($1,245 and 51.4%) that are independently confirmed correct by arithmetic on the Budget Tracker figures. This exactly matches the spec's defined Non-Fail Test Coverage band for facts covered by rubric but missing a unit test, so the single grader flag is confirmed and no other issues were found.",
+  "agreement": "1/1 grader flagged Tests-Coverage/Incorrectly Covered by Rubric; independently reconfirmed via ctx test_code and rubric criteria (arithmetic checks out)."
+ },
+ "6a3d7db012a738e7ef9c09c1": {
+  "task_id": "6a3d7db012a738e7ef9c09c1",
+  "verdict": "Non-Fail",
+  "confidence": 70,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major",
+    "category": "Non-Fail - Up to 10% Major Errors",
+    "severity": "Non-Fail",
+    "reason": "Confirmed by direct pixel/visual inspection of IMG_2213: bar heights read approximately R1=20, R2=23, R3=24-25, R4=~30, R5=~30-31. Cross-referencing the sheet values pulled from ctx (R1=18.2, R2=21.5, R3=24.8, R4=26.1 sheet/25.1 corrected, R5=25.4), R3's graph bar (~24-25) is nearly identical to the sheet's 24.8, not '~21\u00b0C, well below the sheet.' The actual clear discrepancies are at R4 (graph ~30 vs sheet 26.1) and R5 (graph ~30 vs sheet 25.4), which the criterion never mentions. This is a genuine Incorrect-Criteria defect on 1/20 criteria = 5%, landing in the <=10% Major Non-Fail band.",
+    "fix": "Rewrite the criterion to require flagging the graph's overstatement of R4/R5 (~30\u00b0C bars vs sheet 26.1/25.4\u00b0C) rather than pinning R3 as the discrepancy; drop or correct the '~21\u00b0C' claim.",
+    "spec_ref": "Overall Rubric Quality - Major"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "category": "Non-Fail - Up to 15% Moderate Errors",
+    "severity": "Non-Fail",
+    "reason": "Same confirmed graph-criterion defect (1/20 = 5%) cascades into this threshold, which is also satisfied (<=15%).",
+    "spec_ref": "Overall Rubric Quality - Major/Moderate"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "Non-Fail - 5-20% Minor Errors",
+    "severity": "Non-Fail",
+    "reason": "Same confirmed defect places total issue rate at exactly 5% of criteria (20 total), landing in the 5-20% Non-Fail band rather than the <5% clean band.",
+    "spec_ref": "Overall Rubric Quality - Major/Moderate/Minor"
+   },
+   {
+    "dimension": "Tests - Coverage",
+    "category": "Non-Fail - Incorrectly Covered by Rubric",
+    "severity": "Non-Fail",
+    "reason": "Confirmed by reading the actual test_code in ctx: only two pytest tests exist (test_field_log_exists, test_memory_md_exists), both trivial existence/non-empty checks. Every deterministic content requirement visible in the rubric (specific times, temperature/turbidity values, the voice-memo correction, summary range/peak stats, the reminder date, and the exact message content to Emma) is checked only via rubric criteria, with no corresponding unit test.",
+    "fix": "Add unit tests that parse field_log.md/MEMORY.md and assert on the specific times, temperatures, turbidity values, the corrected R4 temp, the summary range/peak, the reminder date, and the message content, instead of leaving all of this to rubric grading.",
+    "spec_ref": "Tests - Coverage"
+   }
+  ],
+  "why": "Independently re-verified the single grader's report by opening IMG_2213 directly and reading bar heights against the sheet values pulled from the task ctx JSON: R3's graph bar (~24-25\u00b0C) closely matches the sheet's 24.8\u00b0C, while R4 and R5 are the bars plotted high (~30\u00b0C) against sheet values of 26.1\u00b0C and 25.4\u00b0C \u2014 confirming the rubric criterion mis-identifies the discrepancy. Also confirmed via the actual test_code in ctx that only two trivial existence-check pytest tests exist, with all content-specific requirements (times, temps, turbidity, corrections, summary stats, reminder date, message content) delegated solely to the rubric. Both root issues are real and drive all four surviving flags; overall verdict is Non-Fail (no Fail-band evidence found).",
+  "agreement": "1/1 grader flagged both the graph-criterion defect and the tests-coverage gap; both independently reconfirmed against IMG_2213 pixels, the sheet values in ctx, and the actual test_code \u2014 no flags dropped, none escalated to Fail."
+ },
+ "6a3d7db012a738e7ef9c09c8": {
+  "task_id": "6a3d7db012a738e7ef9c09c8",
+  "verdict": "Fail",
+  "confidence": 18,
+  "flags": [
+   {
+    "dimension": "Tests - Coverage",
+    "category": "[Fail - Test Coverage]",
+    "severity": "Fail",
+    "reason": "answer_format.txt requires 21 filled blanks (4 Section-A dot counts, 3+4+5=12 individual B-Box shape-type counts, 5 Section-C answers). Only Q1/Q2 sums are unit-tested; the rubric adds correctness checks for the 4 Section-A dot counts, B-Box1 star, B-Box3 square, Q3, Q4, Q5 (9 more). That leaves B-Box1 circle/triangle, all 4 B-Box2 shape counts, and B-Box3 moon/triangle/circle/star (10 of 21 blanks, ~48%) with zero correctness verification by either a test or a rubric criterion -- only the generic 'every blank filled in' criterion covers them, which checks presence, not correctness.",
+    "fix": "Add unit tests or rubric criteria asserting the exact expected value for each of the 10 uncovered blanks (B-Box1 circle/triangle, B-Box2 star/triangle/circle/square, B-Box3 moon/triangle/circle/star).",
+    "spec_ref": "authoring_spec.md #19 / row 19: >20% of deterministic-requirement tests missing -> [Fail - Test Coverage]"
+   }
+  ],
+  "why": "Verified directly against answer_format.txt (21 blanks total), test_code (only existence + Q1 + Q2 checked), and the rubric list (adds A1-A4, B-Box1 star, B-Box3 square, Q3, Q4, Q5). That leaves exactly the 10 blanks the grader named with no correctness check anywhere, ~48% of all required fields, well past the >20% Fail threshold defined in the spec for Tests - Coverage.",
+  "agreement": "1/1 grader flagged this; independently reconfirmed by counting blanks in answer_format.txt against test_code.py and the rubric list -- exact match on which 10 fields are uncovered."
+ },
+ "6a3d7db012a738e7ef9c09c9": {
+  "task_id": "6a3d7db012a738e7ef9c09c9",
+  "verdict": "Fail",
+  "confidence": 15,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major",
+    "category": "[Fail - 10%+ Major Rubric Errors]",
+    "severity": "Fail",
+    "reason": "Confirmed by direct evidence: instruction.md (the single user turn, checked verbatim) never mentions Vikram, hours/ballpark, course-hours, retro-summary CSV, or any request to check on a message reply. The seeded 'Vikram Patel' messaging thread (grep-verified) is exclusively cycling/Strava banter (ride plans, Strava year-in-review stats) with zero content resembling a pending work message William is waiting on a reply to. Criteria #13 (Vikram reply status), #14 (course-hours 8-20hr estimate), #15 (retro-CSV not-found), #18 (messaging query for Vikram/behavioral-analytics), #24 (FinTrack course-purchase negative), and #27/#28 (Vikram-replied / CSV-found negative guardrails tied to the same fabricated threads) all test content absent from the prompt -- 7/29 = ~24% of criteria, exceeding the >10% Major threshold.",
+    "spec_ref": "\u00a7 Rubric Quality Definitions / Incorrect Criteria (Major)",
+    "fix": "Remove or rewrite criteria #13,14,15,18,24,27,28 to align with the actual instruction (William's request to cross-check study_plan.md gaps against Linear/email/messaging work history, video lecture, and handwritten notes only)."
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "category": "[Fail - 15%+ Moderate Rubric Errors]",
+    "severity": "Fail",
+    "reason": "The same ~24% unaligned-criteria bucket independently breaches the 15% major+moderate cap.",
+    "spec_ref": "\u00a7 Rubric Quality Definitions / Major+Moderate threshold"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "[Fail - 20%+ Minor Rubric Errors]",
+    "severity": "Fail",
+    "reason": "Major-issue rate alone (~24%) already exceeds the 20% major+moderate+minor threshold.",
+    "spec_ref": "\u00a7 Rubric Quality Definitions / Major+Moderate+Minor threshold"
+   },
+   {
+    "dimension": "Failed Rubric/Unit Test - Justification",
+    "category": "[Non-Fail - Incorrect Justification]",
+    "severity": "Non-Fail",
+    "reason": "Confirmed: the justification fields for criteria #13 and #14 assert 'The prompt explicitly asks...' and quote fabricated instruction text ('see if Vikram ever got back to me...', 'roughly how many hours have i sunk into this course...') that does not exist anywhere in the actual instruction.md, which was read verbatim and contains no such lines.",
+    "spec_ref": "Failed Rubric/Unit Test - Justification"
+   }
+  ],
+  "why": "Direct verification against instruction.md and the seeded messaging/email/fintrack data confirms every claim in the grader report: the prompt never mentions Vikram, course-hours/ballpark, or a retro CSV, and the 'Vikram Patel' thread is pure cycling chat with no pending-reply content -- so criteria #13,14,15,18,24,27,28 (7/29 \u224824%) are ungrounded, breaching all three rubric-quality thresholds. The justification fields for #13/#14 also quote instruction text that does not exist, confirming the Non-Fail justification flag. No flags were dropped; all were independently reconfirmed against the raw task data.",
+  "agreement": "1/1 grader; all flags independently reconfirmed against instruction.md and raw messaging/email/fintrack data.json files"
+ },
+ "6a3d7db012a738e7ef9c09cc": {
+  "task_id": "6a3d7db012a738e7ef9c09cc",
+  "verdict": "Non-Fail",
+  "confidence": 70,
+  "flags": [
+   {
+    "dimension": "Tests - Coverage",
+    "category": "[Non-Fail - Incorrectly Covered by Rubric]",
+    "severity": "Non-Fail",
+    "reason": "Confirmed: test_code has only test_financial_overview_exists and test_financial_overview_not_empty (existence/non-empty checks). Every deterministic, environment-verifiable fact (Joyce $400/mo, subscriptions $81.94, Discover balance $4,312.81, six $300 UCSF payments, $3,612 March deposit) is pushed entirely into the 15 rubric criteria rather than unit tests.",
+    "fix": "Add deterministic unit tests asserting the specific dollar figures/dates against the ground-truth environment data, rather than relying solely on rubric criteria.",
+    "spec_ref": "Tests - Coverage"
+   },
+   {
+    "dimension": "Failed Rubric/Unit Test - Justification",
+    "category": "[Non-Fail - Weak Justification]",
+    "severity": "Non-Fail",
+    "reason": "Confirmed via rubric JSON: of 15 criteria, only index 0 carries why_rubric_is_correct/why_rubric_is_important/what_model_did_wrong. Indices 1 (job-timing, pass_rate_opus 0.25), 6 (forward-looking projection, 0.375), 8 (take-home pay, 0.125), 10 (UCSF plan projection, 0.0), and 13 (hallucinated figures, 0.375) all have low Opus pass rates but ship with no justification fields at all.",
+    "fix": "Add the justification triple for the other frequently-failed criteria (idx 1, 6, 8, 10, 13 at minimum) to defend why each is a valid, prompt-requested requirement.",
+    "spec_ref": "Failed Rubric/Unit Test - Justification"
+   }
+  ],
+  "why": "Re-checked both flags directly against the task's test_code and rubric JSON. Test coverage is limited to two trivial existence/non-empty assertions while all substantive verifiable facts live only in rubric criteria, confirming the Coverage flag. The rubric array confirms only criterion 0 of 15 has any justification fields, while several other criteria with low Opus pass rates (0.0-0.375) have none, confirming the Weak Justification flag. Both are legitimate Non-Fail findings; no Fail-severity issues were found in the underlying data, so overall verdict is Non-Fail.",
+  "agreement": "1/1 grader flags fully reconfirmed against test_code and rubric JSON; no additional issues found."
+ },
+ "6a42a89fbff245d051aeb422": {
+  "task_id": "6a42a89fbff245d051aeb422",
+  "verdict": "Non-Fail",
+  "confidence": 70,
+  "flags": [
+   {
+    "dimension": "Tests - Redundancy",
+    "category": "[Non-Fail - 1 pair of tests or rubric criteria check exactly the same behavior with no difference]",
+    "severity": "Non-Fail",
+    "reason": "Rubric criterion #1 ('movewell_activity_prefill.csv exists and parses as a CSV with five data rows') is checked verbatim, deterministically, by pytest's test_prefill_csv_exists (existence) + test_prefill_csv_parses_as_csv_with_five_rows (five-row parse). Confirmed by reading test_code: both assertions exist and map 1:1 onto the rubric text with zero differentiation.",
+    "fix": "Drop the rubric criterion (or narrow it to something the tests don't already cover) since the pytest pair already grades this deterministically.",
+    "spec_ref": "Tests - Redundancy"
+   },
+   {
+    "dimension": "Tests - Coverage",
+    "category": "[Non-Fail - Incorrectly Covered by Rubric]",
+    "severity": "Non-Fail",
+    "reason": "Confirmed against service_data: activity_id 1035/1042/1049/1054 in server/data/strava/data.json give elapsed_time 6000/6300/6000/6300s (100/105/100/105 min) exactly matching rubric criteria #3-6's minutes_attended golds, and fintrack/data.json has a -105.0 transaction matching the kayak split-payment criterion. None of these numeric CSV-field checks appear in test_code.py (which only checks file existence, 5-row count, and the two held dates) -- they are graded solely via LLM-judged rubric despite being 100% programmatically verifiable.",
+    "fix": "Add pytest assertions that read the CSV and check minutes_attended/paid_amount_usd values directly against strava elapsed_time and the fintrack transaction, moving these off the LLM-judged rubric.",
+    "spec_ref": "Tests - Coverage"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "[Non-Fail - 5-20% Minor Errors]",
+    "severity": "Non-Fail",
+    "reason": "Confirmed: the -5 criterion ('The outputs present softball minutes as a fixed 90-minute league block / the preview minutes') bundles two related-but-distinct bad behaviors under one weight, a minor atomicity slip. At 1/17 criteria (~5.9%) this sits inside the 5-20% minor-error band.",
+    "fix": "Split into two atomic criteria, or keep as one but confirm both phrasings are truly the same failure mode before merging.",
+    "spec_ref": "\u00a79a atomicity / Overall Rubric Quality Minor"
+   }
+  ],
+  "why": "Verified against the actual rubric JSON, test_code.py, and service_data: criterion #1 duplicates the two pytest existence/row-count tests verbatim; the softball minutes_attended and kayak paid_amount_usd goldens are fully derivable from strava elapsed_time and the fintrack -105.0 transaction yet are graded only via LLM rubric with no matching pytest assertion; and the -5 criterion's dual phrasing ('fixed 90-minute block' / 'the preview minutes') is a minor atomicity issue at ~5.9% of criteria, inside the 5-20% band. All three grader flags reconfirmed directly against source files, no visual/miscount issues found, so none were dropped.",
+  "agreement": "1/1 grader agreed on all three flags; independently reconfirmed each against test_code.py, the rubric JSON, and service_data (strava elapsed_time, fintrack transaction) -- no flags dropped."
+ },
+ "6a42a89fbff245d051aeb426": {
+  "agreement": "1/1 grader; all 5 flags independently confirmed against ctx JSON rubric list, authoring_spec.md \u00a79g, and the IMG_1038.jpg / IMG_0967.jpg image files",
+  "confidence": 58,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major",
+    "category": "[Non-Fail - Up to 10% Major Errors]",
+    "severity": "Non-Fail",
+    "reason": "Confirmed: all 15 rubric criteria are positive-weight (0/15 negative-weight), violating the spec's ~25% negative-weight target (cap 30%) and the requirement for a cross-modal hallucination guard on this media-derived-values task. Counted as 1 missing-critical-criterion / 15 = 6.7%, within the <=10% major band.",
+    "spec_ref": "authoring_spec.md \u00a79g negative-weight ratio; \u00a712 f2_hallucination requirement",
+    "fix": "Add a negative-weight (e.g. -3 or -5) criterion penalizing a cross-modal hallucination, e.g. presentation.pptx cites a quantity/price for one of the 6 items that doesn't match the corresponding photo/notes.md/prices.csv value."
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "category": "[Non-Fail - Up to 15% Moderate Errors]",
+    "severity": "Non-Fail",
+    "reason": "Same confirmed gap (1/15 = 6.7%) falls within the <=15% moderate-or-major band.",
+    "spec_ref": "authoring_spec.md \u00a79g",
+    "fix": "Same fix as above resolves this band too."
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "[Non-Fail - 5-20% Minor Errors]",
+    "severity": "Non-Fail",
+    "reason": "Same confirmed gap (1/15 = 6.7%) falls within the 5-20% minor-or-worse band.",
+    "spec_ref": "authoring_spec.md \u00a79g",
+    "fix": "Same fix as above."
+   },
+   {
+    "dimension": "Failed Rubric/Unit Test - Justification",
+    "category": "[Non-Fail - Weak Justification]",
+    "severity": "Non-Fail",
+    "reason": "Confirmed by inspecting ctx JSON: criterion 13 (FinTrack liquid-money, weight 3, pass_rate_opus=0.125, i.e. failed in 14/16 runs) has no why_rubric_is_correct / why_rubric_is_important / what_model_did_wrong fields at all, whereas the adjacent failed criterion (#12, total-bill) has all three fully populated.",
+    "spec_ref": "Failed Rubric/Unit Test - Justification (3 justification questions)",
+    "fix": "Backfill the three justification fields for the FinTrack liquid-money criterion, citing the FinTrack tool-call gold value and what the model reported instead."
+   },
+   {
+    "dimension": "Input Artifacts - Realism",
+    "category": "[Non-Fail - Partially Contrived Inputs]",
+    "severity": "Non-Fail",
+    "reason": "Confirmed by viewing IMG_1038.jpg: it is a glossy, evenly studio-lit stock/promotional-style photo (uniform blue-sky backdrop, saturated multicolor MSC-branded containers, no ground clutter or camera shake) inconsistent with the prompt's framing of a rushed employee snapping inventory photos 40 minutes before a meeting. By contrast IMG_0967.jpg (gas cylinders) reads as a plausible candid warehouse shot, so this is an isolated 1/6 contrivance, correctly landing in the Non-Fail (partial) band rather than the >20%/Fail band.",
+    "spec_ref": "Input Artifacts - Realism",
+    "fix": "Replace IMG_1038.jpg with a candid-style photo of stacked shipping containers (imperfect framing/lighting, no visible brand-clean studio backdrop) consistent with the other 5 images."
+   }
+  ],
+  "task_id": "6a42a89fbff245d051aeb426",
+  "verdict": "Non-Fail",
+  "why": "I independently re-verified every grader-flagged item against the ctx JSON rubric array, the grading card bands, the authoring spec's \u00a79g negative-weight requirement, and the actual input image. The rubric genuinely has zero negative-weight criteria among 15 (a real \u00a79g violation, correctly quantified at 6.7% and placed in the Non-Fail bands across all three overall-rubric-quality dimensions), the FinTrack criterion is missing all three justification fields (unlike its sibling failed criterion), and IMG_1038.jpg is visibly a stock-style/studio photo out of character with the other five candid images. All 5 flags survive verification with no changes to severity/category."
+ },
+ "6a44d23e639aef61456f6ff9": {
+  "task_id": "6a44d23e639aef61456f6ff9",
+  "verdict": "Non-Fail",
+  "confidence": 78,
+  "flags": [
+   {
+    "dimension": "Tests - Coverage",
+    "category": "[Non-Fail - Test Coverage]: Suboptimal Overall Coverage",
+    "severity": "Non-Fail",
+    "reason": "The prompt explicitly requires meal_log.csv day totals to be rounded to one decimal, but none of the 6 pytest tests (existence, header, non-empty, 3 distinct dates, briefing existence/non-empty) nor any of the 19 rubric criteria check decimal-rounding formatting, leaving this explicit spec requirement unverified by either grading mechanism.",
+    "fix": "Add a rubric criterion or unit test asserting that per-day aggregated totals in meal_log.csv are formatted/rounded to one decimal place.",
+    "spec_ref": "Tests - Coverage"
+   }
+  ],
+  "why": "Verified directly against the task instruction, test_code, and rubric in the ctx JSON: the prompt says \"day totals rounded to one decimal,\" the 6 pytest tests only check file existence, header, row presence, and date count, and none of the 19 rubric criteria address rounding/formatting. This is a genuine, confirmed coverage gap, correctly classified as Non-Fail.",
+  "agreement": "1/1 grader flagged this; independently reconfirmed against test_code and rubric in ctx JSON \u2014 no coverage found for the decimal-rounding requirement."
+ },
+ "6a457ed4182720ee4794afb6": {
+  "agreement": "1 grader; both flags independently reconfirmed against ctx JSON (all 14 criteria modality=TEXT_ONLY, 4 product photos only checked via a process/tool-use criterion, never content; 1/14 negative-weight criterion = ~9% of total weight magnitude, well under the 25% target/30% cap)",
+  "confidence": 25,
+  "task_id": "6a457ed4182720ee4794afb6",
+  "verdict": "Fail",
+  "why": "The mm_input includes uploaded/API product photos, but none of the 14 rubric criteria or 4 pytest tests grade the photos' actual content \u2014 the sole photo-related criterion only checks that the agent invoked a vision tool as a process step, while every substantive verdict/flag_reason/hallucination check is grounded in text-only FinTrack and email data. This is a confirmed \u00a75/\u00a79 Missing Artifact Verification Fail. Separately, only 1 of 14 criteria carries negative weight (-3 hallucination guard out of ~33 total weight magnitude, ~9%), which is a real but lesser MECE gap relative to the 25% target/30% cap, correctly banded as Non-Fail.",
+  "flags": [
+   {
+    "dimension": "Input Artifacts - Artifact Verification",
+    "category": "[Fail - Missing Artifact Verification]",
+    "severity": "Fail",
+    "reason": "All 14 rubric criteria are modality TEXT_ONLY per ctx JSON. The only photo-related criterion checks agent process (used a vision/image tool) rather than any content fact derived from the photos; every value-level check (verification_status, flag_reason grounding, hallucination guard) is sourced from FinTrack transactions and email correspondence text, never the four uploaded/api product images.",
+    "fix": "Add at least one value-level criterion that depends on actual photo content (e.g., verifying a claimed wood species, dimension, or visible defect against what's shown in the product photo for one of the NPW rows).",
+    "spec_ref": "authoring_spec.md #5 / 9 - Artifact Verification"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "category": "[Non-Fail - Up to 15% Moderate Errors]",
+    "severity": "Non-Fail",
+    "reason": "Confirmed: weights sum to |1|+|1|+|1|+|1|+|3|+|3|+|3|+|3|+|3|+|1|+|3|+|3|+|3|+|3-negative|=33 total magnitude, with only the single -3 hallucination-guard criterion negative (~9%), well under the ~25% target and under the 30% ceiling from spec 9g.",
+    "fix": "Add 2-3 more negative-weight criteria for other plausible failure modes (e.g., malformed verification_status enum value, scope creep beyond the four NPW rows) to bring the negative ratio closer to ~25%.",
+    "spec_ref": "authoring_spec.md 9g Negative-weight ratio"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "[Non-Fail - 5-20% Minor Errors]",
+    "severity": "Non-Fail",
+    "reason": "Same underlying negative-weight-ratio shortfall (~9%, in the 5-20% minor-or-worse band with 0% majors) cascades into this cumulative rubric-quality dimension.",
+    "fix": "Same fix as above - add negative-weight criteria to raise the ratio toward the ~25% target.",
+    "spec_ref": "authoring_spec.md 9g Negative-weight ratio"
+   }
+  ]
+ },
+ "6a457ed4182720ee4794afb7": {
+  "task_id": "6a457ed4182720ee4794afb7",
+  "verdict": "Fail",
+  "confidence": 10,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major",
+    "category": "Fail - 10%+ Major Rubric Errors",
+    "severity": "Fail",
+    "reason": "Confirmed via ctx JSON crit_pass_rate: 'Sweater priced at $55' (0.0 both models), 'Face mask and doilies...budget tier ($15-$20)' (0.0 both models), and half of the F1-builds criterion (only Leclerc SF-24 order #2891447 exists in the data; no second build) are ungrounded fabrications with 0% pass rate across all runs/models. 3/17 = 17.6% > 10% Major threshold.",
+    "fix": "Remove or rewrite the three fabricated/unpassable criteria to reflect only what's actually present in the email/Linear ground truth (no invented prices, no second F1 build).",
+    "spec_ref": "Overall Rubric Quality - Major"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "category": "Fail - 15%+ Moderate Rubric Errors",
+    "severity": "Fail",
+    "reason": "Adding the moderate 'Sold-but-unphotographed types (calico cat, sage alpaca scarf, beanie variants)' criterion (also 0.0 pass rate in ctx JSON, confirming ground truth only has plain 'Chunky knit scarf' and single 'Navy beanie', not the described variants) brings major+moderate to 4/17 = 23.5%, exceeding the 15% cap.",
+    "fix": "Rewrite the placeholder-types criterion to match actual ground-truth item descriptors, or remove it.",
+    "spec_ref": "Overall Rubric Quality - Major/Moderate"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "Fail - 20%+ Minor Rubric Errors",
+    "severity": "Fail",
+    "reason": "Same 4/17 = 23.5% of criteria carry major-or-worse grounding defects (confirmed via ctx JSON pass rates), exceeding the 20% ceiling for this band.",
+    "fix": "Same as above fixes; once major/moderate criteria are corrected this band clears too.",
+    "spec_ref": "Overall Rubric Quality - Major/Moderate/Minor"
+   },
+   {
+    "dimension": "Tests - Coverage",
+    "category": "Non-Fail - Incorrectly Covered by Rubric",
+    "severity": "Non-Fail",
+    "reason": "The deterministically checkable action of sending review-request emails to real past customers (vs. fabricated @example.com addresses) is graded only via rubric criteria ('Review requests sent to fabricated @example.com addresses instead of real ones' at 0.125 pass rate, 'Polite review-request emails sent to Eric's past customers' at 0.25), with no unit test asserting the actual email/tool call target, despite being independent of the non-machine-verifiable HTML/MD content the test file scopes around.",
+    "fix": "Add a unit test asserting review-request emails were sent to real past-customer addresses from ground truth, not fabricated example.com addresses.",
+    "spec_ref": "Tests - Coverage"
+   }
+  ],
+  "why": "All three Overall Rubric Quality band flags are independently confirmed against the ctx JSON crit_pass_rate data: the sweater-price, face-mask/doilies-tier, and F1-second-build criteria all show 0.0 pass rate across every run/model for both graders' cited reasons (no supporting price/build data exists in the ground truth), and the sold-but-unphotographed-types criterion also shows 0.0 pass rate confirming the described variants (calico cat, sage alpaca, beanie variants) don't match actual ground truth (plain scarf, single Navy beanie). This yields 3/17=17.6% major (>10% cap) and 4/17=23.5% major+moderate (>15% cap) and minor+ (>20% cap), each independently crossing its respective Fail threshold per the V10 rubric CSV definitions. The Tests-Coverage Non-Fail flag is plausible and consistent with the grader's reasoning but doesn't change the overall verdict, which is already Fail from the rubric-quality bands alone.",
+  "agreement": "1/1 grader; all four flags independently reconfirmed against ctx JSON crit_pass_rate data and V10_rubric.csv band thresholds"
+ },
+ "6a457ed4182720ee4794afba": {
+  "task_id": "6a457ed4182720ee4794afba",
+  "verdict": "Fail",
+  "confidence": 5,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major",
+    "category": "[Fail - 10%+ Major Rubric Errors]",
+    "severity": "Fail",
+    "reason": "Confirmed against ctx JSON: instruction is timestamped Fri 2026-07-03 and explicitly tells the agent to 'verify anything that seems out of date' in the CSV, yet criteria 5, 6, 8, and 9 (of 12 total) hard-lock the gold answer to a 'December 25, 2025' publication date/calendar check that is already ~6 months in the past, and criterion 11 (-5 weight) actively penalizes an agent that correctly rolls the date forward to Dec 25, 2026 -- directly contradicting the instruction's own directive.",
+    "fix": "Rewrite criteria 5/6/8/9/11 to accept either a 2025 or 2026 Dec-25 selection as long as it is internally consistent with whichever calendar year the agent actually queries, and drop the anti-2026 penalty criterion.",
+    "spec_ref": "\u00a7 Overall Rubric Quality / overspec_exact signals"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "category": "[Fail - 15%+ Moderate Rubric Errors]",
+    "severity": "Fail",
+    "reason": "Same 5/12 (42%) date-locked criteria set (5, 6, 8, 9, 11) confirmed in ctx JSON exceeds the 15% moderate-or-major threshold.",
+    "fix": "Same as above.",
+    "spec_ref": "\u00a7 Overall Rubric Quality"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "[Fail - 20%+ Minor Rubric Errors]",
+    "severity": "Fail",
+    "reason": "Same confirmed criteria set (5/12, 42%) exceeds the 20% minor-or-worse threshold.",
+    "fix": "Same as above.",
+    "spec_ref": "\u00a7 Overall Rubric Quality"
+   },
+   {
+    "dimension": "Input Artifacts - Realism",
+    "category": "[Fail - Contrived Inputs]",
+    "severity": "Fail",
+    "reason": "Visually confirmed: all 3 thumbnail_draft images are flat solid-color placeholder graphics with plain centered text, not real YouTube thumbnail mockups; thumbnail_draft_1.jpg literally reads 'Celtics Defense (Hard to read, poor contrast)' as its entire image content -- no real creator would produce this.",
+    "fix": "Replace with actual mocked-up thumbnail image designs (real photos/graphics with overlaid text in varying legibility) rather than plain color cards with literal caption text.",
+    "spec_ref": "Input Artifacts - Realism"
+   },
+   {
+    "dimension": "Input Artifacts - Leak Prevention",
+    "category": "[Fail - Direct Answer Leak]",
+    "severity": "Fail",
+    "reason": "Visually confirmed via direct image read: thumbnail_draft_1.jpg's only content is the text 'Celtics Defense (Hard to read, poor contrast)' baked into the pixels -- this is the exact verdict criterion 1 wants the agent to reach, handed to it verbatim.",
+    "fix": "Regenerate the thumbnail images without embedding the rubric's judgment language inside the image; encode readability/contrast differences visually instead of via literal caption text.",
+    "spec_ref": "Input Artifacts - Leak Prevention"
+   },
+   {
+    "dimension": "Tests - Coverage",
+    "category": "[Non-Fail - Incorrectly Covered by Rubric]",
+    "severity": "Non-Fail",
+    "reason": "Confirmed by reading test_code: test_report_selects_publication_time_between_10_and_12 only checks that a chosen time falls in the 10am-12pm window; there is no pytest assertion checking the selected time against the Team Standup (10:00-10:15) or Design Sync (11:00-11:30) meeting conflicts -- that check exists only in rubric criteria C6/C9.",
+    "fix": "Add a pytest assertion that parses the snapshot calendar for Dec 25 meetings and asserts the chosen publication time avoids them, mirroring rubric C6/C9.",
+    "spec_ref": "Tests - Coverage"
+   }
+  ],
+  "why": "Independently re-verified every flag against ground truth: opened thumbnail_draft_1.jpg directly and confirmed it is a literal caption-text placeholder image that leaks the exact rubric verdict; read the ctx JSON instruction/rubric and confirmed 5 of 12 criteria (42%) hard-lock a Dec-25-2025 date that is already stale relative to the 2026-07-03 instruction timestamp, with a -5 criterion actively punishing the temporally correct 2026 answer, exceeding all three Overall Rubric Quality thresholds; and read test_code to confirm the calendar-conflict check is rubric-only with no matching pytest assertion. All grader flags survive verification.",
+  "agreement": "1/1 grader; all 6 flags independently reconfirmed against source images, ctx JSON rubric/instruction, and test_code (no flags dropped)"
+ },
+ "6a457ed4182720ee4794afbc": {
+  "task_id": "6a457ed4182720ee4794afbc",
+  "verdict": "Fail",
+  "confidence": 25,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "[Fail - 20%+ Minor Rubric Errors]",
+    "severity": "Fail",
+    "reason": "Verified against ctx JSON: criteria 0-11 (all 12 asset image count/price checks) plus criterion 12 (song-credit check) are typed 'instruction following' with modality REQUIRE_VISUAL_UNDERSTANDING \u2014 i.e., cross-modal grounding assertions (values must be read off asset1-6.jpg images). authoring_spec.md L467 and L475 state a cross-modal grounding check must be categorized 'factuality and hallucination' even if it also relates to task completion/instruction-following. 13/17 = 76.5% of criteria are miscategorized this way, far exceeding the 20% minor-error cap.",
+    "spec_ref": "authoring_spec.md L466-477 (factuality and hallucination definition; 'cross-modal grounding check goes to factuality and hallucination even if it relates to task completion')"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major",
+    "category": "[Non-Fail - Up to 10% Major Errors]",
+    "severity": "Non-Fail",
+    "reason": "Confirmed via ctx JSON: all 17 criteria carry positive weights (13x weight=5, 4x weight=3); zero negative-weight criteria exist. authoring_spec.md \u00a79g requires ~25% negative-weight criteria with a hard 30% ceiling on the high side, and a rubric for a numeric/visually-computed task with no negative-weight hallucination guard leaves no criterion that penalizes a fabricated count/price. This is a real structural gap but affects roughly one implicit missing criterion's worth of coverage, keeping the rate under the 10% Major-error fail line.",
+    "spec_ref": "authoring_spec.md \u00a79g Negative-weight ratio (~25%, cap 30%)"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "category": "[Non-Fail - Up to 15% Moderate Errors]",
+    "severity": "Non-Fail",
+    "reason": "Same zero-negative-weight gap as above; confirmed no negative weights exist in the 17-criterion rubric. Rate stays under the 15% Moderate-or-major fail line so this tier is Non-Fail rather than Fail.",
+    "spec_ref": "authoring_spec.md \u00a79g"
+   },
+   {
+    "dimension": "Failed Rubric/Unit Test - Justification",
+    "category": "[Non-Fail - Weak Justification]",
+    "severity": "Non-Fail",
+    "reason": "Confirmed via ctx JSON: pass_rate_opus is 0.0 for exactly three criteria (index 0: asset1 book-count, index 1: asset1 price, index 13: overall-sales-amount). Only index 13 carries the why_rubric_is_correct/why_rubric_is_important/what_model_did_wrong justification triple; indices 0 and 1 have no such keys at all, i.e., no justification was authored for two of the three Model-A failures.",
+    "spec_ref": "Failed Rubric/Unit Test - Justification"
+   }
+  ],
+  "why": "All four grader flags were independently reconfirmed against the raw rubric JSON and authoring_spec.md. The dominant, clearly-Fail-level issue is systemic miscategorization: 13 of 17 criteria (76.5%) are cross-modal grounding checks (image-derived counts/prices, one song-credit metadata check) typed 'instruction following' instead of the spec-mandated 'factuality and hallucination', which alone exceeds the 20% minor-error cap. The zero-negative-weight gap and the missing justifications for two of three Model-A-failed criteria are real but stay in Non-Fail territory per the card's percentage thresholds.",
+  "agreement": "1 grader; all 4 flags independently reconfirmed against ctx JSON and authoring_spec.md \u2014 no drops."
+ },
+ "6a457ed4182720ee4794afd2": {
+  "task_id": "6a457ed4182720ee4794afd2",
+  "verdict": "Non-Fail",
+  "confidence": 78,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "[Non-Fail - 5-20% Minor Errors]",
+    "severity": "Non-Fail",
+    "reason": "Criterion 14 (DOC_0038 reading-log sums) asserts that printed weekly totals 'do not match' the actual daily-entry sums for all weeks, but its own cited numbers show Week 3 printed=95 and actual sum=95 \u2014 an internal factual/wording inconsistency confirmed directly against the criterion's own listed figures (verified in the task ctx JSON). This affects 1/19 (~5.3%) criteria, a minor isolated wording defect that doesn't undermine the other weeks' genuinely mismatched totals or the criterion's overall intent.",
+    "fix": "Reword Criterion 14 to note that Weeks 1, 2, and 4 totals are mismatched while Week 3 matches, rather than claiming all weeks mismatch.",
+    "spec_ref": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor"
+   }
+  ],
+  "why": "Re-checked the grader's cited evidence directly against the task ctx JSON crit_pass_rate text, which lists printed Week 3=95 and actual Week 3=95 verbatim alongside the criterion's blanket claim that printed and actual weekly totals 'do not match' \u2014 confirming a real, minor internal inconsistency in exactly one criterion. This is a low-impact wording defect (1/19 criteria) that doesn't rise to Major/Moderate since the other three weeks are genuinely mismatched and the criterion's core grading intent is unaffected. No other flags were raised by the single grader, and this one is fully substantiated by the source data.",
+  "agreement": "1/1 grader flagged this; independently confirmed against task ctx JSON (Week 3 printed=95, actual=95)."
+ },
+ "6a4580a87562d45c85acf909": {
+  "task_id": "6a4580a87562d45c85acf909",
+  "verdict": "Fail",
+  "confidence": 20,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Rubric Structure",
+    "category": "[Fail - Negative-Weight Ratio \u00a79g]",
+    "severity": "Fail",
+    "reason": "All 11 rubric criteria (weights 5,5,3,3,3,3,5,5,3,3,1) carry positive weights \u2014 0/11 = 0% negative-weight \u2014 against the ~25% target (30% hard cap) required by \u00a79g and the Rubric Architect SP. Cross-checked against the other 27 tasks in the same batch: every other task's rubric mixes in negative-weight criteria (e.g. -1/-3/-5), confirming this task is the outlier with none.",
+    "spec_ref": "\u00a79g Negative-weight ratio",
+    "fix": "Convert at least 2-3 of the existing criteria into negative-weight decoys/penalties (e.g. penalize including the MinuteClinic cash visit, penalize using Devin's self-reported/eyeballed numbers instead of verified account activity, penalize sharing files with Sandra) to reach roughly 25% negative-weight share."
+   },
+   {
+    "dimension": "Tests - Coverage",
+    "category": "[Non-Fail - Test Coverage]",
+    "severity": "Non-Fail",
+    "reason": "The prompt's explicit tax_receipts_summary.csv schema requires vendor, date, amount paid, whether it ties to a real charge, and whether it's one Sandra needs, plus a running total. The verifier (test_summary_has_vendor_date_amount_columns) only asserts vendor/date/amount-column regexes, currency amounts, and a running-total row \u2014 it never checks for the two verification-status columns, and no rubric criterion checks for their presence in the CSV output either (criterion 4 checks item selection/content, not that the columns exist).",
+    "spec_ref": "Tests - Coverage",
+    "fix": "Add a pytest assertion checking the header row for verification-status/needed-by-Sandra column tokens (e.g. matches on 'verified'|'tied'|'charge' and 'needed'|'sandra')."
+   }
+  ],
+  "why": "Both grader flags were independently reconfirmed against ctx/6a4580a87562d45c85acf909.json and grading_card.md. The rubric has zero negative-weight criteria out of 11, a documented Fail-band condition under \u00a79g, and this is corroborated by comparing against sibling tasks in the same batch which all carry negative weights. The test-coverage gap is also confirmed: the verifier explicitly checks only vendor/date/amount/currency/running-total and by its own docstring deliberately defers value-specific checks to the rubric, but neither tests nor rubric verify the two CSV verification-status columns the prompt names.",
+  "agreement": "1/1 grader flagged both dimensions; both independently reconfirmed against ctx JSON, test_code, and cross-batch comparison \u2014 no drops."
+ },
+ "6a480daf5c67581f0c3ae624": {
+  "task_id": "6a480daf5c67581f0c3ae624",
+  "verdict": "Fail",
+  "confidence": 20,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "category": "[Non-Fail - Up to 15% Moderate Errors]",
+    "severity": "Fail",
+    "reason": "Directly viewed all three cited photos (PXL_20260704_212058401, _212147971, _212210150). All show RAM sticks edge-on/stacked at oblique angles, in one case through a ribbed anti-static tray wall that occludes most of the modules and only lets ~9-10 edge-strips show through a narrow band. None of the three photos supports counting a clean, unambiguous set of discrete units \u2014 overlapping edges and partial occlusion make single-digit-precision counts (10/12/14) genuinely indeterminate from the provided evidence. 4/16 criteria (25%) hard-code these exact counts, and both graded models (pass_rate_gpt=0.0, pass_rate_opus=0.0) failed all four, consistent with unverifiable/overfit ground truth rather than model error. 25% > 15% moderate threshold.",
+    "fix": "Replace exact per-module counts (10/12/14/36) with range-based or qualitative criteria (e.g., 'reports an approximate count within a stated uncertainty' or credit for flagging the count as visually indeterminate), or supply a manifest/BOL document that gives ground-truth counts independent of ambiguous photos.",
+    "spec_ref": "\u00a79c Overfitting and Underfitting; overspec_exact linter signal"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "[Non-Fail - 5-20% Minor Errors]",
+    "severity": "Fail",
+    "reason": "The same 4 unverifiable base-count criteria (C2-C5) cascade into at least 5 more derived criteria that inherit the same unresolvable ground truth: C7 ($364.44 net compensable value), C9 (email reflects $364.44), C10 (MEMORY.md records $364.44), C11 (MEMORY.md records 36 units), and C14 ($12.07 gross average unit value) -- all with pass_rate_gpt=0.0 and pass_rate_opus=0.0, the same signature as the base counts. Counting only the 4 direct overfit criteria already pushes combined minor+moderate+major past 20% when added to any other imperfections; including the cascading derived criteria the affected fraction is closer to 9/16 (56%), far exceeding the ceiling.",
+    "fix": "Same fix as above at the source (C2-C5); once base counts are made verifiable or range-based, recompute the derived dollar/aggregate criteria so they don't inherit unverifiable precision.",
+    "spec_ref": "\u00a79c Overfitting and Underfitting; overspec_exact linter signal"
+   }
+  ],
+  "why": "I independently re-viewed all three cited photos and confirmed the grader's core claim: the RAM modules are shown edge-on, overlapping, and in one case through an occluding anti-static tray wall, making exact unit counts (10/12/14) genuinely unverifiable from the visual evidence rather than a case of model undercounting. This is corroborated by both graded models scoring 0.0 pass rate on these criteria plus their five downstream dollar/aggregate derivatives, indicating pervasive overfit ground truth well past the 15%/20% Non-Fail thresholds.",
+  "agreement": "1/1 grader flagged both dimensions; independently confirmed via direct image inspection of all three cited photos, and found the overfit condition cascades further than the grader stated (9/16 criteria affected, not just 4/16)."
+ },
+ "6a480daf5c67581f0c3ae62b": {
+  "agreement": "1/1 grader flagged all 4 items; independently reconfirmed all 4 against the raw environment/rubric/test data",
+  "confidence": 15,
+  "task_id": "6a480daf5c67581f0c3ae62b",
+  "verdict": "Fail",
+  "why": "Confirmed via the quickbooks invoice data that the weight-3 revenue criterion mis-shifts the AdSense figures by one month (inv_003 $87.43 is explicitly labeled \"January ad revenue,\" paid Feb 15; inv_004 $112.60 is explicitly \"February ad revenue,\" paid Mar 15), so the gold's Dec/Jan/Feb=$64.20/$71.85/$87.43 drops the real Feb number and mislabels Jan as Feb. Also confirmed no file anywhere in the environment (quickbooks, fintrack, email, notion) contains \"stacked monthly totals ($87.00/$97.00/$116.00),\" \"memberships,\" or \"Super Thanks\" \u2014 the weight-5 agent-behavior criterion invents this dashboard detail wholesale. 2/17 criteria (11.8%) are Major, exceeding the 10% Non-Fail cap and also exceeding the <5% major-share carve-out for the Major/Moderate dimension, so both escalate to Fail; the combined minor-or-worse tier (still 11.8%) sits inside the 5-20% Non-Fail band. Read test_code directly: only test_deck_created, test_deck_has_content, and test_memory_written exist \u2014 no test checks for the cover-email draft the prompt explicitly requests, confirming the Tests-Coverage Non-Fail flag.",
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major",
+    "category": "[Non-Fail - Up to 10% Major Errors]",
+    "severity": "Fail",
+    "reason": "2/17 (11.8%) criteria are Major factual errors: the weight-3 revenue criterion mis-shifts months (invoice descriptions explicitly label $87.43 'January ad revenue' paid Feb 15 and $112.60 'February ad revenue' paid Mar 15, so the gold's Feb figure is really January's and the real Feb figure is dropped), and the weight-5 agent-behavior criterion invents a 'stacked monthly totals ($87.00/$97.00/$116.00)... memberships and Super Thanks' dashboard breakdown that does not exist in any environment file (quickbooks has a single AdSense income line item).",
+    "fix": "Correct the revenue criterion to Dec=$71.85(inv_002)/Jan=$87.43(inv_003)/Feb=$112.60(inv_004) per the explicit invoice line descriptions, and rewrite the agent-behavior criterion to reference only the actual single-line-item AdSense income account, dropping the fabricated stacked-totals/memberships/Super-Thanks detail.",
+    "spec_ref": "Rubric Criteria - Overall Rubric Quality - Major"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "category": "[Non-Fail - Up to 15% Moderate Errors]",
+    "severity": "Fail",
+    "reason": "The same two Major criteria alone total 11.8%, which exceeds the <5% major-contribution ceiling required to stay in the Non-Fail band for this dimension even though total moderate+major (11.8%) is under the 15% cap.",
+    "fix": "Fix the two underlying gold errors above; once corrected, major-share drops to 0% and this dimension clears.",
+    "spec_ref": "Rubric Criteria - Overall Rubric Quality - Major/Moderate"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "[Non-Fail - 5-20% Minor Errors]",
+    "severity": "Non-Fail",
+    "reason": "2/17 (~11.8%) issues fall within the 5-20% combined minor-or-worse band, and 11.8% is well under the >20% Fail threshold for this dimension.",
+    "fix": "Fix the two underlying gold errors above to clear this dimension to clean.",
+    "spec_ref": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor"
+   },
+   {
+    "dimension": "Tests - Coverage",
+    "category": "[Non-Fail - Incorrectly Covered by Rubric]",
+    "severity": "Non-Fail",
+    "reason": "Read test_code directly: it defines only test_deck_created, test_deck_has_content, and test_memory_written. No test checks for the cover-email draft that the prompt explicitly requests ('draft me a cover email to HoopVision... leave it ready for me'); that deliverable's existence is verified only by rubric criterion 17.",
+    "fix": "Add a unit test that locates a draft/email artifact (or a drafts entry in the email service data) addressed to HoopVision, independent of the rubric.",
+    "spec_ref": "Tests - Coverage"
+   }
+  ]
+ },
+ "6a480daf5c67581f0c3ae62d": {
+  "task_id": "6a480daf5c67581f0c3ae62d",
+  "verdict": "Fail",
+  "confidence": 10,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major",
+    "category": "Non-Fail - Up to 10% Major Errors",
+    "severity": "Fail",
+    "reason": "Confirmed against the actual rubric JSON (17 criteria, ids 1-17). C6 (w5) reads 'IMG_5518.PNG, IMG_5521.PNG, IMG_5530.PNG, and IMG_5531.PNG are identified as thumbnails for videos already published...' and C7 (w3) reads 'None of IMG_5518.PNG, IMG_5521.PNG, IMG_5530.PNG, or IMG_5531.PNG is recommended as a new upload that is ready to post...'. Both are textbook Rule-C generalized-quantifier-over-an-enumerable-set violations, directly matching the spec's own anti-pattern example ('reports Stripe clearance status for units 8, 23, 28, and 44 -> four atomic criteria'). 2/17 = 11.8% of criteria carry a major atomicity defect, exceeding the >10% Fail threshold.",
+    "fix": "Split C6 into 4 per-thumbnail 'already published' criteria and C7 into 4 per-thumbnail 'not ready to post' criteria, each at reduced weight.",
+    "spec_ref": "authoring_spec.md \u00a79a Rule C (Contextual Universal) / line 283 Stripe-units example"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "category": "Non-Fail - Up to 15% Moderate Errors",
+    "severity": "Fail",
+    "reason": "Beyond C6/C7, C8 ('IMG_5535.PNG and Screenshot_2026-02-20-011433.png are treated as genuinely new thumbnails... each needing a fix') and C9 ('IMG_5518.PNG and IMG_5530.PNG are recognized as meeting... red-dominant palette and four-word text limit') each bundle two distinct named entities via 'and'/'each' -- direct Rule-A distinct-entity-guardrail violations, and C9 additionally double-bundles two properties per entity. All four (C6,C7,C8,C9) are Major-class atomicity defects = 4/17 = 23.5%, which exceeds the >15% Fail threshold outright, no need to invoke the 5% major-share caveat since the raw total alone fails.",
+    "fix": "Split C6-C9 per named entity/property; recompute weights to preserve total signal (e.g., per-entity splits at reduced weight per original bundle).",
+    "spec_ref": "authoring_spec.md \u00a79a Rule A distinct-entity guardrail; grading_card.md line 67"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "Non-Fail - 5-20% Minor Errors",
+    "severity": "Fail",
+    "reason": "Total defective criteria (C6,C7,C8,C9) = 4/17 ~= 23.5%, exceeding the >20% ceiling in the minor-or-worse band regardless of whether each is scored major or minor.",
+    "fix": "Same remediation as above; re-verify count after split brings percentage under 20%.",
+    "spec_ref": "authoring_spec.md \u00a79a; grading_card.md line 72"
+   }
+  ],
+  "why": "Pulled the actual 17-criterion rubric JSON for this task and verified all four cited criteria (C6,C7,C8,C9) verbatim against the authoring spec's atomicity rules; each is an unambiguous Rule-A/Rule-C violation (multi-entity or multi-entity+multi-property bundling), not a subjective miscount. With 4/17 = 23.5% defective, all three Overall-Rubric-Quality bands independently exceed their Fail thresholds (>10% major, >15% moderate-or-major, >20% minor-or-worse) even without relying on any borderline caveat reasoning. No visual/media evidence was needed since this is a pure rubric-text atomicity check.",
+  "agreement": "1/1 grader flagged all three bands; independently reconfirmed via direct inspection of the 17-criterion rubric JSON, finding the violation set is if anything larger (C8/C9 also qualify as major, not just minor) than the grader assumed."
+ },
+ "6a480daf5c67581f0c3ae632": {
+  "agreement": "1/1 grader flagged the \"First words = 12\" milestone-chart mismatch; independently re-measured and could NOT confirm \u2014 pixel-level check contradicts the grader.",
+  "confidence": 85,
+  "flags": [],
+  "task_id": "6a480daf5c67581f0c3ae632",
+  "verdict": "Pass",
+  "why": "I pixel-measured the handwritten milestones chart (20260706_122606.jpg) by detecting the axis tick-dot centers along the \"Typical age (months)\" number line and the right-edge x-coordinate of the \"First words\" bar's box border. The bar edge (x\u2248745-757, image-native coords) lands essentially on top of the month-12 tick (x\u2248769, interpolated \u224811.7 months) \u2014 a red overlay line at the bar edge and a blue overlay line at the 12-month tick are visually coincident, while the 14-month tick (green line) sits clearly further right, over the next bar's row. This directly contradicts the grader's claim that the bar's right edge is \"closer to 13-14\" months. Since all three submitted flags rest on this single (disconfirmed) visual defect, none survive independent re-verification, and the low crit_pass_rate cited as corroboration does not on its own establish a rubric-quality Major/Moderate/Minor issue once the underlying visual claim is refuted."
+ },
+ "6a4bcd3f4ded158f40c4e3d6": {
+  "agreement": "1/1 grader; both flags independently reconfirmed against ctx JSON",
+  "confidence": 55,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major",
+    "category": "Non-Fail - Up to 10% Major Errors",
+    "severity": "Non-Fail",
+    "reason": "Confirmed via ctx rubric: all 13 criteria carry positive weight (0/13 negative), well short of the ~25% negative-weight target. This is a missing-critical-negative-criterion gap on a factuality/hallucination-heavy counting task -- the diamonds criterion's own justification documents the model fabricating an extra row of diamonds (recording 14 instead of the correct 12), yet no criterion penalizes fabricated/incorrect counts generally. At 1/13 (~7.7%) explicit criteria affected this stays within the <=10% Major threshold rather than escalating to Fail.",
+    "fix": "Add a negative-weight criterion penalizing fabricated or miscounted totals (e.g., counts that don't match the source image) to reach the ~25% negative-weight target and better guard against hallucinated counts.",
+    "spec_ref": "\u00a79g negative-weight ratio / Overall Rubric Quality - Major"
+   },
+   {
+    "dimension": "Failed Rubric/Unit Test - Justification",
+    "category": "Non-Fail - Weak Justification",
+    "severity": "Non-Fail",
+    "reason": "Confirmed via ctx rubric: 4 of 13 criteria have pass_rate_opus=0.0 (diamonds, spirals, squares, and the aggregate \"all six result cells\" criterion), but only the diamonds criterion includes why_rubric_is_correct/why_rubric_is_important/what_model_did_wrong justification fields. Spirals, squares, and the aggregate result-cells criterion ship with zero justification despite failing at the same rate, leaving reviewers unable to verify whether those failures are gold errors or genuine model errors.",
+    "fix": "Add why_rubric_is_correct/why_rubric_is_important/what_model_did_wrong justification blocks for the spirals, squares, and aggregate result-cells criteria to match the diamonds criterion's documentation standard.",
+    "spec_ref": "Dimension #21 Failed Rubric/Unit Test Justification"
+   }
+  ],
+  "task_id": "6a4bcd3f4ded158f40c4e3d6",
+  "verdict": "Non-Fail",
+  "why": "Both grader-reported flags survive independent reconfirmation against the task's ctx rubric JSON. The negative-weight ratio is genuinely 0/13 (not ~25%), consistent with a missing negative criterion for the diamonds hallucination, but this affects only ~1/13 criteria so it stays under the 10% Major cutoff. Separately, 4/13 criteria fail at pass_rate_opus=0.0 but only 1 (diamonds) has a justification block, confirming a weak-justification gap on the other three (spirals, squares, aggregate result-cells). Neither issue rises to Fail severity, so the task is Non-Fail overall."
+ },
+ "6a4bcd3f4ded158f40c4e3da": {
+  "task_id": "6a4bcd3f4ded158f40c4e3da",
+  "verdict": "Non-Fail",
+  "confidence": 62,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "category": "[Non-Fail - Up to 15% Moderate Errors]",
+    "severity": "Non-Fail",
+    "reason": "All 10 rubric weights are positive (verified: 5,3,5,3,3,5,3,1,1,1) \u2014 the rubric ships with 0/10 negative-weight criteria against the ~25% target (cap 30%). The 'Nothing sent or published; draft only, reached via Tyler's usual channel' criterion (weight +3, safety & boundaries) is framed as a reward for compliance rather than as the required negative criterion that awards when the forbidden action (sending/publishing without authorization) actually occurs, even though the prompt explicitly states an instruction not to send. That is 1/10 = 10% of criteria carrying this moderate framing defect, which sits at/under the 15% ceiling for this dimension.",
+    "fix": "Rephrase or add a negative-weight (-3) criterion in affirmative-bad-event phrasing, e.g. 'The draft heads-up email or sponsored segment is sent/published without Tyler's review', to satisfy the negative-weight ratio and the 'every explicit prohibition needs a negative criterion' rule.",
+    "spec_ref": "\u00a79g negative-weight ratio (~25%, cap 30%); self-audit checklist 'every explicit prohibition has a safety & boundaries or instruction following negative-weight criterion'"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "[Non-Fail - 5-20% Minor Errors]",
+    "severity": "Non-Fail",
+    "reason": "Same single moderate-tier issue (missing/mis-framed negative-weight criterion) puts minor-or-worse criteria at ~10% of the 10, inside the 5-20% Non-Fail band.",
+    "spec_ref": "Rubric Quality Definitions \u2014 counting rule"
+   }
+  ],
+  "why": "Verified the core, reconfirmable defect: the shipped rubric has zero negative-weight criteria (all 10 weights are positive: 5/3/5/3/3/5/3/1/1/1), and the one criterion that could plausibly carry a negative weight ('Nothing sent or published...') is instead phrased as a positive-compliance reward, violating \u00a79g's ~25% (cap 30%) negative-weight requirement and the rule that explicit prohibitions need a negative criterion. I could not, however, reconfirm the grader's other claim \u2014 that the deal has '7 explicit terms' and that the rubric skips checking a verbal 'kilnandco.com' mention or a spoken 'sponsored by Kiln & Co.' disclosure. Pulling the actual environment data, the Kiln & Co. deal only lists 5 checkable terms (60s length, \u22652 products shown, link in video description, spoken discount code WHEELKILN15, live-by date), no disclosure language is required anywhere in the emails, and the two unchecked terms (description link, live-by date) are publish-time items outside this trim-only task's scope \u2014 the three terms that ARE checkable in-scope (length, products, spoken code) are all covered by existing criteria. That inflated coverage-gap claim is dropped as unreconfirmed. With only the single negative-weight framing issue surviving (1/10 = 10% of criteria), both percentage-based Overall Rubric Quality dimensions land inside their Non-Fail bands (\u226415% moderate/major, and 5-20% minor-or-worse) rather than the grader's asserted Fail band.",
+  "agreement": "1/1 grader flagged the zero-negative-weight/mis-framed-safety-criterion issue, confirmed by direct weight inspection; the grader's companion claim of missing deal-term checks (2 of 7 alleged terms) was independently re-derived from the environment and found unreconfirmable \u2014 the actual deal has 5 terms, all 3 in-scope ones are covered \u2014 so that portion was dropped, downgrading the dimension from the grader's asserted Fail to Non-Fail."
+ },
+ "6a4bcd3f4ded158f40c4e3e5": {
+  "agreement": "1/1 grader flagged Input Artifacts - Artifact Verification; independently confirmed against the actual image files (enhanced.jpg, summary_0.jpg both viewed \u2014 completely blank template) and ctx JSON (all rubric items TEXT_ONLY modality, visual_rubrics=None, test_code's only image-anchored assertion is a generic substring check)",
+  "confidence": 25,
+  "task_id": "6a4bcd3f4ded158f40c4e3e5",
+  "verdict": "Fail",
+  "why": "Verified directly: enhanced.jpg and summary_0.jpg (representative of the 16 image inputs, all crops of one handwritten ledger) are entirely blank aside from printed headers/box labels \u2014 no filled order data. Cross-checking the ctx JSON confirms every rubric criterion is modality TEXT_ONLY and sourced from email/Linear/fintrack text, visual_rubrics is None, and the sole image-referencing pytest check (_check_summary_boxes) only asserts the literal substrings \"payout\" and \"still to ship\" appear somewhere in the CSV \u2014 guessable from the prompt text alone, not from reading the image. This is a genuine Input Artifacts - Artifact Verification failure: no grading signal actually exercises the visual/multimodal inputs.",
+  "flags": [
+   {
+    "dimension": "Input Artifacts - Artifact Verification",
+    "category": "Fail - Missing Artifact Verification",
+    "severity": "Fail",
+    "reason": "All 16 image inputs (enhanced.jpg, top.jpg, bottom.jpg, KOL001.jpg, binary.png/binary2.png, row_0-9.jpg, summary_0/1.jpg) are crops/reprocessed versions of the same handwritten KnotBadCo ledger sheet, and that sheet is entirely blank -- only printed column headers and box labels, zero filled-in order data (confirmed by direct inspection of enhanced.jpg and summary_0.jpg). Every rubric criterion in the ctx JSON is modality TEXT_ONLY and traces to email/Linear/fintrack sources; visual_rubrics is None. The only image-referencing test (_check_summary_boxes in test_code) merely asserts the generic substrings 'payout' and 'still to ship' appear anywhere in the CSV, which is trivially satisfiable from the prompt's own wording ('both summary boxes') without reading any value off the image.",
+    "fix": "Either populate the handwritten sheet images with real order data that becomes the unique source of truth for at least one graded field, or add rubric/test criteria that require values read specifically from the image (not derivable from email/Linear/fintrack), or remove the redundant blank image artifacts from the task.",
+    "spec_ref": "Input Artifacts - Artifact Verification"
+   }
+  ]
+ },
+ "6a4bcd3f4ded158f40c4e3ed": {
+  "task_id": "6a4bcd3f4ded158f40c4e3ed",
+  "verdict": "Fail",
+  "confidence": 25,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major",
+    "category": "[Non-Fail - Up to 10% Major Errors]",
+    "severity": "Fail",
+    "reason": "Verified against the pulled rubric context: all 23 criteria carry weight +1 or +5, zero negative-weight criteria exist (0/23, target ~25%, cap 30% per grading-card \u00a79g). The rubric never penalizes the bad-faith behaviors central to the prompt (treating a public screenshot as ownership proof, overclaiming revenue/partnership/audience growth) \u2014 it only rewards correct hedging, so a response that overclaims everything is not directly docked for the overclaim itself, only for missing the positive-credit language. This is a systemic structural gap the grading card treats as Fail-band when the negative ratio is zero.",
+    "fix": "Convert 5-6 of the existing task-completion/factuality criteria (e.g. #9, #10, #11, #12, #13) into paired negative-weight criteria that explicitly penalize the overclaim/misattribution behaviors (e.g. -5 if the response treats public-facing screenshots as ownership proof; -5 if it calls The Athletic outreach a partnership without acceptance evidence).",
+    "spec_ref": "\u00a79g negative-weight ratio"
+   }
+  ],
+  "why": "Independently pulled the task's rubric JSON and confirmed the negative-weight flag exactly: all 23 criteria use only +1/+5 weights, 0 negatives, a genuine \u00a79g structural violation. The two Overfitting flags on criterion #15 are not confirmed \u2014 the grader's sole evidence is a ~6.2% aggregate pass rate, but criteria #5 and #13 have even lower (0%) empirical pass rates and were not flagged, and criterion #15's text ('label exact Instagram post authorship as Cannot Be Determined unless post-level metadata is cited') is squarely aligned with the prompt's explicit ask to be careful about ownership/authorship distinctions \u2014 low pass rate here reflects intended task difficulty (models tend to overclaim, which the task is designed to catch), not rubric rigidity that rejects valid responses. Dropped both Overfitting flags as unconfirmed miscounts of intent.",
+  "agreement": "1/1 grader flagged \u00a79g negative-weight gap, confirmed via direct JSON inspection; 1/1 grader's Overfitting flag on criterion #15 not reconfirmed and dropped (inconsistent with equally-low pass rates on unflagged criteria #5/#13, and criterion text matches prompt intent)."
+ },
+ "6a4bcd3f4ded158f40c4e3f2": {
+  "task_id": "6a4bcd3f4ded158f40c4e3f2",
+  "verdict": "Pass",
+  "confidence": 62,
+  "flags": [],
+  "why": "Clean per the single grader; master verification skipped.",
+  "agreement": "1 grader (clean), no master pass"
+ },
+ "6a4bcd3f4ded158f40c4e3f3": {
+  "task_id": "6a4bcd3f4ded158f40c4e3f3",
+  "verdict": "Fail",
+  "confidence": 28,
+  "flags": [
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major",
+    "category": "Fail - Up to 10% Major Errors",
+    "severity": "Fail",
+    "reason": "Confirmed and escalated from the grader's Non-Fail call. All 10 criteria carry weights of +1/+3/+5 with zero negative-weight criteria (verified in the ctx rubric JSON). Two of the gold answers (grey drake hook No. 5, red spinner hooks No. 7/8/9) are derivable only from the scanned book images (Img_1/Img_6/Img_3), and authoring_spec.md line 554 mandates 'at least one negative criterion targeting [cross-modal hallucination] per task whose gold derivation depends on values pulled from media' -- this rubric has none. The grading_card.md header itself states the override rule: 'zero negatives = Fail-band' (distinct from the raw 1/10=10% count the grader used to land on the Non-Fail boundary).",
+    "fix": "Add a negative-weight (-3 or -5) criterion awarding when the output states a hook number (No. 5 for grey drake, or No. 7/8/9 for red spinner) that contradicts what the scanned pages show / that is not grounded in Img_1/Img_3/Img_6, per the f2_hallucination pattern in the spec.",
+    "spec_ref": "authoring_spec.md \u00a79g / line 554 (cross-modal hallucination negative-criterion mandate); grading_card.md header 'zero negatives = Fail-band'"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "category": "Fail - Up to 15% Moderate Errors",
+    "severity": "Fail",
+    "reason": "Same underlying zero-negative-weight defect; since the Major dimension is escalated to Fail, the cumulative major-or-moderate dimension is Fail as well (a Major issue alone already exceeds this threshold under the card's override).",
+    "fix": "Same fix as above -- add the missing cross-modal hallucination negative criterion.",
+    "spec_ref": "grading_card.md header override; authoring_spec.md \u00a79g"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "Fail - 5-20% Minor Errors",
+    "severity": "Fail",
+    "reason": "Same underlying zero-negative-weight defect cascades to this cumulative band as well.",
+    "fix": "Same fix as above.",
+    "spec_ref": "grading_card.md header override; authoring_spec.md \u00a79g"
+   },
+   {
+    "dimension": "Tests - Coverage",
+    "category": "Non-Fail - Incorrectly Covered by Rubric",
+    "severity": "Non-Fail",
+    "reason": "Confirmed against test_code: the file explicitly states 'Every VALUE check ... is a substring/judgement check and [is] graded by the RUBRIC, not here,' and the two tests only assert result.md exists and is non-empty. None of the four prompt-requested answers (Netflix billing day, grocery total, grey drake hook, red spinner hooks) are covered by pytest -- all four live only in the rubric. This matches the spec's defined 'Incorrectly Covered by Rubric' category exactly.",
+    "fix": "No change required if this is an intentional design choice per the project's Pytest-vs-Rubric split rule, but if a stricter split is wanted, add a lightweight structural test (e.g., asserting result.md mentions a hook-number-shaped token) while keeping value-correctness in the rubric.",
+    "spec_ref": "authoring_spec.md line ~1115 'Non-Fail - Incorrectly Covered by Rubric'"
+   }
+  ],
+  "why": "The Tests-Coverage flag is confirmed verbatim against the test_code (which explicitly defers all four value checks to the rubric). The rubric-quality flag is confirmed but escalated: the grader math-boundaried this at exactly 10% (Non-Fail), but the ctx rubric shows zero negative-weight criteria despite two gold answers being derivable only from scanned media pages, which authoring_spec.md line 554 and the grading_card.md header explicitly treat as a Fail-band condition rather than a percentage-boundary call. Because a Fail flag survives, the overall verdict is Fail.",
+  "agreement": "1/1 grader flagged the missing negative-weight/cross-modal-hallucination criterion and the test-coverage gap; both confirmed on re-check of the ctx rubric and test_code, with the rubric-quality severity escalated from Non-Fail to Fail per the grading card's explicit 'zero negatives = Fail-band' override."
+ },
+ "6a4bcd3f4ded158f40c4e3f5": {
+  "task_id": "6a4bcd3f4ded158f40c4e3f5",
+  "verdict": "Pass",
+  "confidence": 4,
+  "flags": [],
+  "why": "Clean per the single grader; master verification skipped.",
+  "agreement": "1 grader (clean), no master pass"
+ },
+ "6a4bcd3f4ded158f40c4e400": {
+  "task_id": "6a4bcd3f4ded158f40c4e400",
+  "verdict": "Fail",
+  "confidence": 15,
+  "flags": [
+   {
+    "dimension": "Tests - Correctness",
+    "category": "[Fail - Incorrect Tests]",
+    "severity": "Fail",
+    "reason": "Confirmed via test_code: test_email_total_count_is_27 asserts len(emails)==27 against ALL SENT emails in the mailbox snapshot (26 pre-existing + 1 new), a brittle environment-state check unrelated to the task's actual requirement of sending one email to Keisha. This is 1 of 8 tests in the suite (test_videos_csv_exists, test_plants_mp4_exists, test_videos_csv_has_2_columns, test_videos_csv_has_5_rows, test_videos_csv_header_first_column_is_order, test_videos_csv_header_second_column_is_filename, test_email_total_count_is_27, test_email_last_sent_recipient_is_keisha) = 12.5%, exceeding the 10% threshold for Fail.",
+    "fix": "Remove or rewrite test_email_total_count_is_27 to check something scoped to the task (e.g., that at least one new SENT email exists to Keisha) instead of an absolute mailbox-wide count.",
+    "spec_ref": "Tests - Correctness [Fail - Incorrect Tests] >=10% overly-specific/misaligned tests"
+   },
+   {
+    "dimension": "Tests - Coverage",
+    "category": "[Non-Fail - Incorrectly Covered by Rubric]",
+    "severity": "Non-Fail",
+    "reason": "Confirmed: rubric contains exactly 4 TEXT_ONLY criteria asserting specific filenames in videos.csv rows #1-#4 (VID_20260707_143235.mp4, VID_20260707_143141.mp4, VID_20260707_143205.mp4, VID_20260707_143219.mp4), each a deterministic single-value fact. The pytest suite only checks header names and row count (test_videos_csv_has_2_columns, test_videos_csv_has_5_rows, header column-name tests) and never reads/asserts actual row content, so this deterministic fact is left to rubric/LLM-judge coverage instead of a pytest test.",
+    "fix": "Add a pytest test that reads videos.csv rows 1-4 and asserts the exact filename in each row.",
+    "spec_ref": "Tests - Coverage [Non-Fail - Incorrectly Covered by Rubric]"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate",
+    "category": "[Non-Fail - Up to 15% Moderate Errors]",
+    "severity": "Non-Fail",
+    "reason": "Confirmed: two criteria \u2014 'The agent does not add any title overlay or text overlay to plants.mp4...' (weight 3) and 'The email sent to keisha.bryant@gmail.com does not contain any file attachments.' (weight 1) \u2014 are Double-Negative prohibitions (positive-phrased-good-outcome via 'does not X') carrying positive weights rather than being written as a negative-weighted bad-event per \u00a79g. 2/25 = 8%, within the <=15% Non-Fail band (majors 0%).",
+    "fix": "Rephrase both as positive-phrased bad-events with negative weight, e.g. 'The agent adds a title/text overlay to plants.mp4' (weight -3) and 'The email to Keisha contains a file attachment' (weight -1).",
+    "spec_ref": "\u00a79g Negative-weight ratio / Double Negative"
+   },
+   {
+    "dimension": "Rubric Criteria - Overall Rubric Quality - Major/Moderate/Minor",
+    "category": "[Non-Fail - 5-20% Minor Errors]",
+    "severity": "Non-Fail",
+    "reason": "Same two Double-Negative-phrased criteria (8% of 25) fall within the 5-20% Non-Fail band for minor-or-worse issue rate, with 0% majors.",
+    "spec_ref": "\u00a79g Negative-weight ratio / Double Negative"
+   }
+  ],
+  "why": "Independently reconfirmed all four grader flags against the actual test_code and rubric JSON in the ctx file: the 27-email test is a mailbox-wide hardcoded count (1/8=12.5% tests, Fail-band); the 4 videos.csv filename criteria are genuinely uncovered by any pytest content check (Non-Fail); and exactly 2/25 rubric criteria are double-negative-phrased with positive weight, landing in both the moderate (<=15%) and minor-or-worse (5-20%) Non-Fail bands. No flags needed dropping; category labels and thresholds match the grading card exactly.",
+  "agreement": "1/1 grader; all 4 flags independently confirmed against test_code and rubric evidence, none dropped"
+ },
+ "6a4c976d8ac483b5991658e0": {
+  "task_id": "6a4c976d8ac483b5991658e0",
+  "verdict": "Non-Fail",
+  "confidence": 78,
+  "flags": [
+   {
+    "dimension": "Failed Rubric/Unit Test - Justification",
+    "category": "[Non-Fail - Weak Justification]",
+    "severity": "Non-Fail",
+    "reason": "The criterion 'The review names May 15, 2026, the deadline in the most recent demands letter on record, as the date that governs the listing timing.' (weight 5, pass_rate_gpt=0.0, pass_rate_opus=0.0) has none of why_rubric_is_correct/why_rubric_is_important/what_model_did_wrong set. Direct comparison against every other 0.0/0.0 pass-rate criterion in this rubric (the R. Dunn expense, co-ownership authority, excluded loan-officer items, basement condition change, county assessed value, Madison County property tax, QuickBooks/loan-officer misrepresentation, and the out-of-record deadline decoy) confirms all of them have a full justification set \u2014 this is the sole exception.",
+    "fix": "Add why_rubric_is_correct/why_rubric_is_important/what_model_did_wrong to the May 15, 2026 deadline criterion to match the justification standard applied to every other equally-hard criterion in this rubric.",
+    "spec_ref": "Failed Rubric/Unit Test - Justification"
+   }
+  ],
+  "why": "Re-checked the ctx JSON directly: enumerating all 24 rubric criteria and their justification fields against pass_rate_gpt/pass_rate_opus confirms the grader's claim precisely \u2014 every 0.0/0.0 pass-rate criterion has a full why_rubric_is_correct/why_rubric_is_important/what_model_did_wrong set except the May 15, 2026 deadline criterion, which has none. This is a real, reconfirmed spec/authoring gap, not a misread, but it's a justification-completeness issue rather than a substantive rubric-correctness defect, so it lands as Non-Fail per the grader's own severity.",
+  "agreement": "1/1 grader flagged this dimension; independently reconfirmed via direct field-by-field inspection of the ctx JSON rubric array."
+ },
+ "6a4c976d8ac483b5991658e3": {
+  "task_id": "6a4c976d8ac483b5991658e3",
+  "verdict": "Pass",
+  "confidence": 4,
+  "flags": [],
+  "why": "Clean per the single grader; master verification skipped.",
+  "agreement": "1 grader (clean), no master pass"
+ },
+ "6a4c976d8ac483b5991658f5": {
+  "task_id": "6a4c976d8ac483b5991658f5",
+  "verdict": "Non-Fail",
+  "confidence": 65,
+  "flags": [
+   {
+    "dimension": "Input Artifacts - Realism",
+    "category": "Non-Fail - Realism",
+    "severity": "Non-Fail",
+    "reason": "ffprobe confirms Blueshell_task_3_Mr_davis_convo.mp4 contains exactly one AAC audio stream (no video stream), with duration 43.369958s identical to audio.wav's 43.370688s duration \u2014 it is a duplicate/mislabeled audio file packaged as an .mp4. The task instruction only references 'a file containing the official project rubric and an audio recording,' never mentioning a video file, confirming this artifact is unreferenced and contrived.",
+    "spec_ref": "Input Artifacts - Realism",
+    "fix": "Remove the redundant .mp4 (or replace it with an actual video file if a video modality was intended), keeping only audio.wav and rubrics.jpeg as the two artifacts the prompt describes."
+   },
+   {
+    "dimension": "Tests - Coverage",
+    "category": "Non-Fail - Incorrectly Covered by Rubric",
+    "severity": "Non-Fail",
+    "reason": "Verified test_code.py contains exactly 3 tests: test_project_timeline_md_exists, test_no_bullet_points_in_file, test_no_numbered_lists_in_file \u2014 all checking only file existence and formatting markers. None test substantive content. The rubric, however, carries several high-weight (5) content criteria \u2014 Friday Jan 26 deadline (weight 3), flat cardboard material, two-page research paper, circuits/physics topic, and circuits shopping-list items (weight 5 each) \u2014 that are only checked by the LLM-graded rubric, not by any deterministic unit test, despite being objectively verifiable facts from the audio recording.",
+    "spec_ref": "Tests - Coverage",
+    "fix": "Add unit tests asserting project_timeline.md contains 'January 26' (or the deadline), 'cardboard', a circuits/physics keyword, and that the shopping list contains circuit-related materials (e.g., 'battery', 'wire'), moving these objective checks out of rubric-only coverage."
+   }
+  ],
+  "why": "Both grader-reported flags were independently reconfirmed against primary evidence: ffprobe on the actual mp4 file proves it is audio-only and duration-identical to audio.wav, and the task instruction text confirms no video is referenced. The test_code.py file was read directly and contains only 3 formatting/existence tests, while the rubric JSON shows five weight-5 content criteria (cardboard, two-page paper, circuits topic/materials) and one weight-3 deadline criterion that are rubric-only, unbacked by deterministic tests. Neither flag rises to Fail severity \u2014 they are quality/coverage gaps, not correctness-breaking defects \u2014 so the task remains Non-Fail overall.",
+  "agreement": "1/1 grader agreed on both flags; both independently reconfirmed via ffprobe, instruction text, test_code.py, and rubric JSON inspection."
+ }
+}

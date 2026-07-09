@@ -1,0 +1,1714 @@
+{
+ "6a04c2de0b4f42487f8e5e08": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 0% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=0% of total (w=0/56); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=0% of total (w=0/56); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 14%, below the \u00a79g ~25% target. 2/14 = 14% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "2/14 = 14% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a0b6c51dd899aff89927536": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 0% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=0% of total (w=0/71); vision=7% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (7% of total), below the 50%-of-accuracy (>= 25% of total) bar. ",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=0% of total (w=0/71); vision=7% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "action_required",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Rubric has ZERO negative-weight criteria. \u00a79g requires ~25% (cap 30%) negative-weight criteria to cover failure modes (cross-modal hallucination, prohibitions). 0/25 = 0% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria (~25% of the set) that AWARD points when a failure mode IS present (affirmative phrasing of the bad behavior).",
+   "evidence": "0/25 = 0% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a1fbaebeae04350ba1af213": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 0% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=0% of total (w=0/114); vision=22% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (22% of total), below the 50%-of-accuracy (>= 25% of total) bar. ",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=0% of total (w=0/114); vision=22% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "pytest_hardcount",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "action_required",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "tests/test_outputs.py contains exact-count assertions that fail a correct-but-different-shaped output. hardcoded count assertion(s): `column_count == 2` Task mean_reward=0.40 (low) \u2014 the brittle count may be suppressing correct answers.",
+   "fix": "Relax the exact-count assertion to a range / '>=' bound, or delete it if a rubric already covers the requirement.",
+   "evidence": "hardcoded count assertion(s): `column_count == 2`"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "action_required",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Rubric has ZERO negative-weight criteria. \u00a79g requires ~25% (cap 30%) negative-weight criteria to cover failure modes (cross-modal hallucination, prohibitions). 0/34 = 0% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria (~25% of the set) that AWARD points when a failure mode IS present (affirmative phrasing of the bad behavior).",
+   "evidence": "0/34 = 0% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a2252a7226df6fc69476d54": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 6% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=6% of total (w=3/53); vision=6% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (6% of total), below the 50%-of-accuracy (>= 25% of total) bar. ",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=6% of total (w=3/53); vision=6% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    21
+   ],
+   "test_names": [],
+   "explanation": "Rubric R21 demands an exact value and both reference models pass it rarely (pass_rate=0% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "' The workspace does not include `jayden_email.md`, since Jayden has exactly 5 social interactions and does not meet the ' pass_rate=0.0"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "action_required",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Rubric has ZERO negative-weight criteria. \u00a79g requires ~25% (cap 30%) negative-weight criteria to cover failure modes (cross-modal hallucination, prohibitions). 0/21 = 0% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria (~25% of the set) that AWARD points when a failure mode IS present (affirmative phrasing of the bad behavior).",
+   "evidence": "0/21 = 0% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a2252a7226df6fc69476d60": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=88% of total (w=75/85); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "pytest_hardcount",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "tests/test_outputs.py contains exact-count assertions that fail a correct-but-different-shaped output. hardcoded count assertion(s): `len(complete) == 1`; `len(candidates) == 1`; `len(selected_roots) == 1`",
+   "fix": "Relax the exact-count assertion to a range / '>=' bound, or delete it if a rubric already covers the requirement.",
+   "evidence": "hardcoded count assertion(s): `len(complete) == 1`; `len(candidates) == 1`; `len(selected_roots) == 1`"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "action_required",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Rubric has ZERO negative-weight criteria. \u00a79g requires ~25% (cap 30%) negative-weight criteria to cover failure modes (cross-modal hallucination, prohibitions). 0/23 = 0% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria (~25% of the set) that AWARD points when a failure mode IS present (affirmative phrasing of the bad behavior).",
+   "evidence": "0/23 = 0% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a2e2c326db3981084352d3c": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 0% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=0% of total (w=0/52); vision=100% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (100% of total), below the 50%-of-accuracy (>= 25% of total) bar. ",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=0% of total (w=0/52); vision=100% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 14%, below the \u00a79g ~25% target. 2/14 = 14% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "2/14 = 14% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a31a2f7424da28b8ccb4459": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 27% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=27% of total (w=12/45); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=27% of total (w=12/45); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "pytest_hardcount",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "action_required",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "tests/test_outputs.py contains exact-count assertions that fail a correct-but-different-shaped output. hardcoded count assertion(s): `len(rows) == 37` Task mean_reward=0.31 (low) \u2014 the brittle count may be suppressing correct answers.",
+   "fix": "Relax the exact-count assertion to a range / '>=' bound, or delete it if a rubric already covers the requirement.",
+   "evidence": "hardcoded count assertion(s): `len(rows) == 37`"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    12
+   ],
+   "test_names": [],
+   "explanation": "Rubric R12 demands an exact value and both reference models pass it rarely (pass_rate=0% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'hr_zones_guide.md presents exactly four training zones.' pass_rate=0.0"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 7%, below the \u00a79g ~25% target. 1/14 = 7% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "1/14 = 7% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a31a2f7424da28b8ccb445a": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 28% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=28% of total (w=10/36); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=28% of total (w=10/36); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 18%, below the \u00a79g ~25% target. 3/17 = 18% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "3/17 = 18% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a31a2f7424da28b8ccb445b": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 42% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=42% of total (w=11/26); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=42% of total (w=11/26); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    3
+   ],
+   "test_names": [],
+   "explanation": "Rubric R3 demands an exact value and both reference models pass it rarely (pass_rate=0% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'A calendar event titled \"CS 401 Exam Prep\" exists, scheduled on a Friday from 18:00 to 20:00.' pass_rate=0.0"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "action_required",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Rubric has ZERO negative-weight criteria. \u00a79g requires ~25% (cap 30%) negative-weight criteria to cover failure modes (cross-modal hallucination, prohibitions). 0/10 = 0% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria (~25% of the set) that AWARD points when a failure mode IS present (affirmative phrasing of the bad behavior).",
+   "evidence": "0/10 = 0% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a31a2f7424da28b8ccb4469": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 26% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=26% of total (w=17/65); vision=2% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (2% of total), below the 50%-of-accuracy (>= 25% of total) bar. ",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=26% of total (w=17/65); vision=2% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 7%, below the \u00a79g ~25% target. 2/27 = 7% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "2/27 = 7% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a34843aa0d92ff63eee2e29": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 10% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=10% of total (w=2/20); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=10% of total (w=2/20); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 22%, below the \u00a79g ~25% target. 4/18 = 22% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "4/18 = 22% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a3ae0c1291d4e4d56373174": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 0% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=0% of total (w=0/28); vision=57% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (57% of total), below the 50%-of-accuracy (>= 25% of total) bar. ",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=0% of total (w=0/28); vision=57% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 9%, below the \u00a79g ~25% target. 1/11 = 9% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "1/11 = 9% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a3d7db012a738e7ef9c09c1": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 46% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=46% of total (w=18/39); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=46% of total (w=18/39); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    2
+   ],
+   "test_names": [],
+   "explanation": "Rubric R2 demands an exact value and both reference models pass it rarely (pass_rate=0% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "\"Reading 1's time is logged as 2:40 (read from its clock photo)\" pass_rate=0.0"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    4
+   ],
+   "test_names": [],
+   "explanation": "Rubric R4 demands an exact value and both reference models pass it rarely (pass_rate=0% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "\"Reading 3's time is logged as 2:55\" pass_rate=0.0"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    5
+   ],
+   "test_names": [],
+   "explanation": "Rubric R5 demands an exact value and both reference models pass it rarely (pass_rate=0% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "\"Reading 4's time is logged as 3:40\" pass_rate=0.0"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 5%, below the \u00a79g ~25% target. 1/20 = 5% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "1/20 = 5% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a3d7db012a738e7ef9c09c8": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=84% of total (w=27/32); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    2
+   ],
+   "test_names": [],
+   "explanation": "Rubric R2 demands an exact value and both reference models pass it rarely (pass_rate=12% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'homework_complete.md records the Section A Box 1 dot count as exactly 13.' pass_rate=0.125"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    3
+   ],
+   "test_names": [],
+   "explanation": "Rubric R3 demands an exact value and both reference models pass it rarely (pass_rate=6% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'homework_complete.md records the Section A Box 2 dot count as exactly 9.' pass_rate=0.062"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    4
+   ],
+   "test_names": [],
+   "explanation": "Rubric R4 demands an exact value and both reference models pass it rarely (pass_rate=12% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'homework_complete.md records the Section A Box 3 dot count as exactly 13.' pass_rate=0.125"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 8%, below the \u00a79g ~25% target. 1/13 = 8% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "1/13 = 8% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a3d7db012a738e7ef9c09c9": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 8% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=8% of total (w=6/73); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=8% of total (w=6/73); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 21%, below the \u00a79g ~25% target. 6/29 = 21% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "6/29 = 21% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a3d7db012a738e7ef9c09cc": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 30% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=30% of total (w=14/47); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=30% of total (w=14/47); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 13%, below the \u00a79g ~25% target. 2/15 = 13% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "2/15 = 13% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a42a89fbff245d051aeb422": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (2% of total), below the 50%-of-accuracy (>= 25% of total) bar. ",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=80% of total (w=33/41); vision=2% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "pytest_hardcount",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "tests/test_outputs.py contains exact-count assertions that fail a correct-but-different-shaped output. hardcoded count assertion(s): `len(rows) == 5`",
+   "fix": "Relax the exact-count assertion to a range / '>=' bound, or delete it if a rubric already covers the requirement.",
+   "evidence": "hardcoded count assertion(s): `len(rows) == 5`"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 12%, below the \u00a79g ~25% target. 2/17 = 12% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "2/17 = 12% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a42a89fbff245d051aeb426": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 0% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=0% of total (w=0/73); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=0% of total (w=0/73); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "action_required",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Rubric has ZERO negative-weight criteria. \u00a79g requires ~25% (cap 30%) negative-weight criteria to cover failure modes (cross-modal hallucination, prohibitions). 0/15 = 0% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria (~25% of the set) that AWARD points when a failure mode IS present (affirmative phrasing of the bad behavior).",
+   "evidence": "0/15 = 0% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a44d23e639aef61456f6ff9": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 21% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=21% of total (w=10/47); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=21% of total (w=10/47); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "pytest_hardcount",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "tests/test_outputs.py contains exact-count assertions that fail a correct-but-different-shaped output. hardcoded count assertion(s): `len(dates) == 3`",
+   "fix": "Relax the exact-count assertion to a range / '>=' bound, or delete it if a rubric already covers the requirement.",
+   "evidence": "hardcoded count assertion(s): `len(dates) == 3`"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    3
+   ],
+   "test_names": [],
+   "explanation": "Rubric R3 demands an exact value and both reference models pass it rarely (pass_rate=19% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'meal_log.csv records the April 25 pizza exactly once, with the preparation photos and the whole-pie photo collapsed into' pass_rate=0.188"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 11%, below the \u00a79g ~25% target. 2/19 = 11% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "2/19 = 11% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a457ed4182720ee4794afb6": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 0% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=0% of total (w=0/29); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=0% of total (w=0/29); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "pytest_hardcount",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "action_required",
+   "rubric_ids": [],
+   "test_names": [
+    "test_reviewed_csv_has_exactly_the_four_listings"
+   ],
+   "explanation": "tests/test_outputs.py contains exact-count assertions that fail a correct-but-different-shaped output. exact-count test(s): test_reviewed_csv_has_exactly_the_four_listings | hardcoded count assertion(s): `len(rows) == 4` Task mean_reward=0.39 (low) \u2014 the brittle count may be suppressing correct answers.",
+   "fix": "Relax the exact-count assertion to a range / '>=' bound, or delete it if a rubric already covers the requirement.",
+   "evidence": "exact-count test(s): test_reviewed_csv_has_exactly_the_four_listings | hardcoded count assertion(s): `len(rows) == 4`"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 7%, below the \u00a79g ~25% target. 1/14 = 7% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "1/14 = 7% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a457ed4182720ee4794afb7": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 11% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=11% of total (w=4/36); vision=6% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (6% of total), below the 50%-of-accuracy (>= 25% of total) bar. ",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=11% of total (w=4/36); vision=6% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 6%, below the \u00a79g ~25% target. 1/17 = 6% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "1/17 = 6% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a457ed4182720ee4794afba": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 18% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=18% of total (w=6/34); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=18% of total (w=6/34); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    6
+   ],
+   "test_names": [],
+   "explanation": "Rubric R6 demands an exact value and both reference models pass it rarely (pass_rate=12% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'The report selects a publication time on December 25, 2025, between 10:00 AM and 12:00 PM EST.' pass_rate=0.125"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    7
+   ],
+   "test_names": [],
+   "explanation": "Rubric R7 demands an exact value and both reference models pass it rarely (pass_rate=6% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'The chosen publication time does not conflict with the Team Standup (10:00 AM - 10:15 AM EST) or the Design Sync with Ma' pass_rate=0.062"
+  },
+  {
+   "check": "answer_key_data",
+   "defect_type": "RUBRIC_INACCURATE",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    5
+   ],
+   "test_names": [],
+   "explanation": "Rubric R5 grades against currency value(s) ['$21.99'] that appear nowhere in the mock-API data the agent can read \u2014 the answer key is likely wrong or the data is missing.",
+   "fix": "Reconcile the rubric's expected amount with the actual service data (fintrack/etc.), or add the supporting record so the value is derivable.",
+   "evidence": "amounts=['$21.99'] not found in service data"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 17%, below the \u00a79g ~25% target. 2/12 = 17% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "2/12 = 17% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a457ed4182720ee4794afbc": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 0% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=0% of total (w=0/77); vision=88% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (88% of total), below the 50%-of-accuracy (>= 25% of total) bar. ",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=0% of total (w=0/77); vision=88% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "action_required",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Rubric has ZERO negative-weight criteria. \u00a79g requires ~25% (cap 30%) negative-weight criteria to cover failure modes (cross-modal hallucination, prohibitions). 0/17 = 0% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria (~25% of the set) that AWARD points when a failure mode IS present (affirmative phrasing of the bad behavior).",
+   "evidence": "0/17 = 0% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a457ed4182720ee4794afd2": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 0% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=0% of total (w=0/66); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=0% of total (w=0/66); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    8
+   ],
+   "test_names": [],
+   "explanation": "Rubric R8 demands an exact value and both reference models pass it rarely (pass_rate=0% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "\"next_steps.md states Owen's preschool pickup at 4:30 PM directly conflicts with Bright Path's Tuesday/Thursday 4:00-5:00\" pass_rate=0.0"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    12
+   ],
+   "test_names": [],
+   "explanation": "Rubric R12 demands an exact value and both reference models pass it rarely (pass_rate=0% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "\"MEMORY.md contains the scheduling conflict between Owen's 4:30 PM pickup and the tutoring sessions at 4:00-5:00 PM Tuesd\" pass_rate=0.0"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    15
+   ],
+   "test_names": [],
+   "explanation": "Rubric R15 demands an exact value and both reference models pass it rarely (pass_rate=12% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "\"The model's trajectory includes a query to contacts or user profile tools to confirm Owen's preschool pickup time of 4:3\" pass_rate=0.125"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 5%, below the \u00a79g ~25% target. 1/19 = 5% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "1/19 = 5% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a4580a87562d45c85acf909": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 44% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=44% of total (w=17/39); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=44% of total (w=17/39); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    4
+   ],
+   "test_names": [],
+   "explanation": "Rubric R4 demands an exact value and both reference models pass it rarely (pass_rate=19% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'tax_receipts_summary.csv contains exactly the right set of items: the MinuteClinic visit is left out because it was paid' pass_rate=0.188"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "action_required",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Rubric has ZERO negative-weight criteria. \u00a79g requires ~25% (cap 30%) negative-weight criteria to cover failure modes (cross-modal hallucination, prohibitions). 0/11 = 0% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria (~25% of the set) that AWARD points when a failure mode IS present (affirmative phrasing of the bad behavior).",
+   "evidence": "0/11 = 0% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a480daf5c67581f0c3ae624": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 0% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=0% of total (w=0/39); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=0% of total (w=0/39); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    3
+   ],
+   "test_names": [],
+   "explanation": "Rubric R3 demands an exact value and both reference models pass it rarely (pass_rate=0% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'(`insurance_claim_report.md`) records a physical count of exactly 10 units for the Crucial 4GB DDR3L SODIMM module.' pass_rate=0.0"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    4
+   ],
+   "test_names": [],
+   "explanation": "Rubric R4 demands an exact value and both reference models pass it rarely (pass_rate=0% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'(`insurance_claim_report.md`) records a physical count of exactly 12 units for the Samsung 1GB DDR3 ECC DIMM module.' pass_rate=0.0"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    5
+   ],
+   "test_names": [],
+   "explanation": "Rubric R5 demands an exact value and both reference models pass it rarely (pass_rate=0% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'(`insurance_claim_report.md`) records a physical count of exactly 14 units for the Samsung/Mixed 4GB DDR3L SODIMM module' pass_rate=0.0"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    6
+   ],
+   "test_names": [],
+   "explanation": "Rubric R6 demands an exact value and both reference models pass it rarely (pass_rate=0% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'(`insurance_claim_report.md`) records an aggregate total count of exactly 36 damaged units.' pass_rate=0.0"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    8
+   ],
+   "test_names": [],
+   "explanation": "Rubric R8 demands an exact value and both reference models pass it rarely (pass_rate=0% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'(`insurance_claim_report.md`) calculates the total net compensable value for the claim as exactly $364.44.' pass_rate=0.0"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    10
+   ],
+   "test_names": [],
+   "explanation": "Rubric R10 demands an exact value and both reference models pass it rarely (pass_rate=0% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'The email draft in the folder reflects a total claim value of exactly $364.44 in its valuation table or summary body.' pass_rate=0.0"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    15
+   ],
+   "test_names": [],
+   "explanation": "Rubric R15 demands an exact value and both reference models pass it rarely (pass_rate=0% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'The insurance_claim_report.md calculates a gross average unit value of exactly $12.07 for the Crucial 4GB DDR3L SODIMM m' pass_rate=0.0"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 19%, below the \u00a79g ~25% target. 3/16 = 19% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "3/16 = 19% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a480daf5c67581f0c3ae62b": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 29% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=29% of total (w=12/42); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=29% of total (w=12/42); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 18%, below the \u00a79g ~25% target. 3/17 = 18% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "3/17 = 18% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a480daf5c67581f0c3ae62d": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 0% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=0% of total (w=0/41); vision=15% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (15% of total), below the 50%-of-accuracy (>= 25% of total) bar. ",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=0% of total (w=0/41); vision=15% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "visual_sign",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    12
+   ],
+   "test_names": [],
+   "explanation": "Rubric R12 describes undesired behavior but carries a positive weight (1) \u2014 it rewards the bad behavior instead of penalizing it.",
+   "fix": "Give this criterion a negative weight (penalty guard) so incurring the bad behavior subtracts points.",
+   "evidence": "`thumbnail_report.md` accounts for all eight thumbnails, sorting each into a recommendation (ready to post, needs redo, or should not be posted/already live), w"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 12%, below the \u00a79g ~25% target. 2/17 = 12% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "2/17 = 12% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a480daf5c67581f0c3ae632": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 47% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=47% of total (w=20/43); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=47% of total (w=20/43); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "pytest_hardcount",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [
+    "test_milestones_csv_exactly_eight_rows"
+   ],
+   "explanation": "tests/test_outputs.py contains exact-count assertions that fail a correct-but-different-shaped output. exact-count test(s): test_milestones_csv_exactly_eight_rows | hardcoded count assertion(s): `len(data) == 8`; `len(r) == 3`",
+   "fix": "Relax the exact-count assertion to a range / '>=' bound, or delete it if a rubric already covers the requirement.",
+   "evidence": "exact-count test(s): test_milestones_csv_exactly_eight_rows | hardcoded count assertion(s): `len(data) == 8`; `len(r) == 3`"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 12%, below the \u00a79g ~25% target. 2/17 = 12% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "2/17 = 12% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a4bcd3f4ded158f40c4e3d6": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=64% of total (w=21/33); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "action_required",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Rubric has ZERO negative-weight criteria. \u00a79g requires ~25% (cap 30%) negative-weight criteria to cover failure modes (cross-modal hallucination, prohibitions). 0/13 = 0% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria (~25% of the set) that AWARD points when a failure mode IS present (affirmative phrasing of the bad behavior).",
+   "evidence": "0/13 = 0% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a4bcd3f4ded158f40c4e3da": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 37% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=37% of total (w=11/30); vision=10% of total; vision-of-accuracy=27%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 27% of the accuracy mix (10% of total), below the 50%-of-accuracy (>= 25% of total) bar. ",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=37% of total (w=11/30); vision=10% of total; vision-of-accuracy=27%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "action_required",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Rubric has ZERO negative-weight criteria. \u00a79g requires ~25% (cap 30%) negative-weight criteria to cover failure modes (cross-modal hallucination, prohibitions). 0/10 = 0% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria (~25% of the set) that AWARD points when a failure mode IS present (affirmative phrasing of the bad behavior).",
+   "evidence": "0/10 = 0% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a4bcd3f4ded158f40c4e3e5": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 0% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=0% of total (w=0/61); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=0% of total (w=0/61); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 8%, below the \u00a79g ~25% target. 2/25 = 8% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "2/25 = 8% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a4bcd3f4ded158f40c4e3ed": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 25% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=25% of total (w=17/67); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=25% of total (w=17/67); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "visual_sign",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    10
+   ],
+   "test_names": [],
+   "explanation": "Rubric R10 describes undesired behavior but carries a positive weight (5) \u2014 it rewards the bad behavior instead of penalizing it.",
+   "fix": "Give this criterion a negative weight (penalty guard) so incurring the bad behavior subtracts points.",
+   "evidence": "When workspace/app records are accessible, the audit treats Urban Roots SF / gardening as workspace-supported only if it cites record-backed support such as own"
+  },
+  {
+   "check": "visual_sign",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    21
+   ],
+   "test_names": [],
+   "explanation": "Rubric R21 describes undesired behavior but carries a positive weight (5) \u2014 it rewards the bad behavior instead of penalizing it.",
+   "fix": "Give this criterion a negative weight (penalty guard) so incurring the bad behavior subtracts points.",
+   "evidence": "The final recommendation separates what Monique can safely use, what she should not use, and what additional proof is needed only for unsupported or indetermina"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    16
+   ],
+   "test_names": [],
+   "explanation": "Rubric R16 demands an exact value and both reference models pass it rarely (pass_rate=6% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'The audit separates Seed Swap/local gardening event claims into event participation, content creation, and exact-post au' pass_rate=0.062"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "action_required",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Rubric has ZERO negative-weight criteria. \u00a79g requires ~25% (cap 30%) negative-weight criteria to cover failure modes (cross-modal hallucination, prohibitions). 0/23 = 0% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria (~25% of the set) that AWARD points when a failure mode IS present (affirmative phrasing of the bad behavior).",
+   "evidence": "0/23 = 0% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a4bcd3f4ded158f40c4e3f2": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 38% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=38% of total (w=14/37); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=38% of total (w=14/37); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 7%, below the \u00a79g ~25% target. 2/27 = 7% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "2/27 = 7% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a4bcd3f4ded158f40c4e3f3": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=62% of total (w=15/24); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "action_required",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Rubric has ZERO negative-weight criteria. \u00a79g requires ~25% (cap 30%) negative-weight criteria to cover failure modes (cross-modal hallucination, prohibitions). 0/10 = 0% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria (~25% of the set) that AWARD points when a failure mode IS present (affirmative phrasing of the bad behavior).",
+   "evidence": "0/10 = 0% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a4bcd3f4ded158f40c4e3f5": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 0% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=0% of total (w=0/34); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=0% of total (w=0/34); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 9%, below the \u00a79g ~25% target. 1/11 = 9% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "1/11 = 9% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a4bcd3f4ded158f40c4e400": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 8% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=8% of total (w=6/75); vision=28% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (28% of total), below the 50%-of-accuracy (>= 25% of total) bar. ",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=8% of total (w=6/75); vision=28% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    10
+   ],
+   "test_names": [],
+   "explanation": "Rubric R10 demands an exact value and both reference models pass it rarely (pass_rate=6% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'The plants.mp4 contains exactly 4 video clips.' pass_rate=0.062"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    15
+   ],
+   "test_names": [],
+   "explanation": "Rubric R15 demands an exact value and both reference models pass it rarely (pass_rate=6% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'The email sent to keisha.bryant@gmail.com contains exactly 4 video clips.' pass_rate=0.062"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    21
+   ],
+   "test_names": [],
+   "explanation": "Rubric R21 demands an exact value and both reference models pass it rarely (pass_rate=19% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'The final response to the user lists exactly 4 video clips and no more.' pass_rate=0.188"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    24
+   ],
+   "test_names": [],
+   "explanation": "Rubric R24 demands an exact value and both reference models pass it rarely (pass_rate=19% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'The agent correctly identifies exactly 4 plantsas marked for inclusion in the instructions PDF.' pass_rate=0.188"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    25
+   ],
+   "test_names": [],
+   "explanation": "Rubric R25 demands an exact value and both reference models pass it rarely (pass_rate=12% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "'The agent sequences the 4 selected clips in the exact order they appear top to bottom in the instructions PDF, without r' pass_rate=0.125"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "action_required",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Rubric has ZERO negative-weight criteria. \u00a79g requires ~25% (cap 30%) negative-weight criteria to cover failure modes (cross-modal hallucination, prohibitions). 0/25 = 0% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria (~25% of the set) that AWARD points when a failure mode IS present (affirmative phrasing of the bad behavior).",
+   "evidence": "0/25 = 0% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a4c976d8ac483b5991658e0": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 4% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=4% of total (w=3/68); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=4% of total (w=3/68); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 8%, below the \u00a79g ~25% target. 2/24 = 8% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "2/24 = 8% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a4c976d8ac483b5991658e3": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 18% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=18% of total (w=17/92); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=18% of total (w=17/92); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "overspec_exact",
+   "defect_type": "RUBRIC_OVERSPEC",
+   "tier": "review_recommended",
+   "rubric_ids": [
+    2
+   ],
+   "test_names": [],
+   "explanation": "Rubric R2 demands an exact value and both reference models pass it rarely (pass_rate=0% <= 30%) \u2014 likely over-specified where a range is defensible.",
+   "fix": "Accept a tolerance/range for this target (or move exact-match to an LLM-graded criterion that can reason about acceptable variance).",
+   "evidence": "\"D5's 'unaware of any repair history' is labeled explicitly false or misleading, citing BLD-2017-08942 (June 2017, Buckey\" pass_rate=0.0"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 10%, below the \u00a79g ~25% target. 3/29 = 10% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "3/29 = 10% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ],
+ "6a4c976d8ac483b5991658f5": [
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Accuracy rubrics are 0% of total rubric weight, below the 60% bar. Non-accuracy criteria are over-weighted.",
+   "fix": "Downweight non-accuracy criteria (or add accuracy criteria) until accuracy >= 60% of total weight.",
+   "evidence": "accuracy=0% of total (w=0/43); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "weight_mix",
+   "defect_type": "WEIGHT_MIX",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Vision rubrics are 0% of the accuracy mix (0% of total), below the 50%-of-accuracy (>= 25% of total) bar. No criteria are tagged vision-dependent \u2014 check for modality mistagging.",
+   "fix": "Add or up-weight vision-dependent accuracy criteria (and verify criteria that require reading an image aren't mistagged TEXT_ONLY).",
+   "evidence": "accuracy=0% of total (w=0/43); vision=0% of total; vision-of-accuracy=0%; accuracy_types=['factuality and hallucination']"
+  },
+  {
+   "check": "negweight_ratio",
+   "defect_type": "RUBRIC_UNFAIR",
+   "tier": "review_recommended",
+   "rubric_ids": [],
+   "test_names": [],
+   "explanation": "Negative-weight criteria are 6%, below the \u00a79g ~25% target. 1/16 = 6% negative-weight (\u00a79g target 25%, cap 30%).",
+   "fix": "Add negative-weight criteria until ~25% of the set is negative.",
+   "evidence": "1/16 = 6% negative-weight (\u00a79g target 25%, cap 30%)"
+  }
+ ]
+}
