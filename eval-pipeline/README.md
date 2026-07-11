@@ -116,6 +116,19 @@ back to the authored `type` when the tagger hasn't run. This is what makes the "
 flag sharp: it measures the visual share of the *accuracy* weight (correctness that truly needs
 vision), which is robust to the modality mistags being exactly what's under review.
 
+## Accuracy tiers & deep-dive (Opus where it counts)
+
+Per-role model tiering (`config/pipeline.yaml` → `models.role_model` / `role_effort`) puts Opus at
+the accuracy chokepoints while the bulk stays cheap: the per-dimension **generalist grader**, CDQ,
+and tagger run **Sonnet**, but the **rubric-quality specialist grader**, the **master**
+(reconciliation / verification), and the **deep-dive** run **Opus**. Any role not listed inherits
+`reviewer`. The audit now runs **two graders** (generalist + rubric specialist) for coverage.
+
+**Deep-dive finder** (`audit_deepdive`, on by default) — after the master, an Opus **completeness
+critic** re-examines each task for defects the audit *missed* (re-reading the card, ctx, and all
+media) and unions any new flags into the DRAWER record. This is the "go beyond on findings" pass;
+turn it off to save one Opus agent per task.
+
 ## Resilience
 
 LLM checks run as background Workflows; `src/resume.py` harvests their results from the
