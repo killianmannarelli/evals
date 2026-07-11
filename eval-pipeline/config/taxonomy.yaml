@@ -52,6 +52,9 @@ defect_types:
   - token: WEIGHT_MIX                  # new — Karan's weight-distribution bar
     desc: "Rubric weight mix off-spec: accuracy < min, or vision < min share (see thresholds.yaml)."
     tier_default: review_recommended
+  - token: LOW_VISUAL_CAPACITY         # multimodal task whose rubric barely needs the visuals
+    desc: "A (nominally) multimodal task whose rubric weight barely requires visual understanding — weak MM dependence; it could largely be solved without the images/video."
+    tier_default: review_recommended
 
 # Map each defect_type to an eval-guide dimension (for the sheet's flagged_dimensions column).
 dimension_of:
@@ -70,6 +73,7 @@ dimension_of:
   SKILL_LOADOUT: environment_adequacy
   SP_UNCLEAR: prompt_clarity
   WEIGHT_MIX: coverage_and_balance
+  LOW_VISUAL_CAPACITY: coverage_and_balance
 
 # Task-level verdict rollup from surviving findings.
 verdict_rule:
@@ -88,6 +92,7 @@ human_label:
   DATA_SPARSE: "Graded fact not derivable from visible data"
   MEDIA_PATH: "Referenced media missing / wrong path"
   MULTIMODAL_ARTIFACT: "Media artifact issue (mistagged / corrupt)"
+  LOW_VISUAL_CAPACITY: "Low visual capacity needed (weak MM dependence)"
   ORACLE_LEAK: "Answer reachable by the agent (oracle leak)"
   GRADER_BROKEN: "Grader / test can never pass as written"
   TOOL_FAILURE: "Required tool / mock is broken or disabled"

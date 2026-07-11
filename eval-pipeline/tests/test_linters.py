@@ -6,7 +6,7 @@ so tuning a threshold that breaks intent fails here.
 """
 from src.common import load_config
 from checks.linters import (weight_mix, pytest_hardcount, visual_sign, visual_vs_text,
-                            overspec_exact, answer_key_data, negweight_ratio)
+                            overspec_exact, answer_key_data, negweight_ratio, visual_capacity)
 
 CFG = load_config()
 
@@ -159,3 +159,34 @@ def test_overspec_flags_mustbe_number_when_hard():
     rub = [{"criteria": "The total must be 42 units", "weight": 3, "pass_rate_gpt": 0.0, "pass_rate_opus": 0.1}]
     out = overspec_exact.run(ctx(rubric=rub), CFG)
     assert out and out[0]["defect_type"] == "RUBRIC_OVERSPEC"
+
+
+# ── visual_capacity (weak MM dependence — low visual capacity needed) ────────────
+def test_visual_capacity_flags_multimodal_task_with_text_only_rubric():
+    # a video/audio task where every criterion is TEXT_ONLY -> 0% visual -> weak MM dependence
+    rub = [{"criteria": "identifies the student as Emma", "weight": 5, "modality": "TEXT_ONLY"},
+           {"criteria": "uses the requested output format", "weight": 5, "modality": "TEXT_ONLY"}]
+    out = visual_capacity.run(ctx(rubric=rub, mm_input="video, audio"), CFG)
+    assert out and out[0]["defect_type"] == "LOW_VISUAL_CAPACITY"
+
+
+def test_visual_capacity_silent_when_visuals_carry_weight():
+    rub = [{"criteria": "reads the value shown in the chart", "weight": 7, "modality": "REQUIRE_VISUAL_UNDERSTANDING"},
+           {"criteria": "uses the requested output format", "weight": 3, "modality": "TEXT_ONLY"}]
+    assert visual_capacity.run(ctx(rubric=rub, mm_input="IMAGE"), CFG) == []
+
+
+def test_visual_capacity_exempts_text_only_task():
+    # a genuine text-only task legitimately needs no visual capacity -> NOT a defect
+    rub = [{"criteria": "the value is 42", "weight": 5, "modality": "TEXT_ONLY"}]
+    assert visual_capacity.run(ctx(rubric=rub, mm_input="TEXT_ONLY"), CFG) == []
+
+
+def test_visual_capacity_uses_tagger_accuracy_scope():
+    # tagger buckets present -> measure the visual share of the ACCURACY criteria. Accuracy is
+    # TEXT_ONLY while the visual weight sits on a formatting criterion -> accuracy is 0% visual -> flag.
+    rub = [{"criteria": "states the correct submission date", "weight": 5, "modality": "TEXT_ONLY", "bucket": "accuracy"},
+           {"criteria": "thumbnail is a valid PNG", "weight": 5, "modality": "REQUIRE_VISUAL_UNDERSTANDING", "bucket": "formatting"}]
+    out = visual_capacity.run(ctx(rubric=rub, mm_input="IMAGE"), CFG)
+    assert out and out[0]["defect_type"] == "LOW_VISUAL_CAPACITY"
+    assert "accuracy-criteria weight" in out[0]["evidence"]

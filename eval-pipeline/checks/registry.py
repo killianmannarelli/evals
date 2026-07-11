@@ -16,7 +16,7 @@ by checks/llm/*.py and harvested via src/resume.py. This registry is the determi
 """
 from checks.linters import (
     weight_mix, pytest_hardcount, visual_sign, visual_vs_text, overspec_exact, answer_key_data,
-    negweight_ratio,
+    negweight_ratio, visual_capacity,
 )
 
 LINTERS = {
@@ -27,9 +27,10 @@ LINTERS = {
     "overspec_exact": overspec_exact.run,
     "answer_key_data": answer_key_data.run,
     "negweight_ratio": negweight_ratio.run,   # §9g — the drawer's negative-weight flag
+    "visual_capacity": visual_capacity.run,   # weak MM dependence — low visual capacity needed
 }
 
-LLM_CHECKS = {"cdq_static", "audit_hybrid31"}
+LLM_CHECKS = {"cdq_static", "audit_hybrid31", "rubric_tagger"}
 
 
 def run_linters(ctx, cfg, enabled):

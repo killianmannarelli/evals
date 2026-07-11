@@ -18,6 +18,17 @@ weight_mix:
                                      # criterion). Stops the vision bar false-firing on text-only tasks.
   text_task_mm_values: ["TEXT_ONLY", "TEXT", "NONE", ""]   # ctx.mm_input values treated as non-visual
 
+visual_capacity:
+  # Flag (nominally) MULTIMODAL tasks whose rubric barely requires visual understanding — i.e. weak
+  # MM dependence: the rubric could largely be satisfied without reading the images/video. Text-only
+  # tasks are EXEMPT (0 visual capacity is expected there, not a defect).
+  min_visual_frac: 0.15              # flag when < this share of the relevant rubric weight is visual
+  text_only_modality_value: "TEXT_ONLY"
+  text_task_mm_values: ["TEXT_ONLY", "TEXT", "NONE", ""]   # ctx.mm_input values treated as non-visual
+  use_tagger_accuracy: true          # if the rubric tagger has run, measure the visual share of the
+                                     # ACCURACY weight (correctness that depends on vision), not all weight
+  tier: review_recommended           # design smell; the DRAWER 'Prompt - MM dependence' dim escalates
+
 pytest_hardcount:
   # Flag exact-count assertions that make a correct-but-different output fail.
   # Regexes over tests/test_outputs.py source (see linter for the compiled patterns).
