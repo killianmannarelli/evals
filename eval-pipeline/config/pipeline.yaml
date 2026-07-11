@@ -85,6 +85,7 @@ enabled_checks:
   # LLM checks (Sonnet workflows; the judgment-heavy net)
   - cdq_static          # customer static eval-design QA + blind verify
   - audit_hybrid31      # our Hybrid 3+1 rubric-quality audit vs V10 spec
+  - rubric_tagger       # 5-bucket criterion classifier (accuracy/exist/formatting/process/safety)
 
 spec:
   # THE SPEC DOC — the V10 grading rubric (21 dimensions, each with its exact [Fail-]/[Non-Fail-]

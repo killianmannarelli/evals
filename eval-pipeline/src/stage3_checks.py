@@ -14,10 +14,18 @@ from checks import registry
 def main(cfg, run_dir):
     run_dir = Path(run_dir)
     enabled = [c for c in cfg["pipeline"]["enabled_checks"] if c in registry.LINTERS]
+    # rubric-tagger buckets (if the tagger has run) — attach the semantic accuracy/exist/formatting/
+    # process/safety label to each criterion so weight_mix + visual_capacity use it over the authored type.
+    tags = json.load(open(run_dir / "rubric_tags.json")) if (run_dir / "rubric_tags.json").exists() else {}
     out = {}
     n_find = 0
     for p in sorted(glob.glob(str(run_dir / "ctx" / "*.json"))):
         ctx = json.load(open(p))
+        tb = tags.get(ctx["task_id"]) or {}
+        if tb:
+            for i, c in enumerate(ctx.get("rubric") or [], 1):
+                if isinstance(c, dict) and str(i) in tb:
+                    c["bucket"] = tb[str(i)]
         fs = registry.run_linters(ctx, cfg, enabled)
         out[ctx["task_id"]] = fs
         n_find += len(fs)

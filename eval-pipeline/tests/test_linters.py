@@ -30,6 +30,16 @@ def test_weight_mix_flags_low_accuracy_and_zero_vision_on_visual_task():
     assert all(f["defect_type"] == "WEIGHT_MIX" for f in out)
 
 
+def test_weight_mix_prefers_tagger_accuracy_bucket():
+    # authored types are non-accuracy, but the tagger bucket marks the factual (visual) criterion as
+    # accuracy -> accuracy 70% (>=60%) and vision-of-accuracy 100% -> compliant, no flag.
+    rub = [{"criteria": "states the correct value shown in the chart", "weight": 7, "type": "task completion",
+            "modality": "REQUIRE_VISUAL_UNDERSTANDING", "bucket": "accuracy"},
+           {"criteria": "uses the requested output format", "weight": 3, "type": "instruction following",
+            "modality": "TEXT_ONLY", "bucket": "formatting"}]
+    assert weight_mix.run(ctx(rubric=rub, mm_input="IMAGE"), CFG) == []
+
+
 def test_weight_mix_text_only_task_skips_vision_bar():
     # Genuinely text-only task (no visual input, no visual criteria) => vision bar must NOT fire.
     rub = [{"criteria": "value is 42", "weight": 7, "type": "factuality and hallucination", "modality": "TEXT_ONLY"},

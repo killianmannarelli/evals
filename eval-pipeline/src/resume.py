@@ -172,11 +172,31 @@ def harvest_audit(outfile, tdir):
     return by
 
 
+def harvest_tagger(outfile, tdir):
+    """Rubric tagger output {task_id, tagger:[{n,tag}], review:[{n,final_tag}]} -> {task_id: {str(n):
+    bucket}} using the reviewer's final_tag (falling back to the tagger's tag)."""
+    by = {}
+    for r in _iter_records(outfile, tdir, '"review"'):
+        tid = r.get("task_id")
+        if not tid or "review" not in r:
+            continue
+        buckets = {}
+        for f in (r.get("tagger") or []):
+            if isinstance(f, dict) and f.get("n") is not None and f.get("tag"):
+                buckets[str(f["n"])] = f["tag"]
+        for f in (r.get("review") or []):        # reviewer's final_tag wins
+            if isinstance(f, dict) and f.get("n") is not None and f.get("final_tag"):
+                buckets[str(f["n"])] = f["final_tag"]
+        by[tid] = buckets
+    return by
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--run-dir", required=True)
     ap.add_argument("--cdq-out"); ap.add_argument("--cdq-tdir")
     ap.add_argument("--audit-out"); ap.add_argument("--audit-tdir")
+    ap.add_argument("--tagger-out"); ap.add_argument("--tagger-tdir")
     a = ap.parse_args()
     run_dir = Path(a.run_dir)
     merged = {}
@@ -191,6 +211,13 @@ def main():
         if chk:
             merged[tid] = [f for f in merged[tid] if f.get("check") != chk] + fs
     json.dump(merged, open(run_dir / "findings_llm.json", "w"), indent=1)
+    # rubric tagger -> rubric_tags.json (per-criterion buckets; stage3 attaches them to ctx)
+    if a.tagger_out or a.tagger_tdir:
+        tags = harvest_tagger(a.tagger_out, a.tagger_tdir)
+        prior = json.load(open(run_dir / "rubric_tags.json")) if (run_dir / "rubric_tags.json").exists() else {}
+        prior.update(tags)
+        json.dump(prior, open(run_dir / "rubric_tags.json", "w"), indent=1)
+        print(f"resume: tagger tasks={len(tags)} -> rubric_tags.json ({len(prior)} total)")
     all_tasks = {Path(p).stem for p in glob.glob(str(run_dir / "ctx" / "*.json"))}
     print(f"resume: cdq tasks={len(cdq)} audit tasks={len(aud)} | merged findings_llm for {len(merged)} tasks")
     miss_cdq = sorted(all_tasks - set(cdq)) if cdq else []

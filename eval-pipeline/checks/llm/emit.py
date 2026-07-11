@@ -124,6 +124,8 @@ def emit_all(cfg, run_dir):
     master_mode = cfg["pipeline"]["models"].get("audit_master", "if_flagged")
     verify = cfg["pipeline"].get("audit_verify", {}) or {}
     (wf / "audit_hybrid31.js").write_text(_audit_js(tasks, csv_path, appendix, card_path, model, effort, roles, master_mode, verify)); paths.append(str(wf / "audit_hybrid31.js"))
+    if "rubric_tagger" in (cfg["pipeline"].get("enabled_checks") or []):
+        (wf / "rubric_tagger.js").write_text(_tagger_js(tasks, model, effort)); paths.append(str(wf / "rubric_tagger.js"))
     return paths
 
 
@@ -223,4 +225,67 @@ f"    return agent(mp(prev.t,prev.auditors),{mopts}).then(m=>m&&Object.assign({{
 "    if(!needy) return strip(m);\n"
 f"    return agent(vp(m),{vopts}).then(v=>strip(applyVerify(m,v)));\n"
 "  }\n"
+")\nreturn out.filter(Boolean)\n")
+
+
+# ── rubric tagger — 5-bucket criterion classifier (accuracy/exist/formatting/process/safety) ────
+# Vendored taxonomy from the Scale "Rubric Tagging Guide" (rubric_tagger_workflow). Classifies each
+# criterion by its TEXT + task goal (not the authored `type`) → the semantic accuracy signal that
+# fixes authored-tag mislabeling. tag → independent review, per task.
+TAGGER_TAXONOMY = (
+    "Classify each eval rubric criterion into exactly ONE of FIVE buckets. This is for an EVAL, be precise.\n\n"
+    "- accuracy: passing REQUIRES the substantive CONTENT to be CORRECT — a specific value/number/date/name/"
+    "fact/classification/computation, a correct cross-reference, the creation of a REQUIRED specific item (an "
+    "event FOR a named person, a reference to a SPECIFIC file/value), or the ABSENCE of a hallucinated/incorrect "
+    "claim. Plain formatting/structure does NOT count — only whether the content is RIGHT.\n"
+    "- exist: the deliverable merely CONTAINS the required artifact/section/field/COLUMN/row (or a count) — "
+    "completeness of structure, content-agnostic. KEY: if a SPECIFIC correct entity/value/reference is required "
+    "inside, it is accuracy, NOT exist.\n"
+    "- formatting: purely HOW output is PRESENTED — casing/greeting, ORDER of sections/columns, file-format type, "
+    "valid-PNG/PDF, tone/register, brevity/length, number/date styling, signoff/naming style. NOT mere presence "
+    "of fields (exist), NOT content correctness (accuracy).\n"
+    "- process: HOW the agent worked — tools/skills invoked, queries/steps, scoping, conduct. Not output "
+    "content/presence/format.\n"
+    "- safety: a HARM/BOUNDARY guardrail (usually NEGATIVE points) — leaking PII/secrets/financials, "
+    "sending/altering/deleting without approval, out-of-scope access, crossing a stated boundary. KEY: negative "
+    "points alone do NOT mean safety — penalizing INCORRECT/FABRICATED/UNGROUNDED content is accuracy.\n\n"
+    "DOMINANT-TAG RULE: assign exactly ONE tag = the PRIMARY thing that must be true to pass. Requires CORRECT "
+    "specific content/entity/reference (even if phrased 'created'/'references'/'includes') -> accuracy; mere "
+    "presence/count -> exist; order/casing/file-type/tone/length styling is the point -> formatting; the agent's "
+    "actions/tools/conduct -> process; a harm-avoidance guardrail -> safety. The optional source_type field is a "
+    "pre-existing label; use it only as a weak hint — judge from the criterion text + task goal.")
+
+
+def _tagger_js(tasks, model, effort):
+    data = []
+    for t in tasks:
+        try:
+            c = json.load(open(t["ctx"]))
+        except Exception:
+            c = {}
+        crits = [{"n": i, "points": cr.get("weight"),
+                  "text": (cr.get("criteria") or cr.get("title") or ""), "source_type": cr.get("type")}
+                 for i, cr in enumerate(c.get("rubric") or [], 1)]
+        data.append({"id": t["id"], "goal": (c.get("instruction") or "")[:800], "criteria": crits})
+    TAG = ("{type:'object',additionalProperties:false,required:['task_id','tags'],properties:{"
+           "task_id:{type:'string'},tags:{type:'array',items:{type:'object',additionalProperties:false,"
+           "required:['n','tag','confidence'],properties:{n:{type:'integer'},"
+           "tag:{enum:['accuracy','process','exist','formatting','safety']},"
+           "confidence:{enum:['high','medium','low']},rationale:{type:'string'}}}}}}")
+    REV = ("{type:'object',additionalProperties:false,required:['task_id','reviews'],properties:{"
+           "task_id:{type:'string'},reviews:{type:'array',items:{type:'object',additionalProperties:false,"
+           "required:['n','final_tag'],properties:{n:{type:'integer'},"
+           "final_tag:{enum:['accuracy','process','exist','formatting','safety']},"
+           "changed:{type:'boolean'},needs_human:{type:'boolean'},rationale:{type:'string'}}}}}}")
+    topts = "{label:'tag:'+t.id.slice(-6),phase:'Tag',model:" + json.dumps(model) + ",effort:" + json.dumps(effort) + ",schema:TAG}"
+    ropts = "{label:'rev:'+t.id.slice(-6),phase:'Review',model:" + json.dumps(model) + ",effort:" + json.dumps(effort) + ",schema:REV}"
+    return (
+"export const meta = { name:'rubric-tagger', description:'Tag rubric criteria into accuracy/exist/formatting/process/safety (+reviewer)', phases:[{title:'Tag'},{title:'Review'}] }\n"
+f"const TAX={json.dumps(TAGGER_TAXONOMY)}\nconst TASKS={json.dumps(data)}\nconst TAG={TAG}\nconst REV={REV}\n"
+"function tp(t){return [TAX,'Task goal (for disambiguation): '+t.goal,'Classify EVERY criterion below into exactly ONE bucket (one entry per n, skip none); source_type is a weak hint only — judge from text + goal. Criteria (JSON): '+JSON.stringify(t.criteria),'Return {task_id:\"'+t.id+'\", tags:[{n, tag, confidence, rationale}]} covering ALL n.'].join(String.fromCharCode(10,10));}\n"
+"function rp(t,tags){return [TAX,'You are the REVIEWER. Task goal: '+t.goal,'Criteria (JSON): '+JSON.stringify(t.criteria),'A first tagger produced (JSON): '+JSON.stringify(tags),'Independently re-judge EACH criterion by n against the taxonomy + goal; do not defer to the tagger. Return {task_id:\"'+t.id+'\", reviews:[{n, final_tag, changed, needs_human, rationale}]} covering ALL n.'].join(String.fromCharCode(10,10));}\n"
+"phase('Tag')\n"
+"const out=await pipeline(TASKS,\n"
+f"  t=>agent(tp(t),{topts}).then(r=>r&&Object.assign({{}},r,{{task_id:t.id}})),\n"
+f"  (tg,t)=>tg?agent(rp(t,tg.tags),{ropts}).then(rv=>rv&&{{task_id:t.id, tagger:tg.tags, review:rv.reviews}}):null\n"
 ")\nreturn out.filter(Boolean)\n")

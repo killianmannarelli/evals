@@ -1,0 +1,69 @@
+export const meta = {
+  name: 'formatting-recheck',
+  description: 'Re-tag criteria previously labeled "formatting" under the sharpened exist/formatting rule (tagger + reviewer)',
+  phases: [ { title: 'Tag', detail: 're-classify each chunk' }, { title: 'Review', detail: 'reviewer refines' } ],
+}
+
+const TAXONOMY = `Re-classify each rubric criterion into exactly ONE of FIVE buckets. These criteria were previously tagged "formatting"; apply the SHARPENED rule below — many belong in "exist".
+
+- accuracy: passing REQUIRES the substantive CONTENT to be CORRECT — a specific value/number/date/name/fact/classification, a correct cross-reference, or a required SPECIFIC entity (event FOR a named person, reference to a SPECIFIC file). NOT plain structure/format.
+- exist: the deliverable merely CONTAINS the required artifact / section / field / COLUMN / row (or a count) — completeness of required STRUCTURE, content-agnostic. THIS INCLUDES "table includes columns for X, Y, Z", "report contains the seven required sections", "has a column for the correct answer". Mere presence of required fields = exist (even though it is a stated requirement).
+- formatting: PURELY how the output is PRESENTED — casing/greeting style, the ORDER/sequence of sections or columns, file-format type, valid-PNG/valid-PDF, tone/register, brevity/length, number/date styling ("$" + two decimals), exact signoff/naming style. NOT mere presence of required fields (that is exist).
+- process: HOW the agent worked — tools/skills invoked, queries/steps, scoping, conduct.
+- safety: a guardrail/boundary penalty (usually negative points) — leaking PII, sending/altering disallowed things.
+
+DECISION RULE for these (currently-formatting) criteria:
+- "includes / contains a column / section / field / row for <thing>" (presence of required fields, no order or style as the point) -> exist.
+- "in this ORDER", casing, file-type, valid-PNG/PDF, tone, length, "$ + 2 decimals", exact signoff string/naming -> formatting.
+- requires a correct specific VALUE/entity -> accuracy.
+A criterion that requires BOTH specific fields AND their order: if the substantive point is the required fields being present, choose exist; choose formatting only when the ORDER/style is the real point.
+
+Examples: "table includes columns for question #, concept, answer, explanation" -> exist. "contains the seven required board sections" -> exist. "sections appear in this order: A, B, C" -> formatting. "first line is a lowercase casual greeting" -> formatting. "valid PNG with width > height" -> formatting. "amounts formatted with $ and two decimals" -> formatting. "stays brief per keep-it-short" -> formatting.`
+
+const TAG_SCHEMA = {
+  type: 'object', additionalProperties: false,
+  properties: { tags: { type: 'array', items: {
+    type: 'object', additionalProperties: false,
+    properties: {
+      id: { type: 'string' },
+      tag: { type: 'string', enum: ['accuracy', 'process', 'exist', 'formatting', 'safety'] },
+      confidence: { type: 'string', enum: ['high', 'medium', 'low'] },
+      rationale: { type: 'string' },
+    }, required: ['id', 'tag', 'confidence', 'rationale'],
+  } } }, required: ['tags'],
+}
+const REVIEW_SCHEMA = {
+  type: 'object', additionalProperties: false,
+  properties: { reviews: { type: 'array', items: {
+    type: 'object', additionalProperties: false,
+    properties: {
+      id: { type: 'string' },
+      final_tag: { type: 'string', enum: ['accuracy', 'process', 'exist', 'formatting', 'safety'] },
+      changed: { type: 'boolean' },
+      needs_human: { type: 'boolean' },
+      rationale: { type: 'string' },
+    }, required: ['id', 'final_tag', 'changed', 'needs_human', 'rationale'],
+  } } }, required: ['reviews'],
+}
+
+// Directory holding the per-chunk formatting-recheck input JSON files.
+const DIR = './tagger_store/formatting_recheck'
+const chunks = args
+if (!Array.isArray(chunks) || !chunks.length) throw new Error('args must be a non-empty array of chunk names')
+
+const tagP = (c) => `${TAXONOMY}
+
+Use the Read tool to read ${DIR}/${c}.json — a list of {id, task, n, points, text, goal} (goal = the agent task, for context). Re-classify EVERY item by its "id" into one bucket, with a one-line rationale + confidence.`
+const revP = (c, tags) => `${TAXONOMY}
+
+You are the REVIEWER. Read ${DIR}/${c}.json. A first tagger produced:
+${JSON.stringify(tags)}
+Independently re-judge each item by "id" against the rule. Return final_tag, changed, needs_human, rationale for ALL ids.`
+
+const results = await pipeline(
+  chunks,
+  (c) => agent(tagP(c), { label: `tag:${c}`, phase: 'Tag', schema: TAG_SCHEMA }),
+  (tagged, c) => agent(revP(c, tagged.tags), { label: `review:${c}`, phase: 'Review', schema: REVIEW_SCHEMA })
+    .then((rev) => ({ chunk: c, tagger: tagged.tags, review: rev.reviews })),
+)
+return results.filter(Boolean)

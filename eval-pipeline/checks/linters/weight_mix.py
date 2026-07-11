@@ -50,10 +50,18 @@ def run(ctx, cfg):
     total_w = sum(c["weight"] for c in pos)
     if total_w <= 0:
         return []
-    acc_w = sum(c["weight"] for c in pos if c.get("type") in acc_types)
+    # Prefer the rubric tagger's semantic "accuracy" bucket (judged from criterion text) when it has
+    # run; otherwise fall back to the authored `type` tag. This fixes accuracy% on tasks whose factual
+    # criteria were mistagged (e.g. a value-extraction tagged "task completion").
+    use_bucket = any(c.get("bucket") for c in pos)
+
+    def _is_acc(c):
+        return (c.get("bucket") == "accuracy") if use_bucket else (c.get("type") in acc_types)
+
+    acc_w = sum(c["weight"] for c in pos if _is_acc(c))
     vis_w = sum(c["weight"] for c in pos if c.get("modality") and c["modality"] != text_only)
     vis_acc_w = sum(c["weight"] for c in pos
-                    if c.get("type") in acc_types and c.get("modality") and c["modality"] != text_only)
+                    if _is_acc(c) and c.get("modality") and c["modality"] != text_only)
 
     acc_frac = acc_w / total_w
     vis_frac = vis_w / total_w
@@ -63,7 +71,7 @@ def run(ctx, cfg):
     out = []
     ev = (f"accuracy={acc_frac:.0%} of total (w={acc_w}/{total_w}); "
           f"vision={vis_frac:.0%} of total; vision-of-accuracy={vis_of_acc:.0%}; "
-          f"accuracy_types={sorted(acc_types)}")
+          f"accuracy_source={'tagger-bucket' if use_bucket else 'type:' + str(sorted(acc_types))}")
 
     if acc_frac < t["accuracy_min_frac_of_total"]:
         out.append(finding(

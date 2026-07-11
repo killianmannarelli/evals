@@ -80,7 +80,7 @@ ships an **Overview** tab (verdict split, cross-lens confidence, top defects, fa
 
 ## The linters (deterministic checks)
 
-Seven pure-Python checks (`checks/linters/<name>.py`, `run(task_ctx, cfg) -> [finding]`) that
+Eight pure-Python checks (`checks/linters/<name>.py`, `run(task_ctx, cfg) -> [finding]`) that
 catch the *mechanical* defect classes an LLM pass is unreliable for. They run in milliseconds,
 cost nothing, and are unit-tested. Each reads a specific grading artifact and emits the same
 taxonomy tokens the LLM audit uses, so stage4 dedupes them together.
@@ -94,6 +94,7 @@ taxonomy tokens the LLM audit uses, so stage4 dedupes them together.
 | `visual_vs_text` | Same criterion in `visual_rubrics.json` and `rubric.json` graded with **opposite sign** (the two grading passes contradict). | both rubric files | review | Heuristic (fuzzy title match ≥0.85); low volume |
 | `overspec_exact` | Criterion demands an **exact** value (timestamp / long decimal) a range would cover, *and* both reference models rarely pass it. | `rubric.json` + model pass-rates | review | Heuristic marker + empirical pass-rate gate |
 | `answer_key_data` | Rubric grades against a currency amount that appears **nowhere** in the mock-API data (likely a wrong answer key). | mock `data.json` + `rubric.json` | review | Conservative (cents-only, aggregates skipped) |
+| `visual_capacity` | **Low visual capacity needed**: a (nominally) multimodal task whose rubric weight barely requires visual understanding (weak MM dependence) — could largely be solved without the images/video. Text-only tasks exempt. | `rubric.json` modality+weight, `mm_input` (+ tagger accuracy buckets) | review | Deterministic on modality; sharper with tagger buckets |
 
 **Design principle — only structural checks fail alone.** `negweight_ratio` (a faithful
 reproduction of the §9g rule) can drive a task to **Fail** on its own. Every *heuristic* linter
@@ -102,6 +103,18 @@ emits `review_recommended` only; it becomes a Fail when the **LLM audit independ
 corroborates. This keeps the linters a fast, free, reproducible pre-pass **without letting a
 keyword false-positive hard-fail a correct task.** Tune every threshold in
 `config/thresholds.yaml`; toggle any linter in `enabled_checks`.
+
+## Rubric tagger (5-bucket accuracy classifier)
+
+An LLM check (`rubric_tagger`, vendored from Scale's Rubric Tagging Guide) classifies **every
+criterion by its text + task goal** into `accuracy / exist / formatting / process / safety` — a
+*semantic* accuracy signal, independent of the authored `type` tag (which is frequently mislabeled,
+e.g. a factual value-extraction tagged `task completion`). It runs tag → independent reviewer pass
+on the config model. Its buckets are attached back to each criterion in `stage3`, so **`weight_mix`
+and `visual_capacity` measure accuracy from the tagger's judgment** rather than the raw tag — falling
+back to the authored `type` when the tagger hasn't run. This is what makes the "low visual capacity"
+flag sharp: it measures the visual share of the *accuracy* weight (correctness that truly needs
+vision), which is robust to the modality mistags being exactly what's under review.
 
 ## Resilience
 
